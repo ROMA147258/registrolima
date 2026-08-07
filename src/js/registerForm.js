@@ -7,15 +7,15 @@ export function getRegisterFormHTML() {
   return `
     <div class="mobile-card" id="card-register">
       <!-- Header with dynamic progress & logout button -->
-      <div class="card-header">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <div class="card-header" style="padding-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
           <h1 class="card-title" id="title-register" style="cursor: pointer; user-select: none;">Registro</h1>
           <button type="button" id="btn-exit-to-login" class="btn-exit-small" title="Ir a inicio de sesión">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             <span>Salir</span>
           </button>
         </div>
-        <p class="card-subtitle" style="font-size: 1.1rem; font-weight: 600; text-align: center; color: var(--text-main); margin-top: 8px; line-height: 1.4;">Ficha de Inscripción de Personeros -Elecciones Municipales 2026</p>
+        <p class="card-subtitle" style="font-size: 1.1rem; font-weight: 600; text-align: center; color: var(--text-main); margin-top: 4px; margin-bottom: 0; line-height: 1.3;">Ficha de Inscripción de Personeros -Elecciones Municipales 2026</p>
         
         <!-- Progress Bar indicator -->
         <div class="progress-container">
@@ -24,7 +24,7 @@ export function getRegisterFormHTML() {
       </div>
 
       <!-- Main View Content -->
-      <div class="view-content">
+      <div class="view-content" style="padding-top: 12px;">
         
         <!-- VIEW: FORM -->
         <div class="form-view" id="view-form">
