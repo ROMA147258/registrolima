@@ -15,7 +15,7 @@ export function getRegisterFormHTML() {
             <span>Salir</span>
           </button>
         </div>
-        <p class="card-subtitle">Ficha de Inscripción de Personeros -Elecciones Municipales 2026</p>
+        <p class="card-subtitle" style="font-size: 1.1rem; font-weight: 600; text-align: center; color: var(--text-main); margin-top: 8px; line-height: 1.4;">Ficha de Inscripción de Personeros -Elecciones Municipales 2026</p>
         
         <!-- Progress Bar indicator -->
         <div class="progress-container">
