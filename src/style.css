@@ -2019,80 +2019,497 @@ body.full-screen-mode {
   color: #1e293b;
 }
 
-/* Credential Badge Card */
-.credential-badge {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border: 2px solid var(--primary-color);
-  border-radius: var(--radius-xl);
-  padding: 24px;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.2);
+/* Somos Perú Official Certificate & Credential Styling */
+.somosperu-modal-dialog {
+  max-width: 960px !important;
+  width: 95% !important;
+  background: #0b1329 !important;
+  border: 1px solid rgba(32, 72, 142, 0.4) !important;
 }
-.credential-badge::before {
-  content: '';
+
+.cert-modal-body {
+  padding: 16px !important;
+  background: #070d1d;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Certificate Paper Frame */
+.somosperu-certificate {
+  width: 100%;
+  max-width: 880px;
+  min-width: 680px;
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 6px;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0,0,0,0.1);
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Security guilloche & triple borders */
+.cert-outer-border {
+  padding: 10px;
+  border: 5px solid #20488e; /* Somos Perú Navy */
+  position: relative;
+  background: #ffffff;
+}
+
+.cert-inner-border {
+  border: 2px solid #e30613; /* Somos Perú Red */
+  padding: 4px;
+  position: relative;
+}
+
+.cert-gold-border {
+  border: 1.5px dashed #c59b27; /* Gold accent */
+  padding: 18px 24px 14px 24px;
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+}
+
+/* Corner Ornaments */
+.cert-corner {
   position: absolute;
-  top: -50%;
-  right: -30%;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  background: rgba(56, 189, 248, 0.05);
+  width: 24px;
+  height: 24px;
+  border-color: #c59b27;
   pointer-events: none;
 }
-.credential-header {
-  text-align: center;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
+.cert-corner.top-left {
+  top: 4px;
+  left: 4px;
+  border-top: 3px solid #c59b27;
+  border-left: 3px solid #c59b27;
 }
-.credential-header h4 {
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  color: var(--primary-color);
-  font-weight: 800;
-  margin-bottom: 4px;
+.cert-corner.top-right {
+  top: 4px;
+  right: 4px;
+  border-top: 3px solid #c59b27;
+  border-right: 3px solid #c59b27;
 }
-.credential-header span {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  color: #94a3b8;
+.cert-corner.bottom-left {
+  bottom: 4px;
+  left: 4px;
+  border-bottom: 3px solid #c59b27;
+  border-left: 3px solid #c59b27;
 }
-.credential-body {
+.cert-corner.bottom-right {
+  bottom: 4px;
+  right: 4px;
+  border-bottom: 3px solid #c59b27;
+  border-right: 3px solid #c59b27;
+}
+
+/* Watermark */
+.cert-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header Grid */
+.cert-header-layout {
+  display: grid;
+  grid-template-columns: 140px 1fr 140px;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+  border-bottom: 2px solid #20488e;
+  padding-bottom: 10px;
+}
+
+.cert-logo-box {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
-.credential-field {
+
+.cert-header-text {
+  text-align: center;
+}
+
+.cert-party-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #20488e;
+  letter-spacing: 1.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cert-party-subtitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #e30613;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.cert-peru-flag-line {
+  display: flex;
+  height: 4px;
+  width: 140px;
+  margin: 6px auto 0 auto;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.cert-flag-red { background: #e30613; flex: 1; }
+.cert-flag-white { background: #ffffff; flex: 1; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; }
+.cert-flag-blue { background: #20488e; flex: 1; }
+
+.cert-qr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.cert-qr-code {
+  width: 58px;
+  height: 58px;
+}
+
+.cert-qr-folio {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #20488e;
+  margin-top: 3px;
+  text-align: center;
+  font-family: monospace;
+}
+
+/* Document Title */
+.cert-title-section {
+  text-align: center;
+  margin: 12px 0 8px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.cert-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #20488e;
+  letter-spacing: 2px;
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.cert-main-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #c59b27;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Proclamation & Recipient */
+.cert-proclamation {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #475569;
+  margin: 8px 0 4px 0;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+}
+
+.cert-recipient-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #20488e;
+  text-align: center;
+  margin: 4px 0 2px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.cert-recipient-dni {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+.cert-recipient-dni span {
+  color: #e30613;
+  font-weight: 800;
+}
+
+.cert-merit-text {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #334155;
+  max-width: 680px;
+  margin: 0 auto 10px auto;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* Personero Badge */
+.cert-role-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 8px auto 12px auto;
+  position: relative;
+  z-index: 1;
+}
+
+.cert-role-tag {
+  background: linear-gradient(135deg, #20488e 0%, #0f2759 100%);
+  color: #ffffff;
+  padding: 6px 20px;
+  border-radius: 30px;
+  border: 1.5px solid #c59b27;
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 10px rgba(32, 72, 142, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Electoral Details Grid */
+.cert-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-top: 2px solid #20488e;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.cert-detail-item {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.credential-field label {
-  font-size: 0.65rem;
-  color: #94a3b8;
-  text-transform: uppercase;
-}
-.credential-field span {
-  font-size: 0.95rem;
+.cert-detail-item label {
+  font-size: 0.62rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.credential-status-badge {
-  margin-top: 12px;
-  background: rgba(52, 211, 153, 0.15);
-  border: 1px solid var(--success-color);
-  border-radius: var(--radius-md);
-  padding: 8px;
+.cert-detail-item span {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.cert-detail-item.highlight span {
+  color: #e30613;
+}
+
+/* Signatures and Golden Seal Section */
+.cert-footer-section {
+  display: grid;
+  grid-template-columns: 1fr 120px 1fr;
+  align-items: flex-end;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  padding-top: 6px;
+}
+
+.cert-sign-col {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  color: var(--success-color);
+  text-align: center;
+}
+
+.cert-signature-img {
+  height: 42px;
+  width: auto;
+  opacity: 0.85;
+}
+
+.cert-sign-line {
+  width: 180px;
+  height: 1px;
+  background: #0f172a;
+  margin: 4px 0;
+}
+
+.cert-sign-name {
+  font-size: 0.72rem;
   font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.85rem;
+  color: #0f172a;
+}
+.cert-sign-role {
+  font-size: 0.6rem;
+  color: #64748b;
+  line-height: 1.2;
+}
+
+/* Embossed Gold Seal */
+.cert-gold-seal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-seal-outer {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f3df8a 0%, #dfb15b 50%, #b8860b 100%);
+  border: 2px dashed #7a5806;
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.4), inset 0 2px 4px rgba(255,255,255,0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  position: relative;
+}
+
+.cert-seal-inner {
+  border: 1px solid #7a5806;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2px;
+}
+
+.cert-seal-text-top {
+  font-size: 0.42rem;
+  font-weight: 900;
+  color: #4a3301;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.cert-seal-year {
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #e30613;
+  margin: 1px 0;
+}
+
+.cert-seal-text-bottom {
+  font-size: 0.42rem;
+  font-weight: 900;
+  color: #20488e;
+  line-height: 1;
+}
+
+.cert-ribbon-tails {
+  display: flex;
+  gap: 4px;
+  margin-top: -6px;
+}
+.cert-ribbon-tail {
+  width: 12px;
+  height: 18px;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+.cert-ribbon-tail.red { background: #e30613; }
+.cert-ribbon-tail.blue { background: #20488e; }
+
+/* Micro security line */
+.cert-security-bar {
+  margin-top: 10px;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.55rem;
+  color: #94a3b8;
+  position: relative;
+  z-index: 1;
+}
+.cert-security-bar span {
+  font-family: monospace;
+}
+
+/* Print Specific Rules */
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+  
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+  
+  body * {
+    visibility: hidden;
+  }
+  
+  #printable-certificate-area,
+  #printable-certificate-area * {
+    visibility: visible;
+  }
+  
+  #printable-certificate-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .somosperu-certificate {
+    max-width: 100% !important;
+    width: 98% !important;
+    box-shadow: none !important;
+  }
 }
 .spinner-inline {
   display: inline-block;

@@ -4,6 +4,7 @@ import { getRegisterFormHTML, initRegisterForm } from './js/registerForm.js';
 import { getLoginFormHTML, initLoginForm } from './js/loginForm.js';
 import { getDashboardHTML, initDashboard } from './js/dashboard.js';
 import { getTrainingHTML, initTraining } from './js/training.js';
+import { getVerificationHTML, initVerification } from './js/verifyCertificate.js';
 
 const app = document.querySelector('#app');
 
@@ -11,6 +12,15 @@ const app = document.querySelector('#app');
  * Main application router / view-coordinator
  */
 function renderApp(viewMode = 'register') {
+  // Check if current URL is a QR verification route
+  if (window.location.hash.startsWith('#verificar')) {
+    document.body.classList.remove('full-screen-mode');
+    app.classList.remove('wide-layout');
+    app.innerHTML = getVerificationHTML();
+    initVerification();
+    return;
+  }
+
   const session = getCurrentSession();
 
   if (!session.loggedIn) {
@@ -60,5 +70,11 @@ function renderApp(viewMode = 'register') {
   }
 }
 
+// Listen for hash changes (e.g. scanning QR code or returning home)
+window.addEventListener('hashchange', () => {
+  renderApp();
+});
+
 // Start the app
 renderApp();
+
