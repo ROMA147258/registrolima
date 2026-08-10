@@ -9,14 +9,14 @@ export function getRegisterFormHTML() {
       <!-- Header with dynamic progress & logout button -->
       <div class="card-header" style="padding: 16px 18px 12px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-          <h1 class="card-title" id="title-register" style="font-size: 1.35rem; margin: 0; font-weight: 800; color: var(--secondary-color);">Inscripción de Personeros</h1>
+          <h1 class="card-title" id="title-register" style="font-size: 1.35rem; margin: 0; font-weight: 800; color: var(--secondary-color);">Registro</h1>
           <button type="button" id="btn-exit-to-login" class="btn-exit-small" title="Ir a inicio de sesión">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             <span>Salir</span>
           </button>
         </div>
         <p class="card-subtitle" style="font-size: 1.05rem; font-weight: 700; color: #0369a1; margin-top: 4px; margin-bottom: 0; line-height: 1.35;">
-          Partido Democrático Somos Perú • Elecciones 2026
+          Partido Democrático Somos Perú • Elecciones Municipales 2026
         </p>
         
         <!-- Progress Bar indicator -->
