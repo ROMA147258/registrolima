@@ -108,14 +108,14 @@ function renderTableRows(data, totalCount) {
     const idVal = getRowValue(r, ['ID', 'id']);
     const name = getRowValue(r, ['Nombres y Apellidos', 'nombres']);
     const dni = getRowValue(r, ['D.N.I.', 'dni']);
-    const dist = getRowValue(r, ['Distrito de Votación', 'distrito']);
-    const center = getRowValue(r, ['Centro de Votación', 'centro']);
-    const mesa = getRowValue(r, ['Mesa Electoral', 'mesa']);
-    const cell = getRowValue(r, ['Número de Celular', 'celular']);
-    const usesWA = getRowValue(r, ['¿Usa WhatsApp?', 'usa_whatsapp']);
-    const waOtro = getRowValue(r, ['WhatsApp Alterno', 'whatsapp_otro']);
-    const exp = getRowValue(r, ['Experiencia como Personero', 'experiencia_personero']);
-    const comp = getRowValue(r, ['Compromiso 2da Vuelta 2026', 'compromiso_2da_vuelta']);
+    const dist = getRowValue(r, ['Distrito donde Vota', 'Distrito de Votación', 'distrito']);
+    const center = getRowValue(r, ['Local de Votación', 'Centro de Votación', 'centro']);
+    const mesa = getRowValue(r, ['Mesa de Sufragio', 'Mesa Electoral', 'mesa']);
+    const cell = getRowValue(r, ['Celular', 'Número de Celular', 'celular']);
+    const usesWA = getRowValue(r, ['¿Usa WhatsApp en su celular?', '¿Usa WhatsApp?', 'usa_whatsapp']);
+    const waOtro = getRowValue(r, ['Número WhatsApp Alterno', 'WhatsApp Alterno', 'whatsapp_otro']);
+    const exp = getRowValue(r, ['¿Tiene Experiencia como Personero?', 'Experiencia como Personero', 'experiencia_personero']);
+    const comp = getRowValue(r, ['¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones?', 'Compromiso 2da Vuelta 2026', 'compromiso_2da_vuelta']);
     const mob = getRowValue(r, ['¿Cuenta con Movilidad Propia?', 'movilidad_propia']);
 
     const waNumber = (usesWA.toLowerCase() === 'sí') ? cell : waOtro;
@@ -190,14 +190,14 @@ export function renderFullTableRows(data) {
     const idVal = getRowValue(r, ['ID', 'id']);
     const name = getRowValue(r, ['Nombres y Apellidos', 'nombres']);
     const dni = getRowValue(r, ['D.N.I.', 'dni']);
-    const dist = getRowValue(r, ['Distrito de Votación', 'distrito']);
-    const center = getRowValue(r, ['Centro de Votación', 'centro']);
-    const mesa = getRowValue(r, ['Mesa Electoral', 'mesa']);
-    const cell = getRowValue(r, ['Número de Celular', 'celular']);
-    const usesWA = getRowValue(r, ['¿Usa WhatsApp?', 'usa_whatsapp']);
-    const waOtro = getRowValue(r, ['WhatsApp Alterno', 'whatsapp_otro']);
-    const exp = getRowValue(r, ['Experiencia como Personero', 'experiencia_personero']);
-    const comp = getRowValue(r, ['Compromiso 2da Vuelta 2026', 'compromiso_2da_vuelta']);
+    const dist = getRowValue(r, ['Distrito donde Vota', 'Distrito de Votación', 'distrito']);
+    const center = getRowValue(r, ['Local de Votación', 'Centro de Votación', 'centro']);
+    const mesa = getRowValue(r, ['Mesa de Sufragio', 'Mesa Electoral', 'mesa']);
+    const cell = getRowValue(r, ['Celular', 'Número de Celular', 'celular']);
+    const usesWA = getRowValue(r, ['¿Usa WhatsApp en su celular?', '¿Usa WhatsApp?', 'usa_whatsapp']);
+    const waOtro = getRowValue(r, ['Número WhatsApp Alterno', 'WhatsApp Alterno', 'whatsapp_otro']);
+    const exp = getRowValue(r, ['¿Tiene Experiencia como Personero?', 'Experiencia como Personero', 'experiencia_personero']);
+    const comp = getRowValue(r, ['¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones?', 'Compromiso 2da Vuelta 2026', 'compromiso_2da_vuelta']);
     const mob = getRowValue(r, ['¿Cuenta con Movilidad Propia?', 'movilidad_propia']);
 
     const waNumber = (usesWA.toLowerCase() === 'sí') ? cell : waOtro;

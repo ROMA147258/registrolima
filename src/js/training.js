@@ -95,8 +95,8 @@ export function getTrainingHTML() {
           <h3>¡Bienvenido, <span id="training-user-name">${session.name || 'Personero'}</span>!</h3>
           <div class="training-info-grid">
             <div class="info-badge"><strong>DNI:</strong> <span>${session.dni || '-'}</span></div>
-            <div class="info-badge"><strong>Distrito:</strong> <span>${session.district || '-'}</span></div>
-            <div class="info-badge"><strong>Mesa:</strong> <span>${session.mesa || '-'}</span></div>
+            <div class="info-badge"><strong>Distrito:</strong> <span>${session.distritoAsignado || session.district || '-'}</span></div>
+            <div class="info-badge"><strong>Mesa:</strong> <span>${session.mesaAsignada || session.mesa || '-'}</span></div>
           </div>
         </div>
         
@@ -243,362 +243,124 @@ export function initTraining(onLogout) {
 
   function openVideoModal() {
     modalContainer.innerHTML = `
-      <style>
-        .simulated-video-container {
-          position: relative;
-          overflow: hidden;
-          background: #090d16;
-          border-radius: 8px;
-          height: 200px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          border: 1px solid #1e293b;
-          box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
-          cursor: pointer;
-        }
-        /* Fullscreen styles when native fullscreen is active */
-        .simulated-video-container:fullscreen {
-          width: 100vw !important;
-          height: 100vh !important;
-          border: none !important;
-          border-radius: 0 !important;
-          display: flex !important;
-          flex-direction: column !important;
-          justify-content: space-between !important;
-          background: #000 !important;
-        }
-        .simulated-video-container:-webkit-full-screen {
-          width: 100vw !important;
-          height: 100vh !important;
-          border: none !important;
-          border-radius: 0 !important;
-          background: #000 !important;
-        }
-        
-        /* Video Controls Overlay */
-        .video-controls-overlay {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: linear-gradient(transparent, rgba(15, 23, 42, 0.95) 45%);
-          padding: 24px 12px 10px 12px;
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-          opacity: 0;
-          transform: translateY(10px);
-          pointer-events: none;
-          z-index: 20;
-          border-top: none;
-        }
-        .simulated-video-container.show-controls .video-controls-overlay {
-          opacity: 1;
-          transform: translateY(0);
-          pointer-events: auto;
-        }
-        
-        /* Range input scrubber custom styling */
-        #video-scrubber {
-          flex: 1;
-          accent-color: var(--primary-color);
-          cursor: pointer;
-          height: 4px;
-          border-radius: 2px;
-          background: #334155;
-          outline: none;
-          transition: height 0.1s ease;
-        }
-        #video-scrubber:hover {
-          height: 6px;
-        }
-      </style>
       <div class="training-modal-overlay">
-        <div class="training-modal" style="max-width: 440px;">
-          <div class="training-modal-header">
-            <h3>Capacitación Electoral - Video</h3>
-            <button class="btn-close-modal" id="btn-close-video">×</button>
+        <div class="training-modal" style="max-width: 580px; width: 95%; max-height: 92vh; display: flex; flex-direction: column;">
+          <div class="training-modal-header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.2rem;">🎥</span>
+              <h3 style="color: #ffffff; margin: 0; font-size: 0.98rem; font-weight: 700; font-family: 'Outfit', sans-serif;">Video Tutorial Oficial — Capacitación de Personeros</h3>
+            </div>
+            <button class="btn-close-modal" id="btn-close-video" style="color: #cbd5e1;">✕</button>
           </div>
-          <div class="training-modal-body">
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-              Observe el video tutorial sobre el Conteo Electoral completo para validar su progreso. Mueva el cursor sobre el video para ver los controles.
+          
+          <div class="training-modal-body" style="padding: 12px; overflow-y: auto;">
+            <p style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 10px; line-height: 1.4;">
+              Observe el video tutorial instructivo completo sobre las funciones del personero y el conteo electoral para registrar su avance.
             </p>
             
-            <div class="simulated-video-container show-controls">
-              <!-- Video Screen Area -->
-              <div id="video-visual-screen" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #38bdf8; padding: 15px; z-index: 10;">
-                <div style="font-size: 2.2rem; margin-bottom: 6px; filter: drop-shadow(0 2px 8px rgba(56,189,248,0.4));" id="video-visual-icon">🗳️</div>
-                <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;" id="video-visual-title">1. Instalación de la Mesa</div>
-                <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px; line-height: 1.3;" id="video-visual-subtext">Verifique los materiales y actas antes del inicio.</div>
-              </div>
-              
-              <!-- Video Controls Area (YouTube style overlay) -->
-              <div class="video-controls-overlay">
-                <!-- Scrubber Slider -->
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <input type="range" id="video-scrubber" min="0" max="60" value="0">
-                  <span id="simulated-time-label" style="font-size: 0.75rem; color: #94a3b8; font-family: monospace; white-space: nowrap;">00:00 / 01:00</span>
-                </div>
-                
-                <!-- Playback Buttons -->
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <div style="display: flex; gap: 8px; align-items: center;">
-                    <button type="button" id="btn-video-rewind" class="btn-secondary" style="padding: 4px 8px; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; background: #1e293b; border-color: #334155; margin: 0; width: auto; color: #fff; border-radius: 4px;" title="Retroceder 10 segundos">
-                      ⏪ -10s
-                    </button>
-                    <button type="button" id="btn-video-play-pause" class="btn-submit" style="padding: 4px 12px; font-size: 0.75rem; display: flex; align-items: center; gap: 4px; background: var(--primary-color); color: #0f172a; font-weight: bold; margin: 0; width: auto; border-radius: 4px;">
-                      <span id="play-pause-btn-text">▶️ Iniciar</span>
-                    </button>
-                  </div>
-                  
-                  <div style="display: flex; align-items: center; gap: 10px;">
-                    <!-- Volume Control -->
-                    <div style="display: flex; align-items: center; gap: 4px;">
-                      <button type="button" id="btn-video-volume" style="background: none; border: none; cursor: pointer; color: #94a3b8; padding: 4px; font-size: 0.85rem;" title="Volumen">
-                        🔊
-                      </button>
-                      <input type="range" id="video-volume-slider" min="0" max="100" value="100" style="width: 50px; accent-color: var(--primary-color); cursor: pointer;" title="Ajustar volumen">
-                    </div>
-
-                    <button type="button" id="btn-video-fullscreen" style="background: none; border: none; cursor: pointer; color: #94a3b8; padding: 4px; display: flex; align-items: center; justify-content: center; transition: color 0.2s;" title="Pantalla Completa">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2-2h3"/></svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div class="real-video-wrapper" style="position: relative; background: #000; border-radius: 12px; overflow: hidden; border: 1.5px solid #0284c7; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+              <video 
+                id="real-tutorial-video" 
+                playsinline 
+                controls 
+                preload="auto"
+                style="width: 100%; max-height: 380px; display: block; background: #000; outline: none;"
+              >
+                <source src="./tutorial_personero.mp4" type="video/mp4">
+                <source src="/tutorial_personero.mp4" type="video/mp4">
+                <source src="./TUTORIAL%20PERSONERO.mp4" type="video/mp4">
+                <source src="/TUTORIAL%20PERSONERO.mp4" type="video/mp4">
+                Tu navegador no soporta el formato de video MP4.
+              </video>
             </div>
 
-            <div id="video-status-msg" style="font-size: 0.8rem; text-align: center; margin-top: 10px; color: var(--primary-color); font-weight: 500;">
-              Haga clic en el botón de Iniciar para reproducir.
+            <div id="video-status-msg" style="font-size: 0.78rem; text-align: center; margin-top: 10px; color: #38bdf8; font-weight: 600;">
+              ▶️ Presione Play en el reproductor para iniciar el video tutorial.
             </div>
           </div>
-          <div class="training-modal-footer">
-            <button class="btn-submit" id="btn-finish-video" style="padding: 8px 16px; font-size: 0.85rem; width: auto; margin: 0; opacity: 0.5; cursor: not-allowed;" disabled>
-              <span>🔒 Debe terminar el video</span>
+          
+          <div class="training-modal-footer" style="background: rgba(15, 23, 42, 0.95); border-top: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.75rem; color: #94a3b8;" id="video-progress-text">Progreso: 0%</span>
+            <button class="btn-submit" id="btn-finish-video" style="padding: 8px 18px; font-size: 0.82rem; width: auto; margin: 0; opacity: 0.45; cursor: not-allowed; background: #334155; color: #94a3b8; border: none; border-radius: 8px; font-weight: 700; display: flex; align-items: center; gap: 6px;" disabled>
+              <span>🔒 Debe ver el video para registrar</span>
             </button>
           </div>
         </div>
       </div>
     `;
 
+    const videoEl = document.getElementById('real-tutorial-video');
     const closeBtn = document.getElementById('btn-close-video');
-    const container = document.querySelector('.simulated-video-container');
-    const scrubber = document.getElementById('video-scrubber');
-    const playPauseBtn = document.getElementById('btn-video-play-pause');
-    const playPauseText = document.getElementById('play-pause-btn-text');
-    const btnRewind = document.getElementById('btn-video-rewind');
-    const btnVolume = document.getElementById('btn-video-volume');
-    const volumeSlider = document.getElementById('video-volume-slider');
-    const btnFullscreen = document.getElementById('btn-video-fullscreen');
-    const timeLabel = document.getElementById('simulated-time-label');
-    const visualIcon = document.getElementById('video-visual-icon');
-    const visualTitle = document.getElementById('video-visual-title');
-    const visualSub = document.getElementById('video-visual-subtext');
     const finishBtn = document.getElementById('btn-finish-video');
     const statusMsg = document.getElementById('video-status-msg');
+    const progressText = document.getElementById('video-progress-text');
 
-    let videoPlaying = false;
-    let videoDuration = 60; // 60 seconds simulation
-    let videoCurrentTime = 0;
-    let maxWatchedTime = 0;
-    let currentVolume = 100;
-    let isMuted = false;
-    let intervalId = null;
-    let hideTimeout = null;
+    let maxPercentWatched = 0;
 
-    // Helper to format time as mm:ss
-    function formatTime(sec) {
-      const m = Math.floor(sec / 60).toString().padStart(2, '0');
-      const s = Math.floor(sec % 60).toString().padStart(2, '0');
-      return `${m}:${s}`;
-    }
-
-    // Educational content slides shown based on video timestamp
-    const slides = [
-      { time: 0, icon: '🗳️', title: '1. Instalación de la Mesa', sub: 'Verifique los materiales electorales y actas antes del inicio oficial.' },
-      { time: 15, icon: '👥', title: '2. Sufragio de los Votantes', sub: 'Valide la identidad de cada elector con su D.N.I. y firma.' },
-      { time: 35, icon: '📊', title: '3. Escrutinio y Conteo', sub: 'Cuente voto por voto de forma minuciosa y registre votos de nuestra lista.' },
-      { time: 50, icon: '✍️', title: '4. Cierre y Copias del Acta', sub: 'Firme el acta final y exija su copia certificada inmediatamente.' }
-    ];
-
-    function showControls() {
-      container.classList.add('show-controls');
-      clearTimeout(hideTimeout);
-      
-      // Auto hide controls only if video is playing
-      if (videoPlaying) {
-        hideTimeout = setTimeout(() => {
-          container.classList.remove('show-controls');
-        }, 2200);
-      }
-    }
-
-    function updateVisualScreen() {
-      let activeSlide = slides[0];
-      for (let i = 0; i < slides.length; i++) {
-        if (videoCurrentTime >= slides[i].time) {
-          activeSlide = slides[i];
-        }
-      }
-      visualIcon.textContent = activeSlide.icon;
-      visualTitle.textContent = activeSlide.title;
-      visualSub.textContent = activeSlide.sub;
-      
-      scrubber.value = videoCurrentTime;
-      timeLabel.textContent = `${formatTime(videoCurrentTime)} / ${formatTime(videoDuration)}`;
-
-      if (videoCurrentTime >= videoDuration) {
-        videoPlaying = false;
-        clearInterval(intervalId);
-        playPauseText.textContent = '▶️ Iniciar';
-        statusMsg.textContent = '✅ ¡Video observado correctamente!';
+    function unlockFinishBtn() {
+      if (finishBtn && finishBtn.disabled) {
         finishBtn.disabled = false;
-        finishBtn.innerHTML = '<span>Completar Video</span>';
         finishBtn.style.opacity = '1';
         finishBtn.style.cursor = 'pointer';
-        finishBtn.style.background = 'var(--success-color)';
-        finishBtn.style.color = '#fff';
-        container.classList.add('show-controls');
-      } else {
-        finishBtn.disabled = true;
-        finishBtn.style.opacity = '0.5';
-        finishBtn.style.cursor = 'not-allowed';
-        finishBtn.innerHTML = '<span>🔒 Debe terminar el video</span>';
-        if (videoPlaying) {
-          statusMsg.textContent = '🎥 Reproduciendo video instructivo... (Adelanto desactivado)';
-        } else {
-          statusMsg.textContent = '⏸️ Video pausado.';
-        }
+        finishBtn.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+        finishBtn.style.color = '#ffffff';
+        finishBtn.innerHTML = '<span>✅ Registrar Video Visto</span>';
+        if (statusMsg) statusMsg.textContent = '✅ Video observado. ¡Ya puede registrar su avance!';
       }
     }
 
-    function togglePlay() {
-      if (videoPlaying) {
-        videoPlaying = false;
-        clearInterval(intervalId);
-        playPauseText.textContent = '▶️ Reanudar';
-        clearTimeout(hideTimeout);
-        container.classList.add('show-controls');
-      } else {
-        if (videoCurrentTime >= videoDuration) {
-          videoCurrentTime = 0;
+    if (videoEl) {
+      videoEl.addEventListener('timeupdate', () => {
+        if (videoEl.duration) {
+          const currentPercent = Math.min(100, Math.round((videoEl.currentTime / videoEl.duration) * 100));
+          if (currentPercent > maxPercentWatched) {
+            maxPercentWatched = currentPercent;
+          }
+          if (progressText) {
+            progressText.textContent = `Progreso: ${maxPercentWatched}%`;
+          }
+
+          // Unlock finish button once user has watched at least 70% of the video or reached near the end
+          if (maxPercentWatched >= 70 || videoEl.currentTime >= videoEl.duration - 2) {
+            unlockFinishBtn();
+          }
         }
-        videoPlaying = true;
-        playPauseText.textContent = '⏸️ Pausar';
-        intervalId = setInterval(() => {
-          videoCurrentTime += 1;
-          if (videoCurrentTime > maxWatchedTime) {
-            maxWatchedTime = videoCurrentTime;
-          }
-          if (videoCurrentTime >= videoDuration) {
-            videoCurrentTime = videoDuration;
-          }
-          updateVisualScreen();
-        }, 1000);
-        showControls();
-      }
-      updateVisualScreen();
+      });
+
+      videoEl.addEventListener('ended', () => {
+        maxPercentWatched = 100;
+        if (progressText) progressText.textContent = 'Progreso: 100%';
+        unlockFinishBtn();
+      });
+
+      videoEl.addEventListener('play', () => {
+        if (statusMsg && finishBtn.disabled) {
+          statusMsg.textContent = '🎥 Reproduciendo video tutorial...';
+        }
+      });
+
+      videoEl.addEventListener('pause', () => {
+        if (statusMsg && finishBtn.disabled) {
+          statusMsg.textContent = '⏸️ Video en pausa.';
+        }
+      });
     }
-
-    // Event listeners for auto-hide controls
-    container.addEventListener('mousemove', showControls);
-    container.addEventListener('mouseenter', showControls);
-    container.addEventListener('mouseleave', () => {
-      if (videoPlaying) {
-        clearTimeout(hideTimeout);
-        hideTimeout = setTimeout(() => {
-          container.classList.remove('show-controls');
-        }, 800);
-      }
-    });
-
-    container.addEventListener('click', (e) => {
-      const isControls = e.target.closest('.video-controls-overlay');
-      if (!isControls) {
-        togglePlay();
-      }
-    });
 
     closeBtn.addEventListener('click', () => {
-      clearInterval(intervalId);
-      clearTimeout(hideTimeout);
+      if (videoEl) {
+        videoEl.pause();
+        videoEl.src = '';
+      }
       modalContainer.innerHTML = '';
-    });
-
-    playPauseBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      togglePlay();
-    });
-
-    btnRewind.addEventListener('click', (e) => {
-      e.stopPropagation();
-      videoCurrentTime = Math.max(0, videoCurrentTime - 10);
-      showControls();
-      updateVisualScreen();
-    });
-
-    // Prevent seeking forward: user can only seek backward or to what was already watched
-    scrubber.addEventListener('input', (e) => {
-      const targetTime = parseInt(e.target.value, 10);
-      if (targetTime > maxWatchedTime) {
-        // Prevent forward seek beyond watched time
-        scrubber.value = videoCurrentTime;
-      } else {
-        // Allow rewinding / seeking back
-        videoCurrentTime = targetTime;
-        showControls();
-        updateVisualScreen();
-      }
-    });
-
-    // Volume controls
-    function updateVolumeUI() {
-      if (isMuted || currentVolume === 0) {
-        btnVolume.textContent = '🔇';
-      } else if (currentVolume < 50) {
-        btnVolume.textContent = '🔉';
-      } else {
-        btnVolume.textContent = '🔊';
-      }
-    }
-
-    btnVolume.addEventListener('click', (e) => {
-      e.stopPropagation();
-      isMuted = !isMuted;
-      volumeSlider.value = isMuted ? 0 : currentVolume;
-      updateVolumeUI();
-    });
-
-    volumeSlider.addEventListener('input', (e) => {
-      e.stopPropagation();
-      currentVolume = parseInt(e.target.value, 10);
-      isMuted = (currentVolume === 0);
-      updateVolumeUI();
-    });
-
-    btnFullscreen.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if (container.requestFullscreen) {
-          container.requestFullscreen();
-        } else if (container.webkitRequestFullscreen) {
-          container.webkitRequestFullscreen();
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        }
-      }
-      showControls();
     });
 
     finishBtn.addEventListener('click', async () => {
       if (videoCount >= 2) {
         showToastNotification('Límite Alcanzado', 'Ya completaste las 2 visualizaciones de video.', 'warning');
+        if (videoEl) {
+          videoEl.pause();
+          videoEl.src = '';
+        }
         modalContainer.innerHTML = '';
         return;
       }
@@ -628,21 +390,25 @@ export function initTraining(onLogout) {
         console.error(err);
         showToastNotification('Error de Conexión', 'No se pudo guardar el avance. Por favor intente nuevamente.', 'warning');
       } finally {
+        if (videoEl) {
+          videoEl.pause();
+          videoEl.src = '';
+        }
         modalContainer.innerHTML = '';
       }
     });
   }
 
-    function openPdfModal() {
+  function openPdfModal() {
     modalContainer.innerHTML = `
       <div class="training-modal-overlay">
         <div class="training-modal" style="max-width:580px;width:94%;max-height:90vh;">
           <div class="training-modal-header" style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.1);">
             <div style="display:flex;align-items:center;gap:7px;">
-              <span style="font-size:1rem;">ðŸ“˜</span>
-              <h3 style="color:#fff;font-size:0.92rem;margin:0;font-family:'Outfit',sans-serif;font-weight:700;">Manual Oficial DidÃ¡ctico â€” VotoReal 2026</h3>
+              <span style="font-size:1rem;">📘</span>
+              <h3 style="color:#fff;font-size:0.92rem;margin:0;font-family:'Outfit',sans-serif;font-weight:700;">Manual Oficial Didáctico — VotoReal 2026</h3>
             </div>
-            <button class="btn-close-modal" id="btn-close-pdf" style="color:#fff;">Ã—</button>
+            <button class="btn-close-modal" id="btn-close-pdf" style="color:#fff;">✕</button>
           </div>
           <div class="training-modal-body" style="padding:8px;">
             <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;line-height:1.3;">
@@ -696,80 +462,80 @@ export function initTraining(onLogout) {
                 .pm-tips { background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.25); border-radius:8px; padding:8px 10px; margin-top:10px; }
                 .pm-tips h4 { color:#c4b5fd; font-size:0.75rem; margin-bottom:5px; display:flex; align-items:center; gap:4px; }
                 .pm-tips ul { list-style:none; display:flex; flex-direction:column; gap:4px; font-size:0.67rem; color:#e2e8f0; padding:0; margin:0; }
-                .pm-tips li::before { content:'âœ”'; color:#a78bfa; font-weight:800; margin-right:4px; }
+                .pm-tips li::before { content:'✔'; color:#a78bfa; font-weight:800; margin-right:4px; }
                 .pm-print-bar { display:flex; justify-content:flex-end; margin-bottom:8px; }
                 .pm-print-btn { background:linear-gradient(90deg,#0284c7,#0369a1); color:#fff; border:none; padding:5px 11px; border-radius:7px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px; font-size:0.68rem; }
               </style>
 
               <div class="pm">
                 <div class="pm-print-bar">
-                  <button class="pm-print-btn" id="btn-print-pdf-manual">ðŸ–¨ï¸ Imprimir / Guardar PDF</button>
+                  <button class="pm-print-btn" id="btn-print-pdf-manual">🖨️ Imprimir / Guardar PDF</button>
                 </div>
 
                 <div class="pm-head">
-                  <div class="pm-badge">ðŸ“± VotoReal MÃ³vil 2026 â€” Somos PerÃº</div>
+                  <div class="pm-badge">📱 VotoReal Móvil 2026 — Somos Perú</div>
                   <div class="pm-title">Manual Oficial con Capturas Reales</div>
-                  <p class="pm-subtitle">GuÃ­a visual paso a paso para Personeros y Coordinadores de Mesa.</p>
+                  <p class="pm-subtitle">Guía visual paso a paso para Personeros y Coordinadores de Mesa.</p>
                 </div>
 
-                <h2 class="pm-section">ðŸ“± Paso a Paso con Capturas de Pantalla</h2>
+                <h2 class="pm-section">📱 Paso a Paso con Capturas de Pantalla</h2>
 
                 <!-- PASO 1 -->
                 <div class="pm-step">
                   <div class="pm-step-hdr"><div class="pm-num">1</div><div class="pm-step-title">Ingreso al Aplicativo (Acceso)</div></div>
-                  <p class="pm-desc">Abre <strong>VotoReal MÃ³vil</strong> en tu celular. Ingresa tus <strong>Nombres y Apellidos</strong> y tu <strong>DNI de 8 dÃ­gitos</strong>, luego presiona <strong>"Ingresar"</strong>.</p>
+                  <p class="pm-desc">Abre <strong>VotoReal Móvil</strong> en tu celular. Ingresa tus <strong>Nombres y Apellidos</strong> y tu <strong>DNI de 8 dígitos</strong>, luego presiona <strong>"Ingresar"</strong>.</p>
                   <div class="pm-img-frame">
-                    <img src="./app_captura_1_login.png" alt="Captura 1 - Inicio de SesiÃ³n" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_1_login.png';">
-                    <div class="pm-img-caption">ðŸ“¸ Pantalla Real: Acceso de Personero con DNI</div>
+                    <img src="./app_captura_1_login.png" alt="Captura 1 - Inicio de Sesión" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_1_login.png';">
+                    <div class="pm-img-caption">📸 Pantalla Real: Acceso de Personero con DNI</div>
                   </div>
                 </div>
 
                 <!-- PASO 2 -->
                 <div class="pm-step">
-                  <div class="pm-step-hdr"><div class="pm-num">2</div><div class="pm-step-title">MÃ³dulo de Conteo Manual</div></div>
+                  <div class="pm-step-hdr"><div class="pm-num">2</div><div class="pm-step-title">Módulo de Conteo Manual</div></div>
                   <p class="pm-desc">Al iniciar el escrutinio (5:00 PM), accede a la pantalla de <strong>Conteo de Votos</strong> de tu mesa electoral asignada.</p>
                   <div class="pm-img-frame">
                     <img src="./app_captura_2_conteo_manual.png" alt="Captura 2 - Conteo Manual" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_2_conteo_manual.png';">
-                    <div class="pm-img-caption">ðŸ“¸ Pantalla Real: Ingreso y SelecciÃ³n de Mesa de VotaciÃ³n</div>
+                    <div class="pm-img-caption">📸 Pantalla Real: Ingreso y Selección de Mesa de Votación</div>
                   </div>
                 </div>
 
                 <!-- PASO 3 -->
                 <div class="pm-step">
                   <div class="pm-step-hdr"><div class="pm-num">3</div><div class="pm-step-title">Llenado de Casillas de Votos</div></div>
-                  <p class="pm-desc">Ingresa casilla por casilla los votos vÃ¡lidos de <strong>Somos PerÃº Provincial</strong>, <strong>Somos PerÃº Distrital</strong>, <strong>Votos Nulos</strong> y <strong>Blancos</strong>.</p>
+                  <p class="pm-desc">Ingresa casilla por casilla los votos válidos de <strong>Somos Perú Provincial</strong>, <strong>Somos Perú Distrital</strong>, <strong>Votos Nulos</strong> y <strong>Blancos</strong>.</p>
                   <div class="pm-img-frame">
-                    <img src="./app_captura_3_votos_llenados.png" alt="Captura 3 - Casillas de VotaciÃ³n" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_3_votos_llenados.png';">
-                    <div class="pm-img-caption">ðŸ“¸ Pantalla Real: Registro detallado de votos por lista</div>
+                    <img src="./app_captura_3_votos_llenados.png" alt="Captura 3 - Casillas de Votación" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_3_votos_llenados.png';">
+                    <div class="pm-img-caption">📸 Pantalla Real: Registro detallado de votos por lista</div>
                   </div>
                 </div>
 
                 <!-- PASO 4 -->
                 <div class="pm-step">
-                  <div class="pm-step-hdr"><div class="pm-num">4</div><div class="pm-step-title">VerificaciÃ³n de Conteo y ComparaciÃ³n</div></div>
-                  <p class="pm-desc">Revisa el total calculado automÃ¡ticamente por el sistema y compÃ¡ralo con el acta fÃ­sica firmada en la mesa.</p>
+                  <div class="pm-step-hdr"><div class="pm-num">4</div><div class="pm-step-title">Verificación de Conteo y Comparación</div></div>
+                  <p class="pm-desc">Revisa el total calculado automáticamente por el sistema y compáralo con el acta física firmada en la mesa.</p>
                   <div class="pm-img-frame">
                     <img src="./app_captura_4_conteo_imagen.png" alt="Captura 4 - Conteo por Imagen" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_4_conteo_imagen.png';">
-                    <div class="pm-img-caption">ðŸ“¸ Pantalla Real: TotalizaciÃ³n y ValidaciÃ³n de Resultados</div>
+                    <div class="pm-img-caption">📸 Pantalla Real: Totalización y Validación de Resultados</div>
                   </div>
                 </div>
 
                 <!-- PASO 5 -->
                 <div class="pm-step">
-                  <div class="pm-step-hdr"><div class="pm-num">5</div><div class="pm-step-title">TransmisiÃ³n, Escaneo y Cierre Oficial</div></div>
+                  <div class="pm-step-hdr"><div class="pm-num">5</div><div class="pm-step-title">Transmisión, Escaneo y Cierre Oficial</div></div>
                   <p class="pm-desc">Toma la foto o escaneo del acta de cierre y presiona <strong>"Enviar y Transmitir"</strong> para registrar en Google Sheets y cerrar mesa.</p>
                   <div class="pm-img-frame">
-                    <img src="./app_captura_5_modal_escaner.png" alt="Captura 5 - EscÃ¡ner y Cierre" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_5_modal_escaner.png';">
-                    <div class="pm-img-caption">ðŸ“¸ Pantalla Real: TransmisiÃ³n y EnvÃ­o al Servidor Central</div>
+                    <img src="./app_captura_5_modal_escaner.png" alt="Captura 5 - Escáner y Cierre" loading="lazy" onerror="this.onerror=null;this.src='/app_captura_5_modal_escaner.png';">
+                    <div class="pm-img-caption">📸 Pantalla Real: Transmisión y Envío al Servidor Central</div>
                   </div>
                 </div>
 
                 <div class="pm-tips">
-                  <h4>ðŸ’¡ Recomendaciones Clave para la Jornada</h4>
+                  <h4>💡 Recomendaciones Clave para la Jornada</h4>
                   <ul>
-                    <li>Lleva tu celular cargado al 100% y con datos mÃ³viles activos.</li>
+                    <li>Lleva tu celular cargado al 100% y con datos móviles activos.</li>
                     <li>Anota tu usuario y DNI en papel como respaldo ante cualquier duda.</li>
-                    <li>Si la seÃ±al es dÃ©bil, el sistema guardarÃ¡ todo en modo local y se sincronizarÃ¡ automÃ¡ticamente.</li>
+                    <li>Si la señal es débil, el sistema guardará todo en modo local y se sincronizará automáticamente.</li>
                     <li>Verifica que la suma de votos coincida con los votantes que sufragaron.</li>
                   </ul>
                 </div>
@@ -779,7 +545,7 @@ export function initTraining(onLogout) {
 
             <div style="margin-top:8px;display:flex;justify-content:flex-end;">
               <button id="btn-finish-pdf" disabled style="opacity:0.4;cursor:not-allowed;background:linear-gradient(90deg,#10b981,#059669);color:#fff;border:none;padding:7px 14px;border-radius:9px;font-weight:700;font-size:0.78rem;display:flex;align-items:center;gap:5px;">
-                âœ… Marcar como LeÃ­do
+                ✅ Marcar como Leído
               </button>
             </div>
           </div>
@@ -860,16 +626,19 @@ export function initTraining(onLogout) {
 
   async function openCredentialsModal() {
     const rawDni = session.dni || '00000000';
-    const rawMesa = session.mesa || '000000';
-    const rawDistrict = (session.district || 'LIMA').toUpperCase();
-    const rawCenter = (session.center || 'LOCAL DE VOTACIÓN ASIGNADO').toUpperCase();
+    const rawMesa = (session.mesaAsignada || session.mesa || '000000').toUpperCase();
+    const rawDistrict = (session.distritoAsignado || session.district || 'LIMA').toUpperCase();
+    const rawCenter = (session.centroAsignado || session.center || 'LOCAL DE VOTACIÓN ASIGNADO').toUpperCase();
     const rawName = (session.name || 'PERSONERO ELECTORAL').toUpperCase();
+    const isCoordinator = (session.rolElectoral || '').toLowerCase().includes('coordinador');
+    const roleTitle = isCoordinator ? 'COORDINADOR DE LOCAL DE VOTACIÓN' : 'PERSONERO DE MESA TITULAR';
+
     const folioCode = `SP-LM2026-${rawDni}`;
     const verifCode = `SP-${rawDni}-${rawMesa}-2026`;
     const currentDateStr = new Date().toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' });
 
     // Official Verification URL scannable by any phone
-    const verificationUrl = `${window.location.origin}${window.location.pathname}#verificar?dni=${rawDni}&mesa=${rawMesa}&distrito=${encodeURIComponent(rawDistrict)}&personero=${encodeURIComponent(rawName)}&local=${encodeURIComponent(rawCenter)}&folio=${encodeURIComponent(folioCode)}`;
+    const verificationUrl = `${window.location.origin}${window.location.pathname}#verificar?dni=${rawDni}&mesa=${rawMesa}&distrito=${encodeURIComponent(rawDistrict)}&personero=${encodeURIComponent(rawName)}&local=${encodeURIComponent(rawCenter)}&folio=${encodeURIComponent(folioCode)}&rol=${encodeURIComponent(roleTitle)}`;
 
     // Generate real, functional QR code Data URL
     let qrDataUrl = '';
@@ -960,7 +729,7 @@ export function initTraining(onLogout) {
                     <div class="cert-role-badge">
                       <div class="cert-role-tag">
                         <span>★</span>
-                        <span>PERSONERO DE MESA TITULAR</span>
+                        <span>${roleTitle}</span>
                         <span>★</span>
                       </div>
                     </div>
@@ -1274,7 +1043,7 @@ export function initTraining(onLogout) {
 
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 28px "Cinzel", "Times New Roman", serif';
-        ctx.fillText('★  PERSONERO DE MESA TITULAR  ★', 1200, badgeY + 42);
+        ctx.fillText(`★  ${roleTitle}  ★`, 1200, badgeY + 42);
 
         // 8. Electoral Details Box
         const boxX = 220;

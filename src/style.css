@@ -178,6 +178,10 @@ body.full-screen-mode {
   transition: max-width var(--transition-normal) ease;
 }
 
+#app:has(#card-register) {
+  max-width: 620px;
+}
+
 #app.wide-layout {
   max-width: 100% !important;
   width: 100%;
@@ -381,6 +385,411 @@ body.full-screen-mode {
   background: var(--card-bg);
   color: var(--primary-color);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   COMPACT RESPONSIVE FORM SYSTEM
+   ========================================================================== */
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.form-row-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 520px) {
+  .form-row-2col {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .form-row-3col {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.form-compact-box {
+  background: rgba(240, 249, 255, 0.75);
+  border: 1px solid rgba(14, 165, 233, 0.22);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  transition: border-color var(--transition-fast);
+}
+
+.form-compact-box:focus-within {
+  border-color: var(--primary-color);
+}
+
+.form-compact-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+  gap: 8px;
+}
+
+.form-compact-box-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.form-compact-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* Compact Role Toggle Bar (2 Botones Modernos y Concisos) */
+.role-toggle-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: var(--input-bg);
+  padding: 4px;
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+}
+
+.role-toggle-option {
+  position: relative;
+}
+
+.role-toggle-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.role-toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  text-align: center;
+  border: 1.5px solid transparent;
+}
+
+.role-toggle-label svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.role-toggle-option input[type="radio"]:checked + .role-toggle-label {
+  background: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+}
+
+.role-toggle-option input[type="radio"]:checked + .role-toggle-label svg {
+  color: #ffffff;
+}
+
+/* Compact Sync Button */
+.btn-copy-compact {
+  background: var(--card-bg);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-copy-compact:hover {
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn-copy-compact svg {
+  width: 12px;
+  height: 12px;
+}
+
+.form-group-compact {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.form-label-compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin-bottom: 4px;
+}
+
+.form-input-compact {
+  width: 100%;
+  height: 38px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
+  padding: 6px 12px 6px 34px;
+  font-family: var(--font-family);
+  font-size: 0.88rem;
+  color: var(--text-white);
+  transition: all var(--transition-fast);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-input-compact:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.segmented-control-compact {
+  display: flex;
+  background: var(--input-bg);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  gap: 3px;
+  border: 1px solid var(--input-border);
+  height: 38px;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.segmented-control-compact .segment-option {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+
+.segmented-control-compact .segment-label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+.segmented-control-compact .segment-option input[type="radio"]:checked + .segment-label {
+  background: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.3);
+}
+
+/* Symmetrical WhatsApp Grid Container */
+.whatsapp-symmetric-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  transition: all var(--transition-normal);
+}
+
+.whatsapp-symmetric-row.has-alt {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 520px) {
+  .whatsapp-symmetric-row.has-alt {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   FORM VALIDATION & RED ERROR HIGHLIGHTS
+   ========================================================================== */
+.form-group.has-error .form-input,
+.form-group-compact.has-error .form-input-compact {
+  border: 1.8px solid #ef4444 !important;
+  background-color: rgba(254, 242, 242, 0.85) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.22) !important;
+  animation: shakeInput 0.28s ease-in-out;
+}
+
+.form-group.has-error .form-label,
+.form-group-compact.has-error .form-label-compact {
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+.form-group.has-error .input-icon,
+.form-group-compact.has-error .input-icon-compact {
+  color: #ef4444 !important;
+}
+
+.field-error-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.2;
+  animation: fadeInDown 0.2s ease-in-out;
+}
+
+.field-error-text svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+@keyframes shakeInput {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.input-icon-compact {
+  position: absolute;
+  left: 10px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.input-icon-compact svg {
+  width: 15px;
+  height: 15px;
+}
+
+.role-card-input:checked + .role-card-label .role-check-indicator {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.role-check-indicator::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.2s;
+}
+
+.role-card-input:checked + .role-card-label .role-check-indicator::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.role-card-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.role-card-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* Smart Fill Banner */
+.smart-fill-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px dashed rgba(14, 165, 233, 0.4);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.smart-fill-text {
+  font-size: 0.78rem;
+  color: var(--secondary-color);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-smart-fill {
+  background: var(--card-bg);
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+
+.btn-smart-fill:hover {
+  background: var(--primary-color);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);
+}
+
+.btn-smart-fill svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* Conditional Field anim */
@@ -2568,4 +2977,55 @@ body.full-screen-mode {
   background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
   border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* ==========================================================================
+   TRAINING WELCOME BOX & INFO BADGES
+   ========================================================================== */
+.welcome-box {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.welcome-box h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a !important;
+}
+
+.welcome-box h3 span {
+  color: #0284c7 !important;
+}
+
+.training-info-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.info-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.info-badge strong {
+  color: #475569 !important;
+  font-weight: 600;
+}
+
+.info-badge span {
+  color: #0f172a !important;
+  font-weight: 700;
 }

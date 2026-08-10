@@ -1,14 +1,12 @@
-export const defaultGoogleScriptUrl = 'https://script.google.com/macros/s/AKfycbzpdJMAOUvi1a4xYKlDu63FZfWz94zoTOHDQkqoCrwBFvTBmBcxopRlC_wnMgROkt_Drw/exec';
-export const fallbackGoogleScriptUrl = 'https://script.google.com/macros/s/AKfycbzpdJMAOUvi1a4xYKlDu63FZfWz94zoTOHDQkqoCrwBFvTBmBcxopRlC_wnMgROkt_Drw/exec';
-
+export const defaultGoogleScriptUrl = 'https://script.google.com/macros/s/AKfycbz0dlFrxIV4l3MgQqcZvtd2MdduidYOmluqa9PFedbb5lYA3Sq_iU6s2BT8c-Yt1nytuQ/exec';
+export const fallbackGoogleScriptUrl = 'https://script.google.com/macros/s/AKfycbz0dlFrxIV4l3MgQqcZvtd2MdduidYOmluqa9PFedbb5lYA3Sq_iU6s2BT8c-Yt1nytuQ/exec';
 
 export function getGoogleScriptUrl() {
   const cached = localStorage.getItem('custom_google_script_url');
-  if (cached && (cached.includes('AKfycbx3ssMyEdr0') || cached.includes('AKfycbIRRUrOcXLl') || cached.includes('AKfycbxIRRUrOcXLl') || cached.includes('AKfycbygXhQBaoz2CvXGXxrc9cBFwAQQTd3JAx-SPxHGURcTQ708RKj5Nu7MnDAMsh_gpK2_'))) {
+  if (cached && cached !== defaultGoogleScriptUrl) {
     localStorage.removeItem('custom_google_script_url');
-    return defaultGoogleScriptUrl;
   }
-  return cached || defaultGoogleScriptUrl;
+  return defaultGoogleScriptUrl;
 }
 
 export function setGoogleScriptUrl(url) {

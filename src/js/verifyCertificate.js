@@ -15,6 +15,7 @@ export function getVerificationHTML() {
   const personero = decodeURIComponent(params.get('personero') || 'PERSONERO ELECTORAL').toUpperCase();
   const local = decodeURIComponent(params.get('local') || 'LOCAL DE VOTACIÓN ASIGNADO').toUpperCase();
   const folio = decodeURIComponent(params.get('folio') || `SP-LM2026-${dni}`);
+  const rol = decodeURIComponent(params.get('rol') || 'PERSONERO DE MESA TITULAR').toUpperCase();
   const currentDate = new Date().toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' });
   const currentTime = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
@@ -49,7 +50,7 @@ export function getVerificationHTML() {
         <!-- Verified Credential Information -->
         <div style="padding: 24px;">
           <div style="margin-bottom: 20px;">
-            <label style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; display: block; margin-bottom: 2px;">Personero Acreditado</label>
+            <label style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; display: block; margin-bottom: 2px;">Personero / Coordinador Acreditado</label>
             <div style="font-size: 1.15rem; font-weight: 700; color: #ffffff; font-family: 'Playfair Display', serif;">${personero}</div>
             <div style="font-size: 0.82rem; color: #94a3b8; margin-top: 2px;">D.N.I.: <strong style="color: #f1f5f9;">${dni}</strong></div>
           </div>
@@ -57,7 +58,7 @@ export function getVerificationHTML() {
           <div style="background: rgba(32, 72, 142, 0.25); border: 1px solid #20488e; border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
             <div>
               <span style="font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; display: block;">Cargo Oficial</span>
-              <strong style="color: #e2e8f0; font-size: 0.95rem; letter-spacing: 0.5px;">PERSONERO DE MESA TITULAR</strong>
+              <strong style="color: #e2e8f0; font-size: 0.95rem; letter-spacing: 0.5px;">${rol}</strong>
             </div>
             <span style="background: #20488e; color: #ffffff; font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: 700; border: 1px solid #c59b27;">★ ELECCIONES 2026 ★</span>
           </div>
