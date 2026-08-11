@@ -74,49 +74,69 @@ export async function login(username, password) {
   }
   
 
-  // Si el password es un DNI (8 dígitos)
-  if (/^\d{8}$/.test(cleanPass)) {
+  // Detect if either input is a DNI (digits 7-9)
+  const passIsDni = /^\d{7,9}$/.test(cleanPass);
+  const userIsDni = /^\d{7,9}$/.test(cleanUser);
+  const dniCandidate = passIsDni ? cleanPass : (userIsDni ? cleanUser : null);
+  const nameCandidate = dniCandidate === cleanPass ? cleanUser : (dniCandidate === cleanUser ? cleanPass : cleanUser);
+
+  if (dniCandidate) {
     try {
       let match = null;
       
-      // Intentar primero con la consulta optimizada al servidor
+      // 1. Intentar consulta directa al servidor por DNI
       try {
-        const res = await checkUserLoginOnServer(cleanPass);
+        const res = await checkUserLoginOnServer(dniCandidate);
         if (res.status === 'success' && res.user) {
           const user = res.user;
-          // Validar nombre coincidente
-          const userName = extractUserField(user, ['Nombres y Apellidos', 'nombres']);
-          if (checkUsernameMatch(userName, cleanUser)) {
+          const userName = extractUserField(user, ['Nombres y Apellidos', 'nombres', 'nombre', 'Nombre Completo']);
+          const userDni = extractUserField(user, ['D.N.I.', 'dni', 'DNI']);
+          
+          if (cleanUser === cleanPass || 
+              String(userDni).trim() === nameCandidate || 
+              checkUsernameMatch(userName, nameCandidate) ||
+              !nameCandidate ||
+              nameCandidate.length <= 2) {
             match = user;
           }
         }
       } catch (serverErr) {
-        console.warn("Fallo login optimizado en el servidor. Intentando fallback local...", serverErr);
+        console.warn("Fallo login optimizado en el servidor. Intentando fallback en tiempo real...", serverErr);
       }
       
-      // Fallback local: Si el servidor falló o no tiene implementado la acción 'login' aún
+      // 2. Fallback en tiempo real: Si no coincidió o el servidor requirió re-escaneo
       if (!match) {
         const registrations = await fetchRegistrations();
         match = registrations.find(r => {
-          const rDni = extractUserField(r, ['D.N.I.', 'dni']);
-          const rName = extractUserField(r, ['Nombres y Apellidos', 'nombres']);
-          const matchesDni = String(rDni).trim() === cleanPass;
-          const matchesName = checkUsernameMatch(rName, cleanUser);
+          const rDni = extractUserField(r, ['D.N.I.', 'dni', 'DNI', 'Documento']);
+          const rName = extractUserField(r, ['Nombres y Apellidos', 'nombres', 'nombre', 'Nombre Completo']);
+          const cleanRDni = String(rDni).trim();
+          
+          const matchesDni = (cleanRDni === dniCandidate);
+          const matchesName = (cleanUser === cleanPass) || checkUsernameMatch(rName, nameCandidate);
           return matchesDni && matchesName;
         });
+
+        // Segundo intento: Coincidencia por DNI exacto
+        if (!match) {
+          match = registrations.find(r => {
+            const rDni = extractUserField(r, ['D.N.I.', 'dni', 'DNI', 'Documento']);
+            return String(rDni).trim() === dniCandidate;
+          });
+        }
       }
       
       if (match) {
         localStorage.setItem('user_logged_in', 'true');
         localStorage.setItem('user_role', ROLES.PERSONERO_REGISTRADO);
 
-        const dni = extractUserField(match, ['D.N.I.', 'dni']) || cleanPass;
-        const name = extractUserField(match, ['Nombres y Apellidos', 'nombres']);
+        const dni = extractUserField(match, ['D.N.I.', 'dni', 'DNI', 'Documento']) || dniCandidate;
+        const name = extractUserField(match, ['Nombres y Apellidos', 'nombres', 'nombre', 'Nombre Completo']) || 'Personero';
         
-        // Priorizar columnas de Distrito Asignado y Mesa Asignada
-        const distAsign = extractUserField(match, ['Distrito Asignado', 'distrito_asignado', 'Distrito donde Vota', 'Distrito de Votación', 'distrito']);
-        const centroAsign = extractUserField(match, ['Local de Votación Asignado', 'Centro Asignado', 'centro_asignado', 'Local de Votación', 'Centro de Votación', 'centro']);
-        const mesaAsign = extractUserField(match, ['Mesa Asignada', 'mesa_asignada', 'Mesa de Sufragio', 'Mesa Electoral', 'mesa']);
+        // Priorizar columnas asignadas y luego de votación
+        const distAsign = extractUserField(match, ['Distrito Asignado', 'distrito_asignado', 'Distrito donde Vota', 'Distrito de Votación', 'distrito']) || '-';
+        const centroAsign = extractUserField(match, ['Local de Votación Asignado', 'Centro Asignado', 'centro_asignado', 'Local de Votación', 'Centro de Votación', 'centro']) || '-';
+        const mesaAsign = extractUserField(match, ['Mesa Asignada', 'mesa_asignada', 'Mesa de Sufragio', 'Mesa Electoral', 'mesa']) || '-';
         const rolElect = extractUserField(match, ['Rol a Desempeñar', 'Rol Electoral', 'rol_electoral', 'rol']) || 'Personero de Mesa';
 
         localStorage.setItem('user_dni', dni);
@@ -135,7 +155,7 @@ export async function login(username, password) {
         const rawPdf = extractUserField(match, ['PDF', 'pdf']);
         const videoCountVal = (rawVideo === "" || isNaN(rawVideo)) ? 0 : parseInt(rawVideo, 10);
         const pdfCountVal = (rawPdf === "" || isNaN(rawPdf)) ? 0 : parseInt(rawPdf, 10);
-        const credVal = extractUserField(match, ['Credenciales', 'credenciales']) || 'Bloqueado';
+        const credVal = extractUserField(match, ['Credenciales', 'credenciales']) || ((videoCountVal >= 2 && pdfCountVal >= 2) ? 'Confirmado' : 'Bloqueado');
         
         localStorage.setItem('user_video_count', videoCountVal);
         localStorage.setItem('user_pdf_count', pdfCountVal);

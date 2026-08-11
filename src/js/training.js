@@ -355,6 +355,12 @@ export function initTraining(onLogout) {
     });
 
     finishBtn.addEventListener('click', async () => {
+      const activeDni = String(session.dni || localStorage.getItem('user_dni') || '').trim();
+      if (!activeDni) {
+        showToastNotification('Error de Sesión', 'No se identificó el DNI del usuario.', 'warning');
+        return;
+      }
+
       if (videoCount >= 2) {
         showToastNotification('Límite Alcanzado', 'Ya completaste las 2 visualizaciones de video.', 'warning');
         if (videoEl) {
@@ -366,11 +372,11 @@ export function initTraining(onLogout) {
       }
 
       finishBtn.disabled = true;
-      finishBtn.innerHTML = `<span>Procesando...</span> <span class="spinner-inline"></span>`;
+      finishBtn.innerHTML = `<span>Guardando en Google Sheets...</span> <span class="spinner-inline"></span>`;
 
       try {
-        const res = await updateTrainingProgress(session.dni, 'video', videoCount);
-        if (res.status === 'success') {
+        const res = await updateTrainingProgress(activeDni, 'video', videoCount);
+        if (res && res.status === 'success') {
           videoCount = res.video !== undefined ? res.video : Math.min(2, videoCount + 1);
           if (res.pdf !== undefined) pdfCount = res.pdf;
           credenciales = res.credenciales || ((videoCount >= 2 && pdfCount >= 2) ? 'Confirmado' : 'Bloqueado');
@@ -381,9 +387,9 @@ export function initTraining(onLogout) {
           updateUIState();
 
           if (videoCount >= 2 && pdfCount >= 2) {
-            showToastNotification('¡Capacitación Completada!', 'Has completado 2/2 videos y 2/2 lecturas. ¡Tu Credencial Oficial ha sido DESBLOQUEADA!', 'success');
+            showToastNotification('¡Capacitación Completada!', 'Has completado 2/2 videos y 2/2 lecturas. ¡Tu Certificado Oficial ha sido DESBLOQUEADO!', 'success');
           } else {
-            showToastNotification('¡Video Registrado!', `Progreso de video guardado exitosamente (${videoCount}/2)`, 'success');
+            showToastNotification('¡Video Registrado!', `Progreso de video guardado exitosamente en Google Sheets (${videoCount}/2)`, 'success');
           }
         }
       } catch (err) {
@@ -588,18 +594,24 @@ export function initTraining(onLogout) {
     });
 
     finishBtn.addEventListener('click', async () => {
+      const activeDni = String(session.dni || localStorage.getItem('user_dni') || '').trim();
+      if (!activeDni) {
+        showToastNotification('Error de Sesión', 'No se identificó el DNI del usuario.', 'warning');
+        return;
+      }
+
       if (pdfCount >= 2) {
-        showToastNotification('LÃ­mite Alcanzado', 'Ya completaste las 2 lecturas de PDF.', 'warning');
+        showToastNotification('Límite Alcanzado', 'Ya completaste las 2 lecturas de PDF.', 'warning');
         modalContainer.innerHTML = '';
         return;
       }
 
       finishBtn.disabled = true;
-      finishBtn.innerHTML = `<span>Procesando...</span> <span class="spinner-inline"></span>`;
+      finishBtn.innerHTML = `<span>Guardando en Google Sheets...</span> <span class="spinner-inline"></span>`;
 
       try {
-        const res = await updateTrainingProgress(session.dni, 'pdf', pdfCount);
-        if (res.status === 'success') {
+        const res = await updateTrainingProgress(activeDni, 'pdf', pdfCount);
+        if (res && res.status === 'success') {
           pdfCount = res.pdf !== undefined ? res.pdf : Math.min(2, pdfCount + 1);
           if (res.video !== undefined) videoCount = res.video;
           credenciales = res.credenciales || ((videoCount >= 2 && pdfCount >= 2) ? 'Confirmado' : 'Bloqueado');
@@ -610,9 +622,9 @@ export function initTraining(onLogout) {
           updateUIState();
 
           if (videoCount >= 2 && pdfCount >= 2) {
-            showToastNotification('¡Capacitación Completada!', 'Has completado tus 2 videos y 2 lecturas.', 'success');
+            showToastNotification('¡Capacitación Completada!', 'Has completado tus 2 videos y 2 lecturas. ¡Tu Certificado Oficial ha sido DESBLOQUEADO!', 'success');
           } else {
-            showToastNotification('¡Manual Registrado!', `Progreso de lectura guardado exitosamente (${pdfCount}/2)`, 'success');
+            showToastNotification('¡Manual Registrado!', `Progreso de lectura guardado exitosamente en Google Sheets (${pdfCount}/2)`, 'success');
           }
         }
       } catch (err) {

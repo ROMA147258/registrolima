@@ -118,13 +118,13 @@ export function getRegisterFormHTML() {
             </div>
 
             <!-- ============================================== -->
-            <!-- SECCIÓN 2: LUGAR DE VOTACIÓN CIUDADANA (DNI) -->
+            <!-- SECCIÓN 2: MI LUGAR DE VOTACIÓN -->
             <!-- ============================================== -->
             <div class="form-compact-box">
               <div class="form-compact-box-header">
                 <h3 class="form-compact-box-title">
                   <span class="form-compact-badge">2</span>
-                  <span>Mi Lugar de Votación (DNI)</span>
+                  <span>Mi Lugar de Votación</span>
                 </h3>
               </div>
 
@@ -207,9 +207,9 @@ export function getRegisterFormHTML() {
                   <ul class="suggestions-list hidden" id="distrito-asignado-suggestions"></ul>
                 </div>
 
-                <div class="form-group-compact" data-required="true">
+                <div class="form-group-compact" id="group_mesa_asignada" data-required="true">
                   <label class="form-label-compact" for="mesa_asignada">
-                    <span>Mesa Asignada <span class="label-required">*</span></span>
+                    <span>Mesa Asignada <span class="label-required" id="req_mesa_asignada">*</span></span>
                   </label>
                   <div class="input-wrapper">
                     <input type="text" id="mesa_asignada" name="mesa_asignada" class="form-input-compact" placeholder="Ej. 064321">
@@ -517,9 +517,37 @@ export function initRegisterForm(onLogout) {
     });
   });
 
-  // Role changes update progress tracking
-  rolPersoneroRadio.addEventListener('change', calculateProgress);
-  rolCoordinadorRadio.addEventListener('change', calculateProgress);
+  // Role changes update progress tracking and toggle Mesa Asignada
+  function updateRoleFieldState() {
+    const isCoord = rolCoordinadorRadio.checked;
+    const groupMesaAsignada = document.getElementById('group_mesa_asignada');
+    const reqMesaAsignada = document.getElementById('req_mesa_asignada');
+
+    if (isCoord) {
+      mesaAsignadaInput.disabled = true;
+      mesaAsignadaInput.value = '';
+      mesaAsignadaInput.placeholder = 'No aplica para Coordinador';
+      if (groupMesaAsignada) {
+        groupMesaAsignada.classList.add('group-disabled-soft');
+        groupMesaAsignada.classList.remove('has-error');
+        groupMesaAsignada.removeAttribute('data-required');
+      }
+      if (reqMesaAsignada) reqMesaAsignada.style.display = 'none';
+    } else {
+      mesaAsignadaInput.disabled = false;
+      mesaAsignadaInput.placeholder = 'Ej. 064321';
+      if (groupMesaAsignada) {
+        groupMesaAsignada.classList.remove('group-disabled-soft');
+        groupMesaAsignada.setAttribute('data-required', 'true');
+      }
+      if (reqMesaAsignada) reqMesaAsignada.style.display = 'inline';
+    }
+    calculateProgress();
+  }
+
+  rolPersoneroRadio.addEventListener('change', updateRoleFieldState);
+  rolCoordinadorRadio.addEventListener('change', updateRoleFieldState);
+  updateRoleFieldState();
 
   // ==========================================
   // Smart Fill: Copiar datos con 1 solo clic
@@ -538,7 +566,9 @@ export function initRegisterForm(onLogout) {
 
       distritoAsignadoInput.value = dVal;
       centroAsignadoInput.value = cVal;
-      mesaAsignadaInput.value = mVal;
+      if (!rolCoordinadorRadio.checked) {
+        mesaAsignadaInput.value = mVal;
+      }
 
       // Feedback anim
       const origHTML = btnCopyVotingData.innerHTML;
@@ -591,9 +621,12 @@ export function initRegisterForm(onLogout) {
       { id: 'centro', check: (val) => val.trim().length > 2 },
       { id: 'mesa', check: (val) => val.trim().length > 0 },
       { id: 'distrito_asignado', check: (val) => val.trim().length > 2 },
-      { id: 'centro_asignado', check: (val) => val.trim().length > 2 },
-      { id: 'mesa_asignada', check: (val) => val.trim().length > 0 }
+      { id: 'centro_asignado', check: (val) => val.trim().length > 2 }
     ];
+
+    if (!rolCoordinadorRadio.checked) {
+      requiredFields.push({ id: 'mesa_asignada', check: (val) => val.trim().length > 0 });
+    }
 
     if (whastappRadioNo.checked) {
       requiredFields.push({ id: 'whatsapp_otro', check: (val) => /^\d{9}$/.test(val) });
@@ -703,7 +736,9 @@ export function initRegisterForm(onLogout) {
     setTimeout(() => validateField(this, (val) => val.trim().length >= 2), 200);
   });
   document.getElementById('mesa_asignada').addEventListener('blur', function() {
-    validateField(this, (val) => val.trim().length >= 1);
+    if (!rolCoordinadorRadio.checked) {
+      validateField(this, (val) => val.trim().length >= 1);
+    }
   });
   if (inputOtroWhatsapp) {
     inputOtroWhatsapp.addEventListener('blur', function() {
@@ -729,8 +764,15 @@ export function initRegisterForm(onLogout) {
     const isCentroValid = validateField(document.getElementById('centro'), (val) => val.trim().length >= 2);
 
     const isDistritoAsignadoValid = validateField(document.getElementById('distrito_asignado'), (val) => val.trim().length >= 2);
-    const isMesaAsignadaValid = validateField(document.getElementById('mesa_asignada'), (val) => val.trim().length >= 1);
     const isCentroAsignadoValid = validateField(document.getElementById('centro_asignado'), (val) => val.trim().length >= 2);
+    
+    let isMesaAsignadaValid = true;
+    if (!rolCoordinadorRadio.checked) {
+      isMesaAsignadaValid = validateField(document.getElementById('mesa_asignada'), (val) => val.trim().length >= 1);
+    } else {
+      const groupMesa = document.getElementById('group_mesa_asignada');
+      if (groupMesa) groupMesa.classList.remove('has-error');
+    }
 
     let isWhatsappAlternoValid = true;
     if (whastappRadioNo.checked) {
@@ -771,7 +813,7 @@ export function initRegisterForm(onLogout) {
         correo: formData.get('correo'),
         correo_electronico: formData.get('correo'),
         
-        // Lugar de Votación Ciudadana (DNI)
+        // Lugar de Votación Ciudadana
         distrito: formData.get('distrito'),
         distrito_votacion: formData.get('distrito'),
         centro: formData.get('centro'),
@@ -786,7 +828,7 @@ export function initRegisterForm(onLogout) {
         distrito_asignado: formData.get('distrito_asignado') || formData.get('distrito'),
         centro_asignado: formData.get('centro_asignado') || formData.get('centro'),
         local_asignado: formData.get('centro_asignado') || formData.get('centro'),
-        mesa_asignada: formData.get('mesa_asignada') || formData.get('mesa'),
+        mesa_asignada: selectedRole.includes('Coord') ? 'No aplica' : (formData.get('mesa_asignada') || formData.get('mesa')),
 
         // Logística y Compromiso (Respuestas a todos los botones)
         experiencia_personero: formData.get('experiencia_personero') || 'No',

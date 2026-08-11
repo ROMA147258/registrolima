@@ -56,8 +56,8 @@ export async function fetchRegistrations() {
   for (const baseUrl of urls) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
-      const response = await fetch(`${baseUrl}?action=read`, { signal: controller.signal });
+      const timeoutId = setTimeout(() => controller.abort(), 16000);
+      const response = await fetch(`${baseUrl}?action=read&_t=${Date.now()}`, { signal: controller.signal });
       clearTimeout(timeoutId);
 
       if (!response.ok) {
@@ -99,14 +99,15 @@ export async function fetchRegistrations() {
  * @returns {Promise<Object>}
  */
 export async function updateTrainingProgress(dni, type, currentVal) {
+  const cleanDni = String(dni || '').trim();
   const urls = getCandidateUrls();
   let lastError = null;
 
   for (const baseUrl of urls) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-      const url = `${baseUrl}?action=update_progress&dni=${dni}&type=${type}&current=${currentVal}`;
+      const timeoutId = setTimeout(() => controller.abort(), 16000);
+      const url = `${baseUrl}?action=update_progress&dni=${encodeURIComponent(cleanDni)}&type=${type}&current=${currentVal}&_t=${Date.now()}`;
       const response = await fetch(url, { signal: controller.signal });
       clearTimeout(timeoutId);
 
@@ -115,6 +116,21 @@ export async function updateTrainingProgress(dni, type, currentVal) {
       }
       const result = await response.json();
       if (result && result.status === 'success') {
+        // Sync local cached registrations for instant consistency
+        try {
+          const cached = localStorage.getItem('cached_registrations');
+          if (cached) {
+            const list = JSON.parse(cached);
+            const found = list.find(r => String(r['D.N.I.'] || r.dni || '').trim() === cleanDni);
+            if (found) {
+              if (result.video !== undefined) found['Video'] = result.video;
+              if (result.pdf !== undefined) found['PDF'] = result.pdf;
+              if (result.credenciales !== undefined) found['Credenciales'] = result.credenciales;
+              localStorage.setItem('cached_registrations', JSON.stringify(list));
+            }
+          }
+        } catch (e) {}
+
         return result;
       }
     } catch (err) {
@@ -130,7 +146,7 @@ export async function updateTrainingProgress(dni, type, currentVal) {
     [type]: newVal,
     video: type === 'video' ? newVal : undefined,
     pdf: type === 'pdf' ? newVal : undefined,
-    credenciales: "Bloqueado"
+    credenciales: (type === 'video' && newVal >= 2 && currentVal >= 2) || (type === 'pdf' && newVal >= 2 && currentVal >= 2) ? "Confirmado" : "Bloqueado"
   };
 }
 
@@ -140,14 +156,15 @@ export async function updateTrainingProgress(dni, type, currentVal) {
  * @returns {Promise<Object>}
  */
 export async function checkUserLoginOnServer(dni) {
+  const cleanDni = String(dni || '').trim();
   const urls = getCandidateUrls();
   let lastError = null;
 
   for (const baseUrl of urls) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
-      const url = `${baseUrl}?action=login&dni=${dni}`;
+      const timeoutId = setTimeout(() => controller.abort(), 16000);
+      const url = `${baseUrl}?action=login&dni=${encodeURIComponent(cleanDni)}&_t=${Date.now()}`;
       const response = await fetch(url, { signal: controller.signal });
       clearTimeout(timeoutId);
 
