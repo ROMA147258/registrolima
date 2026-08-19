@@ -47,23 +47,82 @@ export class CatalogController {
     if (!name) return '';
     let clean = String(name).trim().toUpperCase();
     clean = clean.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    if (clean.includes('LURIGANCHO') || clean.includes('CHOSICA')) return 'LURIGANCHO';
-    if (clean.includes('CERCADO') || clean === 'LIMA' || clean === 'LIMA CERCADO') return 'LIMA';
+
+    if (clean === 'SAN JUAN DE LURIGANCHO' || clean.includes('SAN JUAN DE LURIGANCHO')) return 'SAN JUAN DE LURIGANCHO';
+    if (clean === 'SAN JUAN DE MIRAFLORES' || clean.includes('SAN JUAN DE MIRAFLORES')) return 'SAN JUAN DE MIRAFLORES';
+    if (clean === 'SAN MARTIN DE PORRES' || clean.includes('SAN MARTIN DE PORRES')) return 'SAN MARTIN DE PORRES';
+    if (clean === 'LURIGANCHO-CHOSICA' || clean === 'CHOSICA' || clean === 'LURIGANCHO') return 'LURIGANCHO';
+    if (clean === 'CERCADO DE LIMA' || clean === 'LIMA' || clean === 'LIMA CERCADO') return 'LIMA';
+    if (clean === 'SANTIAGO DE SURCO' || clean === 'SURCO') return 'SANTIAGO DE SURCO';
+    if (clean === 'MAGDALENA DEL MAR' || clean === 'MAGDALENA') return 'MAGDALENA DEL MAR';
+    if (clean === 'VILLA MARIA DEL TRIUNFO' || clean === 'VMT') return 'VILLA MARIA DEL TRIUNFO';
+    if (clean === 'VILLA EL SALVADOR' || clean === 'VES') return 'VILLA EL SALVADOR';
+    if (clean === 'PUEBLO LIBRE') return 'PUEBLO LIBRE';
     return clean;
+  }
+
+  getDistrictVariants(name) {
+    if (!name) return [];
+    const raw = String(name).trim();
+    const upper = raw.toUpperCase();
+    const clean = upper.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const variants = new Set([raw, upper, clean]);
+
+    if (clean === 'SAN JUAN DE LURIGANCHO' || clean.includes('SAN JUAN DE LURIGANCHO')) {
+      variants.add('SAN JUAN DE LURIGANCHO');
+      variants.add('SJL');
+    } else if (clean === 'SAN JUAN DE MIRAFLORES' || clean.includes('SAN JUAN DE MIRAFLORES')) {
+      variants.add('SAN JUAN DE MIRAFLORES');
+      variants.add('SJM');
+    } else if (clean === 'SAN MARTIN DE PORRES' || clean.includes('SAN MARTIN DE PORRES')) {
+      variants.add('SAN MARTIN DE PORRES');
+      variants.add('SAN MARTÍN DE PORRES');
+      variants.add('SMP');
+    } else if (clean === 'LURIGANCHO' || clean.includes('CHOSICA') || clean === 'LURIGANCHO-CHOSICA') {
+      variants.add('LURIGANCHO');
+      variants.add('LURIGANCHO-CHOSICA');
+      variants.add('CHOSICA');
+    } else if (clean === 'LIMA' || clean === 'CERCADO DE LIMA' || clean === 'LIMA CERCADO') {
+      variants.add('LIMA');
+      variants.add('CERCADO DE LIMA');
+      variants.add('LIMA CERCADO');
+    } else if (clean === 'SANTIAGO DE SURCO' || clean === 'SURCO') {
+      variants.add('SANTIAGO DE SURCO');
+      variants.add('SURCO');
+    } else if (clean === 'MAGDALENA DEL MAR' || clean === 'MAGDALENA') {
+      variants.add('MAGDALENA DEL MAR');
+      variants.add('MAGDALENA');
+    } else if (clean === 'VILLA MARIA DEL TRIUNFO' || clean === 'VMT') {
+      variants.add('VILLA MARIA DEL TRIUNFO');
+      variants.add('VILLA MARÍA DEL TRIUNFO');
+      variants.add('VMT');
+    } else if (clean === 'VILLA EL SALVADOR' || clean === 'VES') {
+      variants.add('VILLA EL SALVADOR');
+      variants.add('VES');
+    } else if (clean === 'PUEBLO LIBRE') {
+      variants.add('PUEBLO LIBRE');
+    }
+
+    return Array.from(variants);
   }
 
   async getDistritos(req, res) {
     try {
       const pool = await dbPool.getPool();
       const dbResult = await pool.request().query(`
-        SELECT DISTINCT [distrito] FROM [dbo].[Colegios] WHERE [distrito] IS NOT NULL ORDER BY [distrito]
+        SELECT DISTINCT [distrito] 
+        FROM [dbo].[Mesas] 
+        WHERE [distrito] IS NOT NULL AND TRIM([distrito]) <> ''
+        ORDER BY [distrito]
       `);
 
       if (dbResult?.recordset?.length > 0) {
         const dbList = dbResult.recordset.map(r => r.distrito).filter(Boolean);
-        return res.json({ status: 'success', data: dbList, metas: DISTRITO_METAS, source: 'dbo.Colegios' });
+        return res.json({ status: 'success', data: dbList, metas: DISTRITO_METAS, source: 'dbo.Mesas' });
       }
-    } catch {}
+    } catch (err) {
+      console.warn('Consulta de distritos en dbo.Mesas falló, usando constantes:', err.message);
+    }
 
     res.json({
       status: 'success',
@@ -84,37 +143,51 @@ export class CatalogController {
     const { distrito } = req.query;
 
     if (distrito) {
-      const raw = String(distrito).trim();
-      const norm = this.normalizeDistrict(raw);
-      const upper = raw.toUpperCase();
+      const variants = this.getDistrictVariants(distrito);
+      const norm = this.normalizeDistrict(distrito);
 
-      // 1. Consultar en la tabla unificada dbo.Colegios de SQL Server en tiempo real
+      // 1. Consultar en dbo.Mesas agrupado por colegio
       try {
         const pool = await dbPool.getPool();
-        const dbResult = await pool.request()
-          .input('distrito', sql.NVarChar, upper)
-          .input('norm', sql.NVarChar, norm)
-          .query(`
-            SELECT DISTINCT [id], [ubigeo], [distrito], [colegio], [direccion], [num_mesas], [latitud], [longitud], [coordenadas_gps]
-            FROM [dbo].[Colegios]
-            WHERE UPPER([distrito]) IN (@distrito, @norm, 'LIMA', 'CERCADO DE LIMA', 'LURIGANCHO')
-               OR UPPER([distrito]) LIKE '%' + @norm + '%'
-            ORDER BY [colegio]
-          `);
+        const request = pool.request();
+        
+        const paramNames = variants.map((v, i) => {
+          const p = `dist_${i}`;
+          request.input(p, sql.NVarChar, v);
+          return `@${p}`;
+        });
 
-        if (dbResult && dbResult.recordset && dbResult.recordset.length > 0) {
-          const list = dbResult.recordset.map(r => r.colegio).filter(Boolean);
-          const fullData = dbResult.recordset;
-          return res.json({ status: 'success', distrito, data: list, fullDetails: fullData, source: 'dbo.Colegios' });
+        const queryMesas = `
+          SELECT 
+            MIN([id]) as [id],
+            [distrito],
+            [colegio],
+            MAX([direccion]) as [direccion],
+            COUNT(*) as [num_mesas],
+            MAX([latitud]) as [latitud],
+            MAX([longitud]) as [longitud],
+            MAX([coordenadas_gps]) as [coordenadas_gps]
+          FROM [dbo].[Mesas]
+          WHERE UPPER([distrito]) IN (${paramNames.join(', ')})
+          GROUP BY [distrito], [colegio]
+          ORDER BY [colegio]
+        `;
+
+        const dbResultMesas = await request.query(queryMesas);
+
+        if (dbResultMesas && dbResultMesas.recordset && dbResultMesas.recordset.length > 0) {
+          const list = dbResultMesas.recordset.map(r => r.colegio).filter(Boolean);
+          const fullData = dbResultMesas.recordset;
+          return res.json({ status: 'success', distrito, data: list, fullDetails: fullData, source: 'dbo.Mesas' });
         }
       } catch (err) {
-        console.warn('Consulta en dbo.Colegios falló, usando catálogo:', err.message);
+        console.warn('Consulta en dbo.Mesas falló, usando catálogo local:', err.message);
       }
 
       // 2. Fallback al catálogo unificado local
       const locales = this.loadLocales();
       const list = locales[norm] ||
-                   locales[upper] ||
+                   locales[distrito.trim().toUpperCase()] ||
                    locales[norm.replace('LIMA', 'CERCADO DE LIMA')] ||
                    locales[norm.replace('CERCADO DE LIMA', 'LIMA')] ||
                    locales[norm.replace('LURIGANCHO', 'LURIGANCHO-CHOSICA')] ||
@@ -123,16 +196,25 @@ export class CatalogController {
       return res.json({ status: 'success', distrito, data: list, source: 'unifiedCatalogFallback' });
     }
 
-    // Si no se especifica distrito, retornar todos los locales
+    // Si no se especifica distrito, retornar todos los locales desde dbo.Mesas
     try {
       const pool = await dbPool.getPool();
       const dbResult = await pool.request().query(`
-        SELECT [id], [ubigeo], [distrito], [colegio], [direccion], [num_mesas], [latitud], [longitud], [coordenadas_gps]
-        FROM [dbo].[Colegios]
+        SELECT 
+          MIN([id]) as [id],
+          [distrito],
+          [colegio],
+          MAX([direccion]) as [direccion],
+          COUNT(*) as [num_mesas],
+          MAX([latitud]) as [latitud],
+          MAX([longitud]) as [longitud],
+          MAX([coordenadas_gps]) as [coordenadas_gps]
+        FROM [dbo].[Mesas]
+        GROUP BY [distrito], [colegio]
         ORDER BY [distrito], [colegio]
       `);
       if (dbResult?.recordset?.length > 0) {
-        return res.json({ status: 'success', total: dbResult.recordset.length, data: dbResult.recordset });
+        return res.json({ status: 'success', total: dbResult.recordset.length, data: dbResult.recordset, source: 'dbo.Mesas' });
       }
     } catch {}
 

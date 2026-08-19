@@ -64,10 +64,14 @@ function getExp(r) {
     r['¿Tiene Experiencia como Personero?'] ??
     r['Tiene_Experiencia_como_Personero'] ??
     r.TieneExperiencia ??
+    r.tiene_experiencia ??
     r.experiencia ??
     'No'
   ).trim();
-  return (val.toLowerCase() === 'sí' || val.toLowerCase() === 'si') ? 'Sí' : 'No';
+  const lower = val.toLowerCase();
+  if (lower.startsWith('no')) return 'No';
+  if (lower === 'sí' || lower === 'si' || lower.startsWith('sí') || lower.startsWith('si')) return 'Sí';
+  return 'No';
 }
 
 function getMov(r) {
@@ -76,10 +80,14 @@ function getMov(r) {
     r['¿Cuenta con Movilidad Propia?'] ??
     r['Cuenta_con_Movilidad_Propia'] ??
     r.CuentaMovilidad ??
+    r.cuenta_movilidad ??
     r.movilidad ??
     'No'
   ).trim();
-  return (val.toLowerCase() === 'sí' || val.toLowerCase() === 'si') ? 'Sí' : 'No';
+  const lower = val.toLowerCase();
+  if (lower.startsWith('no')) return 'No';
+  if (lower === 'sí' || lower === 'si' || lower.startsWith('sí') || lower.startsWith('si')) return 'Sí';
+  return 'No';
 }
 
 function getComp(r) {
@@ -88,10 +96,14 @@ function getComp(r) {
     r['¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones?'] ??
     r['Se_compromete_a_colaborar_el_4_de_Octubre_del_2026_en_las_Elecciones'] ??
     r.seCompromete ??
+    r.se_compromete ??
     r.compromiso ??
     'No'
   ).trim();
-  return (val.toLowerCase().includes('sí') || val.toLowerCase().includes('si')) ? 'Sí' : 'No';
+  const lower = val.toLowerCase();
+  if (lower.startsWith('no')) return 'No';
+  if (lower === 'sí' || lower === 'si' || lower.startsWith('sí') || lower.startsWith('si') || lower.includes('me comprometo') || lower.includes('confirmo mi compromiso')) return 'Sí';
+  return 'No';
 }
 
 export function DashboardView({ onGoToTraining }) {
