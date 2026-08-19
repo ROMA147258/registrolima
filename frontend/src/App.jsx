@@ -47,13 +47,13 @@ export function App() {
 
   // 2. Usuario Autenticado
   if (isLoggedIn) {
-    // 1. SuperAdmin y Coordinador de Distritos (dbo.Rcoordinadoresd) entran DIRECTAMENTE al Dashboard
-    if (isSuperAdmin || isCoordinadorDistrital) {
+    // 1. SuperAdmin (admin, eric) entra DIRECTAMENTE al Dashboard
+    if (isSuperAdmin) {
       return <DashboardView />;
     }
 
-    // 2. Coordinador de Local (dbo.Rcoordinadores): Requiere OBLIGATORIAMENTE aprobar evaluación (Credenciales = Confirmado)
-    if (isCoordinadorLocal || isCoordinador) {
+    // 2. Coordinador de Distritos y Coordinador de Local: Requieren OBLIGATORIAMENTE aprobar evaluación (Credenciales = Confirmado)
+    if (isCoordinadorDistrital || isCoordinadorLocal || isCoordinador) {
       if (!isEvaluationApproved) {
         return (
           <TrainingView
@@ -62,7 +62,7 @@ export function App() {
         );
       }
 
-      // Si ya aprobó (Confirmado), al terminar su examen puede descargar su certificado o alternar
+      // Si ya aprobó (Confirmado), puede alternar entre Dashboard y su Certificado/Ficha
       if (coordLocalTab === 'training') {
         return (
           <TrainingView

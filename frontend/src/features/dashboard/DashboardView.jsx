@@ -524,8 +524,8 @@ export function DashboardView({ onGoToTraining }) {
                 </span>
               </button>
 
-              {/* Acceso a Certificado / Capacitación para Coordinador de Local */}
-              {isCoordinadorLocal && onGoToTraining && (
+              {/* Acceso a Certificado / Capacitación para Coordinadores */}
+              {(isCoordinadorLocal || isCoordinadorDistrital || isCoordinador) && onGoToTraining && (
                 <button
                   onClick={onGoToTraining}
                   style={{

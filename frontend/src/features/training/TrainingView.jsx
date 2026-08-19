@@ -81,7 +81,9 @@ export function TrainingView({ onGoToDashboard }) {
               Capacítate
             </h1>
             <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
-              {isCoordinadorLocal ? 'Evaluación y Acreditación de Coordinador de Local' : 'Ficha de Capacitación de Personeros'}
+              {isCoordinadorDistrital
+                ? 'Evaluación y Acreditación de Coordinador de Distritos'
+                : (isCoordinadorLocal ? 'Evaluación y Acreditación de Coordinador de Local' : 'Ficha de Capacitación de Personeros')}
             </span>
           </div>
 

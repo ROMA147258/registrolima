@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, FileText, Lightbulb, Lock, CheckCircle2, AlertCircle, RefreshCw, Award, ArrowRight } from 'lucide-react';
-import { QUESTION_BANK } from '../../constants/quizData.js';
+import { getRandomQuestions } from '../../constants/quizData.js';
 import confetti from 'canvas-confetti';
 
 export function QuizModal({ onClose, onPassQuiz }) {
@@ -12,10 +12,9 @@ export function QuizModal({ onClose, onPassQuiz }) {
   const [showResultPopup, setShowResultPopup] = useState(false);
   const scrollRef = useRef(null);
 
-  // Cargar 5 preguntas aleatorias del banco de 100
+  // Cargar 5 preguntas aleatorias del banco de 100 con alternativas permutadas
   const loadRandomQuestions = () => {
-    const shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
-    setQuestions(shuffled.slice(0, 5));
+    setQuestions(getRandomQuestions(5));
     setAnswers({});
     setSubmitted(false);
     setScore(0);
