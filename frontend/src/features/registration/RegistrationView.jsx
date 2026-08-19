@@ -1,0 +1,1404 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  User, CreditCard, Phone, Mail, MapPin, School, Table, Shield,
+  LogOut, Check, ChevronDown, AlertCircle, Edit3, Send, CheckCircle2, X
+} from 'lucide-react';
+import { DISTRITOS_LIMA } from '../../constants/catalogs.js';
+import { api } from '../../services/api.js';
+
+// Componente de Dropdown Desplegable Personalizado con Fondo Blanco y Estilo Somos Perú
+function CustomSearchableSelect({
+  id,
+  value,
+  onChange,
+  options = [],
+  placeholder,
+  icon: Icon,
+  name,
+  required = false,
+  disabled = false,
+  hasError = false,
+  errorMsg = ''
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(value || '');
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setSearchTerm(value || '');
+  }, [value]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const normalizedOptions = options.map(opt => typeof opt === 'string' ? opt : (opt.nombre || opt.local || ''));
+  const filtered = normalizedOptions.filter(opt =>
+    opt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(
+      searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    )
+  );
+
+  const handleInputChange = (e) => {
+    const val = e.target.value;
+    setSearchTerm(val);
+    onChange({ target: { name, value: val } });
+    if (!isOpen) setIsOpen(true);
+  };
+
+  const handleSelect = (selectedVal) => {
+    setSearchTerm(selectedVal);
+    onChange({ target: { name, value: selectedVal } });
+    setIsOpen(false);
+  };
+
+  return (
+    <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
+      <div style={{ position: 'relative' }}>
+        {Icon && <Icon className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: hasError ? '#ef4444' : '#0284c7', pointerEvents: 'none' }} />}
+        <input
+          ref={inputRef}
+          id={id || `field-${name}`}
+          type="text"
+          name={name}
+          value={searchTerm}
+          onChange={handleInputChange}
+          onFocus={() => !disabled && setIsOpen(true)}
+          placeholder={placeholder}
+          required={required}
+          disabled={disabled}
+          autoComplete="off"
+          className="form-control"
+          style={{
+            paddingLeft: Icon ? '36px' : '14px',
+            paddingRight: '32px',
+            background: disabled ? '#f1f5f9' : '#ffffff',
+            border: hasError ? '2px solid #ef4444' : (isOpen ? '1.5px solid #0284c7' : '1.5px solid #cbd5e1'),
+            color: disabled ? '#94a3b8' : '#0f172a',
+            borderRadius: '10px',
+            width: '100%',
+            height: '42px',
+            fontSize: '0.86rem',
+            outline: 'none',
+            boxShadow: hasError ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : (isOpen ? '0 0 0 3px rgba(2, 132, 199, 0.15)' : 'none'),
+            transition: 'all 0.15s ease'
+          }}
+        />
+        <ChevronDown
+          className="w-4 h-4"
+          onClick={() => !disabled && setIsOpen(!isOpen)}
+          style={{
+            position: 'absolute',
+            right: '12px',
+            top: '13px',
+            color: hasError ? '#ef4444' : '#64748b',
+            cursor: disabled ? 'default' : 'pointer',
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s ease'
+          }}
+        />
+      </div>
+
+      {hasError && errorMsg && (
+        <div style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      {/* Lista Desplegable Personalizada con Fondo Blanco */}
+      {isOpen && !disabled && (
+        <div style={{
+          position: 'absolute',
+          top: 'calc(100% + 4px)',
+          left: 0,
+          right: 0,
+          background: '#ffffff',
+          border: '1.5px solid #0284c7',
+          borderRadius: '10px',
+          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.15)',
+          maxHeight: '220px',
+          overflowY: 'auto',
+          zIndex: 1000,
+          animation: 'fadeIn 0.15s ease-out'
+        }}>
+          {filtered.length > 0 ? (
+            filtered.map((item, idx) => {
+              const isSelected = item.toLowerCase() === (value || '').toLowerCase();
+              return (
+                <div
+                  key={idx}
+                  onClick={() => handleSelect(item)}
+                  style={{
+                    padding: '9px 14px',
+                    fontSize: '0.84rem',
+                    fontWeight: isSelected ? 800 : 500,
+                    color: isSelected ? '#ffffff' : '#0f172a',
+                    background: isSelected ? '#0284c7' : '#ffffff',
+                    cursor: 'pointer',
+                    borderBottom: idx !== filtered.length - 1 ? '1px solid #f1f5f9' : 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    transition: 'all 0.1s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.background = '#e0f2fe';
+                      e.currentTarget.style.color = '#0284c7';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.background = '#ffffff';
+                      e.currentTarget.style.color = '#0f172a';
+                    }
+                  }}
+                >
+                  <span>{item}</span>
+                  {isSelected && <Check className="w-4 h-4 text-white" />}
+                </div>
+              );
+            })
+          ) : (
+            <div style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontSize: '0.82rem' }}>
+              No se encontraron coincidencias
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
+  const [formData, setFormData] = useState({
+    nombres_apellidos: '',
+    dni: '',
+    celular: '',
+    correo_electronico: '',
+    usa_whatsapp: 'Sí, mismo número',
+    numero_whatsapp_alterno: '',
+    distrito_vota: '',
+    mesa_vota: '',
+    local_vota: '',
+    rol_electoral: 'Personero de Mesa',
+    distrito_asignado: '',
+    mesa_asignada: '',
+    local_asignado: '',
+    tiene_experiencia: 'No',
+    cuenta_movilidad: 'No',
+    se_compromete: 'Sí, me comprometo el 4 de Octubre del 2026'
+  });
+
+  const [localesVota, setLocalesVota] = useState([]);
+  const [localesAsignados, setLocalesAsignados] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
+  const isCoordinadorLocal = formData.rol_electoral === 'Coordinador de Local';
+  const isCoordinadorDistrital = formData.rol_electoral === 'Coordinador de Distritos';
+  const isPersoneroMesa = formData.rol_electoral === 'Personero de Mesa';
+  const isCoordinador = isCoordinadorLocal || isCoordinadorDistrital;
+
+  // Carga dinámica de colegios desde dbo.mesas / dbo.colegios en SQL Server para Sección 2
+  useEffect(() => {
+    if (formData.distrito_vota) {
+      api.getLocales(formData.distrito_vota)
+        .then(res => setLocalesVota(res.data || []))
+        .catch(() => setLocalesVota([]));
+    } else {
+      setLocalesVota([]);
+    }
+  }, [formData.distrito_vota]);
+
+  // Carga dinámica de colegios desde dbo.mesas / dbo.colegios en SQL Server para Sección 3
+  useEffect(() => {
+    if (formData.distrito_asignado && !isCoordinadorDistrital) {
+      api.getLocales(formData.distrito_asignado)
+        .then(res => setLocalesAsignados(res.data || []))
+        .catch(() => setLocalesAsignados([]));
+    } else {
+      setLocalesAsignados([]);
+    }
+  }, [formData.distrito_asignado, isCoordinadorDistrital]);
+
+  // Limpieza de error en tiempo real cuando el usuario edita
+  const clearFieldError = (name) => {
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => {
+        const copy = { ...prev };
+        delete copy[name];
+        return copy;
+      });
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    clearFieldError(name);
+
+    // Validación numérica estricta para DNI (máx 8 dígitos)
+    if (name === 'dni') {
+      const clean = value.replace(/\D/g, '').slice(0, 8);
+      setFormData(prev => ({ ...prev, dni: clean }));
+      return;
+    }
+
+    // Validación numérica estricta para Celular (máx 9 dígitos)
+    if (name === 'celular') {
+      const clean = value.replace(/\D/g, '').slice(0, 9);
+      setFormData(prev => ({ ...prev, celular: clean }));
+      return;
+    }
+
+    // Validación numérica estricta para WhatsApp Alternativo (máx 9 dígitos)
+    if (name === 'numero_whatsapp_alterno') {
+      const clean = value.replace(/\D/g, '').slice(0, 9);
+      setFormData(prev => ({ ...prev, numero_whatsapp_alterno: clean }));
+      return;
+    }
+
+    // Validación numérica estricta para Mesas (máx 6 dígitos)
+    if (name === 'mesa_vota' || name === 'mesa_asignada') {
+      const clean = value.replace(/\D/g, '').slice(0, 6);
+      setFormData(prev => ({ ...prev, [name]: clean }));
+      return;
+    }
+
+    // Al cambiar distrito_vota o distrito_asignado, resetear el local seleccionado si cambia
+    if (name === 'distrito_vota') {
+      setFormData(prev => ({ ...prev, distrito_vota: value, local_vota: '' }));
+      return;
+    }
+
+    if (name === 'distrito_asignado') {
+      setFormData(prev => ({ ...prev, distrito_asignado: value, local_asignado: isCoordinadorDistrital ? 'No aplica' : '' }));
+      return;
+    }
+
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleRoleChange = (role) => {
+    clearFieldError('rol_electoral');
+    clearFieldError('mesa_asignada');
+    clearFieldError('local_asignado');
+    clearFieldError('distrito_asignado');
+    setFormData(prev => ({
+      ...prev,
+      rol_electoral: role,
+      mesa_asignada: role === 'Personero de Mesa' 
+        ? (prev.mesa_asignada === 'No aplica (Coordinador)' || prev.mesa_asignada === 'No aplica' || prev.mesa_asignada === '-' ? '' : prev.mesa_asignada)
+        : (role === 'Coordinador de Distritos' ? 'No aplica' : 'No aplica (Coordinador)'),
+      local_asignado: role === 'Coordinador de Distritos' 
+        ? 'No aplica' 
+        : (prev.local_asignado === 'No aplica' ? '' : prev.local_asignado)
+    }));
+  };
+
+  const handleToggle = (field, value) => {
+    clearFieldError(field);
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Función de validación estricta ("sí o sí") con redirección al primer campo faltante
+  const validateForm = () => {
+    const errors = {};
+
+    // 1. Datos Personales
+    if (!formData.nombres_apellidos || formData.nombres_apellidos.trim().length < 3) {
+      errors.nombres_apellidos = 'Ingrese sus nombres y apellidos completos.';
+    }
+
+    if (!formData.dni || formData.dni.trim().length !== 8) {
+      errors.dni = 'El DNI debe contener exactamente 8 dígitos numéricos.';
+    }
+
+    if (!formData.celular || formData.celular.trim().length !== 9) {
+      errors.celular = 'El celular debe contener exactamente 9 dígitos numéricos.';
+    }
+
+    if (formData.usa_whatsapp === 'No, otro número' && (!formData.numero_whatsapp_alterno || formData.numero_whatsapp_alterno.trim().length !== 9)) {
+      errors.numero_whatsapp_alterno = 'Ingrese el número de WhatsApp alternativo de 9 dígitos.';
+    }
+
+    // 2. Lugar de Votación
+    if (!formData.distrito_vota || formData.distrito_vota.trim() === '') {
+      errors.distrito_vota = 'Seleccione el distrito donde vota.';
+    }
+
+    if (!formData.mesa_vota || formData.mesa_vota.trim().length !== 6) {
+      errors.mesa_vota = 'La mesa de votación debe tener exactamente 6 dígitos.';
+    }
+
+    if (!formData.local_vota || formData.local_vota.trim() === '') {
+      errors.local_vota = 'Seleccione su colegio o local de votación.';
+    }
+
+    // 3. Rol y Asignación
+    if (!formData.rol_electoral) {
+      errors.rol_electoral = 'Seleccione su rol electoral.';
+    }
+
+    if (!formData.distrito_asignado || formData.distrito_asignado.trim() === '') {
+      errors.distrito_asignado = 'Seleccione el distrito donde será asignado.';
+    }
+
+    if (formData.rol_electoral === 'Personero de Mesa' && (!formData.mesa_asignada || formData.mesa_asignada.trim().length !== 6)) {
+      errors.mesa_asignada = 'La mesa asignada debe tener exactamente 6 dígitos.';
+    }
+
+    if (formData.rol_electoral !== 'Coordinador de Distritos' && (!formData.local_asignado || formData.local_asignado.trim() === '' || formData.local_asignado === 'No aplica')) {
+      errors.local_asignado = 'Seleccione el local de votación asignado.';
+    }
+
+    // 4. Compromiso y Logística
+    if (!formData.tiene_experiencia) {
+      errors.tiene_experiencia = 'Indique si tiene experiencia previa.';
+    }
+
+    if (!formData.cuenta_movilidad) {
+      errors.cuenta_movilidad = 'Indique si cuenta con movilidad propia.';
+    }
+
+    if (!formData.se_compromete) {
+      errors.se_compromete = 'Confirme su compromiso para las elecciones.';
+    }
+
+    setFieldErrors(errors);
+
+    // Si hay errores, hacer scroll y focus al primer campo faltante
+    const errorKeys = Object.keys(errors);
+    if (errorKeys.length > 0) {
+      const firstKey = errorKeys[0];
+      const targetId = `field-${firstKey}`;
+      const targetEl = document.getElementById(targetId) || document.querySelector(`[name="${firstKey}"]`);
+
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => {
+          if (targetEl.focus) targetEl.focus();
+        }, 250);
+      }
+
+      setErrorMsg(`Falta completar o corregir: ${errors[firstKey]}`);
+      return false;
+    }
+
+    setErrorMsg(null);
+    return true;
+  };
+
+  // Al hacer clic en "Registrar y Acreditar", primero valida todo y luego abre la vista de revisión
+  const handlePreSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setShowReviewModal(true);
+    }
+  };
+
+  // Envío final a la base de datos tras confirmación
+  const handleFinalSubmit = async () => {
+    setLoading(true);
+    setErrorMsg(null);
+
+    try {
+      const res = await api.registerPersonero(formData);
+      if (res && res.status === 'success') {
+        setShowReviewModal(false);
+        if (onRegisteredSuccess) {
+          onRegisteredSuccess(res.data);
+        }
+      } else {
+        throw new Error(res?.message || 'Error al procesar el registro.');
+      }
+    } catch (err) {
+      setShowReviewModal(false);
+      setErrorMsg(err.message || 'Error al registrar personero.');
+      // Scroll al inicio para ver el error
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'rgb(193, 229, 249)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '24px 16px',
+      fontFamily: "'Outfit', 'Montserrat', sans-serif"
+    }}>
+      <div style={{
+        background: '#ffffff',
+        borderRadius: '20px',
+        width: '100%',
+        maxWidth: '560px',
+        padding: '28px 24px',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+        border: '1px solid #cbd5e1',
+        animation: 'fadeIn 0.25s ease-out'
+      }}>
+        
+        {/* Cabecera */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+          <div>
+            <h1 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
+              Registro
+            </h1>
+            <div style={{ fontSize: '0.85rem', color: '#20488e', fontWeight: 700, marginTop: '2px' }}>
+              Partido Democrático Somos Perú • Elecciones Municipales 2026
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onShowLogin}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              border: '1px solid #fecaca',
+              background: '#fef2f2',
+              color: '#ef4444',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Ingresar</span>
+          </button>
+        </div>
+
+        {/* Formulario */}
+        <form onSubmit={handlePreSubmit} noValidate style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          
+          {errorMsg && (
+            <div style={{
+              padding: '12px 16px',
+              borderRadius: '12px',
+              background: '#fef2f2',
+              border: '1.5px solid #f87171',
+              color: '#dc2626',
+              fontSize: '0.84rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              animation: 'fadeIn 0.2s ease-in-out'
+            }}>
+              <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-500" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          {/* SECCIÓN 1: DATOS PERSONALES */}
+          <div style={{ border: fieldErrors.nombres_apellidos || fieldErrors.dni || fieldErrors.celular || fieldErrors.numero_whatsapp_alterno ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
+              <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>1</div>
+              <span>DATOS PERSONALES</span>
+            </div>
+
+            <div className="form-group" style={{ marginBottom: '12px' }}>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                Nombres y Apellidos <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <div style={{ position: 'relative' }}>
+                <User className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.nombres_apellidos ? '#ef4444' : '#0284c7' }} />
+                <input
+                  id="field-nombres_apellidos"
+                  type="text"
+                  name="nombres_apellidos"
+                  value={formData.nombres_apellidos}
+                  onChange={handleChange}
+                  placeholder="Ej. Juan Carlos Pérez Torres"
+                  required
+                  className="form-control"
+                  style={{
+                    paddingLeft: '36px',
+                    background: '#ffffff',
+                    border: fieldErrors.nombres_apellidos ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                    color: '#0f172a',
+                    boxShadow: fieldErrors.nombres_apellidos ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                  }}
+                />
+              </div>
+              {fieldErrors.nombres_apellidos && (
+                <div style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{fieldErrors.nombres_apellidos}</span>
+                </div>
+              )}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+              <div>
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                  D.N.I. (8 dígitos) <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <CreditCard className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.dni ? '#ef4444' : '#0284c7' }} />
+                  <input
+                    id="field-dni"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    name="dni"
+                    value={formData.dni}
+                    onChange={handleChange}
+                    placeholder="Ej. 12345678"
+                    maxLength={8}
+                    required
+                    className="form-control"
+                    style={{
+                      paddingLeft: '36px',
+                      background: '#ffffff',
+                      border: fieldErrors.dni ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                      color: '#0f172a',
+                      boxShadow: fieldErrors.dni ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                    }}
+                  />
+                </div>
+                {fieldErrors.dni && (
+                  <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>{fieldErrors.dni}</span>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                  Celular (9 dígitos) <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <Phone className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.celular ? '#ef4444' : '#0284c7' }} />
+                  <input
+                    id="field-celular"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    name="celular"
+                    value={formData.celular}
+                    onChange={handleChange}
+                    placeholder="Ej. 987654321"
+                    maxLength={9}
+                    required
+                    className="form-control"
+                    style={{
+                      paddingLeft: '36px',
+                      background: '#ffffff',
+                      border: fieldErrors.celular ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                      color: '#0f172a',
+                      boxShadow: fieldErrors.celular ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                    }}
+                  />
+                </div>
+                {fieldErrors.celular && (
+                  <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>{fieldErrors.celular}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="form-group" style={{ marginBottom: '12px' }}>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>Correo Electrónico (Opcional)</label>
+              <div style={{ position: 'relative' }}>
+                <Mail className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: '#0284c7' }} />
+                <input
+                  id="field-correo_electronico"
+                  type="email"
+                  name="correo_electronico"
+                  value={formData.correo_electronico}
+                  onChange={handleChange}
+                  placeholder="Ej. juan.perez@gmail.com"
+                  className="form-control"
+                  style={{ paddingLeft: '36px', background: '#ffffff', border: '1.5px solid #cbd5e1', color: '#0f172a' }}
+                />
+              </div>
+            </div>
+
+            {/* Pregunta WhatsApp */}
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                ¿El número de celular registrado cuenta con WhatsApp? <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <button
+                  type="button"
+                  onClick={() => handleToggle('usa_whatsapp', 'Sí, mismo número')}
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    border: '1px solid rgb(14, 165, 233)',
+                    background: formData.usa_whatsapp === 'Sí, mismo número' ? 'rgb(14, 165, 233)' : '#ffffff',
+                    color: formData.usa_whatsapp === 'Sí, mismo número' ? '#ffffff' : '#334155',
+                    fontWeight: 800,
+                    fontSize: '0.82rem',
+                    cursor: 'pointer',
+                    transform: formData.usa_whatsapp === 'Sí, mismo número' ? 'scale(0.99)' : 'scale(1)',
+                    boxShadow: formData.usa_whatsapp === 'Sí, mismo número' ? '0 4px 12px rgba(14, 165, 233, 0.3)' : 'none',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  Sí, mismo número
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleToggle('usa_whatsapp', 'No, otro número')}
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5e1',
+                    background: formData.usa_whatsapp === 'No, otro número' ? 'rgb(14, 165, 233)' : '#ffffff',
+                    color: formData.usa_whatsapp === 'No, otro número' ? '#ffffff' : '#334155',
+                    fontWeight: 800,
+                    fontSize: '0.82rem',
+                    cursor: 'pointer',
+                    transform: formData.usa_whatsapp === 'No, otro número' ? 'scale(0.99)' : 'scale(1)',
+                    boxShadow: formData.usa_whatsapp === 'No, otro número' ? '0 4px 12px rgba(14, 165, 233, 0.3)' : 'none',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  No, otro número
+                </button>
+              </div>
+
+              {formData.usa_whatsapp === 'No, otro número' && (
+                <div style={{ marginTop: '8px', animation: 'fadeIn 0.2s ease' }}>
+                  <div style={{ position: 'relative' }}>
+                    <Phone className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.numero_whatsapp_alterno ? '#ef4444' : '#0284c7' }} />
+                    <input
+                      id="field-numero_whatsapp_alterno"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      name="numero_whatsapp_alterno"
+                      value={formData.numero_whatsapp_alterno}
+                      onChange={handleChange}
+                      placeholder="Ej. 912345678 (WhatsApp)"
+                      maxLength={9}
+                      className="form-control"
+                      style={{
+                        paddingLeft: '36px',
+                        background: '#ffffff',
+                        border: fieldErrors.numero_whatsapp_alterno ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                        color: '#0f172a',
+                        boxShadow: fieldErrors.numero_whatsapp_alterno ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                      }}
+                    />
+                  </div>
+                  {fieldErrors.numero_whatsapp_alterno && (
+                    <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      <AlertCircle className="w-3.5 h-3.5" />
+                      <span>{fieldErrors.numero_whatsapp_alterno}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* SECCIÓN 2: MI LUGAR DE VOTACIÓN */}
+          <div style={{ border: fieldErrors.distrito_vota || fieldErrors.mesa_vota || fieldErrors.local_vota ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
+              <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>2</div>
+              <span>MI LUGAR DE VOTACIÓN</span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+              {/* Distrito donde Vota */}
+              <div>
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                  Distrito donde Vota <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <CustomSearchableSelect
+                  id="field-distrito_vota"
+                  name="distrito_vota"
+                  value={formData.distrito_vota}
+                  onChange={handleChange}
+                  options={DISTRITOS_LIMA}
+                  placeholder="Seleccione Distrito"
+                  icon={MapPin}
+                  required
+                  hasError={!!fieldErrors.distrito_vota}
+                  errorMsg={fieldErrors.distrito_vota}
+                />
+              </div>
+
+              {/* Mesa de Sufragio (Input Numérico de 6 dígitos) */}
+              <div>
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                  Mesa de Sufragio <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.mesa_vota ? '#ef4444' : '#0284c7' }} />
+                  <input
+                    id="field-mesa_vota"
+                    type="text"
+                    inputMode="numeric"
+                    name="mesa_vota"
+                    value={formData.mesa_vota}
+                    onChange={handleChange}
+                    placeholder="Ej. 064321"
+                    maxLength={6}
+                    required
+                    className="form-control"
+                    style={{
+                      paddingLeft: '36px',
+                      background: '#ffffff',
+                      border: fieldErrors.mesa_vota ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                      color: '#0f172a',
+                      boxShadow: fieldErrors.mesa_vota ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                    }}
+                  />
+                </div>
+                {fieldErrors.mesa_vota && (
+                  <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>{fieldErrors.mesa_vota}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Local de Votación */}
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                Local de Votación <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <CustomSearchableSelect
+                id="field-local_vota"
+                name="local_vota"
+                value={formData.local_vota}
+                onChange={handleChange}
+                options={localesVota}
+                placeholder={formData.distrito_vota ? `Seleccione Colegio en ${formData.distrito_vota}` : "Primero seleccione un distrito"}
+                icon={School}
+                required
+                disabled={!formData.distrito_vota}
+                hasError={!!fieldErrors.local_vota}
+                errorMsg={fieldErrors.local_vota}
+              />
+            </div>
+          </div>
+
+          {/* SECCIÓN 3: ROL Y ASIGNACIÓN ELECTORAL */}
+          <div style={{ border: fieldErrors.rol_electoral || fieldErrors.distrito_asignado || fieldErrors.mesa_asignada || fieldErrors.local_asignado ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
+              <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>3</div>
+              <span>ROL Y ASIGNACIÓN ELECTORAL</span>
+            </div>
+
+            {/* Selector de Roles: 3 Botones */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))', gap: '8px', marginBottom: '12px' }}>
+              <button
+                type="button"
+                onClick={() => handleRoleChange('Personero de Mesa')}
+                style={{
+                  padding: '10px 4px',
+                  borderRadius: '8px',
+                  border: isPersoneroMesa ? '1px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  background: isPersoneroMesa ? 'rgb(14, 165, 233)' : '#ffffff',
+                  color: isPersoneroMesa ? '#ffffff' : '#334155',
+                  fontWeight: 800,
+                  fontSize: '0.78rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '5px',
+                  transform: isPersoneroMesa ? 'scale(0.99)' : 'scale(1)',
+                  boxShadow: isPersoneroMesa ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                <Shield className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Personero de Mesa</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRoleChange('Coordinador de Local')}
+                style={{
+                  padding: '10px 4px',
+                  borderRadius: '8px',
+                  border: isCoordinadorLocal ? '1px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  background: isCoordinadorLocal ? 'rgb(14, 165, 233)' : '#ffffff',
+                  color: isCoordinadorLocal ? '#ffffff' : '#334155',
+                  fontWeight: 800,
+                  fontSize: '0.78rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '5px',
+                  transform: isCoordinadorLocal ? 'scale(0.99)' : 'scale(1)',
+                  boxShadow: isCoordinadorLocal ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                <School className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Coordinador de Local</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRoleChange('Coordinador de Distritos')}
+                style={{
+                  padding: '10px 4px',
+                  borderRadius: '8px',
+                  border: isCoordinadorDistrital ? '1px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  background: isCoordinadorDistrital ? 'rgb(14, 165, 233)' : '#ffffff',
+                  color: isCoordinadorDistrital ? '#ffffff' : '#334155',
+                  fontWeight: 800,
+                  fontSize: '0.78rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '5px',
+                  transform: isCoordinadorDistrital ? 'scale(0.99)' : 'scale(1)',
+                  boxShadow: isCoordinadorDistrital ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Coordinador de Distritos</span>
+              </button>
+            </div>
+
+            {/* Campos condicionales según el rol */}
+            {isCoordinadorDistrital ? (
+              /* Caso Coordinador de Distritos: Solo Distrito Asignado */
+              <div className="form-group" style={{ marginBottom: 0 }}>
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                  Distrito Asignado (Donde es Coordinador) <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <CustomSearchableSelect
+                  id="field-distrito_asignado"
+                  name="distrito_asignado"
+                  value={formData.distrito_asignado}
+                  onChange={handleChange}
+                  options={DISTRITOS_LIMA}
+                  placeholder="Seleccione Distrito del que es Coordinador"
+                  icon={MapPin}
+                  required
+                  hasError={!!fieldErrors.distrito_asignado}
+                  errorMsg={fieldErrors.distrito_asignado}
+                />
+              </div>
+            ) : (
+              /* Caso Personero de Mesa o Coordinador de Local */
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+                  {/* Distrito Asignado */}
+                  <div>
+                    <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                      Distrito Asignado <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <CustomSearchableSelect
+                      id="field-distrito_asignado"
+                      name="distrito_asignado"
+                      value={formData.distrito_asignado}
+                      onChange={handleChange}
+                      options={DISTRITOS_LIMA}
+                      placeholder="Seleccione Distrito"
+                      icon={MapPin}
+                      required
+                      hasError={!!fieldErrors.distrito_asignado}
+                      errorMsg={fieldErrors.distrito_asignado}
+                    />
+                  </div>
+
+                  {/* Mesa Asignada */}
+                  <div>
+                    <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                      Mesa Asignada {!isCoordinadorLocal && <span style={{ color: '#ef4444' }}>*</span>}
+                    </label>
+                    <div style={{ position: 'relative' }}>
+                      <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.mesa_asignada ? '#ef4444' : '#0284c7' }} />
+                      <input
+                        id="field-mesa_asignada"
+                        type="text"
+                        inputMode="numeric"
+                        name="mesa_asignada"
+                        value={isCoordinadorLocal ? 'No aplica (Coordinador)' : formData.mesa_asignada}
+                        onChange={handleChange}
+                        placeholder="Ej. 064321"
+                        maxLength={6}
+                        disabled={isCoordinadorLocal}
+                        required={!isCoordinadorLocal}
+                        className="form-control"
+                        style={{
+                          paddingLeft: '36px',
+                          background: isCoordinadorLocal ? '#f1f5f9' : '#ffffff',
+                          border: fieldErrors.mesa_asignada ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                          color: isCoordinadorLocal ? '#94a3b8' : '#0f172a',
+                          cursor: isCoordinadorLocal ? 'not-allowed' : 'text',
+                          boxShadow: fieldErrors.mesa_asignada ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                        }}
+                      />
+                    </div>
+                    {fieldErrors.mesa_asignada && (
+                      <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        <span>{fieldErrors.mesa_asignada}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Local de Votación Asignado */}
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                    Local de Votación Asignado <span style={{ color: '#ef4444' }}>*</span>
+                  </label>
+                  <CustomSearchableSelect
+                    id="field-local_asignado"
+                    name="local_asignado"
+                    value={formData.local_asignado}
+                    onChange={handleChange}
+                    options={localesAsignados}
+                    placeholder={formData.distrito_asignado ? `Seleccione Colegio en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
+                    icon={School}
+                    required
+                    disabled={!formData.distrito_asignado}
+                    hasError={!!fieldErrors.local_asignado}
+                    errorMsg={fieldErrors.local_asignado}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* SECCIÓN 4: COMPROMISO Y LOGÍSTICA */}
+          <div style={{ border: fieldErrors.tiene_experiencia || fieldErrors.cuenta_movilidad || fieldErrors.se_compromete ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
+              <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>4</div>
+              <span>COMPROMISO Y LOGÍSTICA</span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+              <div id="field-tiene_experiencia">
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
+                  ¿Tiene Experiencia como Personero? <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                  <button
+                    type="button"
+                    onClick={() => handleToggle('tiene_experiencia', 'Sí')}
+                    style={{
+                      padding: '8px',
+                      borderRadius: '8px',
+                      border: '1px solid rgb(14, 165, 233)',
+                      background: formData.tiene_experiencia === 'Sí' ? 'rgb(14, 165, 233)' : '#ffffff',
+                      color: formData.tiene_experiencia === 'Sí' ? '#ffffff' : '#334155',
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      transform: formData.tiene_experiencia === 'Sí' ? 'scale(0.99)' : 'scale(1)',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    Sí
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleToggle('tiene_experiencia', 'No')}
+                    style={{
+                      padding: '8px',
+                      borderRadius: '8px',
+                      border: '1px solid rgb(14, 165, 233)',
+                      background: formData.tiene_experiencia === 'No' ? 'rgb(14, 165, 233)' : '#ffffff',
+                      color: formData.tiene_experiencia === 'No' ? '#ffffff' : '#334155',
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      transform: formData.tiene_experiencia === 'No' ? 'scale(0.99)' : 'scale(1)',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+
+              <div id="field-cuenta_movilidad">
+                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
+                  ¿Cuenta con Movilidad Propia? <span style={{ color: '#ef4444' }}>*</span>
+                </label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                  <button
+                    type="button"
+                    onClick={() => handleToggle('cuenta_movilidad', 'Sí')}
+                    style={{
+                      padding: '8px',
+                      borderRadius: '8px',
+                      border: '1px solid rgb(14, 165, 233)',
+                      background: formData.cuenta_movilidad === 'Sí' ? 'rgb(14, 165, 233)' : '#ffffff',
+                      color: formData.cuenta_movilidad === 'Sí' ? '#ffffff' : '#334155',
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      transform: formData.cuenta_movilidad === 'Sí' ? 'scale(0.99)' : 'scale(1)',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    Sí
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleToggle('cuenta_movilidad', 'No')}
+                    style={{
+                      padding: '8px',
+                      borderRadius: '8px',
+                      border: '1px solid rgb(14, 165, 233)',
+                      background: formData.cuenta_movilidad === 'No' ? 'rgb(14, 165, 233)' : '#ffffff',
+                      color: formData.cuenta_movilidad === 'No' ? '#ffffff' : '#334155',
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      transform: formData.cuenta_movilidad === 'No' ? 'scale(0.99)' : 'scale(1)',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group" id="field-se_compromete" style={{ marginBottom: 0 }}>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
+                ¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones? <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <button
+                  type="button"
+                  onClick={() => handleToggle('se_compromete', 'Sí, me comprometo el 4 de Octubre del 2026')}
+                  style={{
+                    padding: '8px',
+                    borderRadius: '8px',
+                    border: '1px solid rgb(14, 165, 233)',
+                    background: formData.se_compromete.includes('Sí') ? 'rgb(14, 165, 233)' : '#ffffff',
+                    color: formData.se_compromete.includes('Sí') ? '#ffffff' : '#334155',
+                    fontWeight: 800,
+                    fontSize: '0.75rem',
+                    cursor: 'pointer',
+                    transform: formData.se_compromete.includes('Sí') ? 'scale(0.99)' : 'scale(1)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Sí, me comprometo el 4 de Octubre del 2026
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleToggle('se_compromete', 'No podré asistir')}
+                  style={{
+                    padding: '8px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5e1',
+                    background: formData.se_compromete === 'No podré asistir' ? 'rgb(14, 165, 233)' : '#ffffff',
+                    color: formData.se_compromete === 'No podré asistir' ? '#ffffff' : '#334155',
+                    fontWeight: 800,
+                    fontSize: '0.75rem',
+                    cursor: 'pointer',
+                    transform: formData.se_compromete === 'No podré asistir' ? 'scale(0.99)' : 'scale(1)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  No podré asistir
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* BOTÓN REGISTRAR Y ACREDITAR */}
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              padding: '14px',
+              borderRadius: '12px',
+              border: 'none',
+              background: 'rgb(14, 165, 233)',
+              color: '#ffffff',
+              fontWeight: 900,
+              fontSize: '1rem',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 15px rgba(14, 165, 233, 0.45)',
+              marginTop: '6px',
+              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.98)'; }}
+            onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+          >
+            <CheckCircle2 className="w-5 h-5" />
+            <span>Revisar y Continuar Registro</span>
+          </button>
+        </form>
+      </div>
+
+      {/* MODAL DE REVISIÓN Y CONFIRMACIÓN PREVIA AL ENVÍO */}
+      {showReviewModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(15, 23, 42, 0.75)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '16px',
+          zIndex: 9999,
+          animation: 'fadeIn 0.2s ease-out'
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '20px',
+            maxWidth: '540px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            padding: '24px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            border: '1px solid #cbd5e1',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px'
+          }}>
+            
+            {/* Encabezado del Modal */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1.5px solid #f1f5f9', paddingBottom: '12px' }}>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>📋 Revisión de Datos</span>
+                </h2>
+                <p style={{ margin: '4px 0 0 0', fontSize: '0.82rem', color: '#64748b' }}>
+                  Revise todos sus datos antes de enviarlos al sistema oficial de Somos Perú. Puede modificarlos si lo desea.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowReviewModal(false)}
+                style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Contenido de la Ficha Resumen */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              
+              {/* Bloque 1: Personales */}
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '12px 14px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  1. Datos Personales
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.82rem' }}>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Nombres y Apellidos</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.nombres_apellidos}</strong>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>D.N.I.</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.dni}</strong>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Celular Principal</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.celular}</strong>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>WhatsApp</span>
+                    <strong style={{ color: '#0f172a' }}>
+                      {formData.usa_whatsapp === 'Sí, mismo número' ? formData.celular : `${formData.numero_whatsapp_alterno} (Alterno)`}
+                    </strong>
+                  </div>
+                  {formData.correo_electronico && (
+                    <div style={{ gridColumn: 'span 2' }}>
+                      <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Correo Electrónico</span>
+                      <strong style={{ color: '#0f172a' }}>{formData.correo_electronico}</strong>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Bloque 2: Lugar de Votación */}
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '12px 14px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  2. Lugar Donde Vota
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.82rem' }}>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Distrito</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.distrito_vota}</strong>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Mesa de Votación</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.mesa_vota}</strong>
+                  </div>
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local / Colegio de Votación</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.local_vota}</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bloque 3: Asignación */}
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '12px 14px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  3. Asignación Electoral
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: isCoordinadorDistrital ? '1fr 1fr' : '1fr 1fr', gap: '8px', fontSize: '0.82rem' }}>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Rol Solicitado</span>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '2px 8px',
+                      borderRadius: '6px',
+                      background: '#e0f2fe',
+                      color: '#0369a1',
+                      fontWeight: 800,
+                      fontSize: '0.78rem'
+                    }}>
+                      {formData.rol_electoral}
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Distrito Asignado</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.distrito_asignado}</strong>
+                  </div>
+                  {!isCoordinadorDistrital && (
+                    <>
+                      <div>
+                        <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Mesa Asignada</span>
+                        <strong style={{ color: '#0f172a' }}>
+                          {isCoordinadorLocal ? 'No aplica (Coordinador)' : formData.mesa_asignada}
+                        </strong>
+                      </div>
+                      <div>
+                        <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local Asignado</span>
+                        <strong style={{ color: '#0f172a' }}>{formData.local_asignado}</strong>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Bloque 4: Compromiso */}
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '12px 14px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  4. Logística y Compromiso
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.82rem' }}>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>¿Experiencia Previa?</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.tiene_experiencia}</strong>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>¿Movilidad Propia?</span>
+                    <strong style={{ color: '#0f172a' }}>{formData.cuenta_movilidad}</strong>
+                  </div>
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Compromiso</span>
+                    <strong style={{ color: formData.se_compromete.includes('Sí') ? '#16a34a' : '#ef4444' }}>
+                      {formData.se_compromete}
+                    </strong>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Botones de Acción del Modal */}
+            <div style={{ display: 'flex', gap: '10px', marginTop: '8px', borderTop: '1.5px solid #f1f5f9', paddingTop: '16px' }}>
+              
+              {/* Botón para regresar a editar en cualquier momento */}
+              <button
+                type="button"
+                onClick={() => setShowReviewModal(false)}
+                style={{
+                  flex: 1,
+                  padding: '12px 16px',
+                  borderRadius: '10px',
+                  border: '1.5px solid #cbd5e1',
+                  background: '#ffffff',
+                  color: '#334155',
+                  fontWeight: 800,
+                  fontSize: '0.86rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <Edit3 className="w-4 h-4 text-sky-600" />
+                <span>✏️ Modificar / Editar</span>
+              </button>
+
+              {/* Botón de Confirmación y Envío Final */}
+              <button
+                type="button"
+                onClick={handleFinalSubmit}
+                disabled={loading}
+                style={{
+                  flex: 1.3,
+                  padding: '12px 16px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'rgb(14, 165, 233)',
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  fontSize: '0.88rem',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  boxShadow: '0 4px 14px rgba(14, 165, 233, 0.4)'
+                }}
+              >
+                <Send className="w-4 h-4" />
+                <span>{loading ? 'Guardando en SQL Server...' : '✅ Confirmar y Enviar'}</span>
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
+export default RegistrationView;

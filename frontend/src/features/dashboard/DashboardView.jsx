@@ -1,0 +1,1446 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import {
+  LayoutGrid, GraduationCap, Cable, RefreshCw, LogOut, Moon, Sun,
+  Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
+  FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
+  AlertCircle, ChevronRight, Edit3, Heart, Filter, RotateCcw
+} from 'lucide-react';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { useTheme } from '../../context/ThemeContext.jsx';
+import { EditAssignmentModal } from '../../components/modals/EditAssignmentModal.jsx';
+import { DISTRITOS_LIMA, DISTRITO_METAS, ROLES } from '../../constants/catalogs.js';
+import { api } from '../../services/api.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+
+// Helper de normalización distrital
+function normalizeDistrictName(name) {
+  if (!name) return '';
+  let clean = String(name).trim().toUpperCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (clean.includes('LURIGANCHO') || clean.includes('CHOSICA')) return 'LURIGANCHO';
+  if (clean.includes('CERCADO') || clean === 'LIMA' || clean === 'LIMA CERCADO') return 'LIMA';
+  return clean;
+}
+
+function matchesDistrict(recordDistrict, filterDistrict) {
+  if (!filterDistrict || filterDistrict === 'all') return true;
+  if (!recordDistrict) return false;
+  return normalizeDistrictName(recordDistrict) === normalizeDistrictName(filterDistrict);
+}
+
+// Helper de roles (2 roles oficiales: Personero de Mesa y Coordinador de Local)
+function matchesRole(recordRole, filterRole) {
+  if (!filterRole || filterRole === 'all') return true;
+  if (!recordRole) return false;
+  const r = String(recordRole).trim().toLowerCase();
+  const f = String(filterRole).trim().toLowerCase();
+  if (f.includes('coordinador')) return r.includes('coordinador');
+  if (f.includes('mesa')) return r.includes('mesa') || !r.includes('coordinador');
+  return r === f || r.includes(f);
+}
+
+// Helpers para lectura de logística (Experiencia, Movilidad, Compromiso)
+function getExp(r) {
+  const val = String(
+    r['Tiene Experiencia como Personero'] ??
+    r['¿Tiene Experiencia como Personero?'] ??
+    r['Tiene_Experiencia_como_Personero'] ??
+    r.TieneExperiencia ??
+    r.experiencia ??
+    'No'
+  ).trim();
+  return (val.toLowerCase() === 'sí' || val.toLowerCase() === 'si') ? 'Sí' : 'No';
+}
+
+function getMov(r) {
+  const val = String(
+    r['Cuenta con Movilidad Propia'] ??
+    r['¿Cuenta con Movilidad Propia?'] ??
+    r['Cuenta_con_Movilidad_Propia'] ??
+    r.CuentaMovilidad ??
+    r.movilidad ??
+    'No'
+  ).trim();
+  return (val.toLowerCase() === 'sí' || val.toLowerCase() === 'si') ? 'Sí' : 'No';
+}
+
+function getComp(r) {
+  const val = String(
+    r['Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones'] ??
+    r['¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones?'] ??
+    r['Se_compromete_a_colaborar_el_4_de_Octubre_del_2026_en_las_Elecciones'] ??
+    r.seCompromete ??
+    r.compromiso ??
+    'No'
+  ).trim();
+  return (val.toLowerCase().includes('sí') || val.toLowerCase().includes('si')) ? 'Sí' : 'No';
+}
+
+export function DashboardView() {
+  const { user, isCoordinador, isSuperAdmin, logout } = useAuth();
+  const { toggleTheme, isDark } = useTheme();
+
+  const coordinatorDistrict = useMemo(() => {
+    if (!isCoordinador) return null;
+    return user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || user?.distrito || '';
+  }, [isCoordinador, user]);
+
+  const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'capacitacion', 'sql'
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  // Filtros Tab 1 (Panel General)
+  const [search1, setSearch1] = useState('');
+  const [dist1, setDist1] = useState(() => (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : 'all');
+  const [role1, setRole1] = useState('all');
+  const [exp1, setExp1] = useState('all');
+  const [mov1, setMov1] = useState('all');
+  const [comp1, setComp1] = useState('all');
+
+  // Filtros Tab 2 (Capacitaciones)
+  const [search2, setSearch2] = useState('');
+  const [status2, setStatus2] = useState('all');
+  const [dist2, setDist2] = useState(() => (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : 'all');
+  const [role2, setRole2] = useState('all');
+
+  useEffect(() => {
+    if (isCoordinador && coordinatorDistrict) {
+      setDist1(coordinatorDistrict);
+      setDist2(coordinatorDistrict);
+    }
+  }, [isCoordinador, coordinatorDistrict]);
+
+  // Modal Ficha / Edición
+  const [selectedPersonero, setSelectedPersonero] = useState(null);
+
+  // Tab 3 API URL state
+  const [apiUrl, setApiUrl] = useState('http://localhost:3000/api');
+  const [savedUrlMsg, setSavedUrlMsg] = useState(null);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      const res = await api.getDashboardSummary();
+      setData(res);
+    } catch (err) {
+      setErrorMsg(err.message || 'Error al conectar con SQL Server.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const allRecords = data?.records || [];
+  const records = useMemo(() => {
+    if (isCoordinador && coordinatorDistrict) {
+      return allRecords.filter(r => matchesDistrict(r['Distrito Asignado'] || r['Distrito donde Vota'], coordinatorDistrict));
+    }
+    return allRecords;
+  }, [allRecords, isCoordinador, coordinatorDistrict]);
+
+  // =========================================================================
+  // DISTRIBUCIÓN DE PERSONEROS Y COORDINADORES POR DISTRITO PARA EL GRÁFICO
+  // =========================================================================
+  const { personerosByDist, coordsByDist } = useMemo(() => {
+    const pMap = {};
+    const cMap = {};
+    DISTRITOS_LIMA.forEach(d => {
+      pMap[d] = 0;
+      cMap[d] = 0;
+    });
+
+    records.forEach(r => {
+      const rawDist = r['Distrito Asignado'] || r['Distrito donde Vota'] || '';
+      const rawRol = String(r['Rol a Desempeñar'] || '').toLowerCase();
+      const isCoord = rawRol.includes('coordinador');
+
+      DISTRITOS_LIMA.forEach(d => {
+        if (matchesDistrict(rawDist, d)) {
+          if (isCoord) cMap[d]++;
+          else pMap[d]++;
+        }
+      });
+    });
+
+    return { personerosByDist: pMap, coordsByDist: cMap };
+  }, [records]);
+
+  // =========================================================================
+  // FILTRADO TAB 1 (PANEL GENERAL)
+  // =========================================================================
+  const filteredRecords1 = useMemo(() => {
+    return records.filter(r => {
+      const q = search1.toLowerCase().trim();
+      const dni = String(r['D.N.I.'] || r['DNI'] || '').toLowerCase();
+      const name = String(r['Nombres y Apellidos'] || '').toLowerCase();
+      const email = String(r['Correo Electrónico'] || r['correo_electronico'] || '').toLowerCase();
+      const local = String(r['Local de Votación Asignado'] || r['Local de Votación'] || '').toLowerCase();
+      const mesa = String(r['Mesa Asignada'] || r['Mesa de Sufragio'] || '').toLowerCase();
+      const cel = String(r['Celular'] || '').toLowerCase();
+      const dist = r['Distrito Asignado'] || r['Distrito donde Vota'] || '';
+      const rol = r['Rol a Desempeñar'] || '';
+
+      const mSearch = !q || dni.includes(q) || name.includes(q) || local.includes(q) || mesa.includes(q) || cel.includes(q) || email.includes(q);
+      const mDist = (isCoordinador && coordinatorDistrict) ? true : matchesDistrict(dist, dist1);
+      const mRole = matchesRole(rol, role1);
+      const mExp = exp1 === 'all' || (exp1 === 'si' ? getExp(r) === 'Sí' : getExp(r) === 'No');
+      const mMov = mov1 === 'all' || (mov1 === 'si' ? getMov(r) === 'Sí' : getMov(r) === 'No');
+      const mComp = comp1 === 'all' || (comp1 === 'si' ? getComp(r) === 'Sí' : getComp(r) === 'No');
+
+      return mSearch && mDist && mRole && mExp && mMov && mComp;
+    });
+  }, [records, search1, dist1, role1, exp1, mov1, comp1, isCoordinador, coordinatorDistrict]);
+
+  // KPIs dinámicos sobre los registros filtrados de Tab 1
+  let tab1Total = filteredRecords1.length;
+  let tab1Coords = 0;
+  let tab1Personeros = 0;
+  let tab1Exp = 0;
+  let tab1Mov = 0;
+  let tab1Comp = 0;
+
+  filteredRecords1.forEach(r => {
+    const rol = String(r['Rol a Desempeñar'] || '').toLowerCase();
+    if (rol.includes('coordinador')) tab1Coords++;
+    else tab1Personeros++;
+
+    if (getExp(r) === 'Sí') tab1Exp++;
+    if (getMov(r) === 'Sí') tab1Mov++;
+    if (getComp(r) === 'Sí') tab1Comp++;
+  });
+
+  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || role1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
+
+  // Meta territorial dinámica según el distrito asignado o seleccionado
+  const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
+  const selectedDistMeta = activeDistrictName ? (DISTRITO_METAS[activeDistrictName] || 0) : 25397;
+  const targetLabel = activeDistrictName ? `META ${activeDistrictName.toUpperCase()}` : 'AVANCE META TOTAL';
+  const targetSub = activeDistrictName ? `Meta distrital: ${selectedDistMeta.toLocaleString()}` : 'Meta Lima: 25,397';
+  const targetPct = selectedDistMeta > 0 ? Math.min(100, ((tab1Total / selectedDistMeta) * 100)).toFixed(1) : '0.0';
+
+  // =========================================================================
+  // GRÁFICO LIMA METROPOLITANA O DISTRITO DEL COORDINADOR
+  // =========================================================================
+  const chartDistricts = (isCoordinador && coordinatorDistrict) ? [coordinatorDistrict] : DISTRITOS_LIMA;
+
+  const barData1 = useMemo(() => {
+    const isPersoneroActive = role1 === 'all' || role1 === 'Personero de Mesa';
+    const isCoordActive = role1 === 'all' || role1 === 'Coordinador de Local';
+
+    const datasets = [];
+
+    if (isPersoneroActive) {
+      datasets.push({
+        label: 'Personeros de Mesa',
+        data: chartDistricts.map(d => personerosByDist[d] || 0),
+        backgroundColor: chartDistricts.map(d =>
+          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
+            ? '#f59e0b'
+            : '#0284c7'
+        ),
+        borderRadius: 3
+      });
+    }
+
+    if (isCoordActive) {
+      datasets.push({
+        label: 'Coordinadores de Local',
+        data: chartDistricts.map(d => coordsByDist[d] || 0),
+        backgroundColor: chartDistricts.map(d =>
+          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
+            ? '#fbbf24'
+            : '#8b5cf6'
+        ),
+        borderRadius: 3
+      });
+    }
+
+    return {
+      labels: chartDistricts,
+      datasets
+    };
+  }, [chartDistricts, role1, dist1, personerosByDist, coordsByDist]);
+
+  // =========================================================================
+  // FILTRADO TAB 2 (CAPACITACIONES)
+  // =========================================================================
+  const filteredRecords2 = useMemo(() => {
+    return records.filter(r => {
+      const q = search2.toLowerCase().trim();
+      const dni = String(r['D.N.I.'] || r['DNI'] || '').toLowerCase();
+      const name = String(r['Nombres y Apellidos'] || '').toLowerCase();
+      const local = String(r['Local de Votación Asignado'] || r['Local de Votación'] || '').toLowerCase();
+      const dist = r['Distrito Asignado'] || r['Distrito donde Vota'] || '';
+      const rol = r['Rol a Desempeñar'] || '';
+      const cred = String(r.Credenciales || '').toLowerCase();
+
+      const mSearch = !q || dni.includes(q) || name.includes(q) || local.includes(q);
+      const mStatus = status2 === 'all' || (status2 === 'confirmado' ? cred === 'confirmado' : cred !== 'confirmado');
+      const mDist = matchesDistrict(dist, dist2);
+      const mRole = matchesRole(rol, role2);
+
+      return mSearch && mStatus && mDist && mRole;
+    });
+  }, [records, search2, status2, dist2, role2]);
+
+  const isFiltered2 = search2 !== '' || status2 !== 'all' || dist2 !== 'all' || role2 !== 'all';
+
+  let tab2Confirmados = 0;
+  let tab2Pendientes = 0;
+  let tab2Videos = 0;
+  let tab2Pdfs = 0;
+  let v0 = 0, v1 = 0, v2 = 0;
+  let p0 = 0, p1 = 0, p2 = 0;
+
+  filteredRecords2.forEach(r => {
+    const cred = String(r.Credenciales || '').toLowerCase();
+    if (cred === 'confirmado') tab2Confirmados++;
+    else tab2Pendientes++;
+
+    const v = parseInt(r.Video, 10) || 0;
+    const p = parseInt(r.PDF, 10) || 0;
+    if (v >= 2) tab2Videos++;
+    if (p >= 2) tab2Pdfs++;
+
+    if (v === 0) v0++; else if (v === 1) v1++; else v2++;
+    if (p === 0) p0++; else if (p === 1) p1++; else p2++;
+  });
+
+  const doughnutData2 = {
+    labels: ['Confirmados (OK)', 'Bloqueados (Pendiente)'],
+    datasets: [
+      {
+        data: [tab2Confirmados, tab2Pendientes],
+        backgroundColor: ['#10b981', '#f59e0b'],
+        borderWidth: 0
+      }
+    ]
+  };
+
+  const barData2 = {
+    labels: ['0/2 (Sin iniciar)', '1/2 (En proceso)', '2/2 (Completado)'],
+    datasets: [
+      {
+        label: 'Videos Vistos',
+        data: [v0, v1, v2],
+        backgroundColor: '#38bdf8',
+        borderRadius: 4
+      },
+      {
+        label: 'Manuales PDF',
+        data: [p0, p1, p2],
+        backgroundColor: '#a855f7',
+        borderRadius: 4
+      }
+    ]
+  };
+
+  // Variables de estilo reactivas al Modo Oscuro / Claro
+  const bgMain = isDark ? '#0b1329' : '#f8fafc';
+  const bgCard = isDark ? '#131b2e' : '#ffffff';
+  const bgHeader = isDark ? '#111827' : '#ffffff';
+  const bgSidebar = isDark ? '#131b2e' : '#ffffff';
+  const borderCol = isDark ? '#233554' : '#e2e8f0';
+  const textTitle = isDark ? '#ffffff' : '#0f172a';
+  const textSub = isDark ? '#94a3b8' : '#64748b';
+  const textBody = isDark ? '#e2e8f0' : '#334155';
+  const bgInput = isDark ? '#141c30' : '#ffffff';
+  const tableHeadBg = isDark ? '#111827' : '#f8fafc';
+  const tableRowBorder = isDark ? '#1e293b' : '#f1f5f9';
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', background: bgMain, color: textBody, fontFamily: "'Outfit', 'Montserrat', sans-serif", transition: 'all 0.2s ease' }}>
+      
+      {/* BARRA LATERAL IZQUIERDA */}
+      <aside style={{ width: '250px', background: bgSidebar, borderRight: `1px solid ${borderCol}`, display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'all 0.2s ease' }}>
+        
+        {/* Sello Somos Perú / Logo ConteoLima */}
+        <div style={{ padding: '20px', borderBottom: `1px solid ${borderCol}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img src="/images/logo_somos_peru.svg" alt="Somos Perú" style={{ width: '48px', height: 'auto', maxHeight: '42px', objectFit: 'contain', flexShrink: 0 }} />
+            <div>
+              <div style={{ fontSize: '1rem', fontWeight: 900, color: textTitle, lineHeight: 1.1 }}>ConteoLima</div>
+              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0284c7' }}>Somos Perú 2026</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Navegación */}
+        <div style={{ padding: '20px 14px', flex: 1 }}>
+          <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, letterSpacing: '0.8px', marginBottom: '12px', paddingLeft: '8px' }}>
+            PANEL DE NAVEGACIÓN
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            
+            {/* Tab 1: Panel General */}
+            <button
+              onClick={() => setActiveTab('overview')}
+              style={{
+                padding: '12px 14px',
+                borderRadius: '10px',
+                border: 'none',
+                background: activeTab === 'overview' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                color: activeTab === 'overview' ? '#0284c7' : textSub,
+                fontWeight: 700,
+                fontSize: '0.86rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                textAlign: 'left',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <LayoutGrid className="w-4 h-4 flex-shrink-0" />
+              <span>{isCoordinador && coordinatorDistrict ? `Panel Distrital (${coordinatorDistrict})` : 'Panel General'}</span>
+            </button>
+
+            {/* Tab 2: Progreso de Capacitaciones */}
+            <button
+              onClick={() => setActiveTab('capacitacion')}
+              style={{
+                padding: '12px 14px',
+                borderRadius: '10px',
+                border: 'none',
+                background: activeTab === 'capacitacion' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                color: activeTab === 'capacitacion' ? '#0284c7' : textSub,
+                fontWeight: 700,
+                fontSize: '0.86rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                textAlign: 'left',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <GraduationCap className="w-4 h-4 flex-shrink-0" />
+              <span>{isCoordinador && coordinatorDistrict ? `Capacitaciones (${coordinatorDistrict})` : 'Progreso de Capacitaciones'}</span>
+            </button>
+
+            {/* Tab 3: Conexión a SQL Server (Solo Administrador) */}
+            {isSuperAdmin && (
+              <button
+                onClick={() => setActiveTab('sql')}
+                style={{
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: activeTab === 'sql' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                  color: activeTab === 'sql' ? '#0284c7' : textSub,
+                  fontWeight: 700,
+                  fontSize: '0.86rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  textAlign: 'left',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <Cable className="w-4 h-4 flex-shrink-0" />
+                <span>Conexión a SQL Server</span>
+              </button>
+            )}
+
+          </div>
+        </div>
+
+        {/* Footer Sidebar */}
+        <div style={{ padding: '20px', borderTop: `1px solid ${borderCol}`, fontSize: '0.72rem', color: textSub, textAlign: 'center' }}>
+          <strong>Somos Perú 2026</strong><br />
+          Defensa y Control del Voto
+        </div>
+      </aside>
+
+      {/* CONTENIDO PRINCIPAL */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        
+        {/* ENCABEZADO SUPERIOR */}
+        <header style={{ background: bgHeader, borderBottom: `1px solid ${borderCol}`, padding: '16px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'all 0.2s ease' }}>
+          <div>
+            <h1 style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle, margin: 0 }}>
+              {activeTab === 'overview' && (isCoordinador && coordinatorDistrict ? `Control Electoral - Distrito ${coordinatorDistrict}` : 'Control Electoral y Monitoreo')}
+              {activeTab === 'capacitacion' && (isCoordinador && coordinatorDistrict ? `Capacitaciones - Distrito ${coordinatorDistrict}` : 'Progreso de las Capacitaciones en Gráficas')}
+              {activeTab === 'sql' && 'Conexión a SQL Server'}
+            </h1>
+            <p style={{ fontSize: '0.78rem', color: textSub, margin: '2px 0 0 0' }}>
+              {activeTab === 'overview' && (isCoordinador && coordinatorDistrict ? `Monitoreo exclusivo de personeros y mesas asignadas para ${coordinatorDistrict}` : 'Gestión centralizada de personeros, asignaciones electorales y cobertura territorial')}
+              {activeTab === 'capacitacion' && 'Monitoreo gráfico de avance en videos, manuales PDF y estado de credenciales oficiales'}
+              {activeTab === 'sql' && 'Administración de la API de SQL Server y estado de las tablas dbo.personero y dbo.coordinadores'}
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {/* Badge de Coordinador con su distrito */}
+            {isCoordinador && coordinatorDistrict && (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
+                border: '1.5px solid #38bdf8',
+                color: '#0284c7',
+                fontWeight: 800,
+                fontSize: '0.82rem'
+              }}>
+                <ShieldCheck className="w-4 h-4 text-sky-500" />
+                <span>Coordinador: {user?.['Nombres y Apellidos'] || user?.fullName || 'Registrado'} • Distrito: {coordinatorDistrict}</span>
+              </div>
+            )}
+
+            {/* Toggle Modo Oscuro / Claro */}
+            <button
+              onClick={toggleTheme}
+              title={isDark ? 'Cambiar a Modo Claro' : 'Cambiar a Modo Oscuro'}
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '50%',
+                border: `1px solid ${borderCol}`,
+                background: bgCard,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+            </button>
+
+            <button
+              onClick={fetchData}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: `1px solid ${borderCol}`,
+                background: bgCard,
+                color: textTitle,
+                fontSize: '0.82rem',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <span>Sincronizar SQL</span>
+            </button>
+
+            <button
+              onClick={logout}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: '1px solid #fecaca',
+                background: isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2',
+                color: '#ef4444',
+                fontSize: '0.82rem',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
+        </header>
+
+        {/* CUERPO DEL TAB SELECCIONADO */}
+        <div style={{ padding: '24px 28px', flex: 1, overflowY: 'auto' }}>
+          
+          {/* =========================================================================
+              TAB 1: PANEL GENERAL
+              ========================================================================= */}
+          {activeTab === 'overview' && (
+            <div>
+              {/* Barra de Filtros Limpia */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '16px 18px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
+                  
+                  {/* Búsqueda por texto */}
+                  <div style={{ position: 'relative', flex: '1 1 200px' }}>
+                    <Search className="w-4 h-4 text-sky-500" style={{ position: 'absolute', left: '12px', top: '10px' }} />
+                    <input
+                      type="text"
+                      placeholder="Buscar por Nombre, DNI, Local..."
+                      value={search1}
+                      onChange={(e) => setSearch1(e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px 8px 34px', borderRadius: '8px', border: `1px solid ${borderCol}`, background: bgInput, color: textTitle, fontSize: '0.82rem', outline: 'none' }}
+                    />
+                  </div>
+
+                  {/* Filtro Distrito */}
+                  {isCoordinador && coordinatorDistrict ? (
+                    <select
+                      value={coordinatorDistrict}
+                      disabled
+                      style={{ padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #0284c7', fontSize: '0.82rem', background: isDark ? '#1e293b' : '#f0f9ff', color: textTitle, fontWeight: 700, cursor: 'not-allowed' }}
+                    >
+                      <option value={coordinatorDistrict}>📍 {coordinatorDistrict} (Distrito Asignado)</option>
+                    </select>
+                  ) : (
+                    <select
+                      value={dist1}
+                      onChange={(e) => setDist1(e.target.value)}
+                      style={{ padding: '8px 12px', borderRadius: '8px', border: dist1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: dist1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: dist1 !== 'all' ? 700 : 500 }}
+                    >
+                      <option value="all">📍 Todos los Distritos</option>
+                      {DISTRITOS_LIMA.map((d, i) => (
+                        <option key={i} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  )}
+
+                  {/* Filtro Roles (2 roles) */}
+                  <select
+                    value={role1}
+                    onChange={(e) => setRole1(e.target.value)}
+                    style={{ padding: '8px 12px', borderRadius: '8px', border: role1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: role1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: role1 !== 'all' ? 700 : 500 }}
+                  >
+                    <option value="all">🛡️ Todos los Roles</option>
+                    <option value="Personero de Mesa">Personero de Mesa</option>
+                    <option value="Coordinador de Local">Coordinador de Local</option>
+                  </select>
+
+                  {/* Filtro Experiencia */}
+                  <select
+                    value={exp1}
+                    onChange={(e) => setExp1(e.target.value)}
+                    style={{ padding: '8px 12px', borderRadius: '8px', border: exp1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: exp1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: exp1 !== 'all' ? 700 : 500 }}
+                  >
+                    <option value="all">⭐ Experiencia: Todos</option>
+                    <option value="si">Experiencia: Sí</option>
+                    <option value="no">Experiencia: No</option>
+                  </select>
+
+                  {/* Filtro Movilidad */}
+                  <select
+                    value={mov1}
+                    onChange={(e) => setMov1(e.target.value)}
+                    style={{ padding: '8px 12px', borderRadius: '8px', border: mov1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: mov1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: mov1 !== 'all' ? 700 : 500 }}
+                  >
+                    <option value="all">🚗 Movilidad: Todos</option>
+                    <option value="si">Movilidad: Sí</option>
+                    <option value="no">Movilidad: No</option>
+                  </select>
+
+                  {/* Filtro Compromiso */}
+                  <select
+                    value={comp1}
+                    onChange={(e) => setComp1(e.target.value)}
+                    style={{ padding: '8px 12px', borderRadius: '8px', border: comp1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: comp1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: comp1 !== 'all' ? 700 : 500 }}
+                  >
+                    <option value="all">📅 Compromiso: Todos</option>
+                    <option value="si">Compromiso: Sí</option>
+                    <option value="no">Compromiso: No</option>
+                  </select>
+
+                  {/* Botón Limpiar Filtros */}
+                  {isFiltered1 && (
+                    <button
+                      onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
+                      style={{
+                        padding: '8px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid #f87171',
+                        background: isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2',
+                        color: '#ef4444',
+                        fontSize: '0.82rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Limpiar Todo</span>
+                    </button>
+                  )}
+                </div>
+
+                {/* Resumen del Filtro Activo y Cantidad Encontrada */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: textSub, borderTop: `1px solid ${borderCol}`, paddingTop: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
+                      color: '#0284c7',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontWeight: 800
+                    }}>
+                      <Filter className="w-3.5 h-3.5" />
+                      <span>{tab1Total} {tab1Total === 1 ? 'personero encontrado' : 'personeros encontrados'}</span>
+                    </div>
+
+                    {dist1 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        📍 {dist1} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setDist1('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {role1 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        🛡️ {role1} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setRole1('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {exp1 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        ⭐ Exp: {exp1 === 'si' ? 'Sí' : 'No'} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setExp1('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {mov1 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        🚗 Mov: {mov1 === 'si' ? 'Sí' : 'No'} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setMov1('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {comp1 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        📅 Comp: {comp1 === 'si' ? 'Sí' : 'No'} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setComp1('all')}>×</strong>
+                      </span>
+                    )}
+                  </div>
+
+                  <span style={{ fontSize: '0.74rem' }}>
+                    Total padrón: <strong>{records.length}</strong>
+                  </span>
+                </div>
+              </div>
+
+              {/* Indicadores Electorales Clave (7 KPIs Sincronizados) */}
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
+                    <LayoutGrid className="w-4 h-4 text-sky-500" />
+                    <span>Indicadores Electorales Sincronizados ({tab1Total})</span>
+                  </div>
+                  <span style={{ fontSize: '0.74rem', color: textSub }}>
+                    {isFiltered1 ? `Métricas en vivo para ${tab1Total} seleccionados` : 'Métricas del padrón completo'}
+                  </span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
+                  
+                  {/* KPI 1 */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px', transition: 'all 0.2s ease' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>TOTAL FILTRADOS</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Users className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Total}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>{isFiltered1 ? `De ${records.length} totales` : 'Padrón Somos Perú'}</div>
+                  </div>
+
+                  {/* KPI 2 */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORDINADORES</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Coords}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Local</div>
+                  </div>
+
+                  {/* KPI 3 */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONEROS MESA</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ShieldCheck className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Personeros}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Defensa del Voto</div>
+                  </div>
+
+                  {/* KPI 4 */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>CON EXPERIENCIA</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Exp}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Elecciones Previas</div>
+                  </div>
+
+                  {/* KPI 5 */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f97316', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>CON MOVILIDAD</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(249, 115, 22, 0.2)' : '#ffedd5', color: '#f97316', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Car className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Mov}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Vehículo Propio</div>
+                  </div>
+
+                  {/* KPI 6 */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COMPROMISO 2026</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Calendar className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Comp}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>4 de Octubre</div>
+                  </div>
+
+                  {/* KPI 7 - Dinámico con respecto a la meta distrital o meta Lima */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #eab308', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#eab308' }}>{targetLabel}</div>
+                    <div style={{ fontSize: '0.72rem', color: textSub, fontWeight: 700 }}>{targetSub}</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: textTitle, marginTop: '6px' }}>
+                      {tab1Total} / {selectedDistMeta.toLocaleString()} <span style={{ fontSize: '0.8rem', color: '#eab308' }}>{targetPct}%</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Gráfico Resultado Lima Metropolitana (Muestra las 2 barras para Personeros y Coordinadores) */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '20px', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle }}>
+                    <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
+                    <span>Resultado Lima Metropolitana (43 Distritos)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <span style={{ background: isDark ? '#1e293b' : '#e0f2fe', color: '#0284c7', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
+                      {dist1 !== 'all' ? `Distrito resaltado: ${dist1}` : `Total Registrados: ${records.length}`}
+                    </span>
+                  </div>
+                </div>
+                <div style={{ height: '240px' }}>
+                  <Bar
+                    data={barData1}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                        x: {
+                          ticks: { color: textSub, font: { size: 9 }, maxRotation: 45, minRotation: 45 }
+                        },
+                        y: {
+                          ticks: { color: textSub, stepSize: 1 },
+                          beginAtZero: true
+                        }
+                      },
+                      plugins: {
+                        legend: {
+                          display: true,
+                          position: 'top',
+                          labels: {
+                            color: textTitle,
+                            font: { size: 11, weight: 'bold' }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Tabla Padrón Electoral de Personeros */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', overflow: 'hidden' }}>
+                <div style={{ padding: '16px 20px', borderBottom: `1px solid ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
+                    <LayoutGrid className="w-4 h-4 text-amber-500" />
+                    <span>Padrón Electoral de Personeros</span>
+                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: textSub, marginLeft: '8px' }}>
+                      ({filteredRecords1.length} {filteredRecords1.length === 1 ? 'resultado' : 'resultados'})
+                    </span>
+                  </div>
+
+                  <a
+                    href={api.getExportUrl('xlsx', dist1 !== 'all' ? dist1 : '')}
+                    download
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      background: '#10b981',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      fontSize: '0.82rem',
+                      fontWeight: 700
+                    }}
+                  >
+                    <FileSpreadsheet className="w-4 h-4" />
+                    <span>Descargar Excel {dist1 !== 'all' ? `(${dist1})` : ''}</span>
+                  </a>
+                </div>
+
+                <div style={{ overflowX: 'auto' }}>
+                  {filteredRecords1.length > 0 ? (
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
+                      <thead>
+                        <tr style={{ background: tableHeadBg, borderBottom: `1px solid ${borderCol}`, color: textSub, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                          <th style={{ padding: '12px 14px' }}>ID</th>
+                          <th style={{ padding: '12px 14px' }}>FECHA</th>
+                          <th style={{ padding: '12px 14px' }}>PERSONERO / DNI / CORREO</th>
+                          <th style={{ padding: '12px 14px' }}>ROL A DESEMPEÑAR</th>
+                          <th style={{ padding: '12px 14px' }}>ASIGNACIÓN SOMOS PERÚ</th>
+                          <th style={{ padding: '12px 14px' }}>VOTACIÓN (DNI)</th>
+                          <th style={{ padding: '12px 14px' }}>CONTACTO & WHATSAPP</th>
+                          <th style={{ padding: '12px 14px' }}>LOGÍSTICA</th>
+                          <th style={{ padding: '12px 14px', textAlign: 'center' }}>ACCIONES</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredRecords1.map((r, idx) => {
+                          const dni = r['D.N.I.'] || r['DNI'];
+                          const cel = r['Celular'] || '-';
+                          const exp = getExp(r);
+                          const mov = getMov(r);
+                          const comp = getComp(r);
+
+                          return (
+                            <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
+                              <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0284c7' }}>#{idx + 1}</td>
+                              <td style={{ padding: '12px 14px', color: textSub, fontSize: '0.75rem' }}>{r['Fecha de Registro'] || '2026-08-17'}</td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos']}</div>
+                                <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                                {r['Correo Electrónico'] && (
+                                  <div style={{ fontSize: '0.7rem', color: textSub }}>{r['Correo Electrónico']}</div>
+                                )}
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                                  {r['Rol a Desempeñar'] || 'Personero de Mesa'}
+                                </span>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ fontWeight: 800, color: '#0284c7' }}>{r['Distrito Asignado'] || r['Distrito donde Vota']}</div>
+                                <div style={{ fontSize: '0.72rem', color: textSub }}>{r['Local de Votación Asignado'] || r['Local de Votación']}</div>
+                                <div style={{ fontSize: '0.72rem', color: textTitle }}>Mesa Asignada: <strong>{r['Mesa Asignada'] || r['Mesa de Sufragio']}</strong></div>
+                              </td>
+                              <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
+                                <div style={{ color: textBody }}>{r['Distrito donde Vota']}</div>
+                                <div style={{ color: textSub }}>Local: {r['Local de Votación']}</div>
+                                <div style={{ color: textSub }}>Mesa: {r['Mesa de Sufragio']}</div>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ fontWeight: 700, color: textTitle }}>{cel}</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#16a34a', fontSize: '0.75rem', fontWeight: 700 }}>
+                                  <span>📱 {cel}</span>
+                                </div>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '0.72rem', fontWeight: 800 }}>
+                                  <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>
+                                    Exp: <strong>{exp}</strong>
+                                  </span>
+                                  <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>
+                                    Mov: <strong>{mov}</strong>
+                                  </span>
+                                  <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>
+                                    Comp: <strong>{comp}</strong>
+                                  </span>
+                                </div>
+                              </td>
+                              <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                                <button
+                                  onClick={() => setSelectedPersonero(r)}
+                                  style={{
+                                    padding: '6px 14px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #0284c7',
+                                    background: 'transparent',
+                                    color: '#0284c7',
+                                    fontWeight: 700,
+                                    fontSize: '0.75rem',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  Ver Ficha
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div style={{ padding: '40px 20px', textAlign: 'center', color: textSub }}>
+                      <AlertCircle className="w-8 h-8 mx-auto text-amber-500 mb-2" />
+                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: textTitle }}>No se encontraron personeros con los filtros actuales</div>
+                      <p style={{ fontSize: '0.8rem', margin: '6px 0 14px 0' }}>Pruebe cambiando o limpiando los criterios de búsqueda.</p>
+                      <button
+                        onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
+                        style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#0284c7', color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
+                      >
+                        Restablecer Filtros
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =========================================================================
+              TAB 2: PROGRESO DE CAPACITACIONES
+              ========================================================================= */}
+          {activeTab === 'capacitacion' && (
+            <div>
+              {/* Banner Top */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '16px 20px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem', fontWeight: 900, color: textTitle }}>
+                  <GraduationCap className="w-5 h-5 text-sky-500" />
+                  <span>Progreso de las Capacitaciones en Gráficas</span>
+                </div>
+                <div style={{ fontSize: '0.78rem', color: textSub, marginTop: '2px' }}>
+                  Estadísticas y visualización gráfica del avance en videos formativos, manuales PDF y habilitación de credenciales
+                </div>
+              </div>
+
+              {/* Barra de Filtros Tab 2 */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px 18px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
+                  <div style={{ position: 'relative', flex: '1 1 200px' }}>
+                    <Search className="w-4 h-4 text-sky-500" style={{ position: 'absolute', left: '12px', top: '10px' }} />
+                    <input
+                      type="text"
+                      placeholder="Buscar personero por Nombre, DNI, Local..."
+                      value={search2}
+                      onChange={(e) => setSearch2(e.target.value)}
+                      style={{ width: '100%', padding: '8px 12px 8px 34px', borderRadius: '8px', border: `1px solid ${borderCol}`, background: bgInput, color: textTitle, fontSize: '0.82rem', outline: 'none' }}
+                    />
+                  </div>
+
+                  <select
+                    value={status2}
+                    onChange={(e) => setStatus2(e.target.value)}
+                    style={{ padding: '8px 12px', borderRadius: '8px', border: status2 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: status2 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: status2 !== 'all' ? 700 : 500 }}
+                  >
+                    <option value="all">Todos los Estados</option>
+                    <option value="confirmado">Confirmado</option>
+                    <option value="bloqueado">Bloqueado</option>
+                  </select>
+
+                  {isCoordinador && coordinatorDistrict ? (
+                    <select
+                      value={coordinatorDistrict}
+                      disabled
+                      style={{ padding: '8px 12px', borderRadius: '8px', border: '1.5px solid #0284c7', fontSize: '0.82rem', background: isDark ? '#1e293b' : '#f0f9ff', color: textTitle, fontWeight: 700, cursor: 'not-allowed' }}
+                    >
+                      <option value={coordinatorDistrict}>📍 {coordinatorDistrict} (Distrito Asignado)</option>
+                    </select>
+                  ) : (
+                    <select
+                      value={dist2}
+                      onChange={(e) => setDist2(e.target.value)}
+                      style={{ padding: '8px 12px', borderRadius: '8px', border: dist2 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: dist2 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: dist2 !== 'all' ? 700 : 500 }}
+                    >
+                      <option value="all">📍 Todos los Distritos</option>
+                      {DISTRITOS_LIMA.map((d, i) => (
+                        <option key={i} value={d}>{d}</option>
+                      ))}
+                    </select>
+                  )}
+
+                  <select
+                    value={role2}
+                    onChange={(e) => setRole2(e.target.value)}
+                    style={{ padding: '8px 12px', borderRadius: '8px', border: role2 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: role2 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: role2 !== 'all' ? 700 : 500 }}
+                  >
+                    <option value="all">🛡️ Todos los Roles</option>
+                    <option value="Personero de Mesa">Personero de Mesa</option>
+                    <option value="Coordinador de Local">Coordinador de Local</option>
+                  </select>
+
+                  {isFiltered2 && (
+                    <button
+                      onClick={() => { setSearch2(''); setStatus2('all'); setDist2('all'); setRole2('all'); }}
+                      style={{
+                        padding: '8px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid #f87171',
+                        background: isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2',
+                        color: '#ef4444',
+                        fontSize: '0.82rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Limpiar Todo</span>
+                    </button>
+                  )}
+                </div>
+
+                {/* Resumen del Filtro Activo Tab 2 */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: textSub, borderTop: `1px solid ${borderCol}`, paddingTop: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
+                      color: '#0284c7',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontWeight: 800
+                    }}>
+                      <Filter className="w-3.5 h-3.5" />
+                      <span>{filteredRecords2.length} {filteredRecords2.length === 1 ? 'personero encontrado' : 'personeros encontrados'}</span>
+                    </div>
+
+                    {dist2 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        📍 {dist2} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setDist2('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {status2 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        ⚡ Estado: {status2} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setStatus2('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {role2 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        🛡️ {role2} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setRole2('all')}>×</strong>
+                      </span>
+                    )}
+                  </div>
+
+                  <span style={{ fontSize: '0.74rem' }}>
+                    Total capacitaciones: <strong>{records.length}</strong>
+                  </span>
+                </div>
+              </div>
+
+              {/* 4 KPIs de Capacitación Sincronizados */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '20px' }}>
+                
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: '16px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, color: textSub }}>CREDENCIALES CONFIRMADAS</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '6px 0' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 className="w-5 h-5" /></div>
+                    <span style={{ fontSize: '1.6rem', fontWeight: 900, color: textTitle }}>{tab2Confirmados}</span>
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: textSub }}>Capacitación Completa</div>
+                </div>
+
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: '16px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, color: textSub }}>CREDENCIALES PENDIENTES</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '6px 0' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Lock className="w-5 h-5" /></div>
+                    <span style={{ fontSize: '1.6rem', fontWeight: 900, color: textTitle }}>{tab2Pendientes}</span>
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: textSub }}>Pendiente de completar</div>
+                </div>
+
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '16px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, color: textSub }}>VIDEOS COMPLETADOS</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '6px 0' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Video className="w-5 h-5" /></div>
+                    <span style={{ fontSize: '1.6rem', fontWeight: 900, color: textTitle }}>{tab2Videos}</span>
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: textSub }}>Módulos de Video (2/2)</div>
+                </div>
+
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '16px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 800, color: textSub }}>MANUALES PDF LEÍDOS</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '6px 0' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FileText className="w-5 h-5" /></div>
+                    <span style={{ fontSize: '1.6rem', fontWeight: 900, color: textTitle }}>{tab2Pdfs}</span>
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: textSub }}>Guía de Procedimientos (2/2)</div>
+                </div>
+
+              </div>
+
+              {/* 2 Gráficos de Capacitación Sincronizados con el Filtro */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '16px', marginBottom: '24px' }}>
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '20px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle, marginBottom: '14px' }}>
+                    <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
+                    <span>Estado de Credenciales {dist2 !== 'all' ? `(${dist2})` : ''}</span>
+                  </div>
+                  <div style={{ height: '220px' }}>
+                    <Doughnut data={doughnutData2} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: textTitle } } } }} />
+                  </div>
+                </div>
+
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '20px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle, marginBottom: '14px' }}>
+                    <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
+                    <span>Avance Videos vs Manuales PDF {dist2 !== 'all' ? `(${dist2})` : ''}</span>
+                  </div>
+                  <div style={{ height: '220px' }}>
+                    <Bar data={barData2} options={{ responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: textSub } }, y: { ticks: { color: textSub } } }, plugins: { legend: { labels: { color: textTitle } } } }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Tabla de Progreso Tab 2 */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', overflow: 'hidden' }}>
+                <div style={{ overflowX: 'auto' }}>
+                  {filteredRecords2.length > 0 ? (
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
+                      <thead>
+                        <tr style={{ background: tableHeadBg, borderBottom: `1px solid ${borderCol}`, color: textSub, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                          <th style={{ padding: '12px 14px' }}>ID</th>
+                          <th style={{ padding: '12px 14px' }}>PERSONERO / DNI</th>
+                          <th style={{ padding: '12px 14px' }}>ROL</th>
+                          <th style={{ padding: '12px 14px' }}>DISTRITO ASIGNADO</th>
+                          <th style={{ padding: '12px 14px' }}>PROGRESO VIDEO</th>
+                          <th style={{ padding: '12px 14px' }}>PROGRESO PDF</th>
+                          <th style={{ padding: '12px 14px' }}>ESTADO CREDENCIAL</th>
+                          <th style={{ padding: '12px 14px' }}>WHATSAPP RECORDATORIO</th>
+                          <th style={{ padding: '12px 14px', textAlign: 'center' }}>ACCIONES</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredRecords2.map((r, idx) => {
+                          const dni = r['D.N.I.'] || r['DNI'];
+                          const cel = r['Celular'] || '';
+                          const v = parseInt(r.Video, 10) || 0;
+                          const p = parseInt(r.PDF, 10) || 0;
+                          const isAcc = String(r.Credenciales).toLowerCase() === 'confirmado';
+
+                          return (
+                            <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
+                              <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0284c7' }}>#{idx + 1}</td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos']}</div>
+                                <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                                  {r['Rol a Desempeñar'] || 'Personero de Mesa'}
+                                </span>
+                              </td>
+                              <td style={{ padding: '12px 14px', color: textBody }}>
+                                {r['Distrito Asignado'] || r['Distrito donde Vota'] || '-'}
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  <div style={{ flex: 1, height: '6px', background: isDark ? '#1e293b' : '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                                    <div style={{ width: `${(v / 2) * 100}%`, height: '100%', background: '#0284c7' }}></div>
+                                  </div>
+                                  <span style={{ fontWeight: 800, color: '#0284c7', fontSize: '0.75rem' }}>{v}/2</span>
+                                </div>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  <div style={{ flex: 1, height: '6px', background: isDark ? '#1e293b' : '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                                    <div style={{ width: `${(p / 2) * 100}%`, height: '100%', background: '#a855f7' }}></div>
+                                  </div>
+                                  <span style={{ fontWeight: 800, color: '#a855f7', fontSize: '0.75rem' }}>{p}/2</span>
+                                </div>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <span style={{
+                                  display: 'inline-block',
+                                  padding: '4px 10px',
+                                  borderRadius: '6px',
+                                  fontSize: '0.75rem',
+                                  fontWeight: 700,
+                                  background: isAcc ? (isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7') : (isDark ? 'rgba(239, 68, 68, 0.2)' : '#fee2e2'),
+                                  color: isAcc ? '#10b981' : '#ef4444',
+                                  border: isAcc ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)'
+                                }}>
+                                  {isAcc ? 'Confirmado' : 'Bloqueado'}
+                                </span>
+                              </td>
+                              <td style={{ padding: '12px 14px' }}>
+                                <a
+                                  href={`https://wa.me/51${cel}?text=${encodeURIComponent(`Hola ${r['Nombres y Apellidos']}, te recordamos ingresar a capacitarte como personero de Somos Perú para completar tus módulos: ${window.location.origin}`)}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    color: '#16a34a',
+                                    fontWeight: 700,
+                                    textDecoration: 'none',
+                                    fontSize: '0.75rem'
+                                  }}
+                                >
+                                  <span>📱 Recordatorio</span>
+                                </a>
+                              </td>
+                              <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                                <button
+                                  onClick={() => setSelectedPersonero(r)}
+                                  style={{
+                                    padding: '6px 14px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #0284c7',
+                                    background: 'transparent',
+                                    color: '#0284c7',
+                                    fontWeight: 700,
+                                    fontSize: '0.75rem',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  Ver Ficha
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div style={{ padding: '40px 20px', textAlign: 'center', color: textSub }}>
+                      <AlertCircle className="w-8 h-8 mx-auto text-amber-500 mb-2" />
+                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: textTitle }}>No se encontraron personeros con los filtros actuales</div>
+                      <p style={{ fontSize: '0.8rem', margin: '6px 0 14px 0' }}>Pruebe cambiando o limpiando los criterios de búsqueda de capacitación.</p>
+                      <button
+                        onClick={() => { setSearch2(''); setStatus2('all'); setDist2('all'); setRole2('all'); }}
+                        style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#0284c7', color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
+                      >
+                        Restablecer Filtros
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =========================================================================
+              TAB 3: CONEXIÓN A SQL SERVER
+              ========================================================================= */}
+          {activeTab === 'sql' && (
+            <div>
+              {/* Banner Top */}
+              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '16px 20px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem', fontWeight: 900, color: textTitle }}>
+                  <Cable className="w-5 h-5 text-sky-500" />
+                  <span>Conexión a SQL Server Management Studio</span>
+                </div>
+                <div style={{ fontSize: '0.78rem', color: textSub, marginTop: '2px' }}>
+                  Configuración de tablas SQL Server (dbo.personero y dbo.coordinadores)
+                </div>
+              </div>
+
+              {savedUrlMsg && (
+                <div style={{ padding: '12px 16px', borderRadius: '10px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', border: '1px solid #bbf7d0', color: '#10b981', fontSize: '0.85rem', fontWeight: 700, marginBottom: '20px' }}>
+                  ✓ {savedUrlMsg}
+                </div>
+              )}
+
+              {/* 2 Cards side by side */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                
+                {/* Card 1: Estado de la Conexión SQL Server */}
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '24px' }}>
+                  <h3 style={{ fontSize: '0.98rem', fontWeight: 900, color: textTitle, margin: '0 0 16px 0' }}>
+                    Estado de la Conexión SQL Server
+                  </h3>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: `1px solid ${borderCol}` }}>
+                    <span style={{ fontSize: '0.85rem', color: textSub, fontWeight: 600 }}>Registros en SQL Server:</span>
+                    <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 12px', borderRadius: '14px', fontSize: '0.82rem', fontWeight: 800 }}>
+                      {records.length} registros
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0' }}>
+                    <span style={{ fontSize: '0.85rem', color: textSub, fontWeight: 600 }}>Última Sincronización:</span>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 800, color: textTitle }}>
+                      {new Date().toLocaleTimeString('es-PE')}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card 2: URL del Servidor API (SQL Server) */}
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '24px' }}>
+                  <h3 style={{ fontSize: '0.98rem', fontWeight: 900, color: textTitle, margin: '0 0 12px 0' }}>
+                    URL del Servidor API (SQL Server)
+                  </h3>
+
+                  <div style={{ fontSize: '0.78rem', color: textSub, fontWeight: 700, marginBottom: '6px' }}>
+                    URL API Activa:
+                  </div>
+
+                  <textarea
+                    value={apiUrl}
+                    onChange={(e) => setApiUrl(e.target.value)}
+                    rows={3}
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px',
+                      borderRadius: '8px',
+                      border: `1px solid ${borderCol}`,
+                      background: bgInput,
+                      fontSize: '0.85rem',
+                      fontFamily: 'monospace',
+                      color: textTitle,
+                      marginBottom: '16px',
+                      outline: 'none'
+                    }}
+                  />
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button
+                      onClick={() => setApiUrl('http://localhost:3000/api')}
+                      style={{ padding: '8px 16px', borderRadius: '8px', border: `1px solid ${borderCol}`, background: isDark ? '#1e293b' : '#f8fafc', color: textTitle, fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer' }}
+                    >
+                      Restaurar Defecto
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setSavedUrlMsg('Configuración guardada y sincronizada con SQL Server.');
+                        fetchData();
+                        setTimeout(() => setSavedUrlMsg(null), 3000);
+                      }}
+                      style={{ padding: '8px 20px', borderRadius: '8px', border: 'none', background: 'rgb(14, 165, 233)', color: '#ffffff', fontSize: '0.82rem', fontWeight: 800, cursor: 'pointer' }}
+                    >
+                      Guardar y Conectar
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+        </div>
+      </div>
+
+      {/* Modal Ficha / Edición */}
+      {selectedPersonero && (
+        <EditAssignmentModal
+          personero={selectedPersonero}
+          onClose={() => setSelectedPersonero(null)}
+          onSaved={fetchData}
+        />
+      )}
+    </div>
+  );
+}
+
+export default DashboardView;

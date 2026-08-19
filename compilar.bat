@@ -1,15 +1,19 @@
 @echo off
-title Compilar Aplicativo RegistroConteo
+setlocal
+cd /d "%~dp0"
+title ConteoLima - Compilar Produccion
+chcp 65001 >nul
+
 echo ==========================================================
-echo           COMPILANDO APLICATIVO CON LAS ULTIMAS ACTUALIZACIONES
+echo           COMPILANDO APLICATIVO EN PRODUCCION
 echo ==========================================================
 echo.
-echo Ejecutando compilacion en produccion...
-npm run build
+cd /d "%~dp0frontend"
+call npm run build
 echo.
 echo ==========================================================
-echo Compilacion terminada. Los archivos listos estan en:
-echo E:\registroconteo\dist
+echo   Compilacion terminada con exito. Archivos listos en:
+echo   %~dp0frontend\dist
 echo ==========================================================
 echo.
 pause

@@ -1,0 +1,95 @@
+/* ==========================================================================
+   SOMOS PERÚ 2026 — DESIGN SYSTEM & TOKENS
+   Fondo Global: rgb(193, 229, 249) | Botones Celestes: rgb(14, 165, 233)
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  /* Fondo general solicitado */
+  --bg-color: rgb(193, 229, 249);
+  --bg-body-gradient: radial-gradient(circle at top center, #e0f2fe 0%, rgb(193, 229, 249) 100%);
+  
+  --card-bg: #ffffff;
+  --card-border: #cbd5e1;
+  --card-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Botones y acentos celestes llamativos */
+  --primary-color: rgb(14, 165, 233);
+  --primary-hover: #0284c7;
+  --primary-light: rgba(14, 165, 233, 0.12);
+  --primary-glow: rgba(14, 165, 233, 0.35);
+  
+  --secondary-color: #0f172a;
+  --secondary-hover: #1e293b;
+  
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-white: #0f172a;
+  
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-focus: rgb(14, 165, 233);
+  
+  --success-color: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --error-color: #ef4444;
+  --error-bg: rgba(239, 68, 68, 0.12);
+  --warning-color: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  
+  /* Institucionales Somos Perú */
+  --somos-blue: #20488e;
+  --somos-red: #e30613;
+  --somos-gold: #c59b27;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  --font-family: 'Outfit', 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cinzel: 'Cinzel', serif;
+  --font-playfair: 'Playfair Display', serif;
+  
+  --sidebar-bg: #ffffff;
+  --header-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg-color: #0b1329;
+  --bg-body-gradient: radial-gradient(circle at top right, #152654 0%, #0b1329 100%);
+  --card-bg: #131b2e;
+  --card-border: #233554;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-white: #ffffff;
+  --input-bg: #141c30;
+  --input-border: #233554;
+  --sidebar-bg: #131b2e;
+  --header-bg: #111827;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-body-gradient);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
