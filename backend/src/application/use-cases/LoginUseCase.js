@@ -56,13 +56,17 @@ export class LoginUseCase {
       const match = await this.personeroRepo.findByCredentials(rawUser, cleanPass || cleanDni);
       if (match && match.entity) {
         const entity = match.entity;
+        const tblName = String(match.tableName || '').toLowerCase();
         const rolLower = String(entity.rolADesempenar || '').toLowerCase();
-        const isCoord = rolLower.includes('coordinador') || String(match.tableName || '').toLowerCase().includes('coord');
+        const isCoordDistrital = tblName.includes('coordinadoresd') || tblName.includes('coodinadoresd') || rolLower.includes('distrito') || rolLower.includes('distrital');
+        const isCoordLocal = !isCoordDistrital && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
+        const isCoord = isCoordDistrital || isCoordLocal;
         const userRole = isCoord ? ROLES.COORDINADOR : ROLES.PERSONERO_REGISTRADO;
         const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
+        const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
 
         const token = jwt.sign(
-          { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig },
+          { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig, local: localAsig },
           config.jwt.secret,
           { expiresIn: config.jwt.expiresIn }
         );
@@ -72,7 +76,7 @@ export class LoginUseCase {
             action: isCoord ? 'LOGIN_COORDINADOR' : 'LOGIN_PERSONERO',
             userIdentifier: entity.dni,
             role: entity.rolADesempenar,
-            details: { dni: entity.dni, nombres: entity.nombresApellidos, rol: entity.rolADesempenar, distritoAsignado: distAsig },
+            details: { dni: entity.dni, nombres: entity.nombresApellidos, rol: entity.rolADesempenar, distritoAsignado: distAsig, localAsignado: localAsig },
             ipAddress: context.ip,
             userAgent: context.userAgent
           });
@@ -94,7 +98,7 @@ export class LoginUseCase {
             'Rol a Desempeñar': entity.rolADesempenar,
             'Distrito Asignado': distAsig,
             'Mesa Asignada': entity.mesaAsignada,
-            'Local de Votación Asignado': entity.localDeVotacionAsignado,
+            'Local de Votación Asignado': localAsig,
             'Tiene Experiencia como Personero': entity.tieneExperiencia,
             'Cuenta con Movilidad Propia': entity.cuentaConMovilidad,
             'Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones': entity.seCompromete,
@@ -108,7 +112,10 @@ export class LoginUseCase {
             fullName: entity.nombresApellidos,
             role: userRole,
             distritoAsignado: distAsig,
-            isCoordinador: isCoord
+            localAsignado: localAsig,
+            isCoordinador: isCoord,
+            isCoordinadorDistrital: isCoordDistrital,
+            isCoordinadorLocal: isCoordLocal
           }
         };
       }
@@ -122,13 +129,17 @@ export class LoginUseCase {
         const match = await this.personeroRepo.findByDni(cleanDni);
         if (match && match.entity) {
           const entity = match.entity;
+          const tblName = String(match.tableName || '').toLowerCase();
           const rolLower = String(entity.rolADesempenar || '').toLowerCase();
-          const isCoord = rolLower.includes('coordinador') || String(match.tableName || '').toLowerCase().includes('coord');
+          const isCoordDistrital = tblName.includes('coordinadoresd') || tblName.includes('coodinadoresd') || rolLower.includes('distrito') || rolLower.includes('distrital');
+          const isCoordLocal = !isCoordDistrital && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
+          const isCoord = isCoordDistrital || isCoordLocal;
           const userRole = isCoord ? ROLES.COORDINADOR : ROLES.PERSONERO_REGISTRADO;
           const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
+          const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
 
           const token = jwt.sign(
-            { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig },
+            { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig, local: localAsig },
             config.jwt.secret,
             { expiresIn: config.jwt.expiresIn }
           );
@@ -149,7 +160,7 @@ export class LoginUseCase {
               'Rol a Desempeñar': entity.rolADesempenar,
               'Distrito Asignado': distAsig,
               'Mesa Asignada': entity.mesaAsignada,
-              'Local de Votación Asignado': entity.localDeVotacionAsignado,
+              'Local de Votación Asignado': localAsig,
               'Tiene Experiencia como Personero': entity.tieneExperiencia,
               'Cuenta con Movilidad Propia': entity.cuentaConMovilidad,
               'Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones': entity.seCompromete,
@@ -163,7 +174,10 @@ export class LoginUseCase {
               fullName: entity.nombresApellidos,
               role: userRole,
               distritoAsignado: distAsig,
-              isCoordinador: isCoord
+              localAsignado: localAsig,
+              isCoordinador: isCoord,
+              isCoordinadorDistrital: isCoordDistrital,
+              isCoordinadorLocal: isCoordLocal
             }
           };
         }

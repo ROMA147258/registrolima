@@ -7,8 +7,8 @@ import { QuizModal } from '../../components/modals/QuizModal.jsx';
 import { CredentialCard } from '../accreditation/CredentialCard.jsx';
 import { api } from '../../services/api.js';
 
-export function TrainingView() {
-  const { user, logout, updateUserTraining } = useAuth();
+export function TrainingView({ onGoToDashboard }) {
+  const { user, logout, updateUserTraining, isCoordinadorLocal, isCoordinadorDistrital } = useAuth();
   const [activeModal, setActiveModal] = useState(null);
   const [viewingCertificate, setViewingCertificate] = useState(false);
 
@@ -49,9 +49,10 @@ export function TrainingView() {
   }
 
   const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || '00000000';
-  const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || 'Personero';
+  const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || 'Usuario';
   const distrito = user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || 'Lima';
   const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || '-';
+  const localAsig = user?.['Local de Votación Asignado'] || user?.localAsignado || user?.['Local de Votación'] || '-';
 
   return (
     <div style={{
@@ -80,7 +81,7 @@ export function TrainingView() {
               Capacítate
             </h1>
             <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
-              Ficha de Capacitación de Personeros
+              {isCoordinadorLocal ? 'Evaluación y Acreditación de Coordinador de Local' : 'Ficha de Capacitación de Personeros'}
             </span>
           </div>
 
@@ -105,6 +106,61 @@ export function TrainingView() {
           </button>
         </div>
 
+        {/* Banner Informativo Exclusivo para Coordinadores (Distrital y Local) */}
+        {(isCoordinadorDistrital || isCoordinadorLocal) && (
+          <div style={{
+            background: isFullyAccredited ? '#ecfdf5' : '#eff6ff',
+            border: isFullyAccredited ? '1.5px solid #10b981' : '1.5px solid #38bdf8',
+            borderRadius: '14px',
+            padding: '14px 16px',
+            marginBottom: '16px',
+            animation: 'fadeIn 0.2s ease-out'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: isFullyAccredited ? '#047857' : '#0369a1', fontSize: '0.86rem', marginBottom: '4px' }}>
+              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador de Distritos' : 'Coordinador de Local'}</span>
+            </div>
+            <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#065f46' : '#334155', lineHeight: 1.45 }}>
+              {isFullyAccredited ? (
+                <>
+                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : `tu colegio (${localAsig}) en ${distrito}`}.
+                </>
+              ) : (
+                <>
+                  📌 Para habilitar el acceso a tu <strong>Dashboard</strong> , debes completar la capacitación y <strong>aprobar la evaluación</strong>.
+                </>
+              )}
+            </div>
+
+            {isFullyAccredited && onGoToDashboard && (
+              <button
+                type="button"
+                onClick={onGoToDashboard}
+                style={{
+                  width: '100%',
+                  marginTop: '10px',
+                  padding: '10px 16px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#10b981',
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  fontSize: '0.88rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.35)',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <span>🚀 {isCoordinadorDistrital ? 'Ir a mi Dashboard Distrital' : 'Ir a mi Dashboard de Coordinador'}</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Tarjeta de Bienvenida y Badges */}
         <div style={{
           background: '#f0f9ff',
@@ -124,9 +180,16 @@ export function TrainingView() {
             <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
               Distrito: {distrito}
             </span>
-            <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-              Mesa: {mesa}
-            </span>
+            {isCoordinadorLocal && (
+              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
+                Colegio: {localAsig}
+              </span>
+            )}
+            {!isCoordinadorDistrital && !isCoordinadorLocal && (
+              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
+                Mesa: {mesa}
+              </span>
+            )}
           </div>
         </div>
 

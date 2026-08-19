@@ -51,8 +51,25 @@ test('ValidationDomainService - Validates 8-digit DNI properly', () => {
   assert.throws(() => ValidationDomainService.validateDni('abcdefgh'), /8 dígitos/);
 });
 
+test('Coordinador Distrital Entity - Handles district coordinator role correctly', () => {
+  const c = new Coordinador({
+    nombresApellidos: 'Coordinador Distrital San Martin',
+    dni: '10203040',
+    rolADesempenar: 'Coordinador de Distritos',
+    distritoAsignado: 'San Martin de Porres',
+    localDeVotacionAsignado: 'No aplica',
+    mesaAsignada: 'No aplica'
+  });
+
+  assert.equal(c.dni, '10203040');
+  assert.equal(c.rolADesempenar, 'Coordinador de Distritos');
+  assert.equal(c.distritoAsignado, 'San Martin de Porres');
+  assert.equal(c.localDeVotacionAsignado, 'No aplica');
+});
+
 test('ValidationDomainService - Validates Email properly', () => {
   assert.equal(ValidationDomainService.validateEmail('test@somosperu.pe'), 'test@somosperu.pe');
   assert.equal(ValidationDomainService.validateEmail(null), null);
   assert.throws(() => ValidationDomainService.validateEmail('invalid-email'), /no es válido/);
 });
+

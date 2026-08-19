@@ -5,13 +5,31 @@ import { LoginView } from './features/authentication/LoginView.jsx';
 import { TrainingView } from './features/training/TrainingView.jsx';
 import { DashboardView } from './features/dashboard/DashboardView.jsx';
 import { PublicVerificationView } from './features/verification/PublicVerificationView.jsx';
-
 export function App() {
-  const { isLoggedIn, isSuperAdmin, isCoordinador, isPersonero } = useAuth();
+  const {
+    user,
+    isLoggedIn,
+    isSuperAdmin,
+    isCoordinadorDistrital,
+    isCoordinadorLocal,
+    isCoordinador,
+    isEvaluationApproved,
+    isPersonero
+  } = useAuth();
   const [viewMode, setViewMode] = useState('register'); // 'register', 'login'
+  const [coordLocalTab, setCoordLocalTab] = useState(() => {
+    return localStorage.getItem('login_initially_confirmed') === 'true' ? 'dashboard' : 'training';
+  });
   const [isVerificationMode, setIsVerificationMode] = useState(
     window.location.hash.startsWith('#verificar')
   );
+
+  useEffect(() => {
+    if (user) {
+      const isConfirmedAtLogin = localStorage.getItem('login_initially_confirmed') === 'true';
+      setCoordLocalTab(isConfirmedAtLogin ? 'dashboard' : 'training');
+    }
+  }, [user?.['D.N.I.'], user?.DNI, user?.dni]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -29,12 +47,39 @@ export function App() {
 
   // 2. Usuario Autenticado
   if (isLoggedIn) {
-    if (isSuperAdmin || isCoordinador) {
+    // 1. SuperAdmin y Coordinador de Distritos (dbo.Rcoordinadoresd) entran DIRECTAMENTE al Dashboard
+    if (isSuperAdmin || isCoordinadorDistrital) {
       return <DashboardView />;
     }
-    if (isPersonero) {
-      return <TrainingView />;
+
+    // 2. Coordinador de Local (dbo.Rcoordinadores): Requiere OBLIGATORIAMENTE aprobar evaluación (Credenciales = Confirmado)
+    if (isCoordinadorLocal || isCoordinador) {
+      if (!isEvaluationApproved) {
+        return (
+          <TrainingView
+            onGoToDashboard={() => setCoordLocalTab('dashboard')}
+          />
+        );
+      }
+
+      // Si ya aprobó (Confirmado), al terminar su examen puede descargar su certificado o alternar
+      if (coordLocalTab === 'training') {
+        return (
+          <TrainingView
+            onGoToDashboard={() => setCoordLocalTab('dashboard')}
+          />
+        );
+      }
+
+      return (
+        <DashboardView
+          onGoToTraining={() => setCoordLocalTab('training')}
+        />
+      );
     }
+
+    // 3. Personero de Mesa (Capacitación y Evaluación)
+    return <TrainingView />;
   }
 
   // 3. Vistas Públicas de Registro / Login

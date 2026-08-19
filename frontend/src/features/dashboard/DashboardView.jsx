@@ -3,7 +3,7 @@ import {
   LayoutGrid, GraduationCap, Cable, RefreshCw, LogOut, Moon, Sun,
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
   FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
-  AlertCircle, ChevronRight, Edit3, Heart, Filter, RotateCcw
+  AlertCircle, ChevronRight, Edit3, Heart, Filter, RotateCcw, School
 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -29,6 +29,21 @@ function matchesDistrict(recordDistrict, filterDistrict) {
   if (!filterDistrict || filterDistrict === 'all') return true;
   if (!recordDistrict) return false;
   return normalizeDistrictName(recordDistrict) === normalizeDistrictName(filterDistrict);
+}
+
+// Helper de normalización de local de votación (colegio)
+function normalizeLocalName(name) {
+  if (!name) return '';
+  return String(name).trim().toUpperCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function matchesLocal(recordLocal, filterLocal) {
+  if (!filterLocal || filterLocal === 'all') return true;
+  if (!recordLocal) return false;
+  const normRec = normalizeLocalName(recordLocal);
+  const normFilt = normalizeLocalName(filterLocal);
+  return normRec === normFilt || normRec.includes(normFilt) || normFilt.includes(normRec);
 }
 
 // Helper de roles (2 roles oficiales: Personero de Mesa y Coordinador de Local)
@@ -79,14 +94,19 @@ function getComp(r) {
   return (val.toLowerCase().includes('sí') || val.toLowerCase().includes('si')) ? 'Sí' : 'No';
 }
 
-export function DashboardView() {
-  const { user, isCoordinador, isSuperAdmin, logout } = useAuth();
+export function DashboardView({ onGoToTraining }) {
+  const { user, isCoordinador, isCoordinadorDistrital, isCoordinadorLocal, isSuperAdmin, logout } = useAuth();
   const { toggleTheme, isDark } = useTheme();
 
   const coordinatorDistrict = useMemo(() => {
-    if (!isCoordinador) return null;
+    if (isSuperAdmin) return null;
     return user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || user?.distrito || '';
-  }, [isCoordinador, user]);
+  }, [isSuperAdmin, user]);
+
+  const coordinatorLocal = useMemo(() => {
+    if (!isCoordinadorLocal) return null;
+    return user?.['Local de Votación Asignado'] || user?.localAsignado || user?.['Local de Votación'] || '';
+  }, [isCoordinadorLocal, user]);
 
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'capacitacion', 'sql'
   const [data, setData] = useState(null);
@@ -95,7 +115,7 @@ export function DashboardView() {
 
   // Filtros Tab 1 (Panel General)
   const [search1, setSearch1] = useState('');
-  const [dist1, setDist1] = useState(() => (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : 'all');
+  const [dist1, setDist1] = useState(() => (coordinatorDistrict ? coordinatorDistrict : 'all'));
   const [role1, setRole1] = useState('all');
   const [exp1, setExp1] = useState('all');
   const [mov1, setMov1] = useState('all');
@@ -104,15 +124,15 @@ export function DashboardView() {
   // Filtros Tab 2 (Capacitaciones)
   const [search2, setSearch2] = useState('');
   const [status2, setStatus2] = useState('all');
-  const [dist2, setDist2] = useState(() => (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : 'all');
+  const [dist2, setDist2] = useState(() => (coordinatorDistrict ? coordinatorDistrict : 'all'));
   const [role2, setRole2] = useState('all');
 
   useEffect(() => {
-    if (isCoordinador && coordinatorDistrict) {
+    if (coordinatorDistrict) {
       setDist1(coordinatorDistrict);
       setDist2(coordinatorDistrict);
     }
-  }, [isCoordinador, coordinatorDistrict]);
+  }, [coordinatorDistrict]);
 
   // Modal Ficha / Edición
   const [selectedPersonero, setSelectedPersonero] = useState(null);
@@ -139,12 +159,24 @@ export function DashboardView() {
   }, []);
 
   const allRecords = data?.records || [];
+
+  // Filtrado de seguridad según rol:
+  // 1) Coordinador de Local: solo ve los personeros asignados a su colegio y distrito
+  // 2) Coordinador de Distrito: ve todos los coordinadores de local y personeros de su distrito
+  // 3) SuperAdmin: ve todos los distritos de Lima
   const records = useMemo(() => {
-    if (isCoordinador && coordinatorDistrict) {
+    if (isCoordinadorLocal && coordinatorDistrict && coordinatorLocal) {
+      return allRecords.filter(r => {
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'];
+        const l = r['Local de Votación Asignado'] || r['Local de Votación'];
+        return matchesDistrict(d, coordinatorDistrict) && matchesLocal(l, coordinatorLocal);
+      });
+    }
+    if ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict) {
       return allRecords.filter(r => matchesDistrict(r['Distrito Asignado'] || r['Distrito donde Vota'], coordinatorDistrict));
     }
     return allRecords;
-  }, [allRecords, isCoordinador, coordinatorDistrict]);
+  }, [allRecords, isCoordinadorLocal, isCoordinadorDistrital, isCoordinador, coordinatorDistrict, coordinatorLocal]);
 
   // =========================================================================
   // DISTRIBUCIÓN DE PERSONEROS Y COORDINADORES POR DISTRITO PARA EL GRÁFICO
@@ -222,8 +254,8 @@ export function DashboardView() {
   // Meta territorial dinámica según el distrito asignado o seleccionado
   const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
   const selectedDistMeta = activeDistrictName ? (DISTRITO_METAS[activeDistrictName] || 0) : 25397;
-  const targetLabel = activeDistrictName ? `META ${activeDistrictName.toUpperCase()}` : 'AVANCE META TOTAL';
-  const targetSub = activeDistrictName ? `Meta distrital: ${selectedDistMeta.toLocaleString()}` : 'Meta Lima: 25,397';
+  const targetLabel = isCoordinadorLocal ? `META ${coordinatorLocal.toUpperCase()}` : (activeDistrictName ? `META ${activeDistrictName.toUpperCase()}` : 'AVANCE META TOTAL');
+  const targetSub = isCoordinadorLocal ? `Colegio: ${coordinatorLocal}` : (activeDistrictName ? `Meta distrital: ${selectedDistMeta.toLocaleString()}` : 'Meta Lima: 25,397');
   const targetPct = selectedDistMeta > 0 ? Math.min(100, ((tab1Total / selectedDistMeta) * 100)).toFixed(1) : '0.0';
 
   // =========================================================================
@@ -240,7 +272,7 @@ export function DashboardView() {
     if (isPersoneroActive) {
       datasets.push({
         label: 'Personeros de Mesa',
-        data: chartDistricts.map(d => personerosByDist[d] || 0),
+        data: chartDistricts.map(d => personerosByDist[d] || (isCoordinadorLocal ? tab1Personeros : 0)),
         backgroundColor: chartDistricts.map(d =>
           (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
             ? '#f59e0b'
@@ -250,7 +282,7 @@ export function DashboardView() {
       });
     }
 
-    if (isCoordActive) {
+    if (isCoordActive && !isCoordinadorLocal) {
       datasets.push({
         label: 'Coordinadores de Local',
         data: chartDistricts.map(d => coordsByDist[d] || 0),
@@ -264,10 +296,10 @@ export function DashboardView() {
     }
 
     return {
-      labels: chartDistricts,
+      labels: isCoordinadorLocal ? [coordinatorLocal] : chartDistricts,
       datasets
     };
-  }, [chartDistricts, role1, dist1, personerosByDist, coordsByDist]);
+  }, [chartDistricts, role1, dist1, personerosByDist, coordsByDist, isCoordinadorLocal, coordinatorLocal, tab1Personeros]);
 
   // =========================================================================
   // FILTRADO TAB 2 (CAPACITACIONES)
@@ -401,7 +433,13 @@ export function DashboardView() {
               }}
             >
               <LayoutGrid className="w-4 h-4 flex-shrink-0" />
-              <span>{isCoordinador && coordinatorDistrict ? `Panel Distrital (${coordinatorDistrict})` : 'Panel General'}</span>
+              <span>
+                {isCoordinadorLocal && coordinatorLocal
+                  ? `Panel Colegio (${coordinatorLocal})`
+                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                    ? `Panel Distrital (${coordinatorDistrict})`
+                    : 'Panel General')}
+              </span>
             </button>
 
             {/* Tab 2: Progreso de Capacitaciones */}
@@ -424,8 +462,39 @@ export function DashboardView() {
               }}
             >
               <GraduationCap className="w-4 h-4 flex-shrink-0" />
-              <span>{isCoordinador && coordinatorDistrict ? `Capacitaciones (${coordinatorDistrict})` : 'Progreso de Capacitaciones'}</span>
+              <span>
+                {isCoordinadorLocal && coordinatorLocal
+                  ? `Capacitaciones (${coordinatorLocal})`
+                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                    ? `Capacitaciones (${coordinatorDistrict})`
+                    : 'Progreso de Capacitaciones')}
+              </span>
             </button>
+
+            {/* Acceso a Certificado / Capacitación para Coordinador de Local */}
+            {isCoordinadorLocal && onGoToTraining && (
+              <button
+                onClick={onGoToTraining}
+                style={{
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: textSub,
+                  fontWeight: 700,
+                  fontSize: '0.86rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  textAlign: 'left',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <School className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <span>Mi Ficha / Certificado</span>
+              </button>
+            )}
 
             {/* Tab 3: Conexión a SQL Server (Solo Administrador) */}
             {isSuperAdmin && (
@@ -469,20 +538,57 @@ export function DashboardView() {
         <header style={{ background: bgHeader, borderBottom: `1px solid ${borderCol}`, padding: '16px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'all 0.2s ease' }}>
           <div>
             <h1 style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle, margin: 0 }}>
-              {activeTab === 'overview' && (isCoordinador && coordinatorDistrict ? `Control Electoral - Distrito ${coordinatorDistrict}` : 'Control Electoral y Monitoreo')}
-              {activeTab === 'capacitacion' && (isCoordinador && coordinatorDistrict ? `Capacitaciones - Distrito ${coordinatorDistrict}` : 'Progreso de las Capacitaciones en Gráficas')}
+              {activeTab === 'overview' && (
+                isCoordinadorLocal && coordinatorLocal
+                  ? `Control Electoral - ${coordinatorLocal} (${coordinatorDistrict})`
+                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                    ? `Control Electoral - Distrito ${coordinatorDistrict}`
+                    : 'Control Electoral y Monitoreo')
+              )}
+              {activeTab === 'capacitacion' && (
+                isCoordinadorLocal && coordinatorLocal
+                  ? `Capacitaciones - ${coordinatorLocal} (${coordinatorDistrict})`
+                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                    ? `Capacitaciones - Distrito ${coordinatorDistrict}`
+                    : 'Progreso de las Capacitaciones en Gráficas')
+              )}
               {activeTab === 'sql' && 'Conexión a SQL Server'}
             </h1>
             <p style={{ fontSize: '0.78rem', color: textSub, margin: '2px 0 0 0' }}>
-              {activeTab === 'overview' && (isCoordinador && coordinatorDistrict ? `Monitoreo exclusivo de personeros y mesas asignadas para ${coordinatorDistrict}` : 'Gestión centralizada de personeros, asignaciones electorales y cobertura territorial')}
+              {activeTab === 'overview' && (
+                isCoordinadorLocal
+                  ? `Monitoreo exclusivo de personeros asignados a ${coordinatorLocal} en ${coordinatorDistrict}`
+                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                    ? `Monitoreo exclusivo de coordinadores de local y personeros de ${coordinatorDistrict}`
+                    : 'Gestión centralizada de personeros, asignaciones electorales y cobertura territorial')
+              )}
               {activeTab === 'capacitacion' && 'Monitoreo gráfico de avance en videos, manuales PDF y estado de credenciales oficiales'}
               {activeTab === 'sql' && 'Administración de la API de SQL Server y estado de las tablas dbo.personero y dbo.coordinadores'}
             </p>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {/* Badge de Coordinador con su distrito */}
-            {isCoordinador && coordinatorDistrict && (
+            {/* Badge de Coordinador de Local con su colegio y distrito */}
+            {isCoordinadorLocal && coordinatorLocal && (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#ecfdf5',
+                border: '1.5px solid #10b981',
+                color: '#047857',
+                fontWeight: 800,
+                fontSize: '0.82rem'
+              }}>
+                <School className="w-4 h-4 text-emerald-500" />
+                <span>Coordinador de Local: {user?.['Nombres y Apellidos'] || user?.fullName || 'Registrado'} • Colegio: {coordinatorLocal} • Distrito: {coordinatorDistrict}</span>
+              </div>
+            )}
+
+            {/* Badge de Coordinador Distrital */}
+            {!isCoordinadorLocal && (isCoordinadorDistrital || isCoordinador) && coordinatorDistrict && (
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -496,8 +602,31 @@ export function DashboardView() {
                 fontSize: '0.82rem'
               }}>
                 <ShieldCheck className="w-4 h-4 text-sky-500" />
-                <span>Coordinador: {user?.['Nombres y Apellidos'] || user?.fullName || 'Registrado'} • Distrito: {coordinatorDistrict}</span>
+                <span>Coordinador Distrital: {user?.['Nombres y Apellidos'] || user?.fullName || 'Registrado'} • Distrito: {coordinatorDistrict}</span>
               </div>
+            )}
+
+            {/* Botón para volver a ver la ficha / certificado para Coordinador Local */}
+            {isCoordinadorLocal && onGoToTraining && (
+              <button
+                onClick={onGoToTraining}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1.5px solid #0284c7',
+                  background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                  color: '#0284c7',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                <GraduationCap className="w-4 h-4 text-sky-500" />
+                <span>Mi Ficha / Certificado</span>
+              </button>
             )}
 
             {/* Toggle Modo Oscuro / Claro */}
@@ -587,7 +716,7 @@ export function DashboardView() {
                   </div>
 
                   {/* Filtro Distrito */}
-                  {isCoordinador && coordinatorDistrict ? (
+                  {coordinatorDistrict ? (
                     <select
                       value={coordinatorDistrict}
                       disabled
@@ -608,6 +737,25 @@ export function DashboardView() {
                     </select>
                   )}
 
+                  {/* Filtro Local para Coordinador de Local */}
+                  {isCoordinadorLocal && coordinatorLocal && (
+                    <div style={{
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1.5px solid #10b981',
+                      fontSize: '0.82rem',
+                      background: isDark ? 'rgba(16, 185, 129, 0.15)' : '#ecfdf5',
+                      color: isDark ? '#34d399' : '#047857',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <School className="w-3.5 h-3.5" />
+                      <span>{coordinatorLocal}</span>
+                    </div>
+                  )}
+
                   {/* Filtro Roles (2 roles) */}
                   <select
                     value={role1}
@@ -616,7 +764,7 @@ export function DashboardView() {
                   >
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
-                    <option value="Coordinador de Local">Coordinador de Local</option>
+                    {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
                   </select>
 
                   {/* Filtro Experiencia */}
@@ -655,7 +803,7 @@ export function DashboardView() {
                   {/* Botón Limpiar Filtros */}
                   {isFiltered1 && (
                     <button
-                      onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
+                      onClick={() => { setSearch1(''); setDist1(coordinatorDistrict || 'all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
                       style={{
                         padding: '8px 14px',
                         borderRadius: '8px',
@@ -695,7 +843,7 @@ export function DashboardView() {
 
                     {dist1 !== 'all' && (
                       <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
-                        📍 {dist1} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setDist1('all')}>×</strong>
+                        📍 {dist1} {!coordinatorDistrict && <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setDist1('all')}>×</strong>}
                       </span>
                     )}
 
@@ -725,7 +873,7 @@ export function DashboardView() {
                   </div>
 
                   <span style={{ fontSize: '0.74rem' }}>
-                    Total padrón: <strong>{records.length}</strong>
+                    Total {isCoordinadorLocal ? 'en colegio' : (coordinatorDistrict ? 'en distrito' : 'padrón')}: <strong>{records.length}</strong>
                   </span>
                 </div>
               </div>
@@ -755,14 +903,16 @@ export function DashboardView() {
                   </div>
 
                   {/* KPI 2 */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORDINADORES</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Coords}</span>
+                  {!isCoordinadorLocal && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px' }}>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORDINADORES</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
+                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Coords}</span>
+                      </div>
+                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Local</div>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Local</div>
-                  </div>
+                  )}
 
                   {/* KPI 3 */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: '14px' }}>
@@ -816,16 +966,24 @@ export function DashboardView() {
                 </div>
               </div>
 
-              {/* Gráfico Resultado Lima Metropolitana (Muestra las 2 barras para Personeros y Coordinadores) */}
+              {/* Gráfico Resultado Lima Metropolitana o Colegio / Distrito */}
               <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '20px', marginBottom: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle }}>
                     <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
-                    <span>Resultado Lima Metropolitana (43 Distritos)</span>
+                    <span>
+                      {isCoordinadorLocal && coordinatorLocal
+                        ? `Resultado Colegio ${coordinatorLocal} (${coordinatorDistrict})`
+                        : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                          ? `Resultado Distrito ${coordinatorDistrict} (Coordinadores de Local y Personeros)`
+                          : 'Resultado Lima Metropolitana (43 Distritos)')}
+                    </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <span style={{ background: isDark ? '#1e293b' : '#e0f2fe', color: '#0284c7', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                      {dist1 !== 'all' ? `Distrito resaltado: ${dist1}` : `Total Registrados: ${records.length}`}
+                      {isCoordinadorLocal
+                        ? `Colegio: ${coordinatorLocal} (${records.length} registrados)`
+                        : (dist1 !== 'all' ? `Distrito resaltado: ${dist1}` : `Total Registrados: ${records.length}`)}
                     </span>
                   </div>
                 </div>
@@ -864,14 +1022,20 @@ export function DashboardView() {
                 <div style={{ padding: '16px 20px', borderBottom: `1px solid ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
                     <LayoutGrid className="w-4 h-4 text-amber-500" />
-                    <span>Padrón Electoral de Personeros</span>
+                    <span>
+                      {isCoordinadorLocal && coordinatorLocal
+                        ? `Padrón de Personeros de Mesa • Colegio ${coordinatorLocal}`
+                        : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                          ? `Padrón Electoral de ${coordinatorDistrict} (Coordinadores de Local y Personeros)`
+                          : 'Padrón Electoral de Personeros')}
+                    </span>
                     <span style={{ fontSize: '0.78rem', fontWeight: 700, color: textSub, marginLeft: '8px' }}>
                       ({filteredRecords1.length} {filteredRecords1.length === 1 ? 'resultado' : 'resultados'})
                     </span>
                   </div>
 
                   <a
-                    href={api.getExportUrl('xlsx', dist1 !== 'all' ? dist1 : '')}
+                    href={api.getExportUrl('xlsx', coordinatorDistrict || (dist1 !== 'all' ? dist1 : ''))}
                     download
                     style={{
                       display: 'inline-flex',
@@ -887,7 +1051,7 @@ export function DashboardView() {
                     }}
                   >
                     <FileSpreadsheet className="w-4 h-4" />
-                    <span>Descargar Excel {dist1 !== 'all' ? `(${dist1})` : ''}</span>
+                    <span>Descargar Excel {isCoordinadorLocal ? `(${coordinatorLocal})` : (coordinatorDistrict ? `(${coordinatorDistrict})` : (dist1 !== 'all' ? `(${dist1})` : ''))}</span>
                   </a>
                 </div>
 
@@ -1040,7 +1204,7 @@ export function DashboardView() {
                     <option value="bloqueado">Bloqueado</option>
                   </select>
 
-                  {isCoordinador && coordinatorDistrict ? (
+                  {coordinatorDistrict ? (
                     <select
                       value={coordinatorDistrict}
                       disabled
@@ -1061,6 +1225,25 @@ export function DashboardView() {
                     </select>
                   )}
 
+                  {/* Filtro Local para Coordinador de Local en Tab 2 */}
+                  {isCoordinadorLocal && coordinatorLocal && (
+                    <div style={{
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1.5px solid #10b981',
+                      fontSize: '0.82rem',
+                      background: isDark ? 'rgba(16, 185, 129, 0.15)' : '#ecfdf5',
+                      color: isDark ? '#34d399' : '#047857',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <School className="w-3.5 h-3.5" />
+                      <span>{coordinatorLocal}</span>
+                    </div>
+                  )}
+
                   <select
                     value={role2}
                     onChange={(e) => setRole2(e.target.value)}
@@ -1068,12 +1251,12 @@ export function DashboardView() {
                   >
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
-                    <option value="Coordinador de Local">Coordinador de Local</option>
+                    {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
                   </select>
 
                   {isFiltered2 && (
                     <button
-                      onClick={() => { setSearch2(''); setStatus2('all'); setDist2('all'); setRole2('all'); }}
+                      onClick={() => { setSearch2(''); setStatus2('all'); setDist2(coordinatorDistrict || 'all'); setRole2('all'); }}
                       style={{
                         padding: '8px 14px',
                         borderRadius: '8px',

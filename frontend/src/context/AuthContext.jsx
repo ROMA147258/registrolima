@@ -22,6 +22,10 @@ export function AuthProvider({ children }) {
         setRole(res.role);
         setToken(res.token || 'session_token');
 
+        const cred = String(res.user?.Credenciales ?? res.user?.credenciales ?? '').toLowerCase().trim();
+        const isConfirmedAtLogin = cred === 'confirmado';
+        localStorage.setItem('login_initially_confirmed', isConfirmedAtLogin ? 'true' : 'false');
+
         localStorage.setItem('auth_user', JSON.stringify(res.user));
         localStorage.setItem('user_role', res.role);
         if (res.token) localStorage.setItem('token', res.token);
@@ -77,9 +81,26 @@ export function AuthProvider({ children }) {
     });
   };
 
-  const isCoordinador = role === 'coordinador' || Boolean(user?.isCoordinador) || Boolean(user?.['Rol a Desempeñar']?.toLowerCase().includes('coordinador'));
+  const rolName = String(user?.['Rol a Desempeñar'] || user?.role || '').toLowerCase();
   const isSuperAdmin = role === 'superadmin' || role === 'admin';
-  const isPersonero = (role === 'personero_registrado' || role === 'personero') && !isCoordinador;
+  const isCoordinadorDistrital = !isSuperAdmin && (
+    Boolean(user?.isCoordinadorDistrital) ||
+    rolName.includes('distrito') ||
+    rolName.includes('distrital')
+  );
+  const isCoordinadorLocal = !isSuperAdmin && !isCoordinadorDistrital && (
+    Boolean(user?.isCoordinadorLocal) ||
+    rolName.includes('local') ||
+    (rolName.includes('coordinador') && !rolName.includes('central'))
+  );
+  const isCoordinador = isCoordinadorDistrital || isCoordinadorLocal || role === 'coordinador';
+  const isPersonero = !isSuperAdmin && !isCoordinador;
+
+  const quizStatus = String(user?.Preguntas ?? user?.preguntas ?? '').toLowerCase().trim();
+  const credStatus = String(user?.Credenciales ?? user?.credenciales ?? '').toLowerCase().trim();
+  const isEvaluationApproved = credStatus === 'confirmado';
+
+
 
   return (
     <AuthContext.Provider value={{
@@ -89,7 +110,10 @@ export function AuthProvider({ children }) {
       isLoggedIn: Boolean(user),
       isSuperAdmin,
       isCoordinador,
+      isCoordinadorDistrital,
+      isCoordinadorLocal,
       isPersonero,
+      isEvaluationApproved,
       login,
       logout,
       updateUserTraining
