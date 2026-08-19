@@ -46,14 +46,22 @@ function matchesLocal(recordLocal, filterLocal) {
   return normRec === normFilt || normRec.includes(normFilt) || normFilt.includes(normRec);
 }
 
-// Helper de roles (2 roles oficiales: Personero de Mesa y Coordinador de Local)
+// Helper de roles (3 roles oficiales: Personero de Mesa, Coordinador de Local y Coordinador de Distritos)
 function matchesRole(recordRole, filterRole) {
   if (!filterRole || filterRole === 'all') return true;
   if (!recordRole) return false;
   const r = String(recordRole).trim().toLowerCase();
   const f = String(filterRole).trim().toLowerCase();
-  if (f.includes('coordinador')) return r.includes('coordinador');
-  if (f.includes('mesa')) return r.includes('mesa') || !r.includes('coordinador');
+  
+  if (f.includes('distrito') || f.includes('distrital')) {
+    return r.includes('distrito') || r.includes('distrital');
+  }
+  if (f.includes('local')) {
+    return r.includes('local') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
+  }
+  if (f.includes('mesa') || f.includes('personero')) {
+    return r.includes('mesa') || (!r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
+  }
   return r === f || r.includes(f);
 }
 
@@ -109,6 +117,14 @@ function getComp(r) {
 export function DashboardView({ onGoToTraining }) {
   const { user, isCoordinador, isCoordinadorDistrital, isCoordinadorLocal, isSuperAdmin, logout } = useAuth();
   const { toggleTheme, isDark } = useTheme();
+
+  // Detección de pantalla móvil (< 768px)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
 
   const coordinatorDistrict = useMemo(() => {
     if (isSuperAdmin) return null;
@@ -193,28 +209,32 @@ export function DashboardView({ onGoToTraining }) {
   // =========================================================================
   // DISTRIBUCIÓN DE PERSONEROS Y COORDINADORES POR DISTRITO PARA EL GRÁFICO
   // =========================================================================
-  const { personerosByDist, coordsByDist } = useMemo(() => {
+  const { personerosByDist, coordsLocalByDist, coordsDistByDist } = useMemo(() => {
     const pMap = {};
-    const cMap = {};
+    const clMap = {};
+    const cdMap = {};
     DISTRITOS_LIMA.forEach(d => {
       pMap[d] = 0;
-      cMap[d] = 0;
+      clMap[d] = 0;
+      cdMap[d] = 0;
     });
 
     records.forEach(r => {
       const rawDist = r['Distrito Asignado'] || r['Distrito donde Vota'] || '';
       const rawRol = String(r['Rol a Desempeñar'] || '').toLowerCase();
-      const isCoord = rawRol.includes('coordinador');
+      const isCoordDist = rawRol.includes('distrito') || rawRol.includes('distrital');
+      const isCoordLocal = !isCoordDist && (rawRol.includes('local') || rawRol.includes('coordinador'));
 
       DISTRITOS_LIMA.forEach(d => {
         if (matchesDistrict(rawDist, d)) {
-          if (isCoord) cMap[d]++;
+          if (isCoordDist) cdMap[d]++;
+          else if (isCoordLocal) clMap[d]++;
           else pMap[d]++;
         }
       });
     });
 
-    return { personerosByDist: pMap, coordsByDist: cMap };
+    return { personerosByDist: pMap, coordsLocalByDist: clMap, coordsDistByDist: cdMap };
   }, [records]);
 
   // =========================================================================
@@ -245,7 +265,8 @@ export function DashboardView({ onGoToTraining }) {
 
   // KPIs dinámicos sobre los registros filtrados de Tab 1
   let tab1Total = filteredRecords1.length;
-  let tab1Coords = 0;
+  let tab1CoordsDistrital = 0;
+  let tab1CoordsLocal = 0;
   let tab1Personeros = 0;
   let tab1Exp = 0;
   let tab1Mov = 0;
@@ -253,8 +274,13 @@ export function DashboardView({ onGoToTraining }) {
 
   filteredRecords1.forEach(r => {
     const rol = String(r['Rol a Desempeñar'] || '').toLowerCase();
-    if (rol.includes('coordinador')) tab1Coords++;
-    else tab1Personeros++;
+    if (rol.includes('distrito') || rol.includes('distrital')) {
+      tab1CoordsDistrital++;
+    } else if (rol.includes('local') || rol.includes('coordinador')) {
+      tab1CoordsLocal++;
+    } else {
+      tab1Personeros++;
+    }
 
     if (getExp(r) === 'Sí') tab1Exp++;
     if (getMov(r) === 'Sí') tab1Mov++;
@@ -277,7 +303,8 @@ export function DashboardView({ onGoToTraining }) {
 
   const barData1 = useMemo(() => {
     const isPersoneroActive = role1 === 'all' || role1 === 'Personero de Mesa';
-    const isCoordActive = role1 === 'all' || role1 === 'Coordinador de Local';
+    const isCoordLocalActive = role1 === 'all' || role1 === 'Coordinador de Local';
+    const isCoordDistActive = role1 === 'all' || role1 === 'Coordinador de Distritos';
 
     const datasets = [];
 
@@ -294,10 +321,10 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
-    if (isCoordActive && !isCoordinadorLocal) {
+    if (isCoordLocalActive && !isCoordinadorLocal) {
       datasets.push({
         label: 'Coordinadores de Local',
-        data: chartDistricts.map(d => coordsByDist[d] || 0),
+        data: chartDistricts.map(d => coordsLocalByDist[d] || 0),
         backgroundColor: chartDistricts.map(d =>
           (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
             ? '#fbbf24'
@@ -307,11 +334,24 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
+    if (isCoordDistActive && !isCoordinadorLocal) {
+      datasets.push({
+        label: 'Coordinadores de Distrito',
+        data: chartDistricts.map(d => coordsDistByDist[d] || 0),
+        backgroundColor: chartDistricts.map(d =>
+          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
+            ? '#34d399'
+            : '#0d9488'
+        ),
+        borderRadius: 3
+      });
+    }
+
     return {
       labels: isCoordinadorLocal ? [coordinatorLocal] : chartDistricts,
       datasets
     };
-  }, [chartDistricts, role1, dist1, personerosByDist, coordsByDist, isCoordinadorLocal, coordinatorLocal, tab1Personeros]);
+  }, [chartDistricts, role1, dist1, personerosByDist, coordsLocalByDist, coordsDistByDist, isCoordinadorLocal, coordinatorLocal, tab1Personeros]);
 
   // =========================================================================
   // FILTRADO TAB 2 (CAPACITACIONES)
@@ -403,96 +443,38 @@ export function DashboardView({ onGoToTraining }) {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: bgMain, color: textBody, fontFamily: "'Outfit', 'Montserrat', sans-serif", transition: 'all 0.2s ease' }}>
       
-      {/* BARRA LATERAL IZQUIERDA */}
-      <aside style={{ width: '250px', background: bgSidebar, borderRight: `1px solid ${borderCol}`, display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'all 0.2s ease' }}>
-        
-        {/* Sello Somos Perú / Logo ConteoLima */}
-        <div style={{ padding: '20px', borderBottom: `1px solid ${borderCol}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <img src="/images/logo_somos_peru.svg" alt="Somos Perú" style={{ width: '48px', height: 'auto', maxHeight: '42px', objectFit: 'contain', flexShrink: 0 }} />
-            <div>
-              <div style={{ fontSize: '1rem', fontWeight: 900, color: textTitle, lineHeight: 1.1 }}>ConteoLima</div>
-              <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0284c7' }}>Somos Perú 2026</div>
+      {/* BARRA LATERAL IZQUIERDA — solo en escritorio */}
+      {!isMobile && (
+        <aside style={{ width: '250px', background: bgSidebar, borderRight: `1px solid ${borderCol}`, display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'all 0.2s ease' }}>
+          
+          {/* Sello Somos Perú / Logo ConteoLima */}
+          <div style={{ padding: '20px', borderBottom: `1px solid ${borderCol}` }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img src="/images/logo_somos_peru.svg" alt="Somos Perú" style={{ width: '48px', height: 'auto', maxHeight: '42px', objectFit: 'contain', flexShrink: 0 }} />
+              <div>
+                <div style={{ fontSize: '1rem', fontWeight: 900, color: textTitle, lineHeight: 1.1 }}>ConteoLima</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0284c7' }}>Somos Perú 2026</div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Navegación */}
-        <div style={{ padding: '20px 14px', flex: 1 }}>
-          <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, letterSpacing: '0.8px', marginBottom: '12px', paddingLeft: '8px' }}>
-            PANEL DE NAVEGACIÓN
-          </div>
+          {/* Navegación */}
+          <div style={{ padding: '20px 14px', flex: 1 }}>
+            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, letterSpacing: '0.8px', marginBottom: '12px', paddingLeft: '8px' }}>
+              PANEL DE NAVEGACIÓN
+            </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            
-            {/* Tab 1: Panel General */}
-            <button
-              onClick={() => setActiveTab('overview')}
-              style={{
-                padding: '12px 14px',
-                borderRadius: '10px',
-                border: 'none',
-                background: activeTab === 'overview' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
-                color: activeTab === 'overview' ? '#0284c7' : textSub,
-                fontWeight: 700,
-                fontSize: '0.86rem',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                textAlign: 'left',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              <LayoutGrid className="w-4 h-4 flex-shrink-0" />
-              <span>
-                {isCoordinadorLocal && coordinatorLocal
-                  ? `Panel Colegio (${coordinatorLocal})`
-                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                    ? `Panel Distrital (${coordinatorDistrict})`
-                    : 'Panel General')}
-              </span>
-            </button>
-
-            {/* Tab 2: Progreso de Capacitaciones */}
-            <button
-              onClick={() => setActiveTab('capacitacion')}
-              style={{
-                padding: '12px 14px',
-                borderRadius: '10px',
-                border: 'none',
-                background: activeTab === 'capacitacion' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
-                color: activeTab === 'capacitacion' ? '#0284c7' : textSub,
-                fontWeight: 700,
-                fontSize: '0.86rem',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                textAlign: 'left',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              <GraduationCap className="w-4 h-4 flex-shrink-0" />
-              <span>
-                {isCoordinadorLocal && coordinatorLocal
-                  ? `Capacitaciones (${coordinatorLocal})`
-                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                    ? `Capacitaciones (${coordinatorDistrict})`
-                    : 'Progreso de Capacitaciones')}
-              </span>
-            </button>
-
-            {/* Acceso a Certificado / Capacitación para Coordinador de Local */}
-            {isCoordinadorLocal && onGoToTraining && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              
+              {/* Tab 1: Panel General */}
               <button
-                onClick={onGoToTraining}
+                onClick={() => setActiveTab('overview')}
                 style={{
                   padding: '12px 14px',
                   borderRadius: '10px',
                   border: 'none',
-                  background: 'transparent',
-                  color: textSub,
+                  background: activeTab === 'overview' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                  color: activeTab === 'overview' ? '#0284c7' : textSub,
                   fontWeight: 700,
                   fontSize: '0.86rem',
                   cursor: 'pointer',
@@ -503,21 +485,25 @@ export function DashboardView({ onGoToTraining }) {
                   transition: 'all 0.15s ease'
                 }}
               >
-                <School className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Mi Ficha / Certificado</span>
+                <LayoutGrid className="w-4 h-4 flex-shrink-0" />
+                <span>
+                  {isCoordinadorLocal && coordinatorLocal
+                    ? `Panel Colegio (${coordinatorLocal})`
+                    : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                      ? `Panel Distrital (${coordinatorDistrict})`
+                      : 'Panel General')}
+                </span>
               </button>
-            )}
 
-            {/* Tab 3: Conexión a SQL Server (Solo Administrador) */}
-            {isSuperAdmin && (
+              {/* Tab 2: Progreso de Capacitaciones */}
               <button
-                onClick={() => setActiveTab('sql')}
+                onClick={() => setActiveTab('capacitacion')}
                 style={{
                   padding: '12px 14px',
                   borderRadius: '10px',
                   border: 'none',
-                  background: activeTab === 'sql' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
-                  color: activeTab === 'sql' ? '#0284c7' : textSub,
+                  background: activeTab === 'capacitacion' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                  color: activeTab === 'capacitacion' ? '#0284c7' : textSub,
                   fontWeight: 700,
                   fontSize: '0.86rem',
                   cursor: 'pointer',
@@ -528,60 +514,125 @@ export function DashboardView({ onGoToTraining }) {
                   transition: 'all 0.15s ease'
                 }}
               >
-                <Cable className="w-4 h-4 flex-shrink-0" />
-                <span>Conexión a SQL Server</span>
+                <GraduationCap className="w-4 h-4 flex-shrink-0" />
+                <span>
+                  {isCoordinadorLocal && coordinatorLocal
+                    ? `Capacitaciones (${coordinatorLocal})`
+                    : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                      ? `Capacitaciones (${coordinatorDistrict})`
+                      : 'Progreso de Capacitaciones')}
+                </span>
               </button>
-            )}
 
+              {/* Acceso a Certificado / Capacitación para Coordinador de Local */}
+              {isCoordinadorLocal && onGoToTraining && (
+                <button
+                  onClick={onGoToTraining}
+                  style={{
+                    padding: '12px 14px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: 'transparent',
+                    color: textSub,
+                    fontWeight: 700,
+                    fontSize: '0.86rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    textAlign: 'left',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <School className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  <span>Mi Ficha / Certificado</span>
+                </button>
+              )}
+
+              {/* Tab 3: Conexión a SQL Server (Solo Administrador) */}
+              {isSuperAdmin && (
+                <button
+                  onClick={() => setActiveTab('sql')}
+                  style={{
+                    padding: '12px 14px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: activeTab === 'sql' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                    color: activeTab === 'sql' ? '#0284c7' : textSub,
+                    fontWeight: 700,
+                    fontSize: '0.86rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    textAlign: 'left',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <Cable className="w-4 h-4 flex-shrink-0" />
+                  <span>Conexión a SQL Server</span>
+                </button>
+              )}
+
+            </div>
           </div>
-        </div>
 
-        {/* Footer Sidebar */}
-        <div style={{ padding: '20px', borderTop: `1px solid ${borderCol}`, fontSize: '0.72rem', color: textSub, textAlign: 'center' }}>
-          <strong>Somos Perú 2026</strong><br />
-          Defensa y Control del Voto
-        </div>
-      </aside>
+          {/* Footer Sidebar */}
+          <div style={{ padding: '20px', borderTop: `1px solid ${borderCol}`, fontSize: '0.72rem', color: textSub, textAlign: 'center' }}>
+            <strong>Somos Perú 2026</strong><br />
+            Defensa y Control del Voto
+          </div>
+        </aside>
+      )}
 
       {/* CONTENIDO PRINCIPAL */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, paddingBottom: isMobile ? '70px' : 0 }}>
         
         {/* ENCABEZADO SUPERIOR */}
-        <header style={{ background: bgHeader, borderBottom: `1px solid ${borderCol}`, padding: '16px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'all 0.2s ease' }}>
-          <div>
-            <h1 style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle, margin: 0 }}>
+        <header style={{ background: bgHeader, borderBottom: `1px solid ${borderCol}`, padding: isMobile ? '12px 16px' : '16px 28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px', transition: 'all 0.2s ease' }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            {/* Logo en móvil */}
+            {isMobile && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '2px' }}>
+                <img src="/images/logo_somos_peru.svg" alt="Somos Perú" style={{ width: '28px', height: 'auto', flexShrink: 0 }} />
+                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7' }}>ConteoLima · Somos Perú 2026</span>
+              </div>
+            )}
+            <h1 style={{ fontSize: isMobile ? '0.95rem' : '1.25rem', fontWeight: 900, color: textTitle, margin: 0, whiteSpace: isMobile ? 'nowrap' : 'normal', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {activeTab === 'overview' && (
                 isCoordinadorLocal && coordinatorLocal
-                  ? `Control Electoral - ${coordinatorLocal} (${coordinatorDistrict})`
+                  ? (isMobile ? `Colegio: ${coordinatorLocal}` : `Control Electoral - ${coordinatorLocal} (${coordinatorDistrict})`)
                   : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                    ? `Control Electoral - Distrito ${coordinatorDistrict}`
-                    : 'Control Electoral y Monitoreo')
+                    ? (isMobile ? `Distrito: ${coordinatorDistrict}` : `Control Electoral - Distrito ${coordinatorDistrict}`)
+                    : (isMobile ? 'Panel General' : 'Control Electoral y Monitoreo'))
               )}
-              {activeTab === 'capacitacion' && (
+              {activeTab === 'capacitacion' && (isMobile ? 'Capacitaciones' : (
                 isCoordinadorLocal && coordinatorLocal
                   ? `Capacitaciones - ${coordinatorLocal} (${coordinatorDistrict})`
                   : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
                     ? `Capacitaciones - Distrito ${coordinatorDistrict}`
                     : 'Progreso de las Capacitaciones en Gráficas')
-              )}
-              {activeTab === 'sql' && 'Conexión a SQL Server'}
+              ))}
+              {activeTab === 'sql' && 'Conexión SQL Server'}
             </h1>
-            <p style={{ fontSize: '0.78rem', color: textSub, margin: '2px 0 0 0' }}>
-              {activeTab === 'overview' && (
-                isCoordinadorLocal
-                  ? `Monitoreo exclusivo de personeros asignados a ${coordinatorLocal} en ${coordinatorDistrict}`
-                  : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                    ? `Monitoreo exclusivo de coordinadores de local y personeros de ${coordinatorDistrict}`
-                    : 'Gestión centralizada de personeros, asignaciones electorales y cobertura territorial')
-              )}
-              {activeTab === 'capacitacion' && 'Monitoreo gráfico de avance en videos, manuales PDF y estado de credenciales oficiales'}
-              {activeTab === 'sql' && 'Administración de la API de SQL Server y estado de las tablas dbo.personero y dbo.coordinadores'}
-            </p>
+            {!isMobile && (
+              <p style={{ fontSize: '0.78rem', color: textSub, margin: '2px 0 0 0' }}>
+                {activeTab === 'overview' && (
+                  isCoordinadorLocal
+                    ? `Monitoreo exclusivo de personeros asignados a ${coordinatorLocal} en ${coordinatorDistrict}`
+                    : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                      ? `Monitoreo exclusivo de coordinadores de local y personeros de ${coordinatorDistrict}`
+                      : 'Gestión centralizada de personeros, asignaciones electorales y cobertura territorial')
+                )}
+                {activeTab === 'capacitacion' && 'Monitoreo gráfico de avance en videos, manuales PDF y estado de credenciales oficiales'}
+                {activeTab === 'sql' && 'Administración de la API de SQL Server y estado de las tablas dbo.personero y dbo.coordinadores'}
+              </p>
+            )}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {/* Badge de Coordinador de Local con su colegio y distrito */}
-            {isCoordinadorLocal && coordinatorLocal && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '6px' : '10px', flexShrink: 0 }}>
+            {/* Badge de Coordinador de Local — solo escritorio */}
+            {!isMobile && isCoordinadorLocal && coordinatorLocal && (
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -599,8 +650,8 @@ export function DashboardView({ onGoToTraining }) {
               </div>
             )}
 
-            {/* Badge de Coordinador Distrital */}
-            {!isCoordinadorLocal && (isCoordinadorDistrital || isCoordinador) && coordinatorDistrict && (
+            {/* Badge de Coordinador Distrital — solo escritorio */}
+            {!isMobile && !isCoordinadorLocal && (isCoordinadorDistrital || isCoordinador) && coordinatorDistrict && (
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -618,27 +669,23 @@ export function DashboardView({ onGoToTraining }) {
               </div>
             )}
 
-            {/* Botón para volver a ver la ficha / certificado para Coordinador Local */}
-            {isCoordinadorLocal && onGoToTraining && (
-              <button
-                onClick={onGoToTraining}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '8px 14px',
-                  borderRadius: '8px',
-                  border: '1.5px solid #0284c7',
-                  background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
-                  color: '#0284c7',
-                  fontSize: '0.82rem',
-                  fontWeight: 700,
-                  cursor: 'pointer'
-                }}
-              >
-                <GraduationCap className="w-4 h-4 text-sky-500" />
-                <span>Mi Ficha / Certificado</span>
-              </button>
+            {/* Badge superadmin con nombre — escritorio */}
+            {!isMobile && isSuperAdmin && (
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe',
+                border: '1.5px solid #8b5cf6',
+                color: '#7c3aed',
+                fontWeight: 800,
+                fontSize: '0.82rem'
+              }}>
+                <ShieldCheck className="w-4 h-4" />
+                <span>{user?.fullName || user?.username || 'Admin'}</span>
+              </div>
             )}
 
             {/* Toggle Modo Oscuro / Claro */}
@@ -646,8 +693,8 @@ export function DashboardView({ onGoToTraining }) {
               onClick={toggleTheme}
               title={isDark ? 'Cambiar a Modo Claro' : 'Cambiar a Modo Oscuro'}
               style={{
-                width: '38px',
-                height: '38px',
+                width: '36px',
+                height: '36px',
                 borderRadius: '50%',
                 border: `1px solid ${borderCol}`,
                 background: bgCard,
@@ -655,31 +702,33 @@ export function DashboardView({ onGoToTraining }) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                transition: 'all 0.15s ease'
+                flexShrink: 0
               }}
             >
               {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
-            <button
-              onClick={fetchData}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '8px 16px',
-                borderRadius: '8px',
-                border: `1px solid ${borderCol}`,
-                background: bgCard,
-                color: textTitle,
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              <span>Sincronizar SQL</span>
-            </button>
+            {!isMobile && (
+              <button
+                onClick={fetchData}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: `1px solid ${borderCol}`,
+                  background: bgCard,
+                  color: textTitle,
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                <span>Sincronizar SQL</span>
+              </button>
+            )}
 
             <button
               onClick={logout}
@@ -687,7 +736,7 @@ export function DashboardView({ onGoToTraining }) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '8px 16px',
+                padding: isMobile ? '8px 10px' : '8px 16px',
                 borderRadius: '8px',
                 border: '1px solid #fecaca',
                 background: isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2',
@@ -698,13 +747,13 @@ export function DashboardView({ onGoToTraining }) {
               }}
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Cerrar Sesión</span>
+              {!isMobile && <span>Cerrar Sesión</span>}
             </button>
           </div>
         </header>
 
         {/* CUERPO DEL TAB SELECCIONADO */}
-        <div style={{ padding: '24px 28px', flex: 1, overflowY: 'auto' }}>
+        <div style={{ padding: isMobile ? '14px 12px' : '24px 28px', flex: 1, overflowY: 'auto' }}>
           
           {/* =========================================================================
               TAB 1: PANEL GENERAL
@@ -768,7 +817,7 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* Filtro Roles (2 roles) */}
+                  {/* Filtro Roles */}
                   <select
                     value={role1}
                     onChange={(e) => setRole1(e.target.value)}
@@ -777,6 +826,7 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
+                    {!isCoordinadorLocal && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
                   </select>
 
                   {/* Filtro Experiencia */}
@@ -914,19 +964,31 @@ export function DashboardView({ onGoToTraining }) {
                     <div style={{ fontSize: '0.68rem', color: textSub }}>{isFiltered1 ? `De ${records.length} totales` : 'Padrón Somos Perú'}</div>
                   </div>
 
-                  {/* KPI 2 */}
+                  {/* KPI 2 - Coordinadores Distritales */}
                   {!isCoordinadorLocal && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px' }}>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORDINADORES</div>
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0d9488', borderRadius: '10px', padding: '14px' }}>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. DISTRITALES</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
-                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Coords}</span>
+                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(13, 148, 136, 0.2)' : '#ccfbf1', color: '#0d9488', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ShieldCheck className="w-4 h-4" /></div>
+                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsDistrital}</span>
                       </div>
-                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Local</div>
+                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Distrito</div>
                     </div>
                   )}
 
-                  {/* KPI 3 */}
+                  {/* KPI 3 - Coordinadores de Local */}
+                  {!isCoordinadorLocal && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. DE LOCAL</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
+                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsLocal}</span>
+                      </div>
+                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Colegio</div>
+                    </div>
+                  )}
+
+                  {/* KPI 4 - Personeros Mesa */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: '14px' }}>
                     <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONEROS MESA</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
@@ -1067,111 +1129,165 @@ export function DashboardView({ onGoToTraining }) {
                   </a>
                 </div>
 
-                <div style={{ overflowX: 'auto' }}>
-                  {filteredRecords1.length > 0 ? (
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
-                      <thead>
-                        <tr style={{ background: tableHeadBg, borderBottom: `1px solid ${borderCol}`, color: textSub, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                          <th style={{ padding: '12px 14px' }}>ID</th>
-                          <th style={{ padding: '12px 14px' }}>FECHA</th>
-                          <th style={{ padding: '12px 14px' }}>PERSONERO / DNI / CORREO</th>
-                          <th style={{ padding: '12px 14px' }}>ROL A DESEMPEÑAR</th>
-                          <th style={{ padding: '12px 14px' }}>ASIGNACIÓN SOMOS PERÚ</th>
-                          <th style={{ padding: '12px 14px' }}>VOTACIÓN (DNI)</th>
-                          <th style={{ padding: '12px 14px' }}>CONTACTO & WHATSAPP</th>
-                          <th style={{ padding: '12px 14px' }}>LOGÍSTICA</th>
-                          <th style={{ padding: '12px 14px', textAlign: 'center' }}>ACCIONES</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredRecords1.map((r, idx) => {
-                          const dni = r['D.N.I.'] || r['DNI'];
-                          const cel = r['Celular'] || '-';
-                          const exp = getExp(r);
-                          const mov = getMov(r);
-                          const comp = getComp(r);
-
-                          return (
-                            <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
-                              <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0284c7' }}>#{idx + 1}</td>
-                              <td style={{ padding: '12px 14px', color: textSub, fontSize: '0.75rem' }}>{r['Fecha de Registro'] || '2026-08-17'}</td>
-                              <td style={{ padding: '12px 14px' }}>
-                                <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos']}</div>
+                {/* ---- VISTA TABLA (escritorio) / TARJETAS (móvil) ---- */}
+                {filteredRecords1.length > 0 ? (
+                  isMobile ? (
+                    /* TARJETAS EN MÓVIL */
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '10px' }}>
+                      {filteredRecords1.map((r, idx) => {
+                        const dni = r['D.N.I.'] || r['DNI'];
+                        const cel = r['Celular'] || '-';
+                        const exp = getExp(r);
+                        const mov = getMov(r);
+                        const comp = getComp(r);
+                        const distrito = r['Distrito Asignado'] || r['Distrito donde Vota'] || '-';
+                        const local = r['Local de Votación Asignado'] || r['Local de Votación'] || '-';
+                        const mesa = r['Mesa Asignada'] || r['Mesa de Sufragio'] || '-';
+                        return (
+                          <div key={idx} style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px', boxShadow: isDark ? 'none' : '0 1px 4px rgba(0,0,0,0.06)' }}>
+                            {/* Fila 1: Nombre + Número */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                              <div>
+                                <div style={{ fontWeight: 900, color: textTitle, fontSize: '0.9rem' }}>{r['Nombres y Apellidos']}</div>
                                 <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
-                                {r['Correo Electrónico'] && (
-                                  <div style={{ fontSize: '0.7rem', color: textSub }}>{r['Correo Electrónico']}</div>
-                                )}
-                              </td>
-                              <td style={{ padding: '12px 14px' }}>
-                                <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
-                                  {r['Rol a Desempeñar'] || 'Personero de Mesa'}
-                                </span>
-                              </td>
-                              <td style={{ padding: '12px 14px' }}>
-                                <div style={{ fontWeight: 800, color: '#0284c7' }}>{r['Distrito Asignado'] || r['Distrito donde Vota']}</div>
-                                <div style={{ fontSize: '0.72rem', color: textSub }}>{r['Local de Votación Asignado'] || r['Local de Votación']}</div>
-                                <div style={{ fontSize: '0.72rem', color: textTitle }}>Mesa Asignada: <strong>{r['Mesa Asignada'] || r['Mesa de Sufragio']}</strong></div>
-                              </td>
-                              <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
-                                <div style={{ color: textBody }}>{r['Distrito donde Vota']}</div>
-                                <div style={{ color: textSub }}>Local: {r['Local de Votación']}</div>
-                                <div style={{ color: textSub }}>Mesa: {r['Mesa de Sufragio']}</div>
-                              </td>
-                              <td style={{ padding: '12px 14px' }}>
-                                <div style={{ fontWeight: 700, color: textTitle }}>{cel}</div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#16a34a', fontSize: '0.75rem', fontWeight: 700 }}>
-                                  <span>📱 {cel}</span>
-                                </div>
-                              </td>
-                              <td style={{ padding: '12px 14px' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '0.72rem', fontWeight: 800 }}>
-                                  <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>
-                                    Exp: <strong>{exp}</strong>
-                                  </span>
-                                  <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>
-                                    Mov: <strong>{mov}</strong>
-                                  </span>
-                                  <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>
-                                    Comp: <strong>{comp}</strong>
-                                  </span>
-                                </div>
-                              </td>
-                              <td style={{ padding: '12px 14px', textAlign: 'center' }}>
-                                <button
-                                  onClick={() => setSelectedPersonero(r)}
-                                  style={{
-                                    padding: '6px 14px',
-                                    borderRadius: '6px',
-                                    border: '1px solid #0284c7',
-                                    background: 'transparent',
-                                    color: '#0284c7',
-                                    fontWeight: 700,
-                                    fontSize: '0.75rem',
-                                    cursor: 'pointer'
-                                  }}
-                                >
-                                  Ver Ficha
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  ) : (
-                    <div style={{ padding: '40px 20px', textAlign: 'center', color: textSub }}>
-                      <AlertCircle className="w-8 h-8 mx-auto text-amber-500 mb-2" />
-                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: textTitle }}>No se encontraron personeros con los filtros actuales</div>
-                      <p style={{ fontSize: '0.8rem', margin: '6px 0 14px 0' }}>Pruebe cambiando o limpiando los criterios de búsqueda.</p>
-                      <button
-                        onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
-                        style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#0284c7', color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
-                      >
-                        Restablecer Filtros
-                      </button>
+                              </div>
+                              <span style={{ background: isDark ? 'rgba(2,132,199,0.2)' : '#e0f2fe', color: '#0284c7', padding: '3px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, flexShrink: 0 }}>
+                                #{idx + 1}
+                              </span>
+                            </div>
+                            {/* Fila 2: Rol */}
+                            <div style={{ marginBottom: '8px' }}>
+                              <span style={{ background: isDark ? 'rgba(2,132,199,0.15)' : '#f0f9ff', color: '#0284c7', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 700, border: `1px solid ${isDark ? 'rgba(2,132,199,0.3)' : '#bae6fd'}` }}>
+                                {r['Rol a Desempeñar'] || 'Personero de Mesa'}
+                              </span>
+                            </div>
+                            {/* Fila 3: Distrito / Local / Mesa */}
+                            <div style={{ background: isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc', borderRadius: '8px', padding: '8px 10px', marginBottom: '8px', fontSize: '0.75rem' }}>
+                              <div style={{ display: 'flex', gap: '6px', marginBottom: '2px' }}>
+                                <span style={{ color: textSub, fontWeight: 600 }}>📍 Distrito:</span>
+                                <span style={{ fontWeight: 800, color: '#0284c7' }}>{distrito}</span>
+                              </div>
+                              <div style={{ display: 'flex', gap: '6px', marginBottom: '2px' }}>
+                                <span style={{ color: textSub, fontWeight: 600 }}>🏫 Local:</span>
+                                <span style={{ fontWeight: 700, color: textBody }}>{local}</span>
+                              </div>
+                              <div style={{ display: 'flex', gap: '6px' }}>
+                                <span style={{ color: textSub, fontWeight: 600 }}>🗳️ Mesa:</span>
+                                <span style={{ fontWeight: 800, color: textTitle }}>{mesa}</span>
+                              </div>
+                            </div>
+                            {/* Fila 4: Celular + Logística */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                              <div style={{ fontSize: '0.78rem', color: '#16a34a', fontWeight: 700 }}>📱 {cel}</div>
+                              <div style={{ display: 'flex', gap: '6px', fontSize: '0.7rem', fontWeight: 800 }}>
+                                <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>Exp:{exp}</span>
+                                <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>Mov:{mov}</span>
+                                <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>Comp:{comp}</span>
+                              </div>
+                            </div>
+                            {/* Acción */}
+                            <button
+                              onClick={() => setSelectedPersonero(r)}
+                              style={{ width: '100%', padding: '9px', borderRadius: '8px', border: '1.5px solid #0284c7', background: isDark ? 'rgba(2,132,199,0.1)' : '#f0f9ff', color: '#0284c7', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
+                            >
+                              Ver Ficha Completa
+                            </button>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
-                </div>
+                  ) : (
+                    /* TABLA EN ESCRITORIO */
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
+                        <thead>
+                          <tr style={{ background: tableHeadBg, borderBottom: `1px solid ${borderCol}`, color: textSub, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                            <th style={{ padding: '12px 14px' }}>ID</th>
+                            <th style={{ padding: '12px 14px' }}>FECHA</th>
+                            <th style={{ padding: '12px 14px' }}>PERSONERO / DNI / CORREO</th>
+                            <th style={{ padding: '12px 14px' }}>ROL A DESEMPEÑAR</th>
+                            <th style={{ padding: '12px 14px' }}>ASIGNACIÓN SOMOS PERÚ</th>
+                            <th style={{ padding: '12px 14px' }}>VOTACIÓN (DNI)</th>
+                            <th style={{ padding: '12px 14px' }}>CONTACTO & WHATSAPP</th>
+                            <th style={{ padding: '12px 14px' }}>LOGÍSTICA</th>
+                            <th style={{ padding: '12px 14px', textAlign: 'center' }}>ACCIONES</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredRecords1.map((r, idx) => {
+                            const dni = r['D.N.I.'] || r['DNI'];
+                            const cel = r['Celular'] || '-';
+                            const exp = getExp(r);
+                            const mov = getMov(r);
+                            const comp = getComp(r);
+
+                            return (
+                              <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
+                                <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0284c7' }}>#{idx + 1}</td>
+                                <td style={{ padding: '12px 14px', color: textSub, fontSize: '0.75rem' }}>{r['Fecha de Registro'] || '2026-08-17'}</td>
+                                <td style={{ padding: '12px 14px' }}>
+                                  <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos']}</div>
+                                  <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                                  {r['Correo Electrónico'] && (
+                                    <div style={{ fontSize: '0.7rem', color: textSub }}>{r['Correo Electrónico']}</div>
+                                  )}
+                                </td>
+                                <td style={{ padding: '12px 14px' }}>
+                                  <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
+                                    {r['Rol a Desempeñar'] || 'Personero de Mesa'}
+                                  </span>
+                                </td>
+                                <td style={{ padding: '12px 14px' }}>
+                                  <div style={{ fontWeight: 800, color: '#0284c7' }}>{r['Distrito Asignado'] || r['Distrito donde Vota']}</div>
+                                  <div style={{ fontSize: '0.72rem', color: textSub }}>{r['Local de Votación Asignado'] || r['Local de Votación']}</div>
+                                  <div style={{ fontSize: '0.72rem', color: textTitle }}>Mesa Asignada: <strong>{r['Mesa Asignada'] || r['Mesa de Sufragio']}</strong></div>
+                                </td>
+                                <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
+                                  <div style={{ color: textBody }}>{r['Distrito donde Vota']}</div>
+                                  <div style={{ color: textSub }}>Local: {r['Local de Votación']}</div>
+                                  <div style={{ color: textSub }}>Mesa: {r['Mesa de Sufragio']}</div>
+                                </td>
+                                <td style={{ padding: '12px 14px' }}>
+                                  <div style={{ fontWeight: 700, color: textTitle }}>{cel}</div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#16a34a', fontSize: '0.75rem', fontWeight: 700 }}>
+                                    <span>📱 {cel}</span>
+                                  </div>
+                                </td>
+                                <td style={{ padding: '12px 14px' }}>
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '0.72rem', fontWeight: 800 }}>
+                                    <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>Exp: <strong>{exp}</strong></span>
+                                    <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>Mov: <strong>{mov}</strong></span>
+                                    <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>Comp: <strong>{comp}</strong></span>
+                                  </div>
+                                </td>
+                                <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                                  <button
+                                    onClick={() => setSelectedPersonero(r)}
+                                    style={{ padding: '6px 14px', borderRadius: '6px', border: '1px solid #0284c7', background: 'transparent', color: '#0284c7', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+                                  >
+                                    Ver Ficha
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )
+                ) : (
+                  <div style={{ padding: '40px 20px', textAlign: 'center', color: textSub }}>
+                    <AlertCircle className="w-8 h-8 mx-auto text-amber-500 mb-2" />
+                    <div style={{ fontWeight: 800, fontSize: '0.95rem', color: textTitle }}>No se encontraron personeros con los filtros actuales</div>
+                    <p style={{ fontSize: '0.8rem', margin: '6px 0 14px 0' }}>Pruebe cambiando o limpiando los criterios de búsqueda.</p>
+                    <button
+                      onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
+                      style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#0284c7', color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
+                    >
+                      Restablecer Filtros
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -1264,6 +1380,7 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
+                    {!isCoordinadorLocal && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
                   </select>
 
                   {isFiltered2 && (
@@ -1373,7 +1490,7 @@ export function DashboardView({ onGoToTraining }) {
               </div>
 
               {/* 2 Gráficos de Capacitación Sincronizados con el Filtro */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '16px', marginBottom: '24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.5fr', gap: '16px', marginBottom: '24px' }}>
                 <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle, marginBottom: '14px' }}>
                     <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
@@ -1625,6 +1742,109 @@ export function DashboardView({ onGoToTraining }) {
 
         </div>
       </div>
+
+      {/* BOTTOM NAV BAR — solo en móvil */}
+      {isMobile && (
+        <nav style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '64px',
+          background: bgSidebar,
+          borderTop: `1px solid ${borderCol}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          zIndex: 100,
+          boxShadow: '0 -2px 12px rgba(0,0,0,0.1)'
+        }}>
+          <button
+            onClick={() => setActiveTab('overview')}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              border: 'none',
+              background: 'transparent',
+              color: activeTab === 'overview' ? '#0284c7' : textSub,
+              fontWeight: activeTab === 'overview' ? 800 : 500,
+              fontSize: '0.62rem',
+              cursor: 'pointer',
+              padding: '8px 0'
+            }}
+          >
+            <LayoutGrid style={{ width: '20px', height: '20px' }} />
+            <span>Panel</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('capacitacion')}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              border: 'none',
+              background: 'transparent',
+              color: activeTab === 'capacitacion' ? '#0284c7' : textSub,
+              fontWeight: activeTab === 'capacitacion' ? 800 : 500,
+              fontSize: '0.62rem',
+              cursor: 'pointer',
+              padding: '8px 0'
+            }}
+          >
+            <GraduationCap style={{ width: '20px', height: '20px' }} />
+            <span>Capacitaciones</span>
+          </button>
+
+          {isSuperAdmin && (
+            <button
+              onClick={() => setActiveTab('sql')}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '3px',
+                border: 'none',
+                background: 'transparent',
+                color: activeTab === 'sql' ? '#0284c7' : textSub,
+                fontWeight: activeTab === 'sql' ? 800 : 500,
+                fontSize: '0.62rem',
+                cursor: 'pointer',
+                padding: '8px 0'
+              }}
+            >
+              <Cable style={{ width: '20px', height: '20px' }} />
+              <span>SQL</span>
+            </button>
+          )}
+
+          <button
+            onClick={fetchData}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              border: 'none',
+              background: 'transparent',
+              color: textSub,
+              fontSize: '0.62rem',
+              cursor: 'pointer',
+              padding: '8px 0'
+            }}
+          >
+            <RefreshCw style={{ width: '20px', height: '20px' }} className={loading ? 'animate-spin' : ''} />
+            <span>Sync</span>
+          </button>
+        </nav>
+      )}
 
       {/* Modal Ficha / Edición */}
       {selectedPersonero && (

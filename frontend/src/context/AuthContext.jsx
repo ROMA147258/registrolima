@@ -39,11 +39,20 @@ export function AuthProvider({ children }) {
         (cleanUser === 'eric' && (cleanPass === 'eric123' || cleanPass === 'admin123')) ||
         (cleanUser === 'admin' && (cleanPass === 'admin123' || cleanPass === 'eric123'))
       ) {
-        const adminUser = {
-          username: cleanUser,
-          fullName: cleanUser === 'eric' ? 'Eric - Coordinador Central' : 'Administrador General',
-          role: 'superadmin'
-        };
+        const adminUser = cleanUser === 'eric'
+          ? {
+              username: 'eric',
+              fullName: 'Eric - Coordinador Distrital General',
+              role: 'superadmin',
+              isCoordinadorDistrital: true,
+              'Rol a Desempeñar': 'Coordinador de Distritos',
+              'Nombres y Apellidos': 'Eric - Coordinador Distrital General'
+            }
+          : {
+              username: 'admin',
+              fullName: 'Administrador General',
+              role: 'superadmin'
+            };
         setUser(adminUser);
         setRole('superadmin');
         setToken('admin_master_token');
