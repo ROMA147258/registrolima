@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, FileText, Lightbulb, Lock, CheckCircle2, AlertCircle, RefreshCw, Award, ArrowRight } from 'lucide-react';
+import { X, FileText, Lightbulb, Lock, CheckCircle2, XCircle, AlertCircle, RefreshCw, Award, ArrowRight, BookOpen } from 'lucide-react';
 import { getRandomQuestions } from '../../constants/quizData.js';
 import confetti from 'canvas-confetti';
 
@@ -51,9 +51,9 @@ export function QuizModal({ onClose, onPassQuiz }) {
 
     setScore(correctCount);
     setSubmitted(true);
-    setShowResultPopup(true);
 
     if (correctCount === 5) {
+      setShowResultPopup(true);
       confetti({ particleCount: 120, spread: 90, origin: { y: 0.5 } });
       try {
         setSubmitting(true);
@@ -62,6 +62,11 @@ export function QuizModal({ onClose, onPassQuiz }) {
         console.error('Error guardando progreso:', err);
       } finally {
         setSubmitting(false);
+      }
+    } else {
+      // Scroll arriba para ver la revisión de respuestas
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = 0;
       }
     }
   };
@@ -73,7 +78,7 @@ export function QuizModal({ onClose, onPassQuiz }) {
         border: '1.5px solid #233554',
         borderRadius: '16px',
         width: '100%',
-        maxWidth: '740px',
+        maxWidth: '760px',
         maxHeight: '92vh',
         display: 'flex',
         flexDirection: 'column',
@@ -87,15 +92,17 @@ export function QuizModal({ onClose, onPassQuiz }) {
         {/* Encabezado */}
         <div style={{ padding: '18px 24px', borderBottom: '1px solid #233554', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111827' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <FileText className="w-5 h-5" />
+            <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: submitted && score < 5 ? 'rgba(239, 68, 68, 0.15)' : 'rgba(56, 189, 248, 0.12)', color: submitted && score < 5 ? '#f87171' : '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {submitted && score < 5 ? <BookOpen className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
             </div>
             <div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
-                Cuestionario Oficial de Capacitación Electoral
+                {submitted && score < 5 ? 'Revisión y Corrección de Respuestas' : 'Cuestionario Oficial de Capacitación Electoral'}
               </h3>
-              <div style={{ fontSize: '0.75rem', color: '#38bdf8', fontWeight: 600, marginTop: '2px' }}>
-                5 preguntas aleatorias del banco de 100 • Aprobación requerida: 5/5 (100%)
+              <div style={{ fontSize: '0.75rem', color: submitted && score < 5 ? '#f87171' : '#38bdf8', fontWeight: 600, marginTop: '2px' }}>
+                {submitted && score < 5
+                  ? `Puntaje obtenido: ${score}/5 (${score * 20}%) — Revisa las respuestas correctas antes de volver a dar el examen`
+                  : '5 preguntas aleatorias del banco de 100 • Aprobación requerida: 5/5 (100%)'}
               </div>
             </div>
           </div>
@@ -107,96 +114,214 @@ export function QuizModal({ onClose, onPassQuiz }) {
         {/* Cuerpo con Scroll */}
         <div ref={scrollRef} style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
           
-          {/* Cuadro de Instrucciones */}
-          <div style={{
-            background: 'rgba(30, 41, 59, 0.6)',
-            borderLeft: '4px solid #38bdf8',
-            borderRadius: '8px',
-            padding: '12px 16px',
-            marginBottom: '20px',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '10px',
-            fontSize: '0.85rem',
-            color: '#cbd5e1',
-            lineHeight: 1.45
-          }}>
-            <Lightbulb className="w-5 h-5 text-amber-400 flex-shrink-0" style={{ marginTop: '2px' }} />
-            <div>
-              <strong style={{ color: '#ffffff' }}>Instrucciones:</strong> Responde las 5 preguntas sobre la jornada electoral. Necesitas aprobar las <strong>5 de 5 respuestas correctas (100%)</strong> para aprobar el cuestionario y desbloquear tu Certificado Oficial.
+          {/* Banner de Estado */}
+          {!submitted ? (
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.6)',
+              borderLeft: '4px solid #38bdf8',
+              borderRadius: '8px',
+              padding: '12px 16px',
+              marginBottom: '20px',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '10px',
+              fontSize: '0.85rem',
+              color: '#cbd5e1',
+              lineHeight: 1.45
+            }}>
+              <Lightbulb className="w-5 h-5 text-amber-400 flex-shrink-0" style={{ marginTop: '2px' }} />
+              <div>
+                <strong style={{ color: '#ffffff' }}>Instrucciones:</strong> Responde las 5 preguntas sobre la jornada electoral. Necesitas aprobar las <strong>5 de 5 respuestas correctas (100%)</strong> para obtener tu Certificado Oficial.
+              </div>
             </div>
-          </div>
+          ) : score < 5 ? (
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.12)',
+              border: '1.5px solid #ef4444',
+              borderRadius: '12px',
+              padding: '16px 20px',
+              marginBottom: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              animation: 'fadeIn 0.25s ease-out'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#f87171', fontWeight: 900, fontSize: '1rem' }}>
+                <AlertCircle className="w-6 h-6 flex-shrink-0" />
+                <span>EVALUACIÓN NO APROBADA — OBTUVISTE {score} DE 5 ({score * 20}%)</span>
+              </div>
+              <div style={{ fontSize: '0.84rem', color: '#fca5a5', lineHeight: 1.45 }}>
+                Para obtener la acreditación oficial necesitas <strong>5/5 respuestas correctas</strong>. Revisa a continuación cuáles marcaste incorrectamente (rojo), cuál es la respuesta correcta (verde) y la justificación del manual para aprender antes de tu siguiente intento.
+              </div>
+            </div>
+          ) : null}
 
-          {/* Lista de las 5 Preguntas (Sin revelar respuestas) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          {/* Lista de las 5 Preguntas */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {questions.map((q, qIdx) => {
               const selectedOpt = answers[qIdx];
               const isAnswered = selectedOpt !== undefined;
+              const isUserCorrect = selectedOpt === q.answer;
 
               return (
                 <div
                   key={qIdx}
                   style={{
                     background: '#182238',
-                    border: isAnswered ? '1.5px solid rgb(14, 165, 233)' : '1px solid #233554',
-                    borderRadius: '12px',
-                    padding: '18px',
-                    transition: 'all 0.15s ease'
+                    border: submitted
+                      ? (isUserCorrect ? '2px solid #10b981' : '2px solid #ef4444')
+                      : (isAnswered ? '1.5px solid rgb(14, 165, 233)' : '1px solid #233554'),
+                    borderRadius: '14px',
+                    padding: '18px 20px',
+                    transition: 'all 0.2s ease',
+                    boxShadow: submitted ? (isUserCorrect ? '0 4px 15px rgba(16, 185, 129, 0.1)' : '0 4px 15px rgba(239, 68, 68, 0.1)') : 'none'
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{
-                      background: 'rgba(56, 189, 248, 0.15)',
-                      color: '#38bdf8',
-                      padding: '3px 10px',
+                      background: submitted
+                        ? (isUserCorrect ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)')
+                        : 'rgba(56, 189, 248, 0.15)',
+                      color: submitted
+                        ? (isUserCorrect ? '#34d399' : '#f87171')
+                        : '#38bdf8',
+                      padding: '3px 12px',
                       borderRadius: '12px',
-                      fontSize: '0.74rem',
-                      fontWeight: 800
+                      fontSize: '0.76rem',
+                      fontWeight: 800,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px'
                     }}>
-                      Pregunta {qIdx + 1} de 5
+                      {submitted && (isUserCorrect ? <CheckCircle2 className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />)}
+                      <span>Pregunta {qIdx + 1} de 5 {submitted && (isUserCorrect ? '• Correcta (+1)' : '• Incorrecta (0)')}</span>
                     </span>
                   </div>
 
-                  <h4 style={{ fontSize: '0.96rem', fontWeight: 700, color: '#f8fafc', margin: '0 0 14px 0', lineHeight: 1.4 }}>
+                  <h4 style={{ fontSize: '0.98rem', fontWeight: 700, color: '#f8fafc', margin: '0 0 14px 0', lineHeight: 1.45 }}>
                     {q.question}
                   </h4>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {q.options.map((opt, optIdx) => {
                       const isSelected = selectedOpt === optIdx;
+                      const isCorrectAnswer = optIdx === q.answer;
+
+                      // Estilos según si ya se envió el examen o está en curso
+                      let bg = '#0f172a';
+                      let border = '1.5px solid #1e293b';
+                      let textColor = '#e2e8f0';
+                      let badge = null;
+
+                      if (!submitted) {
+                        if (isSelected) {
+                          bg = 'rgba(14, 165, 233, 0.15)';
+                          border = '1.5px solid rgb(14, 165, 233)';
+                          textColor = '#ffffff';
+                        }
+                      } else {
+                        // Modo Revisión
+                        if (isCorrectAnswer) {
+                          bg = 'rgba(16, 185, 129, 0.18)';
+                          border = '2px solid #10b981';
+                          textColor = '#ffffff';
+                          badge = isSelected ? '✅ ¡Tu respuesta correcta!' : '✅ Respuesta correcta';
+                        } else if (isSelected && !isCorrectAnswer) {
+                          bg = 'rgba(239, 68, 68, 0.18)';
+                          border = '2px solid #ef4444';
+                          textColor = '#ffffff';
+                          badge = '❌ Tu respuesta (Incorrecta)';
+                        } else {
+                          bg = 'rgba(15, 23, 42, 0.6)';
+                          border = '1px solid #1e293b';
+                          textColor = '#64748b';
+                        }
+                      }
 
                       return (
                         <div
                           key={optIdx}
                           onClick={() => handleSelect(qIdx, optIdx)}
                           style={{
-                            background: isSelected ? 'rgba(14, 165, 233, 0.15)' : '#0f172a',
-                            border: isSelected ? '1.5px solid rgb(14, 165, 233)' : '1.5px solid #1e293b',
+                            background: bg,
+                            border: border,
                             borderRadius: '10px',
-                            padding: '10px 14px',
+                            padding: '12px 14px',
                             display: 'flex',
                             alignItems: 'center',
+                            justifyContent: 'space-between',
                             gap: '12px',
-                            cursor: 'pointer',
-                            color: isSelected ? '#ffffff' : '#e2e8f0',
+                            cursor: submitted ? 'default' : 'pointer',
+                            color: textColor,
                             fontSize: '0.86rem',
-                            fontWeight: isSelected ? 700 : 500,
+                            fontWeight: isSelected || (submitted && isCorrectAnswer) ? 700 : 500,
                             transition: 'all 0.15s ease'
                           }}
                         >
-                          <div style={{
-                            width: '18px',
-                            height: '18px',
-                            borderRadius: '50%',
-                            border: isSelected ? '5px solid rgb(14, 165, 233)' : '2px solid #64748b',
-                            background: isSelected ? '#ffffff' : 'transparent',
-                            flexShrink: 0
-                          }}></div>
-                          <span style={{ flex: 1 }}>{opt}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
+                            {!submitted ? (
+                              <div style={{
+                                width: '18px',
+                                height: '18px',
+                                borderRadius: '50%',
+                                border: isSelected ? '5px solid rgb(14, 165, 233)' : '2px solid #64748b',
+                                background: isSelected ? '#ffffff' : 'transparent',
+                                flexShrink: 0
+                              }}></div>
+                            ) : (
+                              <div style={{ flexShrink: 0 }}>
+                                {isCorrectAnswer ? (
+                                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                                ) : isSelected ? (
+                                  <XCircle className="w-5 h-5 text-red-400" />
+                                ) : (
+                                  <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: '1.5px solid #334155' }}></div>
+                                )}
+                              </div>
+                            )}
+                            <span style={{ flex: 1, lineHeight: 1.35 }}>{opt}</span>
+                          </div>
+
+                          {badge && (
+                            <span style={{
+                              fontSize: '0.72rem',
+                              fontWeight: 800,
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              background: isCorrectAnswer ? '#047857' : '#991b1b',
+                              color: '#ffffff',
+                              whiteSpace: 'nowrap'
+                            }}>
+                              {badge}
+                            </span>
+                          )}
                         </div>
                       );
                     })}
                   </div>
+
+                  {/* Justificación y Explicación en Modo Revisión */}
+                  {submitted && q.explanation && (
+                    <div style={{
+                      marginTop: '12px',
+                      background: 'rgba(30, 41, 59, 0.7)',
+                      borderLeft: '3.5px solid #38bdf8',
+                      borderRadius: '8px',
+                      padding: '10px 14px',
+                      fontSize: '0.82rem',
+                      color: '#cbd5e1',
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '8px',
+                      lineHeight: 1.45
+                    }}>
+                      <Lightbulb className="w-4 h-4 text-amber-400 flex-shrink-0" style={{ marginTop: '2px' }} />
+                      <div>
+                        <strong style={{ color: '#38bdf8' }}>Fundamento Electoral:</strong> {q.explanation}
+                      </div>
+                    </div>
+                  )}
+
                 </div>
               );
             })}
@@ -211,38 +336,96 @@ export function QuizModal({ onClose, onPassQuiz }) {
           background: '#111827',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '10px'
         }}>
-          <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
-            Respondidas: <strong style={{ color: isAllAnswered ? '#38bdf8' : '#ffffff' }}>{totalAnswered}/5</strong>
-          </div>
+          {!submitted ? (
+            <>
+              <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+                Respondidas: <strong style={{ color: isAllAnswered ? '#38bdf8' : '#ffffff' }}>{totalAnswered}/5</strong>
+              </div>
 
-          <button
-            onClick={handleSubmit}
-            disabled={!isAllAnswered || submitting}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 24px',
-              borderRadius: '10px',
-              border: 'none',
-              background: isAllAnswered ? 'rgb(14, 165, 233)' : '#1e293b',
-              color: isAllAnswered ? '#ffffff' : '#64748b',
-              fontSize: '0.9rem',
-              fontWeight: 800,
-              cursor: isAllAnswered ? 'pointer' : 'not-allowed',
-              boxShadow: isAllAnswered ? '0 4px 15px rgba(14, 165, 233, 0.4)' : 'none',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            {isAllAnswered ? <CheckCircle2 className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-            <span>{isAllAnswered ? 'Enviar Respuestas' : 'Responda todas para enviar'}</span>
-          </button>
+              <button
+                onClick={handleSubmit}
+                disabled={!isAllAnswered || submitting}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: isAllAnswered ? 'rgb(14, 165, 233)' : '#1e293b',
+                  color: isAllAnswered ? '#ffffff' : '#64748b',
+                  fontSize: '0.9rem',
+                  fontWeight: 800,
+                  cursor: isAllAnswered ? 'pointer' : 'not-allowed',
+                  boxShadow: isAllAnswered ? '0 4px 15px rgba(14, 165, 233, 0.4)' : 'none',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {isAllAnswered ? <CheckCircle2 className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                <span>{isAllAnswered ? 'Enviar Respuestas' : 'Responda todas para enviar'}</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <div style={{ fontSize: '0.88rem', color: score === 5 ? '#34d399' : '#f87171', fontWeight: 800 }}>
+                Resultado: {score} de 5 correctas ({score * 20}%)
+              </div>
+
+              {score < 5 ? (
+                <button
+                  onClick={loadRandomQuestions}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '11px 24px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: 'rgb(14, 165, 233)',
+                    color: '#ffffff',
+                    fontSize: '0.92rem',
+                    fontWeight: 900,
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 15px rgba(14, 165, 233, 0.4)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  <span>Intentar otra vez (5 preguntas nuevas)</span>
+                </button>
+              ) : (
+                <button
+                  onClick={onClose}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '11px 24px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: '#10b981',
+                    color: '#ffffff',
+                    fontSize: '0.92rem',
+                    fontWeight: 900,
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <Award className="w-4 h-4" />
+                  <span>Ver Mi Certificado Oficial</span>
+                </button>
+              )}
+            </>
+          )}
         </div>
 
-        {/* POPUP DE RESULTADO ÚNICO (Sin opción de ver respuestas) */}
-        {showResultPopup && (
+        {/* POPUP DE FELICITACIÓN (Solo si aprobó 5/5) */}
+        {showResultPopup && score === 5 && (
           <div style={{
             position: 'absolute',
             inset: 0,
@@ -256,7 +439,7 @@ export function QuizModal({ onClose, onPassQuiz }) {
           }}>
             <div style={{
               background: '#182238',
-              border: score === 5 ? '2px solid #10b981' : '2px solid #ef4444',
+              border: '2px solid #10b981',
               borderRadius: '20px',
               maxWidth: '460px',
               width: '100%',
@@ -272,82 +455,55 @@ export function QuizModal({ onClose, onPassQuiz }) {
                   width: '76px',
                   height: '76px',
                   borderRadius: '50%',
-                  background: score === 5 ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-                  color: score === 5 ? '#34d399' : '#f87171',
+                  background: 'rgba(16, 185, 129, 0.2)',
+                  color: '#34d399',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: score === 5 ? '2px solid #10b981' : '2px solid #ef4444'
+                  border: '2px solid #10b981'
                 }}>
-                  {score === 5 ? <Award className="w-10 h-10" /> : <AlertCircle className="w-10 h-10" />}
+                  <Award className="w-10 h-10" />
                 </div>
               </div>
 
               {/* Título */}
-              <h2 style={{ fontSize: '1.45rem', fontWeight: 900, color: score === 5 ? '#34d399' : '#f87171', margin: '0 0 8px 0' }}>
-                {score === 5 ? '¡FELICITACIONES! APROBASTE' : 'EVALUACIÓN NO APROBADA'}
+              <h2 style={{ fontSize: '1.45rem', fontWeight: 900, color: '#34d399', margin: '0 0 8px 0' }}>
+                ¡FELICITACIONES! APROBASTE
               </h2>
 
               {/* Puntaje Destacado */}
               <div style={{ fontSize: '2.4rem', fontWeight: 900, color: '#ffffff', margin: '10px 0' }}>
-                {score} / 5 <span style={{ fontSize: '1rem', color: '#94a3b8', fontWeight: 600 }}>({score * 20}%)</span>
+                5 / 5 <span style={{ fontSize: '1rem', color: '#34d399', fontWeight: 700 }}>(100%)</span>
               </div>
 
               {/* Descripción */}
               <p style={{ fontSize: '0.88rem', color: '#cbd5e1', lineHeight: 1.5, margin: '0 0 26px 0' }}>
-                {score === 5
-                  ? 'Has obtenido un puntaje perfecto de 5/5 (100%). Tu capacitación ha sido registrada exitosamente y tu Certificado Oficial de Acreditación ya se encuentra habilitado.'
-                  : 'Para obtener tu acreditación oficial se requiere un puntaje perfecto de 5/5. Presiona el botón para intentarlo nuevamente con 5 preguntas nuevas del banco oficial.'}
+                Has obtenido un puntaje perfecto de 5/5 (100%). Tu capacitación ha sido registrada exitosamente y tu Certificado Oficial de Acreditación ya se encuentra habilitado.
               </p>
 
-              {/* Botón Único de Acción */}
-              {score === 5 ? (
-                <button
-                  onClick={onClose}
-                  style={{
-                    width: '100%',
-                    padding: '14px',
-                    borderRadius: '10px',
-                    border: 'none',
-                    background: '#10b981',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    fontWeight: 900,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
-                  }}
-                >
-                  <span>Ver Mi Certificado Oficial</span>
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              ) : (
-                <button
-                  onClick={loadRandomQuestions}
-                  style={{
-                    width: '100%',
-                    padding: '14px',
-                    borderRadius: '10px',
-                    border: 'none',
-                    background: 'rgb(14, 165, 233)',
-                    color: '#ffffff',
-                    fontSize: '0.98rem',
-                    fontWeight: 900,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    boxShadow: '0 4px 15px rgba(14, 165, 233, 0.4)'
-                  }}
-                >
-                  <RefreshCw className="w-5 h-5" />
-                  <span>Intentar otra vez con 5 preguntas nuevas</span>
-                </button>
-              )}
+              {/* Botón de Acción */}
+              <button
+                onClick={onClose}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: '#10b981',
+                  color: '#ffffff',
+                  fontSize: '1rem',
+                  fontWeight: 900,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
+                }}
+              >
+                <span>Ver Mi Certificado Oficial</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
 
             </div>
           </div>
