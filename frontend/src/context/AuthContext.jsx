@@ -76,14 +76,26 @@ export function AuthProvider({ children }) {
   };
 
   const updateUserTraining = (updates) => {
+    if (!updates) return;
     setUser(prev => {
       if (!prev) return prev;
+      const v = updates.video !== undefined ? updates.video : (updates.Video !== undefined ? updates.Video : prev.Video);
+      const p = updates.pdf !== undefined ? updates.pdf : (updates.PDF !== undefined ? updates.PDF : prev.PDF);
+      const q = updates.quiz !== undefined ? updates.quiz : (updates.Preguntas !== undefined ? updates.Preguntas : (updates.preguntas !== undefined ? updates.preguntas : prev.Preguntas));
+      const c = updates.credenciales !== undefined ? updates.credenciales : (updates.Credenciales !== undefined ? updates.Credenciales : prev.Credenciales);
+
+      const extraData = updates.user || updates.data || {};
       const updated = {
         ...prev,
-        Video: updates.video !== undefined ? updates.video : prev.Video,
-        PDF: updates.pdf !== undefined ? updates.pdf : prev.PDF,
-        Preguntas: updates.quiz !== undefined ? updates.quiz : prev.Preguntas,
-        Credenciales: updates.credenciales !== undefined ? updates.credenciales : prev.Credenciales
+        ...extraData,
+        Video: v,
+        PDF: p,
+        Preguntas: q,
+        Credenciales: c,
+        video: v,
+        pdf: p,
+        preguntas: q,
+        credenciales: c
       };
       localStorage.setItem('auth_user', JSON.stringify(updated));
       return updated;

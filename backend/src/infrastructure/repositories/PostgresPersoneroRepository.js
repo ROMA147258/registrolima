@@ -283,7 +283,7 @@ export class PostgresPersoneroRepository {
     return this.mapRowToEntity(result.rows[0], tableName !== 'rpersoneros');
   }
 
-  async updateProgress(dni, type, currentValue) {
+  async updateProgress(dni, updatesOrType, currentValue) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
     const cleanDni = String(dni).trim();
@@ -294,16 +294,25 @@ export class PostgresPersoneroRepository {
     const tableName = existing.tableName;
     const entity = existing.entity;
 
-    let v = entity.video;
-    let p = entity.pdf;
-    let q = entity.preguntas;
+    let v = parseInt(entity.video || 0, 10);
+    let p = parseInt(entity.pdf || 0, 10);
+    let q = entity.preguntas || 'Pendiente';
+    let credStatus = entity.credenciales || 'Bloqueado';
 
-    if (type === 'video') v = Math.min(2, (currentValue || 0) + 1);
-    if (type === 'pdf') p = Math.min(2, (currentValue || 0) + 1);
-    if (type === 'quiz') q = 'Aprobado';
+    if (typeof updatesOrType === 'object' && updatesOrType !== null) {
+      if (updatesOrType.video !== undefined) v = parseInt(updatesOrType.video, 10);
+      if (updatesOrType.pdf !== undefined) p = parseInt(updatesOrType.pdf, 10);
+      if (updatesOrType.preguntas !== undefined) q = updatesOrType.preguntas;
+      if (updatesOrType.credenciales !== undefined) credStatus = updatesOrType.credenciales;
+    } else {
+      const type = updatesOrType;
+      if (type === 'video') v = Math.min(2, Math.max(v, (parseInt(currentValue, 10) || 0) + 1));
+      if (type === 'pdf') p = Math.min(2, Math.max(p, (parseInt(currentValue, 10) || 0) + 1));
+      if (type === 'quiz' || type === 'preguntas') q = 'Aprobado';
+    }
 
-    const isFullyApproved = v >= 2 && p >= 2 && q.toLowerCase() === 'aprobado';
-    const credStatus = isFullyApproved ? 'Confirmado' : 'Bloqueado';
+    const isFullyApproved = v >= 2 && p >= 2 && String(q).toLowerCase() === 'aprobado';
+    credStatus = isFullyApproved ? 'Confirmado' : 'Bloqueado';
 
     const query = `
       UPDATE ${tableName}
@@ -313,7 +322,11 @@ export class PostgresPersoneroRepository {
     `;
 
     const res = await pool.query(query, [v, p, q, credStatus, cleanDni]);
-    return this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros');
+    const updatedEntity = this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros');
+    return {
+      entity: updatedEntity,
+      tableName
+    };
   }
 
   async updateAssignment(dni, { distrito, local, mesa }) {

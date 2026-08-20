@@ -40,6 +40,8 @@ export class UpdateTrainingProgressUseCase {
       credenciales: credencialesStatus
     });
 
+    const finalEntity = updated?.entity || updated;
+
     await this.auditRepo.log({
       action: 'UPDATE_TRAINING',
       userIdentifier: cleanDni,
@@ -55,7 +57,33 @@ export class UpdateTrainingProgressUseCase {
       pdf: pdfCount,
       quiz: quizStatus,
       credenciales: credencialesStatus,
-      data: updated.entity
+      data: finalEntity,
+      user: {
+        'ID': finalEntity.id,
+        'Nombres y Apellidos': finalEntity.nombresApellidos,
+        'D.N.I.': finalEntity.dni,
+        'Celular': finalEntity.celular,
+        'Correo Electrónico': finalEntity.correoElectronico,
+        'Distrito donde Vota': finalEntity.distritoDondeVota,
+        'Mesa de Sufragio': finalEntity.mesaDeSufragio,
+        'Local de Votación': finalEntity.localDeVotacion,
+        'Rol a Desempeñar': finalEntity.rolADesempenar,
+        'Distrito Asignado': finalEntity.distritoAsignado,
+        'Mesa Asignada': finalEntity.mesaAsignada,
+        'Local de Votación Asignado': finalEntity.localDeVotacionAsignado,
+        'Tiene Experiencia como Personero': finalEntity.tieneExperiencia,
+        'Cuenta con Movilidad Propia': finalEntity.cuentaConMovilidad,
+        'Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones': finalEntity.seCompromete,
+        'Video': videoCount,
+        'PDF': pdfCount,
+        'Preguntas': quizStatus,
+        'Credenciales': credencialesStatus,
+        'Token': finalEntity.tokenVerificacion,
+        video: videoCount,
+        pdf: pdfCount,
+        preguntas: quizStatus,
+        credenciales: credencialesStatus
+      }
     };
   }
 }
