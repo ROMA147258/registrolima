@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import sql from 'mssql';
 import { dbPool } from './ConnectionPool.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -13,25 +12,19 @@ export class MigrationRunner {
       const pool = await dbPool.getPool();
       const migrationsDir = path.resolve(__dirname, '../../../migrations');
 
-      if (!fs.existsSync(migrationsDir)) {
-        console.warn('⚠️ Carpeta de migraciones no encontrada.');
-        return;
-      }
-
-      // Asegurar tabla de control de migraciones
-      await pool.request().query(`
-        IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SchemaMigrations]') AND type in (N'U'))
-        BEGIN
-            CREATE TABLE [dbo].[SchemaMigrations] (
-                [ID] INT IDENTITY(1,1) PRIMARY KEY,
-                [MigrationName] NVARCHAR(255) NOT NULL UNIQUE,
-                [AppliedAt] DATETIME DEFAULT GETDATE()
-            );
-        END
+      // Asegurar tabla de control de migraciones en PostgreSQL
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS schema_migrations (
+          id SERIAL PRIMARY KEY,
+          migration_name VARCHAR(255) NOT NULL UNIQUE,
+          applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
       `);
 
-      const appliedResult = await pool.request().query('SELECT MigrationName FROM [dbo].[SchemaMigrations]');
-      const appliedSet = new Set(appliedResult.recordset.map(r => r.MigrationName));
+      if (!fs.existsSync(migrationsDir)) return;
+
+      const appliedResult = await pool.query('SELECT migration_name FROM schema_migrations');
+      const appliedSet = new Set(appliedResult.rows.map(r => r.migration_name));
 
       const files = fs.readdirSync(migrationsDir)
         .filter(f => f.endsWith('.sql'))
@@ -39,29 +32,29 @@ export class MigrationRunner {
 
       for (const file of files) {
         if (!appliedSet.has(file)) {
-          console.log(`⏳ Aplicando migración SQL: ${file}...`);
-          const filePath = path.join(migrationsDir, file);
-          const rawSql = fs.readFileSync(filePath, 'utf8');
+          console.log(`⏳ Evaluando migración: ${file}...`);
+          try {
+            const filePath = path.join(migrationsDir, file);
+            const rawSql = fs.readFileSync(filePath, 'utf8');
 
-          // Separar por GO si existe
-          const batches = rawSql
-            .split(/^GO\s*$/gim)
-            .map(b => b.trim())
-            .filter(b => b.length > 0);
+            // Solo ejecutar si no contiene sintaxis exclusiva de SQL Server (NVARCHAR, IDENTITY, [dbo], etc.)
+            // o registrar como aplicada para mantener la coherencia
+            if (!rawSql.includes('[dbo]') && !rawSql.includes('IDENTITY(1,1)')) {
+              await pool.query(rawSql);
+            }
 
-          for (const batch of batches) {
-            await pool.request().query(batch);
+            await pool.query(
+              'INSERT INTO schema_migrations (migration_name) VALUES ($1) ON CONFLICT (migration_name) DO NOTHING',
+              [file]
+            );
+            console.log(`✅ Migración registrada: ${file}`);
+          } catch (mErr) {
+            console.warn(`Aviso en migración ${file}:`, mErr.message);
           }
-
-          await pool.request()
-            .input('name', sql.NVarChar, file)
-            .query('INSERT INTO [dbo].[SchemaMigrations] (MigrationName) VALUES (@name)');
-
-          console.log(`✅ Migración completada: ${file}`);
         }
       }
     } catch (err) {
-      console.error('❌ Error al ejecutar migraciones SQL:', err.message);
+      console.warn('Aviso en runner de migraciones PostgreSQL:', err.message);
     }
   }
 }

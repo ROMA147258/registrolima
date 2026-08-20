@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import sql from 'mssql';
 import { dbPool } from '../../infrastructure/database/ConnectionPool.js';
 import { DISTRITOS_LIMA, DISTRITO_METAS, ELECTORAL_ROLES } from '../../config/constants.js';
 
@@ -109,19 +108,19 @@ export class CatalogController {
   async getDistritos(req, res) {
     try {
       const pool = await dbPool.getPool();
-      const dbResult = await pool.request().query(`
-        SELECT DISTINCT [distrito] 
-        FROM [dbo].[Mesas] 
-        WHERE [distrito] IS NOT NULL AND TRIM([distrito]) <> ''
-        ORDER BY [distrito]
+      const dbResult = await pool.query(`
+        SELECT DISTINCT distrito 
+        FROM mesas 
+        WHERE distrito IS NOT NULL AND TRIM(distrito) <> ''
+        ORDER BY distrito
       `);
 
-      if (dbResult?.recordset?.length > 0) {
-        const dbList = dbResult.recordset.map(r => r.distrito).filter(Boolean);
-        return res.json({ status: 'success', data: dbList, metas: DISTRITO_METAS, source: 'dbo.Mesas' });
+      if (dbResult?.rows?.length > 0) {
+        const dbList = dbResult.rows.map(r => r.distrito).filter(Boolean);
+        return res.json({ status: 'success', data: dbList, metas: DISTRITO_METAS, source: 'mesas' });
       }
     } catch (err) {
-      console.warn('Consulta de distritos en dbo.Mesas falló, usando constantes:', err.message);
+      console.warn('Consulta de distritos en PostgreSQL mesas falló, usando catálogo base:', err.message);
     }
 
     res.json({
@@ -146,42 +145,36 @@ export class CatalogController {
       const variants = this.getDistrictVariants(distrito);
       const norm = this.normalizeDistrict(distrito);
 
-      // 1. Consultar en dbo.Mesas agrupado por colegio
+      // 1. Consultar en tabla mesas de PostgreSQL agrupado por colegio
       try {
         const pool = await dbPool.getPool();
-        const request = pool.request();
-        
-        const paramNames = variants.map((v, i) => {
-          const p = `dist_${i}`;
-          request.input(p, sql.NVarChar, v);
-          return `@${p}`;
-        });
+        const placeholders = variants.map((_, i) => `$${i + 1}`).join(', ');
 
         const queryMesas = `
           SELECT 
-            MIN([id]) as [id],
-            [distrito],
-            [colegio],
-            MAX([direccion]) as [direccion],
-            COUNT(*) as [num_mesas],
-            MAX([latitud]) as [latitud],
-            MAX([longitud]) as [longitud],
-            MAX([coordenadas_gps]) as [coordenadas_gps]
-          FROM [dbo].[Mesas]
-          WHERE UPPER([distrito]) IN (${paramNames.join(', ')})
-          GROUP BY [distrito], [colegio]
-          ORDER BY [colegio]
+            MIN(id) as id,
+            distrito,
+            colegio,
+            MAX(direccion) as direccion,
+            COUNT(*) as num_mesas,
+            MAX(latitud) as latitud,
+            MAX(longitud) as longitud,
+            MAX(coordenadas_gps) as coordenadas_gps
+          FROM mesas
+          WHERE UPPER(distrito) IN (${placeholders})
+          GROUP BY distrito, colegio
+          ORDER BY colegio
         `;
 
-        const dbResultMesas = await request.query(queryMesas);
+        const dbResultMesas = await pool.query(queryMesas, variants.map(v => v.toUpperCase()));
 
-        if (dbResultMesas && dbResultMesas.recordset && dbResultMesas.recordset.length > 0) {
-          const list = dbResultMesas.recordset.map(r => r.colegio).filter(Boolean);
-          const fullData = dbResultMesas.recordset;
-          return res.json({ status: 'success', distrito, data: list, fullDetails: fullData, source: 'dbo.Mesas' });
+        if (dbResultMesas && dbResultMesas.rows && dbResultMesas.rows.length > 0) {
+          const list = dbResultMesas.rows.map(r => r.colegio).filter(Boolean);
+          const fullData = dbResultMesas.rows;
+          return res.json({ status: 'success', distrito, data: list, fullDetails: fullData, source: 'mesas' });
         }
       } catch (err) {
-        console.warn('Consulta en dbo.Mesas falló, usando catálogo local:', err.message);
+        console.warn('Consulta en tabla mesas falló, usando catálogo local:', err.message);
       }
 
       // 2. Fallback al catálogo unificado local
@@ -196,25 +189,25 @@ export class CatalogController {
       return res.json({ status: 'success', distrito, data: list, source: 'unifiedCatalogFallback' });
     }
 
-    // Si no se especifica distrito, retornar todos los locales desde dbo.Mesas
+    // Si no se especifica distrito, retornar todos los locales
     try {
       const pool = await dbPool.getPool();
-      const dbResult = await pool.request().query(`
+      const dbResult = await pool.query(`
         SELECT 
-          MIN([id]) as [id],
-          [distrito],
-          [colegio],
-          MAX([direccion]) as [direccion],
-          COUNT(*) as [num_mesas],
-          MAX([latitud]) as [latitud],
-          MAX([longitud]) as [longitud],
-          MAX([coordenadas_gps]) as [coordenadas_gps]
-        FROM [dbo].[Mesas]
-        GROUP BY [distrito], [colegio]
-        ORDER BY [distrito], [colegio]
+          MIN(id) as id,
+          distrito,
+          colegio,
+          MAX(direccion) as direccion,
+          COUNT(*) as num_mesas,
+          MAX(latitud) as latitud,
+          MAX(longitud) as longitud,
+          MAX(coordenadas_gps) as coordenadas_gps
+        FROM mesas
+        GROUP BY distrito, colegio
+        ORDER BY distrito, colegio
       `);
-      if (dbResult?.recordset?.length > 0) {
-        return res.json({ status: 'success', total: dbResult.recordset.length, data: dbResult.recordset, source: 'dbo.Mesas' });
+      if (dbResult?.rows?.length > 0) {
+        return res.json({ status: 'success', total: dbResult.rows.length, data: dbResult.rows, source: 'mesas' });
       }
     } catch {}
 

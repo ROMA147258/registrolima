@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { dbPool } from '../../infrastructure/database/ConnectionPool.js';
-import { SqlServerPersoneroRepository } from '../../infrastructure/repositories/SqlServerPersoneroRepository.js';
-import { SqlServerUserRepository } from '../../infrastructure/repositories/SqlServerUserRepository.js';
-import { SqlServerAuditRepository } from '../../infrastructure/repositories/SqlServerAuditRepository.js';
+import { PostgresPersoneroRepository } from '../../infrastructure/repositories/PostgresPersoneroRepository.js';
+import { PostgresUserRepository } from '../../infrastructure/repositories/PostgresUserRepository.js';
+import { PostgresAuditRepository } from '../../infrastructure/repositories/PostgresAuditRepository.js';
 
 import { RegisterPersoneroUseCase } from '../../application/use-cases/RegisterPersoneroUseCase.js';
 import { LoginUseCase } from '../../application/use-cases/LoginUseCase.js';
@@ -26,9 +26,9 @@ export function createApiRouter() {
   const router = Router();
 
   // Instanciar Repositorios
-  const personeroRepo = new SqlServerPersoneroRepository();
-  const userRepo = new SqlServerUserRepository();
-  const auditRepo = new SqlServerAuditRepository();
+  const personeroRepo = new PostgresPersoneroRepository();
+  const userRepo = new PostgresUserRepository();
+  const auditRepo = new PostgresAuditRepository();
 
   // Instanciar Casos de Uso
   const registerUseCase = new RegisterPersoneroUseCase(personeroRepo, auditRepo);

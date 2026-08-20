@@ -1,0 +1,368 @@
+import { dbPool } from '../database/ConnectionPool.js';
+import { Personero } from '../../domain/entities/Personero.js';
+import { Coordinador } from '../../domain/entities/Coordinador.js';
+
+export class PostgresPersoneroRepository {
+  async ensureTablesExist() {
+    try {
+      const pool = await dbPool.getPool();
+
+      // 1. Tabla rpersoneros
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS rpersoneros (
+          id SERIAL PRIMARY KEY,
+          fecha_de_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          nombres_y_apellidos VARCHAR(255) NOT NULL,
+          dni VARCHAR(20) NOT NULL UNIQUE,
+          celular VARCHAR(50),
+          correo_electronico VARCHAR(255),
+          usa_whatsapp_en_su_celular VARCHAR(255) DEFAULT 'Sí',
+          numero_whatsapp_alterno VARCHAR(50),
+          distrito_donde_vota VARCHAR(100),
+          mesa_de_sufragio VARCHAR(50),
+          local_de_votacion VARCHAR(255),
+          rol_a_desempenar VARCHAR(100) DEFAULT 'Personero de Mesa',
+          distrito_asignado VARCHAR(100),
+          mesa_asignada VARCHAR(50) DEFAULT '-',
+          local_de_votacion_asignado VARCHAR(255),
+          tiene_experiencia_como_personero VARCHAR(50) DEFAULT 'No',
+          cuenta_con_movilidad_propia VARCHAR(50) DEFAULT 'No',
+          se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones VARCHAR(500) DEFAULT 'Sí, me comprometo el 4 de Octubre del 2026',
+          video INT DEFAULT 0,
+          pdf INT DEFAULT 0,
+          preguntas VARCHAR(50) DEFAULT 'Pendiente',
+          credenciales VARCHAR(50) DEFAULT 'Bloqueado',
+          token_verificacion VARCHAR(100)
+        );
+      `);
+
+      // 2. Tabla rcoordinadores (Coordinador de Local)
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS rcoordinadores (
+          id SERIAL PRIMARY KEY,
+          fecha_de_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          nombres_y_apellidos VARCHAR(255) NOT NULL,
+          dni VARCHAR(20) NOT NULL UNIQUE,
+          celular VARCHAR(50),
+          correo_electronico VARCHAR(255),
+          usa_whatsapp_en_su_celular VARCHAR(255) DEFAULT 'Sí',
+          numero_whatsapp_alterno VARCHAR(50),
+          distrito_donde_vota VARCHAR(100),
+          mesa_de_sufragio VARCHAR(50),
+          local_de_votacion VARCHAR(255),
+          rol_a_desempenar VARCHAR(100) DEFAULT 'Coordinador de Local',
+          distrito_asignado VARCHAR(100),
+          mesa_asignada VARCHAR(50) DEFAULT 'No aplica',
+          local_de_votacion_asignado VARCHAR(255),
+          tiene_experiencia_como_personero VARCHAR(50) DEFAULT 'No',
+          cuenta_con_movilidad_propia VARCHAR(50) DEFAULT 'No',
+          se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones VARCHAR(500) DEFAULT 'Sí, me comprometo el 4 de Octubre del 2026',
+          video INT DEFAULT 0,
+          pdf INT DEFAULT 0,
+          preguntas VARCHAR(50) DEFAULT 'Pendiente',
+          credenciales VARCHAR(50) DEFAULT 'Bloqueado',
+          token_verificacion VARCHAR(100)
+        );
+      `);
+
+      // 3. Tabla rcoordinadoresd (Coordinador de Distritos)
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS rcoordinadoresd (
+          id SERIAL PRIMARY KEY,
+          fecha_de_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          nombres_y_apellidos VARCHAR(255) NOT NULL,
+          dni VARCHAR(20) NOT NULL UNIQUE,
+          celular VARCHAR(50),
+          correo_electronico VARCHAR(255),
+          usa_whatsapp_en_su_celular VARCHAR(255) DEFAULT 'Sí',
+          numero_whatsapp_alterno VARCHAR(50),
+          distrito_donde_vota VARCHAR(100),
+          mesa_de_sufragio VARCHAR(50),
+          local_de_votacion VARCHAR(255),
+          rol_a_desempenar VARCHAR(100) DEFAULT 'Coordinador de Distritos',
+          distrito_asignado VARCHAR(100),
+          mesa_asignada VARCHAR(50) DEFAULT 'No aplica',
+          local_de_votacion_asignado VARCHAR(255) DEFAULT 'No aplica',
+          tiene_experiencia_como_personero VARCHAR(50) DEFAULT 'No',
+          cuenta_con_movilidad_propia VARCHAR(50) DEFAULT 'No',
+          se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones VARCHAR(500) DEFAULT 'Sí, me comprometo el 4 de Octubre del 2026',
+          video INT DEFAULT 0,
+          pdf INT DEFAULT 0,
+          preguntas VARCHAR(50) DEFAULT 'Pendiente',
+          credenciales VARCHAR(50) DEFAULT 'Bloqueado',
+          token_verificacion VARCHAR(100)
+        );
+      `);
+    } catch (err) {
+      console.warn('Advertencia asegurando tablas de PostgreSQL:', err.message);
+    }
+  }
+
+  mapRowToEntity(row, isCoordinador = false) {
+    if (!row) return null;
+    const rolVal = row.rol_a_desempenar || row.rol_desempenar || row.rol;
+    const isActuallyCoord = isCoordinador || (rolVal && rolVal.toLowerCase().includes('coordinador'));
+
+    const props = {
+      id: row.id,
+      fechaRegistro: row.fecha_de_registro ? new Date(row.fecha_de_registro).toISOString() : new Date().toISOString(),
+      nombresApellidos: row.nombres_y_apellidos,
+      dni: row.dni,
+      celular: row.celular,
+      correoElectronico: row.correo_electronico,
+      usaWhatsApp: row.usa_whatsapp_en_su_celular || 'Sí',
+      numeroWhatsAppAlterno: row.numero_whatsapp_alterno || '',
+      distritoDondeVota: row.distrito_donde_vota || '',
+      mesaDeSufragio: row.mesa_de_sufragio || '',
+      localDeVotacion: row.local_de_votacion || '',
+      rolADesempenar: rolVal || (isActuallyCoord ? 'Coordinador de Local' : 'Personero de Mesa'),
+      distritoAsignado: row.distrito_asignado || row.distrito_donde_vota || '',
+      mesaAsignada: row.mesa_asignada || (isActuallyCoord ? 'No aplica' : '-'),
+      localDeVotacionAsignado: row.local_de_votacion_asignado || (rolVal?.includes('distrito') ? 'No aplica' : row.local_de_votacion || ''),
+      tieneExperiencia: row.tiene_experiencia_como_personero || 'No',
+      cuentaConMovilidad: row.cuenta_con_movilidad_propia || 'No',
+      seCompromete: row.se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones || 'Sí',
+      video: parseInt(row.video || 0, 10),
+      pdf: parseInt(row.pdf || 0, 10),
+      preguntas: row.preguntas || 'Pendiente',
+      credenciales: row.credenciales || 'Bloqueado',
+      tokenVerificacion: row.token_verificacion || `SP-LM2026-${row.dni}`
+    };
+
+    return isActuallyCoord ? new Coordinador(props) : new Personero(props);
+  }
+
+  async findByDni(dni) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDni = String(dni).trim();
+
+    // 1. Coordinadores Distritales
+    try {
+      const resD = await pool.query('SELECT * FROM rcoordinadoresd WHERE dni = $1 LIMIT 1', [cleanDni]);
+      if (resD.rows.length > 0) {
+        return { entity: this.mapRowToEntity(resD.rows[0], true), tableName: 'rcoordinadoresd' };
+      }
+    } catch {}
+
+    // 2. Coordinadores de Local
+    try {
+      const resC = await pool.query('SELECT * FROM rcoordinadores WHERE dni = $1 LIMIT 1', [cleanDni]);
+      if (resC.rows.length > 0) {
+        return { entity: this.mapRowToEntity(resC.rows[0], true), tableName: 'rcoordinadores' };
+      }
+    } catch {}
+
+    // 3. Personeros de Mesa
+    try {
+      const resP = await pool.query('SELECT * FROM rpersoneros WHERE dni = $1 LIMIT 1', [cleanDni]);
+      if (resP.rows.length > 0) {
+        return { entity: this.mapRowToEntity(resP.rows[0], false), tableName: 'rpersoneros' };
+      }
+    } catch {}
+
+    return null;
+  }
+
+  async findByCredentials(userIdentifier, secretPassOrDni) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanUser = String(userIdentifier).trim();
+    const cleanPass = String(secretPassOrDni).trim();
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const query = `
+          SELECT * FROM ${tbl.name}
+          WHERE dni = $1 
+             OR (LOWER(nombres_y_apellidos) = LOWER($2) AND dni = $1)
+             OR (dni = $1 AND (LOWER(nombres_y_apellidos) = LOWER($2) OR $2 = ''))
+          LIMIT 1
+        `;
+        const res = await pool.query(query, [cleanPass || cleanUser, cleanUser]);
+        if (res.rows.length > 0) {
+          return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
+        }
+      } catch {}
+    }
+
+    return null;
+  }
+
+  async findByToken(token) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanToken = String(token).trim();
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const res = await pool.query(`SELECT * FROM ${tbl.name} WHERE token_verificacion = $1 LIMIT 1`, [cleanToken]);
+        if (res.rows.length > 0) {
+          return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
+        }
+      } catch {}
+    }
+
+    return null;
+  }
+
+  async save(personeroOrCoordinador) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const data = personeroOrCoordinador.toJSON ? personeroOrCoordinador.toJSON() : personeroOrCoordinador;
+    const rol = String(data.rolADesempenar || '').toLowerCase();
+
+    let tableName = 'rpersoneros';
+    if (rol.includes('distrito') || rol.includes('distrital')) {
+      tableName = 'rcoordinadoresd';
+    } else if (rol.includes('coordinador') || rol.includes('local')) {
+      tableName = 'rcoordinadores';
+    }
+
+    const token = data.tokenVerificacion || `SP-LM2026-${data.dni}`;
+
+    const query = `
+      INSERT INTO ${tableName} (
+        nombres_y_apellidos, dni, celular, correo_electronico,
+        usa_whatsapp_en_su_celular, numero_whatsapp_alterno,
+        distrito_donde_vota, mesa_de_sufragio, local_de_votacion,
+        rol_a_desempenar, distrito_asignado, mesa_asignada, local_de_votacion_asignado,
+        tiene_experiencia_como_personero, cuenta_con_movilidad_propia,
+        se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones,
+        video, pdf, preguntas, credenciales, token_verificacion
+      ) VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21
+      )
+      ON CONFLICT (dni) DO UPDATE SET
+        nombres_y_apellidos = EXCLUDED.nombres_y_apellidos,
+        celular = EXCLUDED.celular,
+        correo_electronico = EXCLUDED.correo_electronico,
+        distrito_asignado = EXCLUDED.distrito_asignado,
+        local_de_votacion_asignado = EXCLUDED.local_de_votacion_asignado,
+        mesa_asignada = EXCLUDED.mesa_asignada
+      RETURNING *;
+    `;
+
+    const values = [
+      data.nombresApellidos,
+      data.dni,
+      data.celular,
+      data.correoElectronico || '',
+      data.usaWhatsApp || 'Sí',
+      data.numeroWhatsAppAlterno || '',
+      data.distritoDondeVota || '',
+      data.mesaDeSufragio || '',
+      data.localDeVotacion || '',
+      data.rolADesempenar || (tableName === 'rcoordinadoresd' ? 'Coordinador de Distritos' : (tableName === 'rcoordinadores' ? 'Coordinador de Local' : 'Personero de Mesa')),
+      data.distritoAsignado || data.distritoDondeVota || '',
+      data.mesaAsignada || (tableName === 'rpersoneros' ? '-' : 'No aplica'),
+      data.localDeVotacionAsignado || (tableName === 'rcoordinadoresd' ? 'No aplica' : data.localDeVotacion || ''),
+      data.tieneExperiencia || 'No',
+      data.cuentaConMovilidad || 'No',
+      data.seCompromete || 'Sí, me comprometo el 4 de Octubre del 2026',
+      data.video || 0,
+      data.pdf || 0,
+      data.preguntas || 'Pendiente',
+      data.credenciales || 'Bloqueado',
+      token
+    ];
+
+    const result = await pool.query(query, values);
+    return this.mapRowToEntity(result.rows[0], tableName !== 'rpersoneros');
+  }
+
+  async updateProgress(dni, type, currentValue) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDni = String(dni).trim();
+
+    const existing = await this.findByDni(cleanDni);
+    if (!existing) throw new Error(`Personero/Coordinador con DNI ${cleanDni} no encontrado`);
+
+    const tableName = existing.tableName;
+    const entity = existing.entity;
+
+    let v = entity.video;
+    let p = entity.pdf;
+    let q = entity.preguntas;
+
+    if (type === 'video') v = Math.min(2, (currentValue || 0) + 1);
+    if (type === 'pdf') p = Math.min(2, (currentValue || 0) + 1);
+    if (type === 'quiz') q = 'Aprobado';
+
+    const isFullyApproved = v >= 2 && p >= 2 && q.toLowerCase() === 'aprobado';
+    const credStatus = isFullyApproved ? 'Confirmado' : 'Bloqueado';
+
+    const query = `
+      UPDATE ${tableName}
+      SET video = $1, pdf = $2, preguntas = $3, credenciales = $4
+      WHERE dni = $5
+      RETURNING *;
+    `;
+
+    const res = await pool.query(query, [v, p, q, credStatus, cleanDni]);
+    return this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros');
+  }
+
+  async updateAssignment(dni, { distrito, local, mesa }) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDni = String(dni).trim();
+
+    const existing = await this.findByDni(cleanDni);
+    if (!existing) throw new Error(`No se encontró el registro con DNI ${cleanDni}`);
+
+    const tableName = existing.tableName;
+
+    const query = `
+      UPDATE ${tableName}
+      SET distrito_asignado = COALESCE($1, distrito_asignado),
+          local_de_votacion_asignado = COALESCE($2, local_de_votacion_asignado),
+          mesa_asignada = COALESCE($3, mesa_asignada)
+      WHERE dni = $4
+      RETURNING *;
+    `;
+
+    const res = await pool.query(query, [distrito, local, mesa, cleanDni]);
+    return this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros');
+  }
+
+  async findAll() {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const allRecords = [];
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const res = await pool.query(`SELECT * FROM ${tbl.name} ORDER BY id ASC`);
+        res.rows.forEach(r => {
+          allRecords.push(this.mapRowToEntity(r, tbl.isCoord));
+        });
+      } catch {}
+    }
+
+    return allRecords;
+  }
+
+  async findAllOrdered() {
+    return this.findAll();
+  }
+}

@@ -45,12 +45,12 @@ app.listen(PORT, '0.0.0.0', async () => {
   console.log('==========================================================');
 
   try {
-    console.log('🔄 Conectando a SQL Server y verificando migraciones...');
+    console.log('🔄 Conectando a PostgreSQL y verificando migraciones...');
     await dbPool.getPool();
     await MigrationRunner.runMigrations();
-    console.log('✅ Base de datos SQL Server y migraciones listas.');
+    console.log('✅ Base de datos PostgreSQL y migraciones listas.');
   } catch (err) {
-    console.warn('⚠️ Base de datos SQL Server offline o no disponible en este momento:', err.message);
+    console.warn('⚠️ Base de datos PostgreSQL offline o no disponible en este momento:', err.message);
   }
 });
 

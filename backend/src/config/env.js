@@ -12,28 +12,24 @@ export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   
   db: {
-    user: process.env.DB_USER || 'data',
-    password: process.env.DB_PASSWORD || 'TECNOlogia2026.$',
-    server: process.env.DB_SERVER || 'localhost',
-    database: process.env.DB_NAME || 'conteo',
-    port: parseInt(process.env.DB_PORT || '1433', 10),
-    encrypt: process.env.DB_ENCRYPT === 'true',
-    trustServerCertificate: process.env.DB_TRUST_CERT !== 'false',
-    connectionTimeout: 5000,
-    requestTimeout: 15000
+    url: process.env.DATABASE_URL,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_DATABASE,
+    port: parseInt(process.env.DB_PORT, 10),
+    ssl: process.env.DB_SSL !== 'false'
   },
 
   jwt: {
-    secret: process.env.JWT_SECRET || 'jwt_default_secret_somos_peru_2026',
+    secret: process.env.JWT_SECRET,
     expiresIn: '24h'
   },
 
   admin: {
-    username: process.env.ADMIN_USERNAME || 'admin',
-    password: process.env.ADMIN_PASSWORD || 'admin123',
-    ericUsername: process.env.ERIC_USERNAME || 'eric',
-    ericPassword: process.env.ERIC_PASSWORD || 'eric123'
+    username: process.env.ADMIN_USERNAME,
+    password: process.env.ADMIN_PASSWORD,
+    ericUsername: process.env.ERIC_USERNAME,
+    ericPassword: process.env.ERIC_PASSWORD
   },
-
-  frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3180'
 };
