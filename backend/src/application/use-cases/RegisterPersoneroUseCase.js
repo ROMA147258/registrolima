@@ -29,6 +29,70 @@ export class RegisterPersoneroUseCase {
     const comp = rawData.se_compromete || rawData['¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones?'] || 'Sí';
 
     const isCoordinador = rol.toLowerCase().includes('coordinador');
+    const rolNorm = rol.toLowerCase().trim();
+
+    // 1. VALIDACIÓN: NOMBRES Y APELLIDOS NO DUPLICADOS
+    const existingName = await this.personeroRepo.findByFullName(nombres);
+    if (existingName && existingName.entity) {
+      throw new Error(`La persona '${nombres}' ya se encuentra registrada en el sistema. No se permite duplicar registros.`);
+    }
+
+    // 2. VALIDACIÓN: DNI NO DUPLICADO
+    const existingUser = await this.personeroRepo.findByDni(dni);
+    if (existingUser && existingUser.entity) {
+      throw new Error(`El DNI ${dni} ya se encuentra registrado en el sistema como ${existingUser.entity.rolADesempenar || 'registrado'}. No se permite duplicar el registro.`);
+    }
+
+    // 3. VALIDACIÓN: CELULAR NO DUPLICADO
+    if (celular) {
+      const existingPhone = await this.personeroRepo.findByPhone(celular);
+      if (existingPhone && existingPhone.entity) {
+        throw new Error(`El número de celular ${celular} ya se encuentra registrado en el sistema.`);
+      }
+    }
+
+    // 4. VALIDACIÓN: CORREO ELECTRÓNICO NO DUPLICADO
+    if (correo) {
+      const existingEmail = await this.personeroRepo.findByEmail(correo);
+      if (existingEmail && existingEmail.entity) {
+        throw new Error(`El correo electrónico '${correo}' ya se encuentra registrado en el sistema.`);
+      }
+    }
+
+    // 5. VALIDACIÓN: NÚMERO WHATSAPP ALTERNATIVO NO DUPLICADO
+    if (numWsAlt && numWsAlt !== 'Mismo número') {
+      const existingWs = await this.personeroRepo.findByWhatsapp(numWsAlt);
+      if (existingWs && existingWs.entity) {
+        throw new Error(`El número de WhatsApp alternativo ${numWsAlt} ya se encuentra registrado en el sistema.`);
+      }
+    }
+
+    // 6. VALIDACIONES DE CUPO SEGÚN EL ROL SELECCIONADO
+    if (rolNorm.includes('distrito') || rolNorm.includes('distrital')) {
+      // Coordinador de Distritos: Máximo 1 usuario por distrito asignado
+      if (distAsig) {
+        const countDist = await this.personeroRepo.countCoordinadoresDistritales(distAsig);
+        if (countDist >= 1) {
+          throw new Error(`El distrito de '${distAsig}' ya cuenta con un Coordinador de Distritos asignado. Solo se permite 1 usuario por distrito asignado.`);
+        }
+      }
+    } else if (rolNorm.includes('coordinador') || rolNorm.includes('local')) {
+      // Coordinador de Local: Máximo 2 por cada distrito
+      if (distAsig) {
+        const countLocalDist = await this.personeroRepo.countCoordinadoresByDistrito(distAsig);
+        if (countLocalDist >= 2) {
+          throw new Error(`Cupo lleno: El distrito de ${distAsig} ya cuenta con el límite máximo de 2 Coordinadores de Local.`);
+        }
+      }
+    } else {
+      // Personero de Mesa: No se debe repetir 2 veces (máximo 1 personero por mesa)
+      if (mesaAsig && mesaAsig !== '-' && mesaAsig.toLowerCase() !== 'no aplica') {
+        const countMesa = await this.personeroRepo.countPersonerosByMesa(mesaAsig);
+        if (countMesa >= 1) {
+          throw new Error(`La mesa de sufragio Nº ${mesaAsig} ya se encuentra asignada a otro personero. No se permite duplicar asignación en la misma mesa.`);
+        }
+      }
+    }
 
     const entityProps = {
       nombresApellidos: nombres,
@@ -74,7 +138,7 @@ export class RegisterPersoneroUseCase {
 
     return {
       status: 'success',
-      message: 'Registro electoral completado exitosamente en SQL Server.',
+      message: 'Registro electoral completado exitosamente.',
       data: saved.entity
     };
   }

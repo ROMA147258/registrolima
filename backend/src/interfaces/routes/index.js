@@ -71,7 +71,9 @@ export function createApiRouter() {
   router.post('/login', authLimiter, (req, res, next) => authCtrl.login(req, res, next)); // Retrocompatibilidad
   router.get('/check_user', (req, res, next) => authCtrl.checkUser(req, res, next)); // Retrocompatibilidad
 
-  // Registro de Personeros y Coordinadores
+  // Registro y Validación en Tiempo Real
+  router.get('/check_availability', (req, res, next) => personeroCtrl.checkAvailability(req, res, next));
+  router.get('/validate_duplicate', (req, res, next) => personeroCtrl.checkAvailability(req, res, next));
   router.post('/register', (req, res, next) => personeroCtrl.register(req, res, next));
   router.post('/personeros', (req, res, next) => personeroCtrl.register(req, res, next));
 

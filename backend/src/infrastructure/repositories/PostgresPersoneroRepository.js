@@ -195,6 +195,60 @@ export class PostgresPersoneroRepository {
     return null;
   }
 
+  async findByFullName(fullName) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanName = String(fullName || '').trim().toLowerCase();
+    if (!cleanName || cleanName.length < 3) return null;
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const res = await pool.query(
+          `SELECT * FROM ${tbl.name} WHERE LOWER(TRIM(nombres_y_apellidos)) = $1 LIMIT 1`,
+          [cleanName]
+        );
+        if (res.rows.length > 0) {
+          return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
+        }
+      } catch {}
+    }
+
+    return null;
+  }
+
+  async findByPhone(phone) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanPhone = String(phone || '').trim().replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length < 7) return null;
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const res = await pool.query(
+          `SELECT * FROM ${tbl.name} WHERE celular = $1 OR numero_whatsapp_alterno = $1 LIMIT 1`,
+          [cleanPhone]
+        );
+        if (res.rows.length > 0) {
+          return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
+        }
+      } catch {}
+    }
+
+    return null;
+  }
+
   async findByToken(token) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
@@ -216,6 +270,142 @@ export class PostgresPersoneroRepository {
     }
 
     return null;
+  }
+
+  async countPersonerosByMesa(mesaAsignada, excludeDni = null) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanMesa = String(mesaAsignada || '').trim();
+    if (!cleanMesa || cleanMesa === '-' || cleanMesa.toLowerCase() === 'no aplica') return 0;
+
+    let query = `SELECT COUNT(*) as count FROM rpersoneros WHERE TRIM(mesa_asignada) = $1`;
+    const params = [cleanMesa];
+
+    if (excludeDni) {
+      query += ` AND TRIM(dni) != $2`;
+      params.push(String(excludeDni).trim());
+    }
+
+    const res = await pool.query(query, params);
+    return parseInt(res.rows[0]?.count || 0, 10);
+  }
+
+  async countCoordinadoresByLocal(distritoAsignado, localAsignado, excludeDni = null) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDist = String(distritoAsignado || '').trim().toLowerCase();
+    const cleanLocal = String(localAsignado || '').trim().toLowerCase();
+    if (!cleanDist || !cleanLocal || cleanLocal === 'no aplica') return 0;
+
+    let query = `
+      SELECT COUNT(*) as count FROM rcoordinadores 
+      WHERE LOWER(TRIM(distrito_asignado)) = $1 AND LOWER(TRIM(local_de_votacion_asignado)) = $2
+    `;
+    const params = [cleanDist, cleanLocal];
+
+    if (excludeDni) {
+      query += ` AND TRIM(dni) != $3`;
+      params.push(String(excludeDni).trim());
+    }
+
+    const res = await pool.query(query, params);
+    return parseInt(res.rows[0]?.count || 0, 10);
+  }
+
+  async findByEmail(email) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanEmail = String(email || '').trim().toLowerCase();
+    if (!cleanEmail || cleanEmail.length < 5) return null;
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const res = await pool.query(
+          `SELECT * FROM ${tbl.name} WHERE LOWER(TRIM(correo_electronico)) = $1 LIMIT 1`,
+          [cleanEmail]
+        );
+        if (res.rows.length > 0) {
+          return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
+        }
+      } catch {}
+    }
+
+    return null;
+  }
+
+  async findByWhatsapp(phone) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanPhone = String(phone || '').trim().replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length < 7) return null;
+
+    const tables = [
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
+    ];
+
+    for (const tbl of tables) {
+      try {
+        const res = await pool.query(
+          `SELECT * FROM ${tbl.name} WHERE celular = $1 OR numero_whatsapp_alterno = $1 LIMIT 1`,
+          [cleanPhone]
+        );
+        if (res.rows.length > 0) {
+          return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
+        }
+      } catch {}
+    }
+
+    return null;
+  }
+
+  async countCoordinadoresByDistrito(distritoAsignado, excludeDni = null) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDist = String(distritoAsignado || '').trim().toLowerCase();
+    if (!cleanDist) return 0;
+
+    let query = `
+      SELECT COUNT(*) as count FROM rcoordinadores 
+      WHERE LOWER(TRIM(distrito_asignado)) = $1
+    `;
+    const params = [cleanDist];
+
+    if (excludeDni) {
+      query += ` AND TRIM(dni) != $2`;
+      params.push(String(excludeDni).trim());
+    }
+
+    const res = await pool.query(query, params);
+    return parseInt(res.rows[0]?.count || 0, 10);
+  }
+
+  async countCoordinadoresDistritales(distritoAsignado, excludeDni = null) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDist = String(distritoAsignado || '').trim().toLowerCase();
+    if (!cleanDist) return 0;
+
+    let query = `
+      SELECT COUNT(*) as count FROM rcoordinadoresd 
+      WHERE LOWER(TRIM(distrito_asignado)) = $1
+    `;
+    const params = [cleanDist];
+
+    if (excludeDni) {
+      query += ` AND TRIM(dni) != $2`;
+      params.push(String(excludeDni).trim());
+    }
+
+    const res = await pool.query(query, params);
+    return parseInt(res.rows[0]?.count || 0, 10);
   }
 
   async save(personeroOrCoordinador) {

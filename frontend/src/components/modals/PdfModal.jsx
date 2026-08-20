@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
-import { X, FileText, CheckCircle2, Lock, ArrowDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, FileText, CheckCircle2, Lock, Clock, BookOpen } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function PdfModal({ onClose, onComplete, currentPdfCount = 0 }) {
-  const [canConfirm, setCanConfirm] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutos (120 segundos)
   const [submitting, setSubmitting] = useState(false);
 
-  const handleContainerScroll = (e) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    // Cuando el usuario baje la barra del visor pasando el documento
-    if (scrollHeight - scrollTop - clientHeight < 80) {
-      setCanConfirm(true);
-    }
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const canConfirm = timeLeft === 0;
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
   const handleConfirm = async () => {
@@ -81,60 +95,62 @@ export function PdfModal({ onClose, onComplete, currentPdfCount = 0 }) {
           </button>
         </div>
 
-        {/* Contenedor con Scroll Exterior que Envuelve al Documento PDF Completo */}
+        {/* Banner de Tiempo de Lectura */}
+        <div style={{
+          background: canConfirm ? '#ecfdf5' : '#eff6ff',
+          borderBottom: canConfirm ? '1.5px solid #10b981' : '1.5px solid #bae6fd',
+          padding: '10px 24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontSize: '0.82rem'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: canConfirm ? '#047857' : '#0369a1', fontWeight: 700 }}>
+            <BookOpen className="w-4 h-4" />
+            <span>{canConfirm ? '✅ Tiempo mínimo de lectura completado (2 minutos).' : '📖 Lea detenidamente el manual electoral.'}</span>
+          </div>
+
+          <div style={{
+            background: canConfirm ? '#10b981' : '#0284c7',
+            color: '#ffffff',
+            padding: '4px 12px',
+            borderRadius: '20px',
+            fontWeight: 800,
+            fontSize: '0.82rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            <Clock className="w-3.5 h-3.5" />
+            <span>{canConfirm ? 'Desbloqueado' : `Habilitando en: ${formatTime(timeLeft)}`}</span>
+          </div>
+        </div>
+
+        {/* Visor PDF Iframe Nativo */}
         <div
-          onScroll={handleContainerScroll}
           style={{
-            padding: '16px',
+            padding: '12px',
             flex: 1,
             overflowY: 'auto',
             background: '#334155',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '16px'
+            flexDirection: 'column'
           }}
         >
-          {/* Visor PDF Iframe Nativo de Alta Compatibilidad */}
           <div style={{
             background: '#ffffff',
             borderRadius: '10px',
             overflow: 'hidden',
             boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
-            height: '1100px',
-            width: '100%',
-            flexShrink: 0
+            height: '100%',
+            minHeight: '600px',
+            width: '100%'
           }}>
             <iframe
               src="/manuals/Manual_Capacitacion_Personeros_ERM_2026_Carlos_Bruce.pdf#toolbar=1&navpanes=0"
               title="Manual de Capacitación Electoral"
               style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
             />
-          </div>
-
-          {/* Marcador Final al fondo del scroll */}
-          <div style={{
-            background: canConfirm ? '#ecfdf5' : '#1e293b',
-            border: canConfirm ? '2px solid #10b981' : '1px dashed #64748b',
-            borderRadius: '12px',
-            padding: '24px 20px',
-            textAlign: 'center',
-            color: canConfirm ? '#065f46' : '#94a3b8',
-            flexShrink: 0
-          }}>
-            {canConfirm ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#10b981', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <strong style={{ fontSize: '1.05rem', color: '#047857' }}>¡Has llegado al final del Manual Electoral!</strong>
-                <span style={{ fontSize: '0.84rem', color: '#059669' }}>El botón de confirmación ya está desbloqueado.</span>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '0.88rem' }}>
-                <ArrowDown className="w-5 h-5 text-sky-400 animate-bounce" />
-                <span>Desplace hacia abajo para completar la lectura</span>
-              </div>
-            )}
           </div>
         </div>
 
@@ -156,9 +172,9 @@ export function PdfModal({ onClose, onComplete, currentPdfCount = 0 }) {
                 <span>Lectura completada y lista para confirmar</span>
               </span>
             ) : (
-              <span style={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Lock className="w-4 h-4 text-amber-500" />
-                <span>Baje hasta el final para desbloquear</span>
+              <span style={{ color: '#0369a1', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}>
+                <Clock className="w-4 h-4 text-sky-600 animate-spin" />
+                <span>Tiempo restante de lectura: {formatTime(timeLeft)}</span>
               </span>
             )}
           </div>
@@ -183,7 +199,7 @@ export function PdfModal({ onClose, onComplete, currentPdfCount = 0 }) {
             }}
           >
             {canConfirm ? <CheckCircle2 className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-            <span>{submitting ? 'Registrando lectura...' : (canConfirm ? 'Confirmar Lectura del Manual' : 'Bajar hasta el final')}</span>
+            <span>{submitting ? 'Registrando lectura...' : (canConfirm ? 'Confirmar Lectura del Manual' : `Esperar ${formatTime(timeLeft)}`)}</span>
           </button>
         </div>
 

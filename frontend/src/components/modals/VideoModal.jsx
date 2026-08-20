@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { X, Play, CheckCircle2, Lock, Sparkles } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X, Play, CheckCircle2, Lock, ShieldAlert, Pause, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
@@ -7,12 +7,27 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
   const [progress, setProgress] = useState(0);
   const [canFinish, setCanFinish] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [warningMsg, setWarningMsg] = useState(null);
+  const maxTimeRef = useRef(0);
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
     const { currentTime, duration } = videoRef.current;
+
+    // Impedir adelantar: si el tiempo actual salta hacia adelante más de lo reproducido continuamente
+    if (currentTime > maxTimeRef.current + 1.2) {
+      videoRef.current.currentTime = maxTimeRef.current;
+      setWarningMsg('⚠️ No está permitido adelantar el video de capacitación.');
+      setTimeout(() => setWarningMsg(null), 3000);
+      return;
+    }
+
+    if (currentTime > maxTimeRef.current) {
+      maxTimeRef.current = currentTime;
+    }
+
     if (duration > 0) {
-      const pct = Math.min(100, Math.round((currentTime / duration) * 100));
+      const pct = Math.min(100, Math.round((maxTimeRef.current / duration) * 100));
       setProgress(pct);
       if (pct >= 90 && !canFinish) {
         setCanFinish(true);
@@ -20,7 +35,29 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
     }
   };
 
+  const handleSeeking = (e) => {
+    if (!videoRef.current) return;
+    if (videoRef.current.currentTime > maxTimeRef.current + 0.5) {
+      videoRef.current.currentTime = maxTimeRef.current;
+      setWarningMsg('⚠️ Debe ver el video en tiempo continuo sin adelantar.');
+      setTimeout(() => setWarningMsg(null), 3000);
+    }
+  };
+
+  const handleSeeked = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.currentTime > maxTimeRef.current + 0.5) {
+      videoRef.current.currentTime = maxTimeRef.current;
+    }
+  };
+
+  const handleEnded = () => {
+    setCanFinish(true);
+    setProgress(100);
+  };
+
   const handleConfirm = async () => {
+    if (!canFinish || submitting) return;
     setSubmitting(true);
     try {
       await onComplete();
@@ -34,35 +71,63 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
   };
 
   return (
-    <div className="modal-backdrop">
-      <div className="modal-content" style={{ maxWidth: '640px' }}>
+    <div className="modal-backdrop" style={{ background: 'rgba(11, 19, 41, 0.9)', backdropFilter: 'blur(8px)', zIndex: 9999 }}>
+      <div className="modal-content" style={{ maxWidth: '680px', background: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', overflow: 'hidden' }}>
         
         {/* Modal Header */}
-        <div className="modal-header">
+        <div style={{ padding: '16px 20px', borderBottom: '1px solid #334155', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#1e293b' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Play className="w-5 h-5 text-sky-400" />
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-              Video Tutorial — Capacitación de Personeros
-            </h3>
+            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(14, 165, 233, 0.2)', color: '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Play className="w-4 h-4 fill-sky-400" />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+                Video Tutorial — Capacitación Electoral 2026
+              </h3>
+              <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+                Reproducción continua en tiempo real requerida ({currentVideoCount}/2)
+              </div>
+            </div>
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}>
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="modal-body" style={{ padding: '16px' }}>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '12px', lineHeight: 1.4 }}>
-            Observe el video tutorial instructivo completo sobre las funciones del personero para registrar su avance ({currentVideoCount}/2).
-          </p>
+        <div className="modal-body" style={{ padding: '18px 20px' }}>
+          {warningMsg && (
+            <div style={{
+              background: '#fef2f2',
+              border: '1px solid #f87171',
+              color: '#dc2626',
+              padding: '10px 14px',
+              borderRadius: '8px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              marginBottom: '12px',
+              animation: 'fadeIn 0.2s ease'
+            }}>
+              <ShieldAlert className="w-4 h-4 flex-shrink-0" />
+              <span>{warningMsg}</span>
+            </div>
+          )}
 
-          <div style={{ position: 'relative', background: '#000', borderRadius: '12px', overflow: 'hidden', border: '1.5px solid #0284c7', boxShadow: '0 8px 25px rgba(0,0,0,0.5)' }}>
+          <div style={{ position: 'relative', background: '#000', borderRadius: '12px', overflow: 'hidden', border: '1.5px solid #0284c7', boxShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
             <video
               ref={videoRef}
               playsInline
               controls
+              controlsList="nodownload noplaybackrate"
+              disablePictureInPicture
               preload="auto"
               onTimeUpdate={handleTimeUpdate}
+              onSeeking={handleSeeking}
+              onSeeked={handleSeeked}
+              onEnded={handleEnded}
               style={{ width: '100%', maxHeight: '380px', display: 'block', outline: 'none' }}
             >
               <source src="/videos/tutorial_personero.mp4" type="video/mp4" />
@@ -70,31 +135,53 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
             </video>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', fontSize: '0.8rem', color: '#38bdf8', fontWeight: 600 }}>
-            <span>Progreso de visualización: {progress}%</span>
-            <span>Meta requerida: 90%</span>
+          {/* Barra de Progreso Bloqueada */}
+          <div style={{ marginTop: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: '#94a3b8', marginBottom: '6px' }}>
+              <span style={{ color: canFinish ? '#34d399' : '#38bdf8', fontWeight: 700 }}>
+                {canFinish ? '✅ Meta alcanzada: Puede confirmar' : `Progreso de visualización: ${progress}%`}
+              </span>
+              <span>Requerido: 90% continuo</span>
+            </div>
+            <div style={{ width: '100%', height: '8px', background: '#334155', borderRadius: '4px', overflow: 'hidden' }}>
+              <div
+                style={{
+                  width: `${progress}%`,
+                  height: '100%',
+                  background: canFinish ? '#10b981' : 'linear-gradient(90deg, #0284c7, #38bdf8)',
+                  transition: 'width 0.3s ease'
+                }}
+              />
+            </div>
           </div>
         </div>
 
         {/* Modal Footer */}
-        <div className="modal-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
+        <div style={{ padding: '14px 20px', borderTop: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#1e293b' }}>
+          <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 600 }}>
             Visualización {Math.min(2, currentVideoCount + 1)} de 2
           </span>
           <button
             onClick={handleConfirm}
             disabled={!canFinish || submitting}
-            className="btn-primary"
             style={{
-              width: 'auto',
-              padding: '8px 20px',
-              fontSize: '0.85rem',
-              background: canFinish ? 'linear-gradient(90deg, #10b981, #059669)' : '#334155',
-              cursor: canFinish ? 'pointer' : 'not-allowed'
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '10px 22px',
+              borderRadius: '10px',
+              border: 'none',
+              fontSize: '0.86rem',
+              fontWeight: 800,
+              background: canFinish ? 'linear-gradient(90deg, #10b981, #059669)' : '#475569',
+              color: '#ffffff',
+              cursor: canFinish && !submitting ? 'pointer' : 'not-allowed',
+              boxShadow: canFinish ? '0 4px 14px rgba(16, 185, 129, 0.4)' : 'none',
+              transition: 'all 0.2s ease'
             }}
           >
             {canFinish ? <CheckCircle2 className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-            <span>{submitting ? 'Registrando visualización...' : (canFinish ? 'Confirmar Visualización' : 'Debe ver el video')}</span>
+            <span>{submitting ? 'Registrando visualización...' : (canFinish ? 'Confirmar Visualización' : `Viendo video (${progress}%)`)}</span>
           </button>
         </div>
       </div>

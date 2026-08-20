@@ -60,7 +60,8 @@ export function PublicVerificationView({ onGoHome }) {
   if (loading) {
     return (
       <div className="center-layout" style={{ minHeight: '100vh', background: '#0b1329', color: '#ffffff' }}>
-        <p>Verificando credencial oficial en SQL Server...</p>
+        <div className="spinner-large"></div>
+        <p>Verificando credencial oficial en el sistema...</p>
       </div>
     );
   }

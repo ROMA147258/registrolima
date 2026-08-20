@@ -232,6 +232,183 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     }
   }, [formData.distrito_asignado, isCoordinadorDistrital]);
 
+  // Validaciones en TIEMPO REAL de disponibilidad y no duplicidad (Nombres, DNI, Celular, Mesa, Local, Distrito)
+  useEffect(() => {
+    const nameTrim = (formData.nombres_apellidos || '').trim();
+    if (nameTrim.length >= 4) {
+      const timer = setTimeout(() => {
+        api.checkAvailability({ nombres: nameTrim })
+          .then(res => {
+            if (res && res.available === false) {
+              setFieldErrors(prev => ({ ...prev, nombres_apellidos: res.message }));
+            } else {
+              setFieldErrors(prev => {
+                if (prev.nombres_apellidos && (prev.nombres_apellidos.includes('registrada') || prev.nombres_apellidos.includes('sistema'))) {
+                  const copy = { ...prev };
+                  delete copy.nombres_apellidos;
+                  return copy;
+                }
+                return prev;
+              });
+            }
+          })
+          .catch(() => {});
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [formData.nombres_apellidos]);
+
+  useEffect(() => {
+    if (formData.dni && formData.dni.length === 8) {
+      api.checkAvailability({ dni: formData.dni })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, dni: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.dni && (prev.dni.includes('registrado') || prev.dni.includes('sistema'))) {
+                const copy = { ...prev };
+                delete copy.dni;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [formData.dni]);
+
+  useEffect(() => {
+    if (formData.celular && formData.celular.length === 9) {
+      api.checkAvailability({ celular: formData.celular })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, celular: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.celular && prev.celular.includes('registrado')) {
+                const copy = { ...prev };
+                delete copy.celular;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [formData.celular]);
+
+  useEffect(() => {
+    const emailTrim = (formData.correo_electronico || '').trim();
+    if (emailTrim.length >= 5 && emailTrim.includes('@')) {
+      const timer = setTimeout(() => {
+        api.checkAvailability({ correo: emailTrim })
+          .then(res => {
+            if (res && res.available === false) {
+              setFieldErrors(prev => ({ ...prev, correo_electronico: res.message }));
+            } else {
+              setFieldErrors(prev => {
+                if (prev.correo_electronico && prev.correo_electronico.includes('registrado')) {
+                  const copy = { ...prev };
+                  delete copy.correo_electronico;
+                  return copy;
+                }
+                return prev;
+              });
+            }
+          })
+          .catch(() => {});
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [formData.correo_electronico]);
+
+  useEffect(() => {
+    if (formData.usa_whatsapp === 'No, otro número' && formData.numero_whatsapp_alterno && formData.numero_whatsapp_alterno.length === 9) {
+      api.checkAvailability({ whatsapp_alterno: formData.numero_whatsapp_alterno })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, numero_whatsapp_alterno: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.numero_whatsapp_alterno && prev.numero_whatsapp_alterno.includes('registrado')) {
+                const copy = { ...prev };
+                delete copy.numero_whatsapp_alterno;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [formData.usa_whatsapp, formData.numero_whatsapp_alterno]);
+
+  useEffect(() => {
+    if (isPersoneroMesa && formData.mesa_asignada && formData.mesa_asignada.length === 6) {
+      api.checkAvailability({ rol: formData.rol_electoral, mesa: formData.mesa_asignada })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, mesa_asignada: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.mesa_asignada && (prev.mesa_asignada.includes('asignado') || prev.mesa_asignada.includes('asignada'))) {
+                const copy = { ...prev };
+                delete copy.mesa_asignada;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isPersoneroMesa, formData.mesa_asignada, formData.rol_electoral]);
+
+  useEffect(() => {
+    if (isCoordinadorLocal && formData.distrito_asignado) {
+      api.checkAvailability({ rol: formData.rol_electoral, distrito: formData.distrito_asignado })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, distrito_asignado: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.distrito_asignado && prev.distrito_asignado.includes('Coordinadores')) {
+                const copy = { ...prev };
+                delete copy.distrito_asignado;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isCoordinadorLocal, formData.distrito_asignado, formData.rol_electoral]);
+
+  useEffect(() => {
+    if (isCoordinadorDistrital && formData.distrito_asignado) {
+      api.checkAvailability({ rol: formData.rol_electoral, distrito: formData.distrito_asignado })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, distrito_asignado: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.distrito_asignado && prev.distrito_asignado.includes('Coordinador')) {
+                const copy = { ...prev };
+                delete copy.distrito_asignado;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isCoordinadorDistrital, formData.distrito_asignado, formData.rol_electoral]);
+
   // Limpieza de error en tiempo real cuando el usuario edita
   const clearFieldError = (name) => {
     if (fieldErrors[name]) {
@@ -375,9 +552,16 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.se_compromete = 'Confirme su compromiso para las elecciones.';
     }
 
+    // Combinar con errores de duplicidad detectados en tiempo real (Nombres, DNI, Celular, Mesa, Local, Distrito)
+    Object.keys(fieldErrors).forEach(k => {
+      if (fieldErrors[k]) {
+        errors[k] = fieldErrors[k];
+      }
+    });
+
     setFieldErrors(errors);
 
-    // Si hay errores, hacer scroll y focus al primer campo faltante
+    // Si hay errores, hacer scroll y focus al primer campo faltante o duplicado
     const errorKeys = Object.keys(errors);
     if (errorKeys.length > 0) {
       const firstKey = errorKeys[0];
@@ -391,7 +575,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
         }, 250);
       }
 
-      setErrorMsg(`Falta completar o corregir: ${errors[firstKey]}`);
+      setErrorMsg(`No se puede avanzar: ${errors[firstKey]}`);
       return false;
     }
 
@@ -510,7 +694,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
           )}
 
           {/* SECCIÓN 1: DATOS PERSONALES */}
-          <div style={{ border: fieldErrors.nombres_apellidos || fieldErrors.dni || fieldErrors.celular || fieldErrors.numero_whatsapp_alterno ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+          <div style={{ border: fieldErrors.nombres_apellidos || fieldErrors.dni || fieldErrors.celular || fieldErrors.correo_electronico || fieldErrors.numero_whatsapp_alterno ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>1</div>
               <span>DATOS PERSONALES</span>
@@ -623,7 +807,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
             <div className="form-group" style={{ marginBottom: '12px' }}>
               <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>Correo Electrónico (Opcional)</label>
               <div style={{ position: 'relative' }}>
-                <Mail className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: '#0284c7' }} />
+                <Mail className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.correo_electronico ? '#ef4444' : '#0284c7' }} />
                 <input
                   id="field-correo_electronico"
                   type="email"
@@ -632,9 +816,21 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   onChange={handleChange}
                   placeholder="Ej. juan.perez@gmail.com"
                   className="form-control"
-                  style={{ paddingLeft: '36px', background: '#ffffff', border: '1.5px solid #cbd5e1', color: '#0f172a' }}
+                  style={{
+                    paddingLeft: '36px',
+                    background: '#ffffff',
+                    border: fieldErrors.correo_electronico ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
+                    color: '#0f172a',
+                    boxShadow: fieldErrors.correo_electronico ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                  }}
                 />
               </div>
+              {fieldErrors.correo_electronico && (
+                <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{fieldErrors.correo_electronico}</span>
+                </div>
+              )}
             </div>
 
             {/* Pregunta WhatsApp */}
@@ -1388,7 +1584,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 }}
               >
                 <Send className="w-4 h-4" />
-                <span>{loading ? 'Guardando en SQL Server...' : '✅ Confirmar y Enviar'}</span>
+                <span>{loading ? 'Registrando y Acreditando...' : '✅ Confirmar y Acreditar'}</span>
               </button>
 
             </div>

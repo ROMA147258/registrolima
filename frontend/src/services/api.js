@@ -36,8 +36,12 @@ export const api = {
   login: (credentials) => request('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
   checkUser: (dni) => request(`/check_user?dni=${encodeURIComponent(dni)}`),
 
-  // Registro
+  // Registro y Validación en Tiempo Real
   registerPersonero: (formData) => request('/register', { method: 'POST', body: JSON.stringify(formData) }),
+  checkAvailability: (params) => {
+    const query = new URLSearchParams(params).toString();
+    return request(`/check_availability?${query}`);
+  },
 
   // Capacitación
   updateProgress: (dni, type, current) => request(`/update_progress?dni=${encodeURIComponent(dni)}&type=${type}&current=${current}`),
