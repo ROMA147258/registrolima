@@ -12,15 +12,21 @@ export function TrainingView({ onGoToDashboard }) {
   const [activeModal, setActiveModal] = useState(null);
   const [viewingCertificate, setViewingCertificate] = useState(false);
 
-  const videoCount = parseInt(user?.Video ?? user?.video ?? 0, 10);
-  const pdfCount = parseInt(user?.PDF ?? user?.pdf ?? 0, 10);
-  const quizStatus = String(user?.Preguntas ?? user?.preguntas ?? 'Pendiente');
-  const isQuizPassed = quizStatus.toLowerCase() === 'aprobado' || quizStatus.toLowerCase() === 'pasado';
+  const rawVideo = parseInt(user?.Video ?? user?.video ?? user?.['Videos Completados'] ?? user?.videosCompletados ?? user?.videos_completados ?? 0, 10);
+  const rawPdf = parseInt(user?.PDF ?? user?.pdf ?? user?.['PDFs Completados'] ?? user?.pdfsCompletados ?? user?.pdfs_completados ?? 0, 10);
+  const quizStatus = String(user?.Preguntas ?? user?.preguntas ?? user?.['Evaluación Estado'] ?? user?.evaluacionEstado ?? user?.evaluacion_estado ?? user?.evaluacion ?? 'Pendiente').trim();
+  const credStatus = String(user?.Credenciales ?? user?.credenciales ?? user?.['Estado Credencial'] ?? user?.estadoCredencial ?? user?.estado_credencial ?? user?.estado ?? '').trim().toLowerCase();
 
-  const isVideoDone = videoCount >= 2;
-  const isPdfDone = pdfCount >= 2;
+  const isConfirmed = credStatus === 'confirmado';
+  const isQuizPassed = quizStatus.toLowerCase().includes('aprob') || quizStatus.toLowerCase().includes('pasad') || isConfirmed;
+  
+  const videoCount = (isConfirmed || isQuizPassed) && rawVideo < 2 ? 2 : rawVideo;
+  const pdfCount = (isConfirmed || isQuizPassed) && rawPdf < 2 ? 2 : rawPdf;
+
+  const isVideoDone = videoCount >= 2 || isConfirmed || isQuizPassed;
+  const isPdfDone = pdfCount >= 2 || isConfirmed || isQuizPassed;
   const canTakeQuiz = isVideoDone && isPdfDone;
-  const isFullyAccredited = isVideoDone && isPdfDone && isQuizPassed;
+  const isFullyAccredited = isConfirmed || isQuizPassed || (isVideoDone && isPdfDone);
 
   const handleVideoComplete = async () => {
     const dni = user?.['D.N.I.'] || user?.DNI || user?.dni;
@@ -40,7 +46,7 @@ export function TrainingView({ onGoToDashboard }) {
     updateUserTraining(res);
   };
 
-  if (viewingCertificate && isFullyAccredited) {
+  if (viewingCertificate) {
     return (
       <div style={{ minHeight: '100vh', background: 'rgb(193, 229, 249)', padding: '24px 16px' }}>
         <CredentialCard user={user} onBack={() => setViewingCertificate(false)} />

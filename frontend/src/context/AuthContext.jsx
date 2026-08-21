@@ -22,8 +22,9 @@ export function AuthProvider({ children }) {
         setRole(res.role);
         setToken(res.token || 'session_token');
 
-        const cred = String(res.user?.Credenciales ?? res.user?.credenciales ?? '').toLowerCase().trim();
-        const isConfirmedAtLogin = cred === 'confirmado';
+        const cred = String(res.user?.Credenciales ?? res.user?.credenciales ?? res.user?.['Estado Credencial'] ?? res.user?.estadoCredencial ?? '').toLowerCase().trim();
+        const quiz = String(res.user?.Preguntas ?? res.user?.preguntas ?? res.user?.['Evaluación Estado'] ?? res.user?.evaluacionEstado ?? '').toLowerCase().trim();
+        const isConfirmedAtLogin = cred === 'confirmado' || quiz.includes('aprob') || quiz.includes('pasad');
         localStorage.setItem('login_initially_confirmed', isConfirmedAtLogin ? 'true' : 'false');
 
         localStorage.setItem('auth_user', JSON.stringify(res.user));
@@ -42,16 +43,17 @@ export function AuthProvider({ children }) {
         const adminUser = cleanUser === 'eric'
           ? {
               username: 'eric',
-              fullName: 'Eric - Coordinador Distrital General',
+              fullName: 'Eric - Administrador Central',
               role: 'superadmin',
-              isCoordinadorDistrital: true,
-              'Rol a Desempeñar': 'Coordinador de Distritos',
-              'Nombres y Apellidos': 'Eric - Coordinador Distrital General'
+              'Rol a Desempeñar': 'Administrador General',
+              'Nombres y Apellidos': 'Eric - Administrador Central'
             }
           : {
               username: 'admin',
               fullName: 'Administrador General',
-              role: 'superadmin'
+              role: 'superadmin',
+              'Rol a Desempeñar': 'Administrador General',
+              'Nombres y Apellidos': 'Administrador General'
             };
         setUser(adminUser);
         setRole('superadmin');
@@ -103,7 +105,8 @@ export function AuthProvider({ children }) {
   };
 
   const rolName = String(user?.['Rol a Desempeñar'] || user?.role || '').toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'admin';
+  const cleanUsername = String(user?.username || '').toLowerCase();
+  const isSuperAdmin = role === 'superadmin' || role === 'admin' || cleanUsername === 'eric' || cleanUsername === 'admin';
   const isCoordinadorDistrital = !isSuperAdmin && (
     Boolean(user?.isCoordinadorDistrital) ||
     rolName.includes('distrito') ||
@@ -114,12 +117,12 @@ export function AuthProvider({ children }) {
     rolName.includes('local') ||
     (rolName.includes('coordinador') && !rolName.includes('central'))
   );
-  const isCoordinador = isCoordinadorDistrital || isCoordinadorLocal || role === 'coordinador';
+  const isCoordinador = isCoordinadorDistrital || isCoordinadorLocal || (!isSuperAdmin && role === 'coordinador');
   const isPersonero = !isSuperAdmin && !isCoordinador;
 
-  const quizStatus = String(user?.Preguntas ?? user?.preguntas ?? '').toLowerCase().trim();
-  const credStatus = String(user?.Credenciales ?? user?.credenciales ?? '').toLowerCase().trim();
-  const isEvaluationApproved = credStatus === 'confirmado';
+  const quizStatus = String(user?.Preguntas ?? user?.preguntas ?? user?.['Evaluación Estado'] ?? user?.evaluacionEstado ?? '').toLowerCase().trim();
+  const credStatus = String(user?.Credenciales ?? user?.credenciales ?? user?.['Estado Credencial'] ?? user?.estadoCredencial ?? '').toLowerCase().trim();
+  const isEvaluationApproved = credStatus === 'confirmado' || quizStatus.includes('aprob') || quizStatus.includes('pasad');
 
 
 

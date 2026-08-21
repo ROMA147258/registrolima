@@ -100,33 +100,42 @@ export class PostgresPersoneroRepository {
 
   mapRowToEntity(row, isCoordinador = false) {
     if (!row) return null;
-    const rolVal = row.rol_a_desempenar || row.rol_desempenar || row.rol;
+    const rolVal = row.rol_a_desempenar || row.rol_desempenar || row.rol || row['Rol a Desempeñar'];
     const isActuallyCoord = isCoordinador || (rolVal && rolVal.toLowerCase().includes('coordinador'));
 
+    const rawPreguntas = String(row.preguntas ?? row.evaluacion_estado ?? row.evaluacion ?? row['Preguntas'] ?? row['Evaluación Estado'] ?? 'Pendiente').trim();
+    const rawCredenciales = String(row.credenciales ?? row.estado_credencial ?? row.estado ?? row['Credenciales'] ?? row['Estado Credencial'] ?? 'Bloqueado').trim();
+    const videoVal = parseInt(row.video ?? row.videos_completados ?? row.videos ?? row['Video'] ?? row['Videos Completados'] ?? 0, 10);
+    const pdfVal = parseInt(row.pdf ?? row.pdfs_completados ?? row.pdfs ?? row['PDF'] ?? row['PDFs Completados'] ?? 0, 10);
+
+    const isAppr = rawPreguntas.toLowerCase().includes('aprob') || rawPreguntas.toLowerCase().includes('pasad') || rawCredenciales.toLowerCase() === 'confirmado';
+    const finalCred = (rawCredenciales.toLowerCase() === 'confirmado' || (videoVal >= 2 && pdfVal >= 2 && isAppr)) ? 'Confirmado' : (rawCredenciales || 'Bloqueado');
+    const finalPreg = isAppr ? 'Aprobado' : (rawPreguntas || 'Pendiente');
+
     const props = {
-      id: row.id,
-      fechaRegistro: row.fecha_de_registro ? new Date(row.fecha_de_registro).toISOString() : new Date().toISOString(),
-      nombresApellidos: row.nombres_y_apellidos,
-      dni: row.dni,
-      celular: row.celular,
-      correoElectronico: row.correo_electronico,
-      usaWhatsApp: row.usa_whatsapp_en_su_celular || 'Sí',
-      numeroWhatsAppAlterno: row.numero_whatsapp_alterno || '',
-      distritoDondeVota: row.distrito_donde_vota || '',
-      mesaDeSufragio: row.mesa_de_sufragio || '',
-      localDeVotacion: row.local_de_votacion || '',
+      id: row.id || row.ID,
+      fechaRegistro: row.fecha_de_registro || row.fechaRegistro ? new Date(row.fecha_de_registro || row.fechaRegistro).toISOString() : new Date().toISOString(),
+      nombresApellidos: row.nombres_y_apellidos || row.nombresApellidos || row['Nombres y Apellidos'],
+      dni: String(row.dni || row.DNI || row['D.N.I.']).trim(),
+      celular: row.celular || row.Celular,
+      correoElectronico: row.correo_electronico || row.correoElectronico || row['Correo Electrónico'],
+      usaWhatsApp: row.usa_whatsapp_en_su_celular || row.usaWhatsApp || row['Usa WhatsApp en su Celular'] || 'Sí',
+      numeroWhatsAppAlterno: row.numero_whatsapp_alterno || row.numeroWhatsAppAlterno || row['Número WhatsApp Alterno'] || '',
+      distritoDondeVota: row.distrito_donde_vota || row.distritoDondeVota || row['Distrito donde Vota'] || '',
+      mesaDeSufragio: row.mesa_de_sufragio || row.mesaDeSufragio || row['Mesa de Sufragio'] || '',
+      localDeVotacion: row.local_de_votacion || row.localDeVotacion || row['Local de Votación'] || '',
       rolADesempenar: rolVal || (isActuallyCoord ? 'Coordinador de Local' : 'Personero de Mesa'),
-      distritoAsignado: row.distrito_asignado || row.distrito_donde_vota || '',
-      mesaAsignada: row.mesa_asignada || (isActuallyCoord ? 'No aplica' : '-'),
-      localDeVotacionAsignado: row.local_de_votacion_asignado || (rolVal?.includes('distrito') ? 'No aplica' : row.local_de_votacion || ''),
-      tieneExperiencia: row.tiene_experiencia_como_personero || 'No',
-      cuentaConMovilidad: row.cuenta_con_movilidad_propia || 'No',
-      seCompromete: row.se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones || 'Sí',
-      video: parseInt(row.video || 0, 10),
-      pdf: parseInt(row.pdf || 0, 10),
-      preguntas: row.preguntas || 'Pendiente',
-      credenciales: row.credenciales || 'Bloqueado',
-      tokenVerificacion: row.token_verificacion || `SP-LM2026-${row.dni}`
+      distritoAsignado: row.distrito_asignado || row.distritoAsignado || row.distrito_donde_vota || '',
+      mesaAsignada: row.mesa_asignada || row.mesaAsignada || (isActuallyCoord ? 'No aplica' : '-'),
+      localDeVotacionAsignado: row.local_de_votacion_asignado || row.localDeVotacionAsignado || (rolVal?.includes('distrito') ? 'No aplica' : row.local_de_votacion || ''),
+      tieneExperiencia: row.tiene_experiencia_como_personero || row.tieneExperiencia || 'No',
+      cuentaConMovilidad: row.cuenta_con_movilidad_propia || row.cuentaConMovilidad || 'No',
+      seCompromete: row.se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones || row.seCompromete || 'Sí',
+      video: videoVal,
+      pdf: pdfVal,
+      preguntas: finalPreg,
+      credenciales: finalCred,
+      tokenVerificacion: row.token_verificacion || row.tokenVerificacion || row.codigo_credencial || `SP-LM2026-${row.dni || row.DNI}`
     };
 
     return isActuallyCoord ? new Coordinador(props) : new Personero(props);
@@ -519,7 +528,7 @@ export class PostgresPersoneroRepository {
     };
   }
 
-  async updateAssignment(dni, { distrito, local, mesa }) {
+  async updateAssignment(dni, params = {}) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
     const cleanDni = String(dni).trim();
@@ -528,6 +537,9 @@ export class PostgresPersoneroRepository {
     if (!existing) throw new Error(`No se encontró el registro con DNI ${cleanDni}`);
 
     const tableName = existing.tableName;
+    const dist = params.distritoAsignado !== undefined ? params.distritoAsignado : params.distrito;
+    const loc = params.localAsignado !== undefined ? params.localAsignado : params.local;
+    const mes = params.mesaAsignada !== undefined ? params.mesaAsignada : params.mesa;
 
     const query = `
       UPDATE ${tableName}
@@ -538,8 +550,11 @@ export class PostgresPersoneroRepository {
       RETURNING *;
     `;
 
-    const res = await pool.query(query, [distrito, local, mesa, cleanDni]);
-    return this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros');
+    const res = await pool.query(query, [dist, loc, mes, cleanDni]);
+    return {
+      entity: this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros'),
+      tableName
+    };
   }
 
   async findAll() {
@@ -559,10 +574,20 @@ export class PostgresPersoneroRepository {
         res.rows.forEach(r => {
           allRecords.push(this.mapRowToEntity(r, tbl.isCoord));
         });
-      } catch {}
+      } catch (e) {
+        console.warn(`Aviso leyendo tabla ${tbl.name}:`, e.message);
+      }
     }
 
     return allRecords;
+  }
+
+  async getAllCombined() {
+    return this.findAll();
+  }
+
+  async getAll() {
+    return this.findAll();
   }
 
   async findAllOrdered() {
