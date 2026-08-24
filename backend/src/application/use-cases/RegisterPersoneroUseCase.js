@@ -113,7 +113,9 @@ export class RegisterPersoneroUseCase {
     if (rolNorm.includes('distrito') || rolNorm.includes('distrital')) {
       if (!claveAcceso) {
         const rand4 = Math.floor(1000 + Math.random() * 9000);
-        claveAcceso = `SP-${rand4}`;
+        claveAcceso = `SP${rand4}`;
+      } else {
+        claveAcceso = String(claveAcceso).replace(/-/g, '').trim();
       }
     }
 

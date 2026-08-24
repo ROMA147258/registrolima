@@ -67,9 +67,10 @@ export class LoginUseCase {
         const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
 
         if (isCoordDistrital) {
-          const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').trim();
+          const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').replace(/[-\s]/g, '').trim();
           if (expectedKey) {
-            if (cleanPass.toUpperCase() !== expectedKey.toUpperCase()) {
+            const userPassClean = cleanPass.replace(/[-\s]/g, '').toUpperCase();
+            if (userPassClean !== expectedKey.toUpperCase()) {
               throw new Error('Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada.');
             }
           }
@@ -155,9 +156,10 @@ export class LoginUseCase {
           const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
 
           if (isCoordDistrital) {
-            const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').trim();
+            const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').replace(/[-\s]/g, '').trim();
             if (expectedKey) {
-              if (cleanPass.toUpperCase() !== expectedKey.toUpperCase()) {
+              const userPassClean = cleanPass.replace(/[-\s]/g, '').toUpperCase();
+              if (userPassClean !== expectedKey.toUpperCase()) {
                 throw new Error('Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada.');
               }
             }

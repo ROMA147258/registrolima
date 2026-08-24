@@ -352,7 +352,7 @@ test('Validation Rule 7: Coordinador de Distritos gets auto-generated password a
 
   assert.equal(regRes.status, 'success');
   assert.ok(regRes.data.claveAcceso, 'Debe generar clave de acceso');
-  assert.match(regRes.data.claveAcceso, /^SP-\d{4}$/, 'Formato de clave debe ser SP-XXXX');
+  assert.match(regRes.data.claveAcceso, /^SP\d{4}$/, 'Formato de clave debe ser SPXXXX (letras y números sin guion)');
 
   // 2. Test Login
   const { LoginUseCase } = await import('../src/application/use-cases/LoginUseCase.js');
