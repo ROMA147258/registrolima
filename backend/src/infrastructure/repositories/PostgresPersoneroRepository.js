@@ -554,7 +554,7 @@ export class PostgresPersoneroRepository {
       data.distritoDondeVota || '',
       data.mesaDeSufragio || '',
       data.localDeVotacion || '',
-      data.rolADesempenar || (tableName === 'rcoordinadoresz' || tableName === 'rcoordinadorz' ? 'Coordinador Zonal' : (tableName === 'rcoordinadoresd' ? 'Coordinador de Distritos' : (tableName === 'rcoordinadores' ? 'Coordinador de Local' : 'Personero de Mesa'))),
+      data.rolADesempenar || (tableName === 'rcoordinadoresz' ? 'Coordinador Zonal' : (tableName === 'rcoordinadoresd' ? 'Coordinador de Distritos' : (tableName === 'rcoordinadores' ? 'Coordinador de Local' : 'Personero de Mesa'))),
       data.distritoAsignado || data.distritoDondeVota || '',
       data.mesaAsignada || (tableName === 'rpersoneros' ? '-' : 'No aplica'),
       data.localDeVotacionAsignado || (tableName === 'rcoordinadoresd' ? 'No aplica' : data.localDeVotacion || ''),
