@@ -509,7 +509,14 @@ export class PostgresPersoneroRepository {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
     const data = personeroOrCoordinador.toJSON ? personeroOrCoordinador.toJSON() : personeroOrCoordinador;
-    const rol = String(data.rolADesempenar || '').toLowerCase();
+    const rol = String(
+      data.rolADesempenar || 
+      data.rol_a_desempenar || 
+      data['Rol a Desempeñar'] || 
+      data.rol_electoral || 
+      data.rol || 
+      ''
+    ).toLowerCase().trim();
 
     let tableName = 'rpersoneros';
     if (rol.includes('zonal') || rol.includes('zona')) {
@@ -518,6 +525,15 @@ export class PostgresPersoneroRepository {
       tableName = 'rcoordinadoresd';
     } else if (rol.includes('coordinador') || rol.includes('local')) {
       tableName = 'rcoordinadores';
+    }
+
+    // Si es Coordinador Zonal, asegurarse de que no quede ningún registro con ese DNI en rcoordinadores ni en otra tabla
+    if (tableName === 'rcoordinadoresz') {
+      try {
+        await pool.query('DELETE FROM rcoordinadores WHERE dni = $1', [data.dni]);
+        await pool.query('DELETE FROM rcoordinadoresd WHERE dni = $1', [data.dni]);
+        await pool.query('DELETE FROM rpersoneros WHERE dni = $1', [data.dni]);
+      } catch (e) {}
     }
 
     const token = data.tokenVerificacion || `SP-LM2026-${data.dni}`;
