@@ -470,7 +470,7 @@ export class PostgresPersoneroRepository {
 
     const assignedSet = new Set();
 
-    // 1. Locales de Coordinadores Zonales
+    // Locales asignados exclusivamente a otros Coordinadores Zonales
     try {
       let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE LOWER(TRIM(distrito_asignado)) = $1`;
       const paramsZ = [cleanDist];
@@ -482,23 +482,6 @@ export class PostgresPersoneroRepository {
       resZ.rows.forEach(r => {
         const val = r.local_de_votacion_asignado || '';
         val.split(',').map(s => s.trim()).filter(Boolean).forEach(loc => assignedSet.add(loc));
-      });
-    } catch {}
-
-    // 2. Locales de Coordinadores de Local
-    try {
-      let qLocal = `SELECT local_de_votacion_asignado FROM rcoordinadores WHERE LOWER(TRIM(distrito_asignado)) = $1`;
-      const paramsL = [cleanDist];
-      if (excludeDni) {
-        qLocal += ` AND TRIM(dni) != $2`;
-        paramsL.push(String(excludeDni).trim());
-      }
-      const resL = await pool.query(qLocal, paramsL);
-      resL.rows.forEach(r => {
-        const val = (r.local_de_votacion_asignado || '').trim();
-        if (val && val.toLowerCase() !== 'no aplica') {
-          assignedSet.add(val);
-        }
       });
     } catch {}
 
