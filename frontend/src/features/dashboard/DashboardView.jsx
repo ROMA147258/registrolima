@@ -1506,7 +1506,14 @@ export function DashboardView({ onGoToTraining }) {
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                               <div>
                                 <div style={{ fontWeight: 900, color: textTitle, fontSize: '0.9rem' }}>{r['Nombres y Apellidos']}</div>
-                                <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                                <div style={{ fontSize: '0.72rem', color: textSub, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '2px' }}>
+                                  <span>DNI: {dni}</span>
+                                  {(r['Clave de Acceso'] || r.claveAcceso) && (
+                                    <span style={{ background: '#fef3c7', color: '#b45309', padding: '1px 6px', borderRadius: '4px', fontWeight: 800, fontSize: '0.68rem', border: '1px solid #fde68a' }}>
+                                      🔑 Clave: {r['Clave de Acceso'] || r.claveAcceso}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                               <span style={{ background: isDark ? 'rgba(2,132,199,0.2)' : '#e0f2fe', color: '#0284c7', padding: '3px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, flexShrink: 0 }}>
                                 #{idx + 1}
@@ -1584,9 +1591,16 @@ export function DashboardView({ onGoToTraining }) {
                                 <td style={{ padding: '12px 14px', color: textSub, fontSize: '0.75rem' }}>{r['Fecha de Registro'] || '2026-08-17'}</td>
                                 <td style={{ padding: '12px 14px' }}>
                                   <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos']}</div>
-                                  <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                                  <div style={{ fontSize: '0.72rem', color: textSub, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '2px' }}>
+                                    <span>DNI: {dni}</span>
+                                    {(r['Clave de Acceso'] || r.claveAcceso) && (
+                                      <span style={{ background: '#fef3c7', color: '#b45309', padding: '1px 6px', borderRadius: '4px', fontWeight: 800, fontSize: '0.68rem', border: '1px solid #fde68a' }}>
+                                        🔑 Clave: {r['Clave de Acceso'] || r.claveAcceso}
+                                      </span>
+                                    )}
+                                  </div>
                                   {r['Correo Electrónico'] && (
-                                    <div style={{ fontSize: '0.7rem', color: textSub }}>{r['Correo Electrónico']}</div>
+                                    <div style={{ fontSize: '0.7rem', color: textSub, marginTop: '1px' }}>{r['Correo Electrónico']}</div>
                                   )}
                                 </td>
                                 <td style={{ padding: '12px 14px' }}>
