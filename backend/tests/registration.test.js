@@ -69,6 +69,19 @@ class MockPersoneroRepository {
     ).length;
   }
 
+  async getAssignedLocalesByDistrito(distritoAsignado, excludeDni = null) {
+    const assigned = [];
+    this.records.forEach(r => {
+      if (r.distritoAsignado?.toLowerCase().trim() === distritoAsignado?.toLowerCase().trim()) {
+        if (!excludeDni || r.dni !== excludeDni) {
+          const loc = r.localDeVotacionAsignado || '';
+          loc.split(',').map(s => s.trim()).filter(Boolean).forEach(l => assigned.push(l));
+        }
+      }
+    });
+    return assigned;
+  }
+
   async save(entity) {
     const data = entity.toJSON ? entity.toJSON() : entity;
     this.records.push(data);
@@ -263,4 +276,51 @@ test('Validation Rule 5: Email and WhatsApp Alternativo cannot be duplicated', a
     },
     /El número de WhatsApp alternativo 999888777 ya se encuentra registrado/
   );
+});
+
+test('Validation Rule 6: Coordinador Zonal can select 1 or more schools and prevents assigning already occupied schools', async () => {
+  const repo = new MockPersoneroRepository();
+  const audit = new MockAuditRepository();
+  const useCase = new RegisterPersoneroUseCase(repo, audit);
+
+  // 1. Zonal Coordinator 1 successfully registers with 2 schools in SJL
+  const res1 = await useCase.execute({
+    nombres_apellidos: 'Coordinador Zonal 1',
+    dni: '77771111',
+    celular: '977771111',
+    rol_electoral: 'Coordinador Zonal',
+    distrito_asignado: 'San Juan de Lurigancho',
+    local_asignado: 'IE 001 San Juan, IE 002 Mariscal Caceres'
+  });
+
+  assert.equal(res1.status, 'success');
+  assert.equal(res1.data.rolADesempenar, 'Coordinador Zonal');
+  assert.equal(res1.data.localDeVotacionAsignado, 'IE 001 San Juan, IE 002 Mariscal Caceres');
+
+  // 2. Zonal Coordinator 2 attempts to register selecting one already assigned school -> Must fail
+  await assert.rejects(
+    async () => {
+      await useCase.execute({
+        nombres_apellidos: 'Coordinador Zonal 2',
+        dni: '77772222',
+        celular: '977772222',
+        rol_electoral: 'Coordinador Zonal',
+        distrito_asignado: 'San Juan de Lurigancho',
+        local_asignado: 'IE 002 Mariscal Caceres, IE 003 Antenor Orrego'
+      });
+    },
+    /El colegio 'IE 002 Mariscal Caceres' ya se encuentra asignado a otro Coordinador Zonal en San Juan de Lurigancho/
+  );
+
+  // 3. Zonal Coordinator 2 registers with available schools in SJL -> Must succeed
+  const res2 = await useCase.execute({
+    nombres_apellidos: 'Coordinador Zonal 2',
+    dni: '77772222',
+    celular: '977772222',
+    rol_electoral: 'Coordinador Zonal',
+    distrito_asignado: 'San Juan de Lurigancho',
+    local_asignado: 'IE 003 Antenor Orrego'
+  });
+
+  assert.equal(res2.status, 'success');
 });

@@ -44,7 +44,7 @@ export function createApiRouter() {
   const trainingCtrl = new TrainingController(updateProgressUseCase);
   const dashboardCtrl = new DashboardController(getDashboardUseCase, exportUseCase);
   const verifyCtrl = new VerifyController(verifyUseCase);
-  const catalogCtrl = new CatalogController();
+  const catalogCtrl = new CatalogController(personeroRepo);
 
   // --- RUTAS PÚBLICAS ---
 

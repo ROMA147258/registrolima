@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  User, CreditCard, Phone, Mail, MapPin, School, Table, Shield,
+  User, CreditCard, Phone, Mail, MapPin, School, Table, Shield, Layers,
   LogOut, Check, ChevronDown, AlertCircle, Edit3, Send, CheckCircle2, X
 } from 'lucide-react';
 import { DISTRITOS_LIMA } from '../../constants/catalogs.js';
@@ -178,6 +178,274 @@ function CustomSearchableSelect({
   );
 }
 
+// Componente de Selección Múltiple con Buscador y Chips para Coordinador Zonal
+function MultiSearchableSelect({
+  id,
+  value,
+  onChange,
+  options = [],
+  assignedOptions = [],
+  placeholder = "Buscar y seleccionar colegios...",
+  icon: Icon = School,
+  name,
+  required = false,
+  disabled = false,
+  hasError = false,
+  errorMsg = ''
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const selectedList = (value || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const normalizedOptions = options.map(opt => typeof opt === 'string' ? opt : (opt.nombre || opt.colegio || opt.local || ''));
+  const assignedNormalized = assignedOptions.map(opt => String(opt || '').trim().toLowerCase());
+
+  // Filtrar colegios ya ocupados por otros coordinadores en este distrito (salvo que ya los tenga seleccionados el usuario actual)
+  const availableOptions = normalizedOptions.filter(opt => {
+    const cleanOpt = opt.trim().toLowerCase();
+    const isAlreadySelectedByMe = selectedList.some(s => s.toLowerCase() === cleanOpt);
+    return isAlreadySelectedByMe || !assignedNormalized.includes(cleanOpt);
+  });
+
+  const filtered = availableOptions.filter(opt =>
+    opt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(
+      searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    )
+  );
+
+  const toggleSelect = (item) => {
+    const exists = selectedList.some(s => s.toLowerCase() === item.toLowerCase());
+    let updated;
+    if (exists) {
+      updated = selectedList.filter(s => s.toLowerCase() !== item.toLowerCase());
+    } else {
+      updated = [...selectedList, item];
+    }
+    onChange({ target: { name, value: updated.join(', ') } });
+    if (inputRef.current) inputRef.current.focus();
+  };
+
+  const removeTag = (item, e) => {
+    e.stopPropagation();
+    const updated = selectedList.filter(s => s.toLowerCase() !== item.toLowerCase());
+    onChange({ target: { name, value: updated.join(', ') } });
+  };
+
+  return (
+    <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
+      {/* Contenedor principal interactivo con tags y buscador */}
+      <div
+        onClick={() => {
+          if (!disabled) {
+            setIsOpen(true);
+            if (inputRef.current) inputRef.current.focus();
+          }
+        }}
+        style={{
+          background: disabled ? '#f1f5f9' : '#ffffff',
+          border: hasError ? '2px solid #ef4444' : (isOpen ? '1.5px solid #0284c7' : '1.5px solid #cbd5e1'),
+          borderRadius: '10px',
+          padding: '6px 36px 6px 36px',
+          minHeight: '44px',
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: '6px',
+          position: 'relative',
+          cursor: disabled ? 'not-allowed' : 'text',
+          boxShadow: hasError ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : (isOpen ? '0 0 0 3px rgba(2, 132, 199, 0.15)' : 'none'),
+          transition: 'all 0.15s ease'
+        }}
+      >
+        {Icon && (
+          <Icon
+            className="w-4 h-4"
+            style={{
+              position: 'absolute',
+              left: '12px',
+              top: selectedList.length > 0 ? '12px' : '50%',
+              transform: selectedList.length > 0 ? 'none' : 'translateY(-50%)',
+              color: hasError ? '#ef4444' : '#0284c7',
+              pointerEvents: 'none'
+            }}
+          />
+        )}
+
+        {/* Chips de colegios seleccionados */}
+        {selectedList.map((item, idx) => (
+          <span
+            key={idx}
+            style={{
+              background: '#0284c7',
+              color: '#ffffff',
+              fontSize: '0.74rem',
+              fontWeight: 700,
+              padding: '3px 8px',
+              borderRadius: '6px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              maxWidth: '100%',
+              lineHeight: '1.2'
+            }}
+          >
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item}</span>
+            {!disabled && (
+              <X
+                className="w-3.5 h-3.5"
+                style={{ cursor: 'pointer', flexShrink: 0, opacity: 0.9 }}
+                onClick={(e) => removeTag(item, e)}
+              />
+            )}
+          </span>
+        ))}
+
+        {/* Input de texto para escribir y buscar */}
+        <input
+          ref={inputRef}
+          id={id || `field-${name}`}
+          type="text"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            if (!isOpen) setIsOpen(true);
+          }}
+          onFocus={() => !disabled && setIsOpen(true)}
+          placeholder={selectedList.length === 0 ? placeholder : "Escribir para agregar otro..."}
+          disabled={disabled}
+          autoComplete="off"
+          style={{
+            border: 'none',
+            outline: 'none',
+            fontSize: '0.86rem',
+            color: disabled ? '#94a3b8' : '#0f172a',
+            background: 'transparent',
+            flex: '1 1 140px',
+            minWidth: '140px',
+            height: '28px',
+            padding: 0
+          }}
+        />
+
+        <ChevronDown
+          className="w-4 h-4"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!disabled) setIsOpen(!isOpen);
+          }}
+          style={{
+            position: 'absolute',
+            right: '12px',
+            top: '50%',
+            transform: `translateY(-50%) rotate(${isOpen ? 180 : 0}deg)`,
+            color: hasError ? '#ef4444' : '#64748b',
+            cursor: disabled ? 'default' : 'pointer',
+            transition: 'transform 0.2s ease'
+          }}
+        />
+      </div>
+
+      {hasError && errorMsg && (
+        <div style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      {/* Lista Desplegable con opciones disponibles */}
+      {isOpen && !disabled && (
+        <div style={{
+          position: 'absolute',
+          top: 'calc(100% + 4px)',
+          left: 0,
+          right: 0,
+          background: '#ffffff',
+          border: '1.5px solid #0284c7',
+          borderRadius: '10px',
+          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.15)',
+          maxHeight: '230px',
+          overflowY: 'auto',
+          zIndex: 1000,
+          animation: 'fadeIn 0.15s ease-out'
+        }}>
+          <div style={{ padding: '6px 12px', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', fontSize: '0.73rem', fontWeight: 700, color: '#64748b', display: 'flex', justifyContent: 'space-between' }}>
+            <span>{filtered.length} colegios disponibles</span>
+            {selectedList.length > 0 && <span style={{ color: '#0284c7' }}>{selectedList.length} seleccionados</span>}
+          </div>
+
+          {filtered.length > 0 ? (
+            filtered.map((item, idx) => {
+              const isSelected = selectedList.some(s => s.toLowerCase() === item.toLowerCase());
+              return (
+                <div
+                  key={idx}
+                  onClick={() => toggleSelect(item)}
+                  style={{
+                    padding: '9px 14px',
+                    fontSize: '0.84rem',
+                    fontWeight: isSelected ? 800 : 500,
+                    color: isSelected ? '#0369a1' : '#0f172a',
+                    background: isSelected ? '#f0f9ff' : '#ffffff',
+                    cursor: 'pointer',
+                    borderBottom: idx !== filtered.length - 1 ? '1px solid #f1f5f9' : 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    transition: 'all 0.1s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.background = '#e0f2fe';
+                      e.currentTarget.style.color = '#0284c7';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.background = '#ffffff';
+                      e.currentTarget.style.color = '#0f172a';
+                    }
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, paddingRight: '8px' }}>
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => {}}
+                      style={{ cursor: 'pointer', accentColor: '#0284c7', width: '15px', height: '15px' }}
+                    />
+                    <span>{item}</span>
+                  </div>
+                  {isSelected && <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7' }}>Seleccionado</span>}
+                </div>
+              );
+            })
+          ) : (
+            <div style={{ padding: '14px', textAlign: 'center', color: '#64748b', fontSize: '0.82rem' }}>
+              {searchTerm ? 'No se encontraron colegios con esa búsqueda' : 'No hay colegios disponibles en este distrito'}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   const [formData, setFormData] = useState({
     nombres_apellidos: '',
@@ -200,15 +468,17 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
   const [localesVota, setLocalesVota] = useState([]);
   const [localesAsignados, setLocalesAsignados] = useState([]);
+  const [assignedLocalesAsignados, setAssignedLocalesAsignados] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [fieldErrors, setFieldErrors] = useState({});
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   const isCoordinadorLocal = formData.rol_electoral === 'Coordinador de Local';
+  const isCoordinadorZonal = formData.rol_electoral === 'Coordinador Zonal';
   const isCoordinadorDistrital = formData.rol_electoral === 'Coordinador de Distritos';
   const isPersoneroMesa = formData.rol_electoral === 'Personero de Mesa';
-  const isCoordinador = isCoordinadorLocal || isCoordinadorDistrital;
+  const isCoordinador = isCoordinadorLocal || isCoordinadorZonal || isCoordinadorDistrital;
 
   // Carga dinámica de colegios desde dbo.mesas / dbo.colegios en SQL Server para Sección 2
   useEffect(() => {
@@ -225,10 +495,17 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   useEffect(() => {
     if (formData.distrito_asignado && !isCoordinadorDistrital) {
       api.getLocales(formData.distrito_asignado)
-        .then(res => setLocalesAsignados(res.data || []))
-        .catch(() => setLocalesAsignados([]));
+        .then(res => {
+          setLocalesAsignados(res.data || []);
+          setAssignedLocalesAsignados(res.assignedLocales || []);
+        })
+        .catch(() => {
+          setLocalesAsignados([]);
+          setAssignedLocalesAsignados([]);
+        });
     } else {
       setLocalesAsignados([]);
+      setAssignedLocalesAsignados([]);
     }
   }, [formData.distrito_asignado, isCoordinadorDistrital]);
 
@@ -389,6 +666,27 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   }, [isCoordinadorLocal, formData.distrito_asignado, formData.rol_electoral]);
 
   useEffect(() => {
+    if (isCoordinadorZonal && formData.distrito_asignado && formData.local_asignado) {
+      api.checkAvailability({ rol: formData.rol_electoral, distrito: formData.distrito_asignado, local: formData.local_asignado })
+        .then(res => {
+          if (res && res.available === false) {
+            setFieldErrors(prev => ({ ...prev, local_asignado: res.message }));
+          } else {
+            setFieldErrors(prev => {
+              if (prev.local_asignado && prev.local_asignado.includes('asignado')) {
+                const copy = { ...prev };
+                delete copy.local_asignado;
+                return copy;
+              }
+              return prev;
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isCoordinadorZonal, formData.distrito_asignado, formData.local_asignado, formData.rol_electoral]);
+
+  useEffect(() => {
     if (isCoordinadorDistrital && formData.distrito_asignado) {
       api.checkAvailability({ rol: formData.rol_electoral, distrito: formData.distrito_asignado })
         .then(res => {
@@ -476,7 +774,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       rol_electoral: role,
       mesa_asignada: role === 'Personero de Mesa' 
         ? (prev.mesa_asignada === 'No aplica (Coordinador)' || prev.mesa_asignada === 'No aplica' || prev.mesa_asignada === '-' ? '' : prev.mesa_asignada)
-        : (role === 'Coordinador de Distritos' ? 'No aplica' : 'No aplica (Coordinador)'),
+        : (role === 'Coordinador de Distritos' || role === 'Coordinador Zonal' ? 'No aplica' : 'No aplica (Coordinador)'),
       local_asignado: role === 'Coordinador de Distritos' 
         ? 'No aplica' 
         : (prev.local_asignado === 'No aplica' ? '' : prev.local_asignado)
@@ -536,7 +834,9 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     }
 
     if (formData.rol_electoral !== 'Coordinador de Distritos' && (!formData.local_asignado || formData.local_asignado.trim() === '' || formData.local_asignado === 'No aplica')) {
-      errors.local_asignado = 'Seleccione el local de votación asignado.';
+      errors.local_asignado = formData.rol_electoral === 'Coordinador Zonal'
+        ? 'Debe seleccionar al menos un colegio o local de votación asignado.'
+        : 'Seleccione el local de votación asignado.';
     }
 
     // 4. Compromiso y Logística
@@ -1005,15 +1305,16 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
               <span>ROL Y ASIGNACIÓN ELECTORAL</span>
             </div>
 
-            {/* Selector de Roles: 3 Botones */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))', gap: '8px', marginBottom: '12px' }}>
+            {/* Selector de Roles: 4 Botones Simétricos en cuadrícula 2x2 */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
               <button
                 type="button"
                 onClick={() => handleRoleChange('Personero de Mesa')}
                 style={{
-                  padding: '10px 4px',
-                  borderRadius: '8px',
-                  border: isPersoneroMesa ? '1px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  minHeight: '44px',
+                  padding: '10px 8px',
+                  borderRadius: '10px',
+                  border: isPersoneroMesa ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
                   background: isPersoneroMesa ? 'rgb(14, 165, 233)' : '#ffffff',
                   color: isPersoneroMesa ? '#ffffff' : '#334155',
                   fontWeight: 800,
@@ -1022,13 +1323,13 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '5px',
+                  gap: '6px',
                   transform: isPersoneroMesa ? 'scale(0.99)' : 'scale(1)',
                   boxShadow: isPersoneroMesa ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
-                <Shield className="w-3.5 h-3.5 flex-shrink-0" />
+                <Shield className="w-4 h-4 flex-shrink-0" />
                 <span>Personero de Mesa</span>
               </button>
 
@@ -1036,9 +1337,10 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 type="button"
                 onClick={() => handleRoleChange('Coordinador de Local')}
                 style={{
-                  padding: '10px 4px',
-                  borderRadius: '8px',
-                  border: isCoordinadorLocal ? '1px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  minHeight: '44px',
+                  padding: '10px 8px',
+                  borderRadius: '10px',
+                  border: isCoordinadorLocal ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
                   background: isCoordinadorLocal ? 'rgb(14, 165, 233)' : '#ffffff',
                   color: isCoordinadorLocal ? '#ffffff' : '#334155',
                   fontWeight: 800,
@@ -1047,23 +1349,50 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '5px',
+                  gap: '6px',
                   transform: isCoordinadorLocal ? 'scale(0.99)' : 'scale(1)',
                   boxShadow: isCoordinadorLocal ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
-                <School className="w-3.5 h-3.5 flex-shrink-0" />
+                <School className="w-4 h-4 flex-shrink-0" />
                 <span>Coordinador de Local</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRoleChange('Coordinador Zonal')}
+                style={{
+                  minHeight: '44px',
+                  padding: '10px 8px',
+                  borderRadius: '10px',
+                  border: isCoordinadorZonal ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  background: isCoordinadorZonal ? 'rgb(14, 165, 233)' : '#ffffff',
+                  color: isCoordinadorZonal ? '#ffffff' : '#334155',
+                  fontWeight: 800,
+                  fontSize: '0.78rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  transform: isCoordinadorZonal ? 'scale(0.99)' : 'scale(1)',
+                  boxShadow: isCoordinadorZonal ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                <Layers className="w-4 h-4 flex-shrink-0" />
+                <span>Coordinador Zonal</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleRoleChange('Coordinador de Distritos')}
                 style={{
-                  padding: '10px 4px',
-                  borderRadius: '8px',
-                  border: isCoordinadorDistrital ? '1px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
+                  minHeight: '44px',
+                  padding: '10px 8px',
+                  borderRadius: '10px',
+                  border: isCoordinadorDistrital ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
                   background: isCoordinadorDistrital ? 'rgb(14, 165, 233)' : '#ffffff',
                   color: isCoordinadorDistrital ? '#ffffff' : '#334155',
                   fontWeight: 800,
@@ -1072,13 +1401,13 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '5px',
+                  gap: '6px',
                   transform: isCoordinadorDistrital ? 'scale(0.99)' : 'scale(1)',
                   boxShadow: isCoordinadorDistrital ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
-                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                <MapPin className="w-4 h-4 flex-shrink-0" />
                 <span>Coordinador de Distritos</span>
               </button>
             </div>
@@ -1103,6 +1432,52 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   errorMsg={fieldErrors.distrito_asignado}
                 />
               </div>
+            ) : isCoordinadorZonal ? (
+              /* Caso Coordinador Zonal: Solo Distrito y Colegios Asignados (Múltiples) */
+              <>
+                <div className="form-group" style={{ marginBottom: '12px' }}>
+                  <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                    Distrito Asignado <span style={{ color: '#ef4444' }}>*</span>
+                  </label>
+                  <CustomSearchableSelect
+                    id="field-distrito_asignado"
+                    name="distrito_asignado"
+                    value={formData.distrito_asignado}
+                    onChange={handleChange}
+                    options={DISTRITOS_LIMA}
+                    placeholder="Seleccione Distrito de la Zona"
+                    icon={MapPin}
+                    required
+                    hasError={!!fieldErrors.distrito_asignado}
+                    errorMsg={fieldErrors.distrito_asignado}
+                  />
+                </div>
+
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                    <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700, margin: 0 }}>
+                      Colegios / Locales de la Zona <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 700 }}>
+                      (Escoger de 1 a más colegios)
+                    </span>
+                  </div>
+                  <MultiSearchableSelect
+                    id="field-local_asignado"
+                    name="local_asignado"
+                    value={formData.local_asignado}
+                    onChange={handleChange}
+                    options={localesAsignados}
+                    assignedOptions={assignedLocalesAsignados}
+                    placeholder={formData.distrito_asignado ? `Escribir o seleccionar colegios en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
+                    icon={School}
+                    required
+                    disabled={!formData.distrito_asignado}
+                    hasError={!!fieldErrors.local_asignado}
+                    errorMsg={fieldErrors.local_asignado}
+                  />
+                </div>
+              </>
             ) : (
               /* Caso Personero de Mesa o Coordinador de Local */
               <>
@@ -1491,7 +1866,18 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Distrito Asignado</span>
                     <strong style={{ color: '#0f172a' }}>{formData.distrito_asignado}</strong>
                   </div>
-                  {!isCoordinadorDistrital && (
+                  {isCoordinadorZonal ? (
+                    <div style={{ gridColumn: 'span 2' }}>
+                      <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Colegios Asignados ({formData.local_asignado ? formData.local_asignado.split(',').length : 0})</span>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px' }}>
+                        {(formData.local_asignado || '').split(',').map((sch, i) => (
+                          <span key={i} style={{ background: '#0284c7', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>
+                            {sch.trim()}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : !isCoordinadorDistrital ? (
                     <>
                       <div>
                         <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Mesa Asignada</span>
@@ -1504,7 +1890,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                         <strong style={{ color: '#0f172a' }}>{formData.local_asignado}</strong>
                       </div>
                     </>
-                  )}
+                  ) : null}
                 </div>
               </div>
 

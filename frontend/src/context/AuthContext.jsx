@@ -112,19 +112,22 @@ export function AuthProvider({ children }) {
     rolName.includes('distrito') ||
     rolName.includes('distrital')
   );
-  const isCoordinadorLocal = !isSuperAdmin && !isCoordinadorDistrital && (
+  const isCoordinadorZonal = !isSuperAdmin && !isCoordinadorDistrital && (
+    Boolean(user?.isCoordinadorZonal) ||
+    rolName.includes('zonal') ||
+    rolName.includes('zona')
+  );
+  const isCoordinadorLocal = !isSuperAdmin && !isCoordinadorDistrital && !isCoordinadorZonal && (
     Boolean(user?.isCoordinadorLocal) ||
     rolName.includes('local') ||
     (rolName.includes('coordinador') && !rolName.includes('central'))
   );
-  const isCoordinador = isCoordinadorDistrital || isCoordinadorLocal || (!isSuperAdmin && role === 'coordinador');
+  const isCoordinador = isCoordinadorDistrital || isCoordinadorZonal || isCoordinadorLocal || (!isSuperAdmin && role === 'coordinador');
   const isPersonero = !isSuperAdmin && !isCoordinador;
 
   const quizStatus = String(user?.Preguntas ?? user?.preguntas ?? user?.['Evaluación Estado'] ?? user?.evaluacionEstado ?? '').toLowerCase().trim();
   const credStatus = String(user?.Credenciales ?? user?.credenciales ?? user?.['Estado Credencial'] ?? user?.estadoCredencial ?? '').toLowerCase().trim();
   const isEvaluationApproved = credStatus === 'confirmado' || quizStatus.includes('aprob') || quizStatus.includes('pasad');
-
-
 
   return (
     <AuthContext.Provider value={{
@@ -135,6 +138,7 @@ export function AuthProvider({ children }) {
       isSuperAdmin,
       isCoordinador,
       isCoordinadorDistrital,
+      isCoordinadorZonal,
       isCoordinadorLocal,
       isPersonero,
       isEvaluationApproved,

@@ -59,8 +59,9 @@ export class LoginUseCase {
         const tblName = String(match.tableName || '').toLowerCase();
         const rolLower = String(entity.rolADesempenar || '').toLowerCase();
         const isCoordDistrital = tblName.includes('coordinadoresd') || tblName.includes('coodinadoresd') || rolLower.includes('distrito') || rolLower.includes('distrital');
-        const isCoordLocal = !isCoordDistrital && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
-        const isCoord = isCoordDistrital || isCoordLocal;
+        const isCoordZonal = !isCoordDistrital && (tblName.includes('coordinadorz') || tblName.includes('coordinadoresz') || rolLower.includes('zonal') || rolLower.includes('zona'));
+        const isCoordLocal = !isCoordDistrital && !isCoordZonal && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
+        const isCoord = isCoordDistrital || isCoordZonal || isCoordLocal;
         const userRole = isCoord ? ROLES.COORDINADOR : ROLES.PERSONERO_REGISTRADO;
         const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
         const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
@@ -115,6 +116,7 @@ export class LoginUseCase {
             localAsignado: localAsig,
             isCoordinador: isCoord,
             isCoordinadorDistrital: isCoordDistrital,
+            isCoordinadorZonal: isCoordZonal,
             isCoordinadorLocal: isCoordLocal
           }
         };
@@ -132,8 +134,9 @@ export class LoginUseCase {
           const tblName = String(match.tableName || '').toLowerCase();
           const rolLower = String(entity.rolADesempenar || '').toLowerCase();
           const isCoordDistrital = tblName.includes('coordinadoresd') || tblName.includes('coodinadoresd') || rolLower.includes('distrito') || rolLower.includes('distrital');
-          const isCoordLocal = !isCoordDistrital && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
-          const isCoord = isCoordDistrital || isCoordLocal;
+          const isCoordZonal = !isCoordDistrital && (tblName.includes('coordinadorz') || tblName.includes('coordinadoresz') || rolLower.includes('zonal') || rolLower.includes('zona'));
+          const isCoordLocal = !isCoordDistrital && !isCoordZonal && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
+          const isCoord = isCoordDistrital || isCoordZonal || isCoordLocal;
           const userRole = isCoord ? ROLES.COORDINADOR : ROLES.PERSONERO_REGISTRADO;
           const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
           const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
@@ -177,6 +180,7 @@ export class LoginUseCase {
               localAsignado: localAsig,
               isCoordinador: isCoord,
               isCoordinadorDistrital: isCoordDistrital,
+              isCoordinadorZonal: isCoordZonal,
               isCoordinadorLocal: isCoordLocal
             }
           };

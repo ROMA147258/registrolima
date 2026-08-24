@@ -93,6 +93,35 @@ export class PostgresPersoneroRepository {
           token_verificacion VARCHAR(100)
         );
       `);
+
+      // 4. Tabla rcoordinadorz (Coordinador Zonal)
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS rcoordinadorz (
+          id SERIAL PRIMARY KEY,
+          fecha_de_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          nombres_y_apellidos VARCHAR(255) NOT NULL,
+          dni VARCHAR(20) NOT NULL UNIQUE,
+          celular VARCHAR(50),
+          correo_electronico VARCHAR(255),
+          usa_whatsapp_en_su_celular VARCHAR(255) DEFAULT 'Sí',
+          numero_whatsapp_alterno VARCHAR(50),
+          distrito_donde_vota VARCHAR(100),
+          mesa_de_sufragio VARCHAR(50),
+          local_de_votacion VARCHAR(255),
+          rol_a_desempenar VARCHAR(100) DEFAULT 'Coordinador Zonal',
+          distrito_asignado VARCHAR(100),
+          mesa_asignada VARCHAR(50) DEFAULT 'No aplica',
+          local_de_votacion_asignado TEXT,
+          tiene_experiencia_como_personero VARCHAR(50) DEFAULT 'No',
+          cuenta_con_movilidad_propia VARCHAR(50) DEFAULT 'No',
+          se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones VARCHAR(500) DEFAULT 'Sí, me comprometo el 4 de Octubre del 2026',
+          video INT DEFAULT 0,
+          pdf INT DEFAULT 0,
+          preguntas VARCHAR(50) DEFAULT 'Pendiente',
+          credenciales VARCHAR(50) DEFAULT 'Bloqueado',
+          token_verificacion VARCHAR(100)
+        );
+      `);
     } catch (err) {
       console.warn('Advertencia asegurando tablas de PostgreSQL:', err.message);
     }
@@ -154,7 +183,15 @@ export class PostgresPersoneroRepository {
       }
     } catch {}
 
-    // 2. Coordinadores de Local
+    // 2. Coordinadores Zonales
+    try {
+      const resZ = await pool.query('SELECT * FROM rcoordinadorz WHERE dni = $1 LIMIT 1', [cleanDni]);
+      if (resZ.rows.length > 0) {
+        return { entity: this.mapRowToEntity(resZ.rows[0], true), tableName: 'rcoordinadorz' };
+      }
+    } catch {}
+
+    // 3. Coordinadores de Local
     try {
       const resC = await pool.query('SELECT * FROM rcoordinadores WHERE dni = $1 LIMIT 1', [cleanDni]);
       if (resC.rows.length > 0) {
@@ -162,7 +199,7 @@ export class PostgresPersoneroRepository {
       }
     } catch {}
 
-    // 3. Personeros de Mesa
+    // 4. Personeros de Mesa
     try {
       const resP = await pool.query('SELECT * FROM rpersoneros WHERE dni = $1 LIMIT 1', [cleanDni]);
       if (resP.rows.length > 0) {
@@ -181,6 +218,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];
@@ -212,6 +250,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];
@@ -239,6 +278,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];
@@ -265,6 +305,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];
@@ -329,6 +370,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];
@@ -356,6 +398,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];
@@ -417,6 +460,49 @@ export class PostgresPersoneroRepository {
     return parseInt(res.rows[0]?.count || 0, 10);
   }
 
+  async getAssignedLocalesByDistrito(distritoAsignado, excludeDni = null) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDist = String(distritoAsignado || '').trim().toLowerCase();
+    if (!cleanDist) return [];
+
+    const assignedSet = new Set();
+
+    // 1. Locales de Coordinadores Zonales
+    try {
+      let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadorz WHERE LOWER(TRIM(distrito_asignado)) = $1`;
+      const paramsZ = [cleanDist];
+      if (excludeDni) {
+        qZonal += ` AND TRIM(dni) != $2`;
+        paramsZ.push(String(excludeDni).trim());
+      }
+      const resZ = await pool.query(qZonal, paramsZ);
+      resZ.rows.forEach(r => {
+        const val = r.local_de_votacion_asignado || '';
+        val.split(',').map(s => s.trim()).filter(Boolean).forEach(loc => assignedSet.add(loc));
+      });
+    } catch {}
+
+    // 2. Locales de Coordinadores de Local
+    try {
+      let qLocal = `SELECT local_de_votacion_asignado FROM rcoordinadores WHERE LOWER(TRIM(distrito_asignado)) = $1`;
+      const paramsL = [cleanDist];
+      if (excludeDni) {
+        qLocal += ` AND TRIM(dni) != $2`;
+        paramsL.push(String(excludeDni).trim());
+      }
+      const resL = await pool.query(qLocal, paramsL);
+      resL.rows.forEach(r => {
+        const val = (r.local_de_votacion_asignado || '').trim();
+        if (val && val.toLowerCase() !== 'no aplica') {
+          assignedSet.add(val);
+        }
+      });
+    } catch {}
+
+    return Array.from(assignedSet);
+  }
+
   async save(personeroOrCoordinador) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
@@ -424,7 +510,9 @@ export class PostgresPersoneroRepository {
     const rol = String(data.rolADesempenar || '').toLowerCase();
 
     let tableName = 'rpersoneros';
-    if (rol.includes('distrito') || rol.includes('distrital')) {
+    if (rol.includes('zonal') || rol.includes('zona')) {
+      tableName = 'rcoordinadorz';
+    } else if (rol.includes('distrito') || rol.includes('distrital')) {
       tableName = 'rcoordinadoresd';
     } else if (rol.includes('coordinador') || rol.includes('local')) {
       tableName = 'rcoordinadores';
@@ -464,7 +552,7 @@ export class PostgresPersoneroRepository {
       data.distritoDondeVota || '',
       data.mesaDeSufragio || '',
       data.localDeVotacion || '',
-      data.rolADesempenar || (tableName === 'rcoordinadoresd' ? 'Coordinador de Distritos' : (tableName === 'rcoordinadores' ? 'Coordinador de Local' : 'Personero de Mesa')),
+      data.rolADesempenar || (tableName === 'rcoordinadorz' ? 'Coordinador Zonal' : (tableName === 'rcoordinadoresd' ? 'Coordinador de Distritos' : (tableName === 'rcoordinadores' ? 'Coordinador de Local' : 'Personero de Mesa'))),
       data.distritoAsignado || data.distritoDondeVota || '',
       data.mesaAsignada || (tableName === 'rpersoneros' ? '-' : 'No aplica'),
       data.localDeVotacionAsignado || (tableName === 'rcoordinadoresd' ? 'No aplica' : data.localDeVotacion || ''),
@@ -564,6 +652,7 @@ export class PostgresPersoneroRepository {
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
     ];

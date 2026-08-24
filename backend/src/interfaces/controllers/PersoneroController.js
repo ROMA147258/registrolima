@@ -118,7 +118,7 @@ export class PersoneroController {
       }
 
       // 7. Validar Coordinador de Local: Máximo 2 por cada distrito
-      if (distrito && (cleanRol.includes('local') || (cleanRol.includes('coordinador') && !cleanRol.includes('distrito')))) {
+      if (distrito && (cleanRol === 'coordinador de local' || (cleanRol.includes('local') && !cleanRol.includes('zonal')))) {
         const countDist = await this.personeroRepo.countCoordinadoresByDistrito(distrito);
         if (countDist >= 2) {
           return res.json({
@@ -140,6 +140,22 @@ export class PersoneroController {
             field: 'distrito_asignado',
             message: `El distrito de '${distrito}' ya cuenta con su Coordinador de Distritos.`
           });
+        }
+      }
+
+      // 9. Validar Colegios Asignados para Coordinador Zonal
+      if (distrito && local && (cleanRol.includes('zonal') || cleanRol.includes('zona'))) {
+        const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distrito);
+        const selectedSchools = String(local).split(',').map(s => s.trim()).filter(Boolean);
+        for (const sch of selectedSchools) {
+          if (assignedLocales.some(al => al.toLowerCase() === sch.toLowerCase())) {
+            return res.json({
+              status: 'success',
+              available: false,
+              field: 'local_asignado',
+              message: `El colegio '${sch}' ya se encuentra asignado a otro Coordinador Zonal en ${distrito}.`
+            });
+          }
         }
       }
 

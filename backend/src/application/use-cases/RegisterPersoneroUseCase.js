@@ -68,7 +68,22 @@ export class RegisterPersoneroUseCase {
     }
 
     // 6. VALIDACIONES DE CUPO SEGÚN EL ROL SELECCIONADO
-    if (rolNorm.includes('distrito') || rolNorm.includes('distrital')) {
+    if (rolNorm.includes('zonal') || rolNorm.includes('zona')) {
+      // Coordinador Zonal: Validación de colegios asignados (no duplicar colegios en el mismo distrito)
+      if (!localAsig || localAsig.trim() === '' || localAsig.toLowerCase() === 'no aplica') {
+        throw new Error('Debe seleccionar al menos un colegio o local de votación asignado.');
+      }
+      if (distAsig) {
+        const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distAsig);
+        const selectedSchools = String(localAsig).split(',').map(s => s.trim()).filter(Boolean);
+        for (const sch of selectedSchools) {
+          const isTaken = assignedLocales.some(al => al.toLowerCase() === sch.toLowerCase());
+          if (isTaken) {
+            throw new Error(`El colegio '${sch}' ya se encuentra asignado a otro Coordinador Zonal en ${distAsig}.`);
+          }
+        }
+      }
+    } else if (rolNorm.includes('distrito') || rolNorm.includes('distrital')) {
       // Coordinador de Distritos: Máximo 1 usuario por distrito asignado
       if (distAsig) {
         const countDist = await this.personeroRepo.countCoordinadoresDistritales(distAsig);

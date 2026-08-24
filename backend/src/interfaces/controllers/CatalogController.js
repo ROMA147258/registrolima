@@ -3,13 +3,15 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dbPool } from '../../infrastructure/database/ConnectionPool.js';
 import { DISTRITOS_LIMA, DISTRITO_METAS, ELECTORAL_ROLES } from '../../config/constants.js';
+import { PostgresPersoneroRepository } from '../../infrastructure/repositories/PostgresPersoneroRepository.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export class CatalogController {
-  constructor() {
+  constructor(personeroRepository = null) {
     this.localesCache = null;
+    this.personeroRepo = personeroRepository || new PostgresPersoneroRepository();
   }
 
   loadLocales() {
@@ -139,11 +141,23 @@ export class CatalogController {
   }
 
   async getLocales(req, res) {
-    const { distrito } = req.query;
+    const { distrito, excludeAssigned } = req.query;
 
     if (distrito) {
       const variants = this.getDistrictVariants(distrito);
       const norm = this.normalizeDistrict(distrito);
+      let assignedLocales = [];
+
+      try {
+        assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distrito);
+      } catch (e) {
+        console.warn('No se pudieron obtener los locales asignados:', e.message);
+      }
+
+      const isAssigned = (locName) => {
+        const clean = String(locName || '').trim().toLowerCase();
+        return assignedLocales.some(al => String(al).trim().toLowerCase() === clean);
+      };
 
       // 1. Consultar en tabla mesas de PostgreSQL agrupado por colegio
       try {
@@ -169,9 +183,19 @@ export class CatalogController {
         const dbResultMesas = await pool.query(queryMesas, variants.map(v => v.toUpperCase()));
 
         if (dbResultMesas && dbResultMesas.rows && dbResultMesas.rows.length > 0) {
-          const list = dbResultMesas.rows.map(r => r.colegio).filter(Boolean);
+          let list = dbResultMesas.rows.map(r => r.colegio).filter(Boolean);
+          if (excludeAssigned === 'true' || excludeAssigned === true) {
+            list = list.filter(l => !isAssigned(l));
+          }
           const fullData = dbResultMesas.rows;
-          return res.json({ status: 'success', distrito, data: list, fullDetails: fullData, source: 'mesas' });
+          return res.json({
+            status: 'success',
+            distrito,
+            data: list,
+            assignedLocales,
+            fullDetails: fullData,
+            source: 'mesas'
+          });
         }
       } catch (err) {
         console.warn('Consulta en tabla mesas falló, usando catálogo local:', err.message);
@@ -179,14 +203,24 @@ export class CatalogController {
 
       // 2. Fallback al catálogo unificado local
       const locales = this.loadLocales();
-      const list = locales[norm] ||
-                   locales[distrito.trim().toUpperCase()] ||
-                   locales[norm.replace('LIMA', 'CERCADO DE LIMA')] ||
-                   locales[norm.replace('CERCADO DE LIMA', 'LIMA')] ||
-                   locales[norm.replace('LURIGANCHO', 'LURIGANCHO-CHOSICA')] ||
-                   [];
+      let list = locales[norm] ||
+                 locales[distrito.trim().toUpperCase()] ||
+                 locales[norm.replace('LIMA', 'CERCADO DE LIMA')] ||
+                 locales[norm.replace('CERCADO DE LIMA', 'LIMA')] ||
+                 locales[norm.replace('LURIGANCHO', 'LURIGANCHO-CHOSICA')] ||
+                 [];
 
-      return res.json({ status: 'success', distrito, data: list, source: 'unifiedCatalogFallback' });
+      if (excludeAssigned === 'true' || excludeAssigned === true) {
+        list = list.filter(l => !isAssigned(l));
+      }
+
+      return res.json({
+        status: 'success',
+        distrito,
+        data: list,
+        assignedLocales,
+        source: 'unifiedCatalogFallback'
+      });
     }
 
     // Si no se especifica distrito, retornar todos los locales

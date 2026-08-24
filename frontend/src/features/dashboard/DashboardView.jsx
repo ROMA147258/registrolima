@@ -3,7 +3,7 @@ import {
   LayoutGrid, GraduationCap, Cable, RefreshCw, LogOut, Moon, Sun,
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
   FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
-  AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School
+  AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School, Layers, Building2
 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -46,7 +46,7 @@ function matchesLocal(recordLocal, filterLocal) {
   return normRec === normFilt || normRec.includes(normFilt) || normFilt.includes(normRec);
 }
 
-// Helper de roles (3 roles oficiales: Personero de Mesa, Coordinador de Local y Coordinador de Distritos)
+// Helper de roles (Personero de Mesa, Coordinador de Local, Coordinador Zonal y Coordinador de Distritos)
 function matchesRole(recordRole, filterRole) {
   if (!filterRole || filterRole === 'all') return true;
   if (!recordRole) return false;
@@ -56,11 +56,14 @@ function matchesRole(recordRole, filterRole) {
   if (f.includes('distrito') || f.includes('distrital')) {
     return r.includes('distrito') || r.includes('distrital');
   }
+  if (f.includes('zonal') || f.includes('zona')) {
+    return r.includes('zonal') || r.includes('zona');
+  }
   if (f.includes('local')) {
-    return r.includes('local') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
+    return (r.includes('local') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal') && !r.includes('zona'))) && !r.includes('zonal');
   }
   if (f.includes('mesa') || f.includes('personero')) {
-    return r.includes('mesa') || (!r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
+    return r.includes('mesa') || (!r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal'));
   }
   return r === f || r.includes(f);
 }
@@ -115,7 +118,7 @@ function getComp(r) {
 }
 
 export function DashboardView({ onGoToTraining }) {
-  const { user, isCoordinador, isCoordinadorDistrital, isCoordinadorLocal, isSuperAdmin, logout } = useAuth();
+  const { user, isCoordinador, isCoordinadorDistrital, isCoordinadorZonal, isCoordinadorLocal, isSuperAdmin, logout } = useAuth();
   const { toggleTheme, isDark } = useTheme();
 
   // Detección de pantalla móvil (< 768px)
@@ -136,6 +139,13 @@ export function DashboardView({ onGoToTraining }) {
     return user?.['Local de Votación Asignado'] || user?.localAsignado || user?.['Local de Votación'] || '';
   }, [isCoordinadorLocal, user]);
 
+  // Lista de colegios asignados para Coordinador Zonal
+  const coordinatorZonalLocales = useMemo(() => {
+    if (!isCoordinadorZonal) return [];
+    const raw = user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.localAsignado || '';
+    return raw.split(',').map(s => s.trim()).filter(Boolean);
+  }, [isCoordinadorZonal, user]);
+
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'capacitacion', 'sql'
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -144,6 +154,7 @@ export function DashboardView({ onGoToTraining }) {
   // Filtros Tab 1 (Panel General)
   const [search1, setSearch1] = useState('');
   const [dist1, setDist1] = useState(() => (coordinatorDistrict ? coordinatorDistrict : 'all'));
+  const [localZonal1, setLocalZonal1] = useState('all');
   const [role1, setRole1] = useState('all');
   const [exp1, setExp1] = useState('all');
   const [mov1, setMov1] = useState('all');
@@ -153,6 +164,7 @@ export function DashboardView({ onGoToTraining }) {
   const [search2, setSearch2] = useState('');
   const [status2, setStatus2] = useState('all');
   const [dist2, setDist2] = useState(() => (coordinatorDistrict ? coordinatorDistrict : 'all'));
+  const [localZonal2, setLocalZonal2] = useState('all');
   const [role2, setRole2] = useState('all');
 
   useEffect(() => {
@@ -221,8 +233,9 @@ export function DashboardView({ onGoToTraining }) {
 
   // Filtrado de seguridad según rol:
   // 1) Coordinador de Local: solo ve los personeros asignados a su colegio y distrito
-  // 2) Coordinador de Distrito: ve todos los coordinadores de local y personeros de su distrito
-  // 3) SuperAdmin: ve todos los distritos de Lima
+  // 2) Coordinador Zonal: solo ve los colegios de su zona y sus coordinadores locales y personeros
+  // 3) Coordinador de Distrito: ve todos los coordinadores de local y personeros de su distrito
+  // 4) SuperAdmin: ve todos los distritos de Lima
   const records = useMemo(() => {
     if (isCoordinadorLocal && coordinatorDistrict && coordinatorLocal) {
       return allRecords.filter(r => {
@@ -231,11 +244,21 @@ export function DashboardView({ onGoToTraining }) {
         return matchesDistrict(d, coordinatorDistrict) && matchesLocal(l, coordinatorLocal);
       });
     }
+    if (isCoordinadorZonal && coordinatorDistrict && coordinatorZonalLocales.length > 0) {
+      return allRecords.filter(r => {
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'];
+        const l = r['Local de Votación Asignado'] || r['Local de Votación'];
+        const isSelf = String(r['D.N.I.'] || r['DNI'] || r.dni || '') === String(user?.DNI || user?.dni || user?.['D.N.I.'] || '');
+        if (isSelf) return true;
+        if (!matchesDistrict(d, coordinatorDistrict)) return false;
+        return coordinatorZonalLocales.some(zLocal => matchesLocal(l, zLocal));
+      });
+    }
     if ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict) {
       return allRecords.filter(r => matchesDistrict(r['Distrito Asignado'] || r['Distrito donde Vota'], coordinatorDistrict));
     }
     return allRecords;
-  }, [allRecords, isCoordinadorLocal, isCoordinadorDistrital, isCoordinador, coordinatorDistrict, coordinatorLocal]);
+  }, [allRecords, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital, isCoordinador, coordinatorDistrict, coordinatorLocal, coordinatorZonalLocales, user]);
 
   // =========================================================================
   // DISTRIBUCIÓN DE PERSONEROS Y COORDINADORES POR DISTRITO PARA EL GRÁFICO
@@ -269,6 +292,46 @@ export function DashboardView({ onGoToTraining }) {
   }, [records]);
 
   // =========================================================================
+  // MONITOREO ZONAL: COLEGIOS Y COORDINADORES LOCALES ASIGNADOS A CADA COLEGIO
+  // =========================================================================
+  const zonalSchoolsOverview = useMemo(() => {
+    if (!isCoordinadorZonal || coordinatorZonalLocales.length === 0) return [];
+    
+    return coordinatorZonalLocales.map(schoolName => {
+      // Coordinadores Locales asignados a este colegio específico
+      const schoolCoords = allRecords.filter(r => {
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '';
+        const l = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || '';
+        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+        const isCoordLocal = rol.includes('local') || (rol.includes('coordinador') && !rol.includes('distrito') && !rol.includes('distrital') && !rol.includes('zonal') && !rol.includes('zona'));
+        return matchesDistrict(d, coordinatorDistrict) && matchesLocal(l, schoolName) && isCoordLocal;
+      });
+
+      // Personeros asignados a este colegio específico
+      const schoolPersoneros = allRecords.filter(r => {
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '';
+        const l = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || '';
+        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+        const isPersonero = rol.includes('mesa') || (!rol.includes('coordinador') && !rol.includes('distrito') && !rol.includes('zonal'));
+        return matchesDistrict(d, coordinatorDistrict) && matchesLocal(l, schoolName) && isPersonero;
+      });
+
+      const accreditedPersoneros = schoolPersoneros.filter(p => {
+        const cred = String(p['Credenciales'] || p.credenciales || '').toLowerCase();
+        const preg = String(p['Preguntas'] || p.preguntas || '').toLowerCase();
+        return cred === 'confirmado' || preg.includes('aprob') || preg.includes('pasad');
+      });
+
+      return {
+        schoolName,
+        coordinadoresLocales: schoolCoords,
+        personerosCount: schoolPersoneros.length,
+        accreditedCount: accreditedPersoneros.length
+      };
+    });
+  }, [isCoordinadorZonal, coordinatorZonalLocales, allRecords, coordinatorDistrict]);
+
+  // =========================================================================
   // FILTRADO TAB 1 (PANEL GENERAL)
   // =========================================================================
   const filteredRecords1 = useMemo(() => {
@@ -285,14 +348,15 @@ export function DashboardView({ onGoToTraining }) {
 
       const mSearch = !q || dni.includes(q) || name.includes(q) || local.includes(q) || mesa.includes(q) || cel.includes(q) || email.includes(q);
       const mDist = coordinatorDistrict ? matchesDistrict(dist, coordinatorDistrict) : matchesDistrict(dist, dist1);
+      const mLocalZonal = !isCoordinadorZonal || localZonal1 === 'all' || matchesLocal(local, localZonal1);
       const mRole = matchesRole(rol, role1);
       const mExp = exp1 === 'all' || (exp1 === 'si' ? getExp(r) === 'Sí' : getExp(r) === 'No');
       const mMov = mov1 === 'all' || (mov1 === 'si' ? getMov(r) === 'Sí' : getMov(r) === 'No');
       const mComp = comp1 === 'all' || (comp1 === 'si' ? getComp(r) === 'Sí' : getComp(r) === 'No');
 
-      return mSearch && mDist && mRole && mExp && mMov && mComp;
+      return mSearch && mDist && mLocalZonal && mRole && mExp && mMov && mComp;
     });
-  }, [records, search1, dist1, role1, exp1, mov1, comp1, coordinatorDistrict]);
+  }, [records, search1, dist1, localZonal1, role1, exp1, mov1, comp1, coordinatorDistrict, isCoordinadorZonal]);
 
   // KPIs dinámicos sobre los registros filtrados de Tab 1
   let tab1Total = filteredRecords1.length;
@@ -318,13 +382,21 @@ export function DashboardView({ onGoToTraining }) {
     if (getComp(r) === 'Sí') tab1Comp++;
   });
 
-  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || role1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
+  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || (isCoordinadorZonal && localZonal1 !== 'all') || role1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
 
   // Meta territorial dinámica según el distrito asignado o seleccionado
   const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
   const selectedDistMeta = activeDistrictName ? (DISTRITO_METAS[activeDistrictName] || 0) : 25397;
-  const targetLabel = isCoordinadorLocal ? `META ${coordinatorLocal.toUpperCase()}` : (activeDistrictName ? `META ${activeDistrictName.toUpperCase()}` : 'AVANCE META TOTAL');
-  const targetSub = isCoordinadorLocal ? `Colegio: ${coordinatorLocal}` : (activeDistrictName ? `Meta distrital: ${selectedDistMeta.toLocaleString()}` : 'Meta Lima: 25,397');
+  const targetLabel = isCoordinadorLocal 
+    ? `META ${coordinatorLocal.toUpperCase()}` 
+    : (isCoordinadorZonal 
+      ? `ZONA • ${coordinatorDistrict.toUpperCase()}` 
+      : (activeDistrictName ? `META ${activeDistrictName.toUpperCase()}` : 'AVANCE META TOTAL'));
+  const targetSub = isCoordinadorLocal 
+    ? `Colegio: ${coordinatorLocal}` 
+    : (isCoordinadorZonal 
+      ? `${coordinatorZonalLocales.length} colegios en tu zona` 
+      : (activeDistrictName ? `Meta distrital: ${selectedDistMeta.toLocaleString()}` : 'Meta Lima: 25,397'));
   const targetPct = selectedDistMeta > 0 ? Math.min(100, ((tab1Total / selectedDistMeta) * 100)).toFixed(1) : '0.0';
 
   // =========================================================================
@@ -411,13 +483,14 @@ export function DashboardView({ onGoToTraining }) {
       const mSearch = !q || dni.includes(q) || name.includes(q) || local.includes(q);
       const mStatus = status2 === 'all' || (status2 === 'confirmado' ? cred === 'confirmado' : cred !== 'confirmado');
       const mDist = coordinatorDistrict ? matchesDistrict(dist, coordinatorDistrict) : matchesDistrict(dist, dist2);
+      const mLocalZonal = !isCoordinadorZonal || localZonal2 === 'all' || matchesLocal(local, localZonal2);
       const mRole = matchesRole(rol, role2);
 
-      return mSearch && mStatus && mDist && mRole;
+      return mSearch && mStatus && mDist && mLocalZonal && mRole;
     });
-  }, [records, search2, status2, dist2, role2, coordinatorDistrict]);
+  }, [records, search2, status2, dist2, localZonal2, role2, coordinatorDistrict, isCoordinadorZonal]);
 
-  const isFiltered2 = search2 !== '' || status2 !== 'all' || (!coordinatorDistrict && dist2 !== 'all') || role2 !== 'all';
+  const isFiltered2 = search2 !== '' || status2 !== 'all' || (!coordinatorDistrict && dist2 !== 'all') || (isCoordinadorZonal && localZonal2 !== 'all') || role2 !== 'all';
 
   let tab2Confirmados = 0;
   let tab2Pendientes = 0;
@@ -734,14 +807,18 @@ export function DashboardView({ onGoToTraining }) {
                 {activeTab === 'overview' && (
                   isCoordinadorLocal && coordinatorLocal
                     ? `Control Electoral • ${coordinatorLocal}`
-                    : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                      ? `Control Electoral • ${coordinatorDistrict}`
-                      : 'Control Electoral y Monitoreo')
+                    : (isCoordinadorZonal
+                      ? `Control Zonal • ${coordinatorDistrict} (${coordinatorZonalLocales.length} Colegios)`
+                      : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                        ? `Control Electoral • ${coordinatorDistrict}`
+                        : 'Control Electoral y Monitoreo'))
                 )}
                 {activeTab === 'capacitacion' && (
-                  (isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                    ? `Capacitaciones • ${coordinatorDistrict}`
-                    : 'Progreso de Capacitaciones'
+                  isCoordinadorZonal
+                    ? `Capacitaciones Zona • ${coordinatorDistrict}`
+                    : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                      ? `Capacitaciones • ${coordinatorDistrict}`
+                      : 'Progreso de Capacitaciones')
                 )}
                 {activeTab === 'sql' && 'Conexión Base de Datos'}
               </h1>
@@ -870,6 +947,143 @@ export function DashboardView({ onGoToTraining }) {
               ========================================================================= */}
           {activeTab === 'overview' && (
             <div>
+
+              {/* SECCIÓN EXCLUSIVA DE MONITOREO ZONAL: COLEGIOS Y COORDINADORES LOCALES DE SU ZONA */}
+              {isCoordinadorZonal && (
+                <div style={{
+                  background: bgCard,
+                  border: `1.5px solid ${isDark ? '#0369a1' : '#bae6fd'}`,
+                  borderRadius: '16px',
+                  padding: '20px',
+                  marginBottom: '20px',
+                  boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.3)' : '0 4px 20px rgba(2, 132, 199, 0.08)'
+                }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                        <div style={{ background: '#0284c7', color: '#fff', padding: '4px 8px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', fontWeight: 800 }}>
+                          <Layers className="w-4 h-4" />
+                          <span>ZONA ASIGNADA</span>
+                        </div>
+                        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: textTitle, margin: 0 }}>
+                          Colegios y Coordinadores Locales de mi Zona
+                        </h2>
+                      </div>
+                      <p style={{ fontSize: '0.82rem', color: textSub, margin: 0 }}>
+                        Distrito de <strong>{coordinatorDistrict}</strong> &bull; Monitoreo de <strong>{coordinatorZonalLocales.length} colegios asignados</strong>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Tarjetas de Colegios de la Zona con sus Coordinadores Locales */}
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))', gap: '14px' }}>
+                    {zonalSchoolsOverview.map((item, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          background: isDark ? '#1e293b' : '#f8fafc',
+                          border: `1px solid ${borderCol}`,
+                          borderRadius: '12px',
+                          padding: '14px 16px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '10px'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.82rem', flexShrink: 0 }}>
+                              {idx + 1}
+                            </div>
+                            <div>
+                              <strong style={{ fontSize: '0.88rem', color: textTitle, display: 'block', lineHeight: 1.25 }}>
+                                {item.schoolName}
+                              </strong>
+                              <span style={{ fontSize: '0.74rem', color: textSub }}>
+                                {item.personerosCount} personeros asignados ({item.accreditedCount} acreditados)
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Coordinadores Locales de este Colegio */}
+                        <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '8px' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '6px' }}>
+                            Coordinador(es) de Local de este colegio:
+                          </span>
+
+                          {item.coordinadoresLocales.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {item.coordinadoresLocales.map((coord, cIdx) => {
+                                const cName = coord['Nombres y Apellidos'] || coord.nombresApellidos || 'Coordinador';
+                                const cDni = coord['D.N.I.'] || coord.dni || '--------';
+                                const cCel = coord['Celular'] || coord.celular || '';
+                                const cPreg = String(coord['Preguntas'] || coord.preguntas || '').toLowerCase();
+                                const cCred = String(coord['Credenciales'] || coord.credenciales || '').toLowerCase();
+                                const isAcred = cCred === 'confirmado' || cPreg.includes('aprob');
+
+                                return (
+                                  <div
+                                    key={cIdx}
+                                    style={{
+                                      background: isDark ? '#0f172a' : '#ffffff',
+                                      border: '1px solid #cbd5e1',
+                                      borderRadius: '8px',
+                                      padding: '8px 10px',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'space-between',
+                                      gap: '8px'
+                                    }}
+                                  >
+                                    <div>
+                                      <div style={{ fontSize: '0.82rem', fontWeight: 800, color: textTitle }}>
+                                        {cName}
+                                      </div>
+                                      <div style={{ fontSize: '0.74rem', color: textSub, display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                        <span>DNI: <strong>{cDni}</strong></span>
+                                        {cCel && <span>Cel: <strong>{cCel}</strong></span>}
+                                      </div>
+                                    </div>
+                                    <span style={{
+                                      padding: '3px 8px',
+                                      borderRadius: '6px',
+                                      fontSize: '0.72rem',
+                                      fontWeight: 800,
+                                      background: isAcred ? '#dcfce7' : '#fef9c3',
+                                      color: isAcred ? '#166534' : '#854d0e',
+                                      whiteSpace: 'nowrap'
+                                    }}>
+                                      {isAcred ? '✅ Acreditado' : '⏳ En Proceso'}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <div style={{
+                              background: isDark ? 'rgba(234, 179, 8, 0.1)' : '#fefce8',
+                              border: '1px solid #fde047',
+                              borderRadius: '8px',
+                              padding: '8px 12px',
+                              fontSize: '0.78rem',
+                              color: isDark ? '#facc15' : '#a16207',
+                              fontWeight: 700,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px'
+                            }}>
+                              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                              <span>Aún no hay Coordinador de Local registrado para este colegio</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Barra de Filtros Limpia */}
               <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '16px 18px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
@@ -920,6 +1134,20 @@ export function DashboardView({ onGoToTraining }) {
                     </select>
                   )}
 
+                  {/* Filtro Colegios para Coordinador Zonal */}
+                  {isCoordinadorZonal && coordinatorZonalLocales.length > 0 && (
+                    <select
+                      value={localZonal1}
+                      onChange={(e) => setLocalZonal1(e.target.value)}
+                      style={{ padding: '8px 12px', borderRadius: '8px', border: localZonal1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: localZonal1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: localZonal1 !== 'all' ? 700 : 500 }}
+                    >
+                      <option value="all">🏫 Todos los Colegios de mi Zona ({coordinatorZonalLocales.length})</option>
+                      {coordinatorZonalLocales.map((school, sIdx) => (
+                        <option key={sIdx} value={school}>{school}</option>
+                      ))}
+                    </select>
+                  )}
+
                   {/* Filtro Local para Coordinador de Local */}
                   {isCoordinadorLocal && coordinatorLocal && (
                     <div style={{
@@ -948,6 +1176,7 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
+                    {!isCoordinadorLocal && <option value="Coordinador Zonal">Coordinador Zonal</option>}
                     {!isCoordinadorLocal && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
                   </select>
 
@@ -1493,6 +1722,20 @@ export function DashboardView({ onGoToTraining }) {
                     </select>
                   )}
 
+                  {/* Filtro Colegios para Coordinador Zonal en Tab 2 */}
+                  {isCoordinadorZonal && coordinatorZonalLocales.length > 0 && (
+                    <select
+                      value={localZonal2}
+                      onChange={(e) => setLocalZonal2(e.target.value)}
+                      style={{ padding: '8px 12px', borderRadius: '8px', border: localZonal2 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: localZonal2 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: localZonal2 !== 'all' ? 700 : 500 }}
+                    >
+                      <option value="all">🏫 Todos los Colegios de mi Zona ({coordinatorZonalLocales.length})</option>
+                      {coordinatorZonalLocales.map((school, sIdx) => (
+                        <option key={sIdx} value={school}>{school}</option>
+                      ))}
+                    </select>
+                  )}
+
                   {/* Filtro Local para Coordinador de Local en Tab 2 */}
                   {isCoordinadorLocal && coordinatorLocal && (
                     <div style={{
@@ -1520,6 +1763,7 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
+                    {!isCoordinadorLocal && <option value="Coordinador Zonal">Coordinador Zonal</option>}
                     {!isCoordinadorLocal && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
                   </select>
 

@@ -8,7 +8,7 @@ import { CredentialCard } from '../accreditation/CredentialCard.jsx';
 import { api } from '../../services/api.js';
 
 export function TrainingView({ onGoToDashboard }) {
-  const { user, logout, updateUserTraining, isCoordinadorLocal, isCoordinadorDistrital } = useAuth();
+  const { user, logout, updateUserTraining, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital } = useAuth();
   const [activeModal, setActiveModal] = useState(null);
   const [viewingCertificate, setViewingCertificate] = useState(false);
 
@@ -27,6 +27,8 @@ export function TrainingView({ onGoToDashboard }) {
   const isPdfDone = pdfCount >= 2 || isConfirmed || isQuizPassed;
   const canTakeQuiz = isVideoDone && isPdfDone;
   const isFullyAccredited = isConfirmed || isQuizPassed || (isVideoDone && isPdfDone);
+
+  const isAnyCoordinador = isCoordinadorDistrital || isCoordinadorZonal || isCoordinadorLocal;
 
   const handleVideoComplete = async () => {
     const dni = user?.['D.N.I.'] || user?.DNI || user?.dni;
@@ -54,11 +56,11 @@ export function TrainingView({ onGoToDashboard }) {
     );
   }
 
-  const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || '00000000';
-  const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || 'Usuario';
-  const distrito = user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || 'Lima';
-  const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || '-';
-  const localAsig = user?.['Local de Votación Asignado'] || user?.localAsignado || user?.['Local de Votación'] || '-';
+  const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || user?.nombres_y_apellidos || 'Personero';
+  const dni = user?.DNI || user?.dni || '--------';
+  const distrito = user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || user?.distritoDondeVota || user?.distrito_asignado || 'Lima';
+  const localAsig = user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.['Local de Votación'] || user?.localDeVotacion || user?.local_de_votacion_asignado || 'Por Asignar';
+  const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || user?.mesaDeSufragio || user?.mesa_asignada || 'No Asignada';
 
   return (
     <div style={{
@@ -74,7 +76,7 @@ export function TrainingView({ onGoToDashboard }) {
         background: '#ffffff',
         borderRadius: '20px',
         width: '100%',
-        maxWidth: '460px',
+        maxWidth: '560px',
         padding: '28px 24px',
         boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
         border: '1px solid #cbd5e1'
@@ -89,7 +91,9 @@ export function TrainingView({ onGoToDashboard }) {
             <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
               {isCoordinadorDistrital
                 ? 'Evaluación y Acreditación de Coordinador de Distritos'
-                : (isCoordinadorLocal ? 'Evaluación y Acreditación de Coordinador de Local' : 'Ficha de Capacitación de Personeros')}
+                : (isCoordinadorZonal
+                  ? 'Evaluación y Acreditación de Coordinador Zonal'
+                  : (isCoordinadorLocal ? 'Evaluación y Acreditación de Coordinador de Local' : 'Ficha de Capacitación de Personeros'))}
             </span>
           </div>
 
@@ -114,8 +118,8 @@ export function TrainingView({ onGoToDashboard }) {
           </button>
         </div>
 
-        {/* Banner Informativo Exclusivo para Coordinadores (Distrital y Local) */}
-        {(isCoordinadorDistrital || isCoordinadorLocal) && (
+        {/* Banner Informativo Exclusivo para Coordinadores */}
+        {isAnyCoordinador && (
           <div style={{
             background: isFullyAccredited ? '#ecfdf5' : '#eff6ff',
             border: isFullyAccredited ? '1.5px solid #10b981' : '1.5px solid #38bdf8',
@@ -125,12 +129,12 @@ export function TrainingView({ onGoToDashboard }) {
             animation: 'fadeIn 0.2s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: isFullyAccredited ? '#047857' : '#0369a1', fontSize: '0.86rem', marginBottom: '4px' }}>
-              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador de Distritos' : 'Coordinador de Local'}</span>
+              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador de Distritos' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Coordinador de Local')}</span>
             </div>
             <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#065f46' : '#334155', lineHeight: 1.45 }}>
               {isFullyAccredited ? (
                 <>
-                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : `tu colegio (${localAsig}) en ${distrito}`}.
+                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu colegio (${localAsig}) en ${distrito}`)}.
                 </>
               ) : (
                 <>
