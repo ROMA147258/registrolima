@@ -57,7 +57,7 @@ export function TrainingView({ onGoToDashboard }) {
   }
 
   const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || user?.nombres_y_apellidos || 'Personero';
-  const dni = user?.DNI || user?.dni || '--------';
+  const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || user?.dni_numero || (user?.tokenVerificacion ? user.tokenVerificacion.split('-').pop() : '') || '--------';
   const distrito = user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || user?.distritoDondeVota || user?.distrito_asignado || 'Lima';
   const localAsig = user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.['Local de Votación'] || user?.localDeVotacion || user?.local_de_votacion_asignado || 'Por Asignar';
   const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || user?.mesaDeSufragio || user?.mesa_asignada || 'No Asignada';
@@ -197,7 +197,12 @@ export function TrainingView({ onGoToDashboard }) {
                 Colegio: {localAsig}
               </span>
             )}
-            {!isCoordinadorDistrital && !isCoordinadorLocal && (
+            {isCoordinadorZonal && (
+              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
+                Zona: {localAsig.split(',').filter(Boolean).length} colegios
+              </span>
+            )}
+            {!isCoordinadorDistrital && !isCoordinadorLocal && !isCoordinadorZonal && (
               <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
                 Mesa: {mesa}
               </span>

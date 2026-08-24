@@ -29,8 +29,13 @@ export const api = {
 
   // Catálogos
   getDistritos: () => request('/distritos'),
-  getRoles: () => request('/roles'),
-  getLocales: (distrito) => request(`/locales${distrito ? `?distrito=${encodeURIComponent(distrito)}` : ''}`),
+  getLocales: (distrito, rol = null) => {
+    const params = new URLSearchParams();
+    if (distrito) params.append('distrito', distrito);
+    if (rol) params.append('rol', rol);
+    const qs = params.toString();
+    return request(`/locales${qs ? `?${qs}` : ''}`);
+  },
 
   // Autenticación
   login: (credentials) => request('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),

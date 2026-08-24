@@ -462,23 +462,57 @@ export class PostgresPersoneroRepository {
     return parseInt(res.rows[0]?.count || 0, 10);
   }
 
-  async getAssignedLocalesByDistrito(distritoAsignado, excludeDni = null) {
+  async getAssignedLocalesByDistrito(distritoAsignado, rol = null, excludeDni = null) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
     const cleanDist = String(distritoAsignado || '').trim().toLowerCase();
     if (!cleanDist) return [];
 
+    const cleanRol = String(rol || '').toLowerCase().trim();
     const assignedSet = new Set();
 
-    // Locales asignados exclusivamente a otros Coordinadores Zonales
+    // 1. Si es Coordinador de Local: consultar colegios ocupados en rcoordinadores
+    if (cleanRol.includes('local') && !cleanRol.includes('zonal')) {
+      try {
+        let qLocal = `SELECT local_de_votacion_asignado FROM rcoordinadores WHERE LOWER(TRIM(distrito_asignado)) = $1`;
+        const paramsL = [cleanDist];
+        if (excludeDni) {
+          qLocal += ` AND TRIM(dni) != $2`;
+          paramsL.push(String(excludeDni).trim());
+        }
+        const resL = await pool.query(qLocal, paramsL);
+        resL.rows.forEach(r => {
+          const val = (r.local_de_votacion_asignado || '').trim();
+          if (val && val.toLowerCase() !== 'no aplica') {
+            assignedSet.add(val);
+          }
+        });
+      } catch {}
+      return Array.from(assignedSet);
+    }
+
+    // 2. Si es Coordinador Zonal: consultar colegios ocupados en rcoordinadoresz
+    if (cleanRol.includes('zonal') || cleanRol.includes('zona')) {
+      try {
+        let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE LOWER(TRIM(distrito_asignado)) = $1`;
+        const paramsZ = [cleanDist];
+        if (excludeDni) {
+          qZonal += ` AND TRIM(dni) != $2`;
+          paramsZ.push(String(excludeDni).trim());
+        }
+        const resZ = await pool.query(qZonal, paramsZ);
+        resZ.rows.forEach(r => {
+          const val = r.local_de_votacion_asignado || '';
+          val.split(',').map(s => s.trim()).filter(Boolean).forEach(loc => assignedSet.add(loc));
+        });
+      } catch {}
+      return Array.from(assignedSet);
+    }
+
+    // 3. Fallback por defecto (Zonales)
     try {
       let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE LOWER(TRIM(distrito_asignado)) = $1`;
-      const paramsZ = [cleanDist];
-      if (excludeDni) {
-        qZonal += ` AND TRIM(dni) != $2`;
-        paramsZ.push(String(excludeDni).trim());
-      }
-      const resZ = await pool.query(qZonal, paramsZ);
+      const resZ = await pool.query(qZonal, [cleanDist]);
       resZ.rows.forEach(r => {
         const val = r.local_de_votacion_asignado || '';
         val.split(',').map(s => s.trim()).filter(Boolean).forEach(loc => assignedSet.add(loc));

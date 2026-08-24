@@ -117,15 +117,15 @@ export class PersoneroController {
         }
       }
 
-      // 7. Validar Coordinador de Local: Máximo 2 por cada distrito
-      if (distrito && (cleanRol === 'coordinador de local' || (cleanRol.includes('local') && !cleanRol.includes('zonal')))) {
-        const countDist = await this.personeroRepo.countCoordinadoresByDistrito(distrito);
-        if (countDist >= 2) {
+      // 7. Validar Coordinador de Local: Máximo 1 por cada colegio
+      if (distrito && local && (cleanRol === 'coordinador de local' || (cleanRol.includes('local') && !cleanRol.includes('zonal')))) {
+        const countLocal = await this.personeroRepo.countCoordinadoresByLocal(distrito, local);
+        if (countLocal >= 1) {
           return res.json({
             status: 'success',
             available: false,
-            field: 'distrito_asignado',
-            message: `Cupo lleno: El distrito de ${distrito} ya cuenta con el límite máximo de 2 Coordinadores de Local.`
+            field: 'local_asignado',
+            message: `Cupo lleno: El colegio '${local}' en ${distrito} ya cuenta con 1 Coordinador de Local asignado.`
           });
         }
       }

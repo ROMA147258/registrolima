@@ -157,12 +157,12 @@ test('Validation Rule 2: Personero de Mesa cannot be assigned to the same mesa t
   );
 });
 
-test('Validation Rule 3: Coordinador de Local allows max 2 per district', async () => {
+test('Validation Rule 3: Coordinador de Local allows strictly 1 per school', async () => {
   const repo = new MockPersoneroRepository();
   const audit = new MockAuditRepository();
   const useCase = new RegisterPersoneroUseCase(repo, audit);
 
-  // Coordinator 1 in Barranco
+  // Coordinator 1 at 'IE Mercedes Indacochea' in Barranco (Allowed)
   await useCase.execute({
     nombres_apellidos: 'Coordinador Local 1',
     dni: '55551111',
@@ -172,30 +172,31 @@ test('Validation Rule 3: Coordinador de Local allows max 2 per district', async 
     local_asignado: 'IE Mercedes Indacochea'
   });
 
-  // Coordinator 2 in Barranco (Allowed)
-  await useCase.execute({
-    nombres_apellidos: 'Coordinador Local 2',
-    dni: '55552222',
-    celular: '955552222',
+  // Coordinator 2 at SAME school 'IE Mercedes Indacochea' in Barranco -> Must fail
+  await assert.rejects(
+    async () => {
+      await useCase.execute({
+        nombres_apellidos: 'Coordinador Local 2',
+        dni: '55552222',
+        celular: '955552222',
+        rol_electoral: 'Coordinador de Local',
+        distrito_asignado: 'Barranco',
+        local_asignado: 'IE Mercedes Indacochea'
+      });
+    },
+    /1 Coordinador de Local asignado/
+  );
+
+  // Coordinator 3 at DIFFERENT school 'IE Corazon de Jesus' in same district Barranco (Allowed)
+  const coord3 = await useCase.execute({
+    nombres_apellidos: 'Coordinador Local 3',
+    dni: '55553333',
+    celular: '955553333',
     rol_electoral: 'Coordinador de Local',
     distrito_asignado: 'Barranco',
     local_asignado: 'IE Corazon de Jesus'
   });
-
-  // Coordinator 3 in Barranco (Exceeds district limit of 2 -> Must fail)
-  await assert.rejects(
-    async () => {
-      await useCase.execute({
-        nombres_apellidos: 'Coordinador Local 3',
-        dni: '55553333',
-        celular: '955553333',
-        rol_electoral: 'Coordinador de Local',
-        distrito_asignado: 'Barranco',
-        local_asignado: 'IE San Martin'
-      });
-    },
-    /límite máximo de 2 Coordinadores de Local/
-  );
+  assert.ok(coord3, 'Coordinador en otro colegio del mismo distrito debe permitirse');
 });
 
 test('Validation Rule 4: Coordinador de Distritos allows strictly 1 user per assigned district', async () => {

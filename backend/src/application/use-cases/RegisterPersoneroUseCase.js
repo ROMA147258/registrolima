@@ -92,11 +92,11 @@ export class RegisterPersoneroUseCase {
         }
       }
     } else if (rolNorm.includes('coordinador') || rolNorm.includes('local')) {
-      // Coordinador de Local: Máximo 2 por cada distrito
-      if (distAsig) {
-        const countLocalDist = await this.personeroRepo.countCoordinadoresByDistrito(distAsig);
-        if (countLocalDist >= 2) {
-          throw new Error(`Cupo lleno: El distrito de ${distAsig} ya cuenta con el límite máximo de 2 Coordinadores de Local.`);
+      // Coordinador de Local: Máximo 1 por cada colegio
+      if (distAsig && localAsig && localAsig.toLowerCase() !== 'no aplica') {
+        const countLocal = await this.personeroRepo.countCoordinadoresByLocal(distAsig, localAsig);
+        if (countLocal >= 1) {
+          throw new Error(`Cupo lleno: El colegio '${localAsig}' en ${distAsig} ya cuenta con 1 Coordinador de Local asignado.`);
         }
       }
     } else {

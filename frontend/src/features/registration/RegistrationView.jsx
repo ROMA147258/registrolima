@@ -494,7 +494,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   // Carga dinámica de colegios desde dbo.mesas / dbo.colegios en SQL Server para Sección 3
   useEffect(() => {
     if (formData.distrito_asignado && !isCoordinadorDistrital) {
-      api.getLocales(formData.distrito_asignado)
+      api.getLocales(formData.distrito_asignado, formData.rol_electoral)
         .then(res => {
           setLocalesAsignados(res.data || []);
           setAssignedLocalesAsignados(res.assignedLocales || []);
@@ -507,7 +507,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       setLocalesAsignados([]);
       setAssignedLocalesAsignados([]);
     }
-  }, [formData.distrito_asignado, isCoordinadorDistrital]);
+  }, [formData.distrito_asignado, isCoordinadorDistrital, formData.rol_electoral]);
 
   // Validaciones en TIEMPO REAL de disponibilidad y no duplicidad (Nombres, DNI, Celular, Mesa, Local, Distrito)
   useEffect(() => {
@@ -645,16 +645,16 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   }, [isPersoneroMesa, formData.mesa_asignada, formData.rol_electoral]);
 
   useEffect(() => {
-    if (isCoordinadorLocal && formData.distrito_asignado) {
-      api.checkAvailability({ rol: formData.rol_electoral, distrito: formData.distrito_asignado })
+    if (isCoordinadorLocal && formData.distrito_asignado && formData.local_asignado) {
+      api.checkAvailability({ rol: formData.rol_electoral, distrito: formData.distrito_asignado, local: formData.local_asignado })
         .then(res => {
           if (res && res.available === false) {
-            setFieldErrors(prev => ({ ...prev, distrito_asignado: res.message }));
+            setFieldErrors(prev => ({ ...prev, local_asignado: res.message }));
           } else {
             setFieldErrors(prev => {
-              if (prev.distrito_asignado && prev.distrito_asignado.includes('Coordinadores')) {
+              if (prev.local_asignado && prev.local_asignado.includes('Cupo lleno')) {
                 const copy = { ...prev };
-                delete copy.distrito_asignado;
+                delete copy.local_asignado;
                 return copy;
               }
               return prev;
@@ -663,7 +663,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
         })
         .catch(() => {});
     }
-  }, [isCoordinadorLocal, formData.distrito_asignado, formData.rol_electoral]);
+  }, [isCoordinadorLocal, formData.distrito_asignado, formData.local_asignado, formData.rol_electoral]);
 
   useEffect(() => {
     if (isCoordinadorZonal && formData.distrito_asignado && formData.local_asignado) {
@@ -1549,7 +1549,10 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     name="local_asignado"
                     value={formData.local_asignado}
                     onChange={handleChange}
-                    options={localesAsignados}
+                    options={isCoordinadorLocal
+                      ? localesAsignados.filter(loc => !assignedLocalesAsignados.some(al => al.toLowerCase().trim() === loc.toLowerCase().trim()))
+                      : localesAsignados
+                    }
                     placeholder={formData.distrito_asignado ? `Seleccione Colegio en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
                     icon={School}
                     required

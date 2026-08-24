@@ -6,16 +6,20 @@ export function CredentialCard({ user, onBack }) {
   const [qrUrl, setQrUrl] = useState('');
   const certRef = useRef(null);
 
-  const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || '12321321';
+  const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || user?.dni_numero || (user?.tokenVerificacion ? user.tokenVerificacion.split('-').pop() : '') || '--------';
   const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || 'PERSONERO OFICIAL';
   const rol = (user?.['Rol a Desempeñar'] || user?.rolADesempenar || 'PERSONERO DE MESA').toUpperCase();
   const distrito = (user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || 'LIMA METROPOLITANA').toUpperCase();
-  const local = (user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.['Local de Votación'] || 'LOCAL DE VOTACIÓN CENTRAL').toUpperCase();
+  const rawLocal = user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.['Local de Votación'] || user?.localDeVotacion || 'LOCAL DE VOTACIÓN CENTRAL';
   const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || '000000';
   const folio = user?.Token || `SP-LM2026-${dni}`;
   const validationCode = `SP-${dni}-${mesa}-2026`;
 
-  const publicVerifyUrl = `${window.location.origin}/#verificar?dni=${dni}&mesa=${encodeURIComponent(mesa)}&distrito=${encodeURIComponent(distrito)}&personero=${encodeURIComponent(personero)}&local=${encodeURIComponent(local)}&rol=${encodeURIComponent(rol)}&folio=${encodeURIComponent(folio)}`;
+  const isZonal = rol.includes('ZONAL') || rol.includes('ZONA');
+  const isDistrital = rol.includes('DISTRITO') || rol.includes('DISTRITAL');
+  const schoolsList = isZonal ? rawLocal.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+  const publicVerifyUrl = `${window.location.origin}/#verificar?dni=${dni}&mesa=${encodeURIComponent(mesa)}&distrito=${encodeURIComponent(distrito)}&personero=${encodeURIComponent(personero)}&local=${encodeURIComponent(rawLocal)}&rol=${encodeURIComponent(rol)}&folio=${encodeURIComponent(folio)}`;
 
   useEffect(() => {
     QRCode.toDataURL(publicVerifyUrl, {
@@ -223,17 +227,18 @@ export function CredentialCard({ user, onBack }) {
             </span>
           </div>
 
-          {/* Tabla de 4 Columnas con Asignación */}
+          {/* Tabla de Asignación Simétrica y Adaptativa */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: isZonal ? '1fr 1.1fr 0.8fr 2.1fr' : (isDistrital ? '1fr 1.5fr 1.5fr' : 'repeat(4, 1fr)'),
             background: '#f8fafc',
             border: '1px solid #cbd5e1',
-            borderRadius: '6px',
-            padding: '10px 14px',
+            borderRadius: '8px',
+            padding: '12px 14px',
             textAlign: 'center',
-            marginBottom: '24px',
-            gap: '8px'
+            marginBottom: '20px',
+            gap: '8px',
+            alignItems: 'center'
           }}>
             <div style={{ borderRight: '1px solid #e2e8f0' }}>
               <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>DEPARTAMENTO / REGIÓN</span>
@@ -243,13 +248,56 @@ export function CredentialCard({ user, onBack }) {
               <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>DISTRITO ELECTORAL</span>
               <strong style={{ fontSize: '0.82rem', color: '#0f172a' }}>{distrito}</strong>
             </div>
-            <div style={{ borderRight: '1px solid #e2e8f0' }}>
-              <span style={{ fontSize: '0.62rem', color: '#ef4444', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>MESA DE SUFRAGIO N°</span>
-              <strong style={{ fontSize: '1rem', color: '#e30613', fontWeight: 900 }}>{mesa}</strong>
-            </div>
+            {!isDistrital && (
+              <div style={{ borderRight: '1px solid #e2e8f0' }}>
+                <span style={{ fontSize: '0.62rem', color: isZonal ? '#64748b' : '#ef4444', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>MESA DE SUFRAGIO N°</span>
+                <strong style={{ fontSize: isZonal ? '0.82rem' : '1rem', color: isZonal ? '#64748b' : '#e30613', fontWeight: 900 }}>
+                  {isZonal ? 'No aplica' : mesa}
+                </strong>
+              </div>
+            )}
             <div>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>LOCAL DE VOTACIÓN</span>
-              <strong style={{ fontSize: '0.78rem', color: '#0f172a', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{local}</strong>
+              <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase', marginBottom: '2px' }}>
+                {isZonal ? `LOCALES DE VOTACIÓN DE LA ZONA (${schoolsList.length})` : (isDistrital ? 'ÁMBITO TERRITORIAL' : 'LOCAL DE VOTACIÓN')}
+              </span>
+              {isZonal ? (
+                /* Lista visual simétrica y prolija para los colegios de la zona */
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '3px',
+                  maxHeight: '80px',
+                  overflowY: 'auto',
+                  padding: '2px 4px',
+                  textAlign: 'left'
+                }}>
+                  {schoolsList.map((sch, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        fontSize: '0.69rem',
+                        color: '#0f172a',
+                        fontWeight: 700,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        lineHeight: 1.25,
+                        background: '#ffffff',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '4px',
+                        padding: '2px 6px'
+                      }}
+                    >
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#0284c7', flexShrink: 0 }}></span>
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sch}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <strong style={{ fontSize: '0.78rem', color: '#0f172a', display: 'block', whiteSpace: isDistrital ? 'normal' : 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {isDistrital ? `TODO EL DISTRITO DE ${distrito}` : rawLocal.toUpperCase()}
+                </strong>
+              )}
             </div>
           </div>
 

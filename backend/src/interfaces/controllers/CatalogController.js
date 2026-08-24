@@ -141,7 +141,7 @@ export class CatalogController {
   }
 
   async getLocales(req, res) {
-    const { distrito, excludeAssigned } = req.query;
+    const { distrito, excludeAssigned, rol } = req.query;
 
     if (distrito) {
       const variants = this.getDistrictVariants(distrito);
@@ -149,7 +149,7 @@ export class CatalogController {
       let assignedLocales = [];
 
       try {
-        assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distrito);
+        assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distrito, rol);
       } catch (e) {
         console.warn('No se pudieron obtener los locales asignados:', e.message);
       }
