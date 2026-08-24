@@ -996,9 +996,39 @@ export function DashboardView({ onGoToTraining }) {
                               {idx + 1}
                             </div>
                             <div>
-                              <strong style={{ fontSize: '0.88rem', color: textTitle, display: 'block', lineHeight: 1.25 }}>
-                                {item.schoolName}
-                              </strong>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '2px' }}>
+                                <strong style={{ fontSize: '0.9rem', color: textTitle, lineHeight: 1.25 }}>
+                                  {item.schoolName}
+                                </strong>
+                                {item.coordinadoresLocales.length > 0 ? (
+                                  <span style={{
+                                    background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
+                                    color: '#0284c7',
+                                    fontSize: '0.74rem',
+                                    fontWeight: 800,
+                                    padding: '2px 8px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #bae6fd',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px'
+                                  }}>
+                                    👤 Coord. Local: {item.coordinadoresLocales[0]['Nombres y Apellidos'] || item.coordinadoresLocales[0].nombresApellidos}
+                                  </span>
+                                ) : (
+                                  <span style={{
+                                    background: isDark ? 'rgba(234, 179, 8, 0.15)' : '#fef3c7',
+                                    color: '#d97706',
+                                    fontSize: '0.72rem',
+                                    fontWeight: 700,
+                                    padding: '2px 6px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #fde68a'
+                                  }}>
+                                    ⚠️ Pendiente de Asignación
+                                  </span>
+                                )}
+                              </div>
                               <span style={{ fontSize: '0.74rem', color: textSub }}>
                                 {item.personerosCount} personeros asignados ({item.accreditedCount} acreditados)
                               </span>

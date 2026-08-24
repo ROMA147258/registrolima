@@ -27,7 +27,7 @@ export function LoginView({ onBackToRegister }) {
         username: userVal,
         fullName: userVal,
         password: passVal,
-        dni: passVal
+        dni: /^\d{7,9}$/.test(userVal) ? userVal : (/^\d{7,9}$/.test(passVal) ? passVal : '')
       });
     } catch (err) {
       setErrorMsg(err.message || 'Credenciales incorrectas. Verifique sus datos.');

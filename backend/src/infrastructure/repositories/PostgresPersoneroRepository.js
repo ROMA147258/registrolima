@@ -221,30 +221,48 @@ export class PostgresPersoneroRepository {
   async findByCredentials(userIdentifier, secretPassOrDni) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
-    const cleanUser = String(userIdentifier).trim();
-    const cleanPass = String(secretPassOrDni).trim();
+    const cleanUser = String(userIdentifier || '').trim();
+    const cleanPass = String(secretPassOrDni || '').trim();
+    const cleanDni = /^\d{7,9}$/.test(cleanUser) ? cleanUser : (/^\d{7,9}$/.test(cleanPass) ? cleanPass : '');
 
     const tables = [
-      { name: 'rcoordinadoresd', isCoord: true },
-      { name: 'rcoordinadoresz', isCoord: true },
-      { name: 'rcoordinadores', isCoord: true },
-      { name: 'rpersoneros', isCoord: false }
+      { name: 'rcoordinadoresd', isCoord: true, hasClave: true },
+      { name: 'rcoordinadoresz', isCoord: true, hasClave: false },
+      { name: 'rcoordinadores', isCoord: true, hasClave: false },
+      { name: 'rpersoneros', isCoord: false, hasClave: false }
     ];
 
     for (const tbl of tables) {
       try {
-        const query = `
-          SELECT * FROM ${tbl.name}
-          WHERE dni = $1 
-             OR (LOWER(nombres_y_apellidos) = LOWER($2) AND dni = $1)
-             OR (dni = $1 AND (LOWER(nombres_y_apellidos) = LOWER($2) OR $2 = ''))
-          LIMIT 1
-        `;
-        const res = await pool.query(query, [cleanPass || cleanUser, cleanUser]);
+        let query;
+        let params;
+        if (tbl.hasClave) {
+          query = `
+            SELECT * FROM ${tbl.name}
+            WHERE dni = $1 
+               OR LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($2))
+               OR (LOWER(TRIM(clave_acceso)) = LOWER(TRIM($3)) AND (dni = $1 OR LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($2)) OR $1 = ''))
+            LIMIT 1
+          `;
+          params = [cleanDni || cleanUser, cleanUser, cleanPass];
+        } else {
+          query = `
+            SELECT * FROM ${tbl.name}
+            WHERE dni = $1 
+               OR LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($2))
+               OR (dni = $2)
+            LIMIT 1
+          `;
+          params = [cleanDni || cleanPass, cleanUser];
+        }
+
+        const res = await pool.query(query, params);
         if (res.rows.length > 0) {
           return { entity: this.mapRowToEntity(res.rows[0], tbl.isCoord), tableName: tbl.name };
         }
-      } catch {}
+      } catch (err) {
+        console.error(`Error en findByCredentials tabla ${tbl.name}:`, err.message);
+      }
     }
 
     return null;
