@@ -196,7 +196,7 @@ export function LoginView({ onBackToRegister }) {
                 />
               </div>
               <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '4px', paddingLeft: '2px' }}>
-                Ejemplo: 12345678
+                Ejemplo: Ingrese su DNI (o su Clave asignada si es Coordinador Distrital)
               </div>
             </div>
 

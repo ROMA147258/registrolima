@@ -37,6 +37,16 @@ class MockPersoneroRepository {
     return { entity: found, tableName: 'mock' };
   }
 
+  async findByCredentials(username, passOrDni) {
+    const found = this.records.find(r => 
+      r.dni === String(username).trim() || 
+      r.dni === String(passOrDni).trim() ||
+      r.nombresApellidos?.toLowerCase().trim() === String(username).toLowerCase().trim()
+    );
+    if (!found) return null;
+    return { entity: found, tableName: found.rolADesempenar?.includes('Distrito') ? 'rcoordinadoresd' : 'rpersoneros' };
+  }
+
   async countPersonerosByMesa(mesaAsignada, excludeDni = null) {
     return this.records.filter(r => 
       r.mesaAsignada === String(mesaAsignada).trim() && 
@@ -324,4 +334,47 @@ test('Validation Rule 6: Coordinador Zonal can select 1 or more schools and prev
   });
 
   assert.equal(res2.status, 'success');
+});
+
+test('Validation Rule 7: Coordinador de Distritos gets auto-generated password and requires it to log in', async () => {
+  const repo = new MockPersoneroRepository();
+  const audit = new MockAuditRepository();
+  const useCase = new RegisterPersoneroUseCase(repo, audit);
+
+  // 1. Register Coordinador Distrital
+  const regRes = await useCase.execute({
+    nombres_apellidos: 'Coordinador Distrital San Borja',
+    dni: '44556677',
+    celular: '944556677',
+    rol_electoral: 'Coordinador de Distritos',
+    distrito_asignado: 'San Borja'
+  });
+
+  assert.equal(regRes.status, 'success');
+  assert.ok(regRes.data.claveAcceso, 'Debe generar clave de acceso');
+  assert.match(regRes.data.claveAcceso, /^SP-\d{4}$/, 'Formato de clave debe ser SP-XXXX');
+
+  // 2. Test Login
+  const { LoginUseCase } = await import('../src/application/use-cases/LoginUseCase.js');
+  const loginUseCase = new LoginUseCase(repo, null, audit);
+
+  // Login with WRONG password -> Must fail
+  await assert.rejects(
+    async () => {
+      await loginUseCase.execute({
+        username: '44556677',
+        password: 'wrong_password'
+      });
+    },
+    /Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada/
+  );
+
+  // Login with CORRECT generated password -> Must succeed
+  const loginRes = await loginUseCase.execute({
+    username: '44556677',
+    password: regRes.data.claveAcceso
+  });
+
+  assert.equal(loginRes.status, 'success');
+  assert.equal(loginRes.user.isCoordinadorDistrital, true);
 });

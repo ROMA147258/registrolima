@@ -109,6 +109,14 @@ export class RegisterPersoneroUseCase {
       }
     }
 
+    let claveAcceso = rawData.clave_acceso || rawData.claveAcceso || rawData['Clave de Acceso'] || null;
+    if (rolNorm.includes('distrito') || rolNorm.includes('distrital')) {
+      if (!claveAcceso) {
+        const rand4 = Math.floor(1000 + Math.random() * 9000);
+        claveAcceso = `SP-${rand4}`;
+      }
+    }
+
     const entityProps = {
       nombresApellidos: nombres,
       dni,
@@ -130,7 +138,8 @@ export class RegisterPersoneroUseCase {
       pdf: 0,
       preguntas: 'Pendiente',
       credenciales: 'Bloqueado',
-      tokenVerificacion: `SP-LM2026-${dni}`
+      tokenVerificacion: `SP-LM2026-${dni}`,
+      claveAcceso
     };
 
     const entity = isCoordinador ? new Coordinador(entityProps) : new Personero(entityProps);

@@ -66,6 +66,15 @@ export class LoginUseCase {
         const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
         const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
 
+        if (isCoordDistrital) {
+          const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').trim();
+          if (expectedKey) {
+            if (cleanPass.toUpperCase() !== expectedKey.toUpperCase()) {
+              throw new Error('Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada.');
+            }
+          }
+        }
+
         const token = jwt.sign(
           { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig, local: localAsig },
           config.jwt.secret,
@@ -91,6 +100,7 @@ export class LoginUseCase {
             'ID': entity.id,
             'Nombres y Apellidos': entity.nombresApellidos,
             'D.N.I.': entity.dni,
+            'Clave de Acceso': entity.claveAcceso || '',
             'Celular': entity.celular,
             'Correo Electrónico': entity.correoElectronico,
             'Distrito donde Vota': entity.distritoDondeVota,
@@ -122,6 +132,9 @@ export class LoginUseCase {
         };
       }
     } catch (err) {
+      if (err.message && err.message.includes('Coordinador de Distritos')) {
+        throw err;
+      }
       console.error('Error buscando personero/coordinador en base de datos:', err);
     }
 
@@ -140,6 +153,15 @@ export class LoginUseCase {
           const userRole = isCoord ? ROLES.COORDINADOR : ROLES.PERSONERO_REGISTRADO;
           const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
           const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
+
+          if (isCoordDistrital) {
+            const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').trim();
+            if (expectedKey) {
+              if (cleanPass.toUpperCase() !== expectedKey.toUpperCase()) {
+                throw new Error('Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada.');
+              }
+            }
+          }
 
           const token = jwt.sign(
             { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig, local: localAsig },

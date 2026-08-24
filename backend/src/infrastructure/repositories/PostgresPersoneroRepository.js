@@ -90,9 +90,14 @@ export class PostgresPersoneroRepository {
           pdf INT DEFAULT 0,
           preguntas VARCHAR(50) DEFAULT 'Pendiente',
           credenciales VARCHAR(50) DEFAULT 'Bloqueado',
-          token_verificacion VARCHAR(100)
+          token_verificacion VARCHAR(100),
+          clave_acceso VARCHAR(100)
         );
       `);
+
+      try {
+        await pool.query(`ALTER TABLE rcoordinadoresd ADD COLUMN IF NOT EXISTS clave_acceso VARCHAR(100);`);
+      } catch (e) {}
 
       // 4. Tabla rcoordinadoresz (Coordinador Zonal) y eliminación de rcoordinadorz
       await pool.query(`
@@ -166,7 +171,8 @@ export class PostgresPersoneroRepository {
       pdf: pdfVal,
       preguntas: finalPreg,
       credenciales: finalCred,
-      tokenVerificacion: row.token_verificacion || row.tokenVerificacion || row.codigo_credencial || `SP-LM2026-${row.dni || row.DNI}`
+      tokenVerificacion: row.token_verificacion || row.tokenVerificacion || row.codigo_credencial || `SP-LM2026-${row.dni || row.DNI}`,
+      claveAcceso: row.clave_acceso || row.claveAcceso || row['Clave de Acceso'] || ''
     };
 
     return isActuallyCoord ? new Coordinador(props) : new Personero(props);
@@ -600,6 +606,33 @@ export class PostgresPersoneroRepository {
       data.credenciales || 'Bloqueado',
       token
     ];
+
+    if (tableName === 'rcoordinadoresd') {
+      const claveAccesoVal = data.claveAcceso || data['Clave de Acceso'] || data.clave_acceso || '';
+      const queryD = `
+        INSERT INTO rcoordinadoresd (
+          nombres_y_apellidos, dni, celular, correo_electronico,
+          usa_whatsapp_en_su_celular, numero_whatsapp_alterno,
+          distrito_donde_vota, mesa_de_sufragio, local_de_votacion,
+          rol_a_desempenar, distrito_asignado, mesa_asignada, local_de_votacion_asignado,
+          tiene_experiencia_como_personero, cuenta_con_movilidad_propia,
+          se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones,
+          video, pdf, preguntas, credenciales, token_verificacion, clave_acceso
+        ) VALUES (
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22
+        )
+        ON CONFLICT (dni) DO UPDATE SET
+          nombres_y_apellidos = EXCLUDED.nombres_y_apellidos,
+          celular = EXCLUDED.celular,
+          correo_electronico = EXCLUDED.correo_electronico,
+          distrito_asignado = EXCLUDED.distrito_asignado,
+          clave_acceso = COALESCE(NULLIF(EXCLUDED.clave_acceso, ''), rcoordinadoresd.clave_acceso)
+        RETURNING *;
+      `;
+      const valuesD = [...values, claveAccesoVal];
+      const resultD = await pool.query(queryD, valuesD);
+      return this.mapRowToEntity(resultD.rows[0], true);
+    }
 
     const result = await pool.query(query, values);
     return this.mapRowToEntity(result.rows[0], tableName !== 'rpersoneros');

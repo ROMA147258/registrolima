@@ -473,6 +473,8 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [fieldErrors, setFieldErrors] = useState({});
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [distritalSuccessData, setDistritalSuccessData] = useState(null);
+  const [copiedKey, setCopiedKey] = useState(false);
 
   const isCoordinadorLocal = formData.rol_electoral === 'Coordinador de Local';
   const isCoordinadorZonal = formData.rol_electoral === 'Coordinador Zonal';
@@ -900,7 +902,16 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       const res = await api.registerPersonero(formData);
       if (res && res.status === 'success') {
         setShowReviewModal(false);
-        if (onRegisteredSuccess) {
+        const distKey = res.data?.claveAcceso || res.data?.['Clave de Acceso'];
+        if (isCoordinadorDistrital && distKey) {
+          setDistritalSuccessData({
+            claveAcceso: distKey,
+            dni: formData.dni,
+            nombres: formData.nombres_apellidos,
+            distrito: formData.distrito_asignado,
+            data: res.data
+          });
+        } else if (onRegisteredSuccess) {
           onRegisteredSuccess(res.data);
         }
       } else {
@@ -1978,6 +1989,107 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* Modal Informativo de Clave Generada para Coordinador Distrital */}
+      {distritalSuccessData && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(15, 23, 42, 0.75)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 10000,
+          padding: '16px',
+          animation: 'fadeIn 0.2s ease-out'
+        }}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '20px',
+            maxWidth: '480px',
+            width: '100%',
+            padding: '28px 24px',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.3)',
+            textAlign: 'center',
+            border: '2px solid #0284c7'
+          }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+              <Lock className="w-8 h-8" />
+            </div>
+
+            <h2 style={{ fontSize: '1.3rem', fontWeight: 900, color: '#0f172a', margin: '0 0 6px 0' }}>
+              ¡Registro de Coordinador Distrital Exitoso!
+            </h2>
+            <p style={{ fontSize: '0.84rem', color: '#64748b', margin: '0 0 18px 0' }}>
+              Se ha generado tu clave de acceso personalizada para el distrito de <strong>{distritalSuccessData.distrito}</strong>.
+            </p>
+
+            <div style={{
+              background: '#f8fafc',
+              border: '2px dashed #0284c7',
+              borderRadius: '12px',
+              padding: '16px',
+              marginBottom: '20px'
+            }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>
+                Tu Clave de Acceso para Iniciar Sesión:
+              </div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0284c7', letterSpacing: '2px', fontFamily: 'monospace' }}>
+                {distritalSuccessData.claveAcceso}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(distritalSuccessData.claveAcceso);
+                  setCopiedKey(true);
+                  setTimeout(() => setCopiedKey(false), 2000);
+                }}
+                style={{
+                  marginTop: '10px',
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid #cbd5e1',
+                  background: '#ffffff',
+                  color: '#334155',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                {copiedKey ? '✅ ¡Copiado!' : '📋 Copiar Clave'}
+              </button>
+            </div>
+
+            <div style={{ fontSize: '0.76rem', color: '#64748b', marginBottom: '20px', lineHeight: 1.4 }}>
+              ⚠️ <strong>Importante:</strong> Guarda esta clave. Para ingresar al sistema, introduce tu nombre o DNI y esta <strong>clave de acceso</strong>.
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (onRegisteredSuccess) {
+                  onRegisteredSuccess(distritalSuccessData.data);
+                }
+              }}
+              style={{
+                width: '100%',
+                padding: '14px 20px',
+                borderRadius: '12px',
+                border: 'none',
+                background: '#0284c7',
+                color: '#ffffff',
+                fontWeight: 900,
+                fontSize: '0.92rem',
+                cursor: 'pointer',
+                boxShadow: '0 4px 14px rgba(2, 132, 199, 0.4)'
+              }}
+            >
+              🚀 Entendido, Ir a Iniciar Sesión
+            </button>
           </div>
         </div>
       )}

@@ -22,7 +22,8 @@ export class Personero {
     pdf = 0,
     preguntas = 'Pendiente',
     credenciales = 'Bloqueado',
-    tokenVerificacion = null
+    tokenVerificacion = null,
+    claveAcceso = null
   }) {
     this.id = id;
     this.fechaRegistro = fechaRegistro;
@@ -47,6 +48,7 @@ export class Personero {
     this.preguntas = preguntas;
     this.credenciales = credenciales;
     this.tokenVerificacion = tokenVerificacion || `SP-LM2026-${this.dni}`;
+    this.claveAcceso = claveAcceso;
 
     // Aliases con nombres en español para retrocompatibilidad con SQL Server y Dashboards
     this['ID'] = this.id;
@@ -54,6 +56,7 @@ export class Personero {
     this['Nombres y Apellidos'] = this.nombresApellidos;
     this['D.N.I.'] = this.dni;
     this['DNI'] = this.dni;
+    this['Clave de Acceso'] = this.claveAcceso;
     this['Celular'] = this.celular;
     this['Correo Electrónico'] = this.correoElectronico;
     this['Usa WhatsApp en su Celular'] = this.usaWhatsApp;
@@ -142,7 +145,9 @@ export class Personero {
       credenciales: this.credenciales,
       Credenciales: this.credenciales,
       tokenVerificacion: this.tokenVerificacion,
-      Token: this.tokenVerificacion
+      Token: this.tokenVerificacion,
+      claveAcceso: this.claveAcceso,
+      'Clave de Acceso': this.claveAcceso
     };
   }
 }
