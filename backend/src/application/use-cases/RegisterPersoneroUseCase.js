@@ -154,7 +154,7 @@ export class RegisterPersoneroUseCase {
     return {
       status: 'success',
       message: 'Registro electoral completado exitosamente.',
-      data: saved.entity
+      data: saved?.entity || saved
     };
   }
 }

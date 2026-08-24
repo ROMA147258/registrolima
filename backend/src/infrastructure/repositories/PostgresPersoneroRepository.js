@@ -701,9 +701,11 @@ export class PostgresPersoneroRepository {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
     const allRecords = [];
+    const seenDnis = new Set();
 
     const tables = [
       { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadoresz', isCoord: true },
       { name: 'rcoordinadorz', isCoord: true },
       { name: 'rcoordinadores', isCoord: true },
       { name: 'rpersoneros', isCoord: false }
@@ -713,7 +715,11 @@ export class PostgresPersoneroRepository {
       try {
         const res = await pool.query(`SELECT * FROM ${tbl.name} ORDER BY id ASC`);
         res.rows.forEach(r => {
-          allRecords.push(this.mapRowToEntity(r, tbl.isCoord));
+          const entity = this.mapRowToEntity(r, tbl.isCoord);
+          if (entity && !seenDnis.has(entity.dni)) {
+            seenDnis.add(entity.dni);
+            allRecords.push(entity);
+          }
         });
       } catch (e) {
         console.warn(`Aviso leyendo tabla ${tbl.name}:`, e.message);
