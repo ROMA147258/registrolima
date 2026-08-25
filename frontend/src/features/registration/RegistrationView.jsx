@@ -455,11 +455,11 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     usa_whatsapp: 'Sí, mismo número',
     numero_whatsapp_alterno: '',
     distrito_vota: '',
-    mesa_vota: '',
+    mesa_vota: 'No aplica',
     local_vota: '',
     rol_electoral: 'Personero de Mesa',
     distrito_asignado: '',
-    mesa_asignada: '',
+    mesa_asignada: 'No aplica',
     local_asignado: '',
     tiene_experiencia: 'No',
     cuenta_movilidad: 'No',
@@ -774,9 +774,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     setFormData(prev => ({
       ...prev,
       rol_electoral: role,
-      mesa_asignada: role === 'Personero de Mesa' 
-        ? (prev.mesa_asignada === 'No aplica (Coordinador)' || prev.mesa_asignada === 'No aplica' || prev.mesa_asignada === '-' ? '' : prev.mesa_asignada)
-        : (role === 'Coordinador de Distritos' || role === 'Coordinador Zonal' ? 'No aplica' : 'No aplica (Coordinador)'),
+      mesa_asignada: 'No aplica',
       local_asignado: role === 'Coordinador de Distritos' 
         ? 'No aplica' 
         : (prev.local_asignado === 'No aplica' ? '' : prev.local_asignado)
@@ -814,10 +812,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.distrito_vota = 'Seleccione el distrito donde vota.';
     }
 
-    if (!formData.mesa_vota || formData.mesa_vota.trim().length !== 6) {
-      errors.mesa_vota = 'La mesa de votación debe tener exactamente 6 dígitos.';
-    }
-
     if (!formData.local_vota || formData.local_vota.trim() === '') {
       errors.local_vota = 'Seleccione su colegio o local de votación.';
     }
@@ -829,10 +823,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
     if (!formData.distrito_asignado || formData.distrito_asignado.trim() === '') {
       errors.distrito_asignado = 'Seleccione el distrito donde será asignado.';
-    }
-
-    if (formData.rol_electoral === 'Personero de Mesa' && (!formData.mesa_asignada || formData.mesa_asignada.trim().length !== 6)) {
-      errors.mesa_asignada = 'La mesa asignada debe tener exactamente 6 dígitos.';
     }
 
     if (formData.rol_electoral !== 'Coordinador de Distritos' && (!formData.local_asignado || formData.local_asignado.trim() === '' || formData.local_asignado === 'No aplica')) {
@@ -1252,39 +1242,30 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 />
               </div>
 
-              {/* Mesa de Sufragio (Input Numérico de 6 dígitos) */}
+              {/* Mesa de Sufragio (Bloqueado Temporalmente) */}
               <div>
                 <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                  Mesa de Sufragio <span style={{ color: '#ef4444' }}>*</span>
+                  Mesa de Sufragio
                 </label>
                 <div style={{ position: 'relative' }}>
-                  <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.mesa_vota ? '#ef4444' : '#0284c7' }} />
+                  <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: '#94a3b8' }} />
                   <input
                     id="field-mesa_vota"
                     type="text"
-                    inputMode="numeric"
                     name="mesa_vota"
-                    value={formData.mesa_vota}
-                    onChange={handleChange}
-                    placeholder="Ej. 064321"
-                    maxLength={6}
-                    required
+                    value="No aplica"
+                    disabled
                     className="form-control"
                     style={{
                       paddingLeft: '36px',
-                      background: '#ffffff',
-                      border: fieldErrors.mesa_vota ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
-                      color: '#0f172a',
-                      boxShadow: fieldErrors.mesa_vota ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                      background: '#f1f5f9',
+                      border: '1.5px solid #cbd5e1',
+                      color: '#64748b',
+                      cursor: 'not-allowed',
+                      fontWeight: 600
                     }}
                   />
                 </div>
-                {fieldErrors.mesa_vota && (
-                  <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{fieldErrors.mesa_vota}</span>
-                  </div>
-                )}
               </div>
             </div>
 
@@ -1512,41 +1493,30 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     />
                   </div>
 
-                  {/* Mesa Asignada */}
+                  {/* Mesa Asignada (Bloqueado Temporalmente) */}
                   <div>
                     <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                      Mesa Asignada {!isCoordinadorLocal && <span style={{ color: '#ef4444' }}>*</span>}
+                      Mesa Asignada
                     </label>
                     <div style={{ position: 'relative' }}>
-                      <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.mesa_asignada ? '#ef4444' : '#0284c7' }} />
+                      <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: '#94a3b8' }} />
                       <input
                         id="field-mesa_asignada"
                         type="text"
-                        inputMode="numeric"
                         name="mesa_asignada"
-                        value={isCoordinadorLocal ? 'No aplica (Coordinador)' : formData.mesa_asignada}
-                        onChange={handleChange}
-                        placeholder="Ej. 064321"
-                        maxLength={6}
-                        disabled={isCoordinadorLocal}
-                        required={!isCoordinadorLocal}
+                        value="No aplica"
+                        disabled
                         className="form-control"
                         style={{
                           paddingLeft: '36px',
-                          background: isCoordinadorLocal ? '#f1f5f9' : '#ffffff',
-                          border: fieldErrors.mesa_asignada ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
-                          color: isCoordinadorLocal ? '#94a3b8' : '#0f172a',
-                          cursor: isCoordinadorLocal ? 'not-allowed' : 'text',
-                          boxShadow: fieldErrors.mesa_asignada ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
+                          background: '#f1f5f9',
+                          border: '1.5px solid #cbd5e1',
+                          color: '#64748b',
+                          cursor: 'not-allowed',
+                          fontWeight: 600
                         }}
                       />
                     </div>
-                    {fieldErrors.mesa_asignada && (
-                      <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
-                        <AlertCircle className="w-3.5 h-3.5" />
-                        <span>{fieldErrors.mesa_asignada}</span>
-                      </div>
-                    )}
                   </div>
                 </div>
 
