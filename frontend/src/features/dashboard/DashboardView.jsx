@@ -1577,10 +1577,13 @@ export function DashboardView({ onGoToTraining }) {
                         const cel = r['Celular'] || '-';
                         const exp = getExp(r);
                         const mov = getMov(r);
-                        const comp = getComp(r);
+                        const rol = r['Rol a Desempeñar'] || 'Personero de Mesa';
+                        const isPersonero = rol.toLowerCase().includes('personero');
                         const distrito = r['Distrito Asignado'] || r['Distrito donde Vota'] || '-';
                         const local = r['Local de Votación Asignado'] || r['Local de Votación'] || '-';
-                        const mesa = r['Mesa Asignada'] || r['Mesa de Sufragio'] || '-';
+                        const mesaAsig = r['Mesa Asignada'];
+                        const hasMesa = mesaAsig && mesaAsig !== '-' && mesaAsig.toLowerCase() !== 'no aplica';
+
                         return (
                           <div key={idx} style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px', boxShadow: isDark ? 'none' : '0 1px 4px rgba(0,0,0,0.06)' }}>
                             {/* Fila 1: Nombre + Número */}
@@ -1603,7 +1606,7 @@ export function DashboardView({ onGoToTraining }) {
                             {/* Fila 2: Rol */}
                             <div style={{ marginBottom: '8px' }}>
                               <span style={{ background: isDark ? 'rgba(2,132,199,0.15)' : '#f0f9ff', color: '#0284c7', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 700, border: `1px solid ${isDark ? 'rgba(2,132,199,0.3)' : '#bae6fd'}` }}>
-                                {r['Rol a Desempeñar'] || 'Personero de Mesa'}
+                                {rol}
                               </span>
                             </div>
                             {/* Fila 3: Distrito / Local / Mesa */}
@@ -1612,14 +1615,18 @@ export function DashboardView({ onGoToTraining }) {
                                 <span style={{ color: textSub, fontWeight: 600 }}>📍 Distrito:</span>
                                 <span style={{ fontWeight: 800, color: '#0284c7' }}>{distrito}</span>
                               </div>
-                              <div style={{ display: 'flex', gap: '6px', marginBottom: '2px' }}>
+                              <div style={{ display: 'flex', gap: '6px', marginBottom: isPersonero ? '2px' : '0px' }}>
                                 <span style={{ color: textSub, fontWeight: 600 }}>🏫 Local:</span>
                                 <span style={{ fontWeight: 700, color: textBody }}>{local}</span>
                               </div>
-                              <div style={{ display: 'flex', gap: '6px' }}>
-                                <span style={{ color: textSub, fontWeight: 600 }}>🗳️ Mesa:</span>
-                                <span style={{ fontWeight: 800, color: textTitle }}>{mesa}</span>
-                              </div>
+                              {isPersonero && (
+                                <div style={{ display: 'flex', gap: '6px' }}>
+                                  <span style={{ color: textSub, fontWeight: 600 }}>🗳️ Mesa:</span>
+                                  <span style={{ fontWeight: 800, color: hasMesa ? '#0284c7' : '#f59e0b' }}>
+                                    {hasMesa ? mesaAsig : 'Pendiente (Sin asignar)'}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                             {/* Fila 4: Celular + Logística */}
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -1633,9 +1640,24 @@ export function DashboardView({ onGoToTraining }) {
                             {/* Acción */}
                             <button
                               onClick={() => setSelectedPersonero(r)}
-                              style={{ width: '100%', padding: '9px', borderRadius: '8px', border: '1.5px solid #0284c7', background: isDark ? 'rgba(2,132,199,0.1)' : '#f0f9ff', color: '#0284c7', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
+                              style={{
+                                width: '100%',
+                                padding: '9px',
+                                borderRadius: '8px',
+                                border: '1.5px solid #0284c7',
+                                background: isDark ? 'rgba(2,132,199,0.15)' : '#e0f2fe',
+                                color: '#0284c7',
+                                fontWeight: 800,
+                                fontSize: '0.82rem',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '6px'
+                              }}
                             >
-                              Ver Ficha Completa
+                              <Edit3 className="w-4 h-4" />
+                              <span>Modificar {isPersonero ? '/ Asignar Mesa' : 'Datos'}</span>
                             </button>
                           </div>
                         );
@@ -1666,6 +1688,11 @@ export function DashboardView({ onGoToTraining }) {
                             const mov = getMov(r);
                             const comp = getComp(r);
 
+                            const rol = r['Rol a Desempeñar'] || 'Personero de Mesa';
+                            const isPersonero = rol.toLowerCase().includes('personero');
+                            const mesaAsig = r['Mesa Asignada'];
+                            const hasMesa = mesaAsig && mesaAsig !== '-' && mesaAsig.toLowerCase() !== 'no aplica';
+
                             return (
                               <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
                                 <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0284c7' }}>#{idx + 1}</td>
@@ -1686,18 +1713,25 @@ export function DashboardView({ onGoToTraining }) {
                                 </td>
                                 <td style={{ padding: '12px 14px' }}>
                                   <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
-                                    {r['Rol a Desempeñar'] || 'Personero de Mesa'}
+                                    {rol}
                                   </span>
                                 </td>
                                 <td style={{ padding: '12px 14px' }}>
                                   <div style={{ fontWeight: 800, color: '#0284c7' }}>{r['Distrito Asignado'] || r['Distrito donde Vota']}</div>
                                   <div style={{ fontSize: '0.72rem', color: textSub }}>{r['Local de Votación Asignado'] || r['Local de Votación']}</div>
-                                  <div style={{ fontSize: '0.72rem', color: textTitle }}>Mesa Asignada: <strong>{r['Mesa Asignada'] || r['Mesa de Sufragio']}</strong></div>
+                                  {isPersonero && (
+                                    <div style={{ fontSize: '0.72rem', color: textTitle, marginTop: '2px' }}>
+                                      Mesa: {hasMesa ? (
+                                        <strong style={{ color: '#0284c7' }}>{mesaAsig}</strong>
+                                      ) : (
+                                        <span style={{ color: '#f59e0b', fontWeight: 700 }}>Pendiente (Sin asignar)</span>
+                                      )}
+                                    </div>
+                                  )}
                                 </td>
                                 <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
                                   <div style={{ color: textBody }}>{r['Distrito donde Vota']}</div>
                                   <div style={{ color: textSub }}>Local: {r['Local de Votación']}</div>
-                                  <div style={{ color: textSub }}>Mesa: {r['Mesa de Sufragio']}</div>
                                 </td>
                                 <td style={{ padding: '12px 14px' }}>
                                   <div style={{ fontWeight: 700, color: textTitle }}>{cel}</div>
@@ -1715,9 +1749,23 @@ export function DashboardView({ onGoToTraining }) {
                                 <td style={{ padding: '12px 14px', textAlign: 'center' }}>
                                   <button
                                     onClick={() => setSelectedPersonero(r)}
-                                    style={{ padding: '6px 14px', borderRadius: '6px', border: '1px solid #0284c7', background: 'transparent', color: '#0284c7', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer' }}
+                                    title="Modificar datos o asignar número de mesa"
+                                    style={{
+                                      padding: '6px 12px',
+                                      borderRadius: '6px',
+                                      border: '1px solid #0284c7',
+                                      background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                                      color: '#0284c7',
+                                      fontWeight: 700,
+                                      fontSize: '0.75rem',
+                                      cursor: 'pointer',
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px'
+                                    }}
                                   >
-                                    Ver Ficha
+                                    <Edit3 className="w-3.5 h-3.5" />
+                                    <span>Modificar</span>
                                   </button>
                                 </td>
                               </tr>
@@ -2113,18 +2161,23 @@ export function DashboardView({ onGoToTraining }) {
                               <td style={{ padding: '12px 14px', textAlign: 'center' }}>
                                 <button
                                   onClick={() => setSelectedPersonero(r)}
+                                  title="Modificar datos o asignar mesa"
                                   style={{
-                                    padding: '6px 14px',
+                                    padding: '6px 12px',
                                     borderRadius: '6px',
                                     border: '1px solid #0284c7',
-                                    background: 'transparent',
+                                    background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
                                     color: '#0284c7',
                                     fontWeight: 700,
                                     fontSize: '0.75rem',
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px'
                                   }}
                                 >
-                                  Ver Ficha
+                                  <Edit3 className="w-3.5 h-3.5" />
+                                  <span>Modificar</span>
                                 </button>
                               </td>
                             </tr>

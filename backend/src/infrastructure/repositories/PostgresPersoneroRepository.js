@@ -702,7 +702,7 @@ export class PostgresPersoneroRepository {
     };
   }
 
-  async updateAssignment(dni, params = {}) {
+  async updatePersonero(dni, params = {}) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
     const cleanDni = String(dni).trim();
@@ -711,24 +711,61 @@ export class PostgresPersoneroRepository {
     if (!existing) throw new Error(`No se encontró el registro con DNI ${cleanDni}`);
 
     const tableName = existing.tableName;
+    const nombres = params.nombresApellidos || params.nombres || params['Nombres y Apellidos'];
+    const cel = params.celular || params.Celular;
     const dist = params.distritoAsignado !== undefined ? params.distritoAsignado : params.distrito;
     const loc = params.localAsignado !== undefined ? params.localAsignado : params.local;
     const mes = params.mesaAsignada !== undefined ? params.mesaAsignada : params.mesa;
+    const rol = params.rolADesempenar || params.rol;
+    const cred = params.credenciales || params.estado;
 
     const query = `
       UPDATE ${tableName}
-      SET distrito_asignado = COALESCE($1, distrito_asignado),
-          local_de_votacion_asignado = COALESCE($2, local_de_votacion_asignado),
-          mesa_asignada = COALESCE($3, mesa_asignada)
-      WHERE dni = $4
+      SET nombres_y_apellidos = COALESCE($1, nombres_y_apellidos),
+          celular = COALESCE($2, celular),
+          distrito_asignado = COALESCE($3, distrito_asignado),
+          local_de_votacion_asignado = COALESCE($4, local_de_votacion_asignado),
+          mesa_asignada = COALESCE($5, mesa_asignada),
+          rol_a_desempenar = COALESCE($6, rol_a_desempenar),
+          credenciales = COALESCE($7, credenciales)
+      WHERE dni = $8
       RETURNING *;
     `;
 
-    const res = await pool.query(query, [dist, loc, mes, cleanDni]);
+    const res = await pool.query(query, [
+      nombres || null,
+      cel || null,
+      dist || null,
+      loc || null,
+      mes !== undefined ? mes : null,
+      rol || null,
+      cred || null,
+      cleanDni
+    ]);
     return {
       entity: this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros'),
       tableName
     };
+  }
+
+  async updateAssignment(dni, params = {}) {
+    return this.updatePersonero(dni, params);
+  }
+
+  async deleteByDni(dni) {
+    await this.ensureTablesExist();
+    const pool = await dbPool.getPool();
+    const cleanDni = String(dni).trim();
+
+    const results = await Promise.all([
+      pool.query('DELETE FROM rpersoneros WHERE dni = $1 RETURNING *', [cleanDni]),
+      pool.query('DELETE FROM rcoordinadores WHERE dni = $1 RETURNING *', [cleanDni]),
+      pool.query('DELETE FROM rcoordinadoresz WHERE dni = $1 RETURNING *', [cleanDni]),
+      pool.query('DELETE FROM rcoordinadoresd WHERE dni = $1 RETURNING *', [cleanDni])
+    ]);
+
+    const totalDeleted = results.reduce((acc, r) => acc + (r.rowCount || 0), 0);
+    return { success: totalDeleted > 0, totalDeleted };
   }
 
   async findAll() {

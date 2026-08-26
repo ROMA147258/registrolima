@@ -54,9 +54,11 @@ export const api = {
   // Verificación Pública
   verifyToken: (token) => request(`/verify/${encodeURIComponent(token)}`),
 
-  // Dashboard
+  // Dashboard y Gestión de Personeros
   getDashboardSummary: () => request('/dashboard/summary'),
   getDashboardRecords: () => request('/dashboard/records'),
-  updateAssignment: (dni, data) => request(`/personeros/${encodeURIComponent(dni)}/assignment`, { method: 'PUT', body: JSON.stringify(data) }),
+  updatePersonero: (dni, data) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'PUT', body: JSON.stringify(data) }),
+  updateAssignment: (dni, data) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deletePersonero: (dni) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'DELETE' }),
   getExportUrl: (format = 'xlsx', district = '') => `${BASE_URL}/dashboard/export?format=${format}${district ? `&district=${encodeURIComponent(district)}` : ''}`
 };

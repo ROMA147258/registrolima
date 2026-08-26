@@ -1103,13 +1103,13 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
           </div>
 
           {/* SECCIÓN 2: MI LUGAR DE VOTACIÓN */}
-          <div style={{ border: fieldErrors.distrito_vota || fieldErrors.mesa_vota || fieldErrors.local_vota ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+          <div style={{ border: fieldErrors.distrito_vota || fieldErrors.local_vota ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>2</div>
               <span>MI LUGAR DE VOTACIÓN</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {/* Distrito donde Vota */}
               <div>
                 <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
@@ -1129,56 +1129,30 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 />
               </div>
 
-              {/* Mesa de Sufragio (Bloqueado Temporalmente) */}
+              {/* Local de Votación */}
               <div>
                 <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                  Mesa de Sufragio
+                  Local / Colegio de Votación <span style={{ color: '#ef4444' }}>*</span>
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: '#94a3b8' }} />
-                  <input
-                    id="field-mesa_vota"
-                    type="text"
-                    name="mesa_vota"
-                    value="No aplica"
-                    disabled
-                    className="form-control"
-                    style={{
-                      paddingLeft: '36px',
-                      background: '#f1f5f9',
-                      border: '1.5px solid #cbd5e1',
-                      color: '#64748b',
-                      cursor: 'not-allowed',
-                      fontWeight: 600
-                    }}
-                  />
-                </div>
+                <CustomSearchableSelect
+                  id="field-local_vota"
+                  name="local_vota"
+                  value={formData.local_vota}
+                  onChange={handleChange}
+                  options={localesVota}
+                  placeholder={formData.distrito_vota ? `Seleccione Colegio en ${formData.distrito_vota}` : "Primero seleccione un distrito"}
+                  icon={School}
+                  required
+                  disabled={!formData.distrito_vota}
+                  hasError={!!fieldErrors.local_vota}
+                  errorMsg={fieldErrors.local_vota}
+                />
               </div>
-            </div>
-
-            {/* Local de Votación */}
-            <div className="form-group" style={{ marginBottom: 0 }}>
-              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                Local de Votación <span style={{ color: '#ef4444' }}>*</span>
-              </label>
-              <CustomSearchableSelect
-                id="field-local_vota"
-                name="local_vota"
-                value={formData.local_vota}
-                onChange={handleChange}
-                options={localesVota}
-                placeholder={formData.distrito_vota ? `Seleccione Colegio en ${formData.distrito_vota}` : "Primero seleccione un distrito"}
-                icon={School}
-                required
-                disabled={!formData.distrito_vota}
-                hasError={!!fieldErrors.local_vota}
-                errorMsg={fieldErrors.local_vota}
-              />
             </div>
           </div>
 
           {/* SECCIÓN 3: ROL Y ASIGNACIÓN ELECTORAL */}
-          <div style={{ border: fieldErrors.rol_electoral || fieldErrors.distrito_asignado || fieldErrors.mesa_asignada || fieldErrors.local_asignado ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+          <div style={{ border: fieldErrors.rol_electoral || fieldErrors.distrito_asignado || fieldErrors.local_asignado ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>3</div>
               <span>ROL Y ASIGNACIÓN ELECTORAL</span>
@@ -1359,56 +1333,28 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
               </>
             ) : (
               /* Caso Personero de Mesa o Coordinador de Local */
-              <>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
-                  {/* Distrito Asignado */}
-                  <div>
-                    <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                      Distrito Asignado <span style={{ color: '#ef4444' }}>*</span>
-                    </label>
-                    <CustomSearchableSelect
-                      id="field-distrito_asignado"
-                      name="distrito_asignado"
-                      value={formData.distrito_asignado}
-                      onChange={handleChange}
-                      options={DISTRITOS_LIMA}
-                      placeholder="Seleccione Distrito"
-                      icon={MapPin}
-                      required
-                      hasError={!!fieldErrors.distrito_asignado}
-                      errorMsg={fieldErrors.distrito_asignado}
-                    />
-                  </div>
-
-                  {/* Mesa Asignada (Bloqueado Temporalmente) */}
-                  <div>
-                    <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                      Mesa Asignada
-                    </label>
-                    <div style={{ position: 'relative' }}>
-                      <Table className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: '#94a3b8' }} />
-                      <input
-                        id="field-mesa_asignada"
-                        type="text"
-                        name="mesa_asignada"
-                        value="No aplica"
-                        disabled
-                        className="form-control"
-                        style={{
-                          paddingLeft: '36px',
-                          background: '#f1f5f9',
-                          border: '1.5px solid #cbd5e1',
-                          color: '#64748b',
-                          cursor: 'not-allowed',
-                          fontWeight: 600
-                        }}
-                      />
-                    </div>
-                  </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                {/* Distrito Asignado */}
+                <div>
+                  <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                    Distrito Asignado <span style={{ color: '#ef4444' }}>*</span>
+                  </label>
+                  <CustomSearchableSelect
+                    id="field-distrito_asignado"
+                    name="distrito_asignado"
+                    value={formData.distrito_asignado}
+                    onChange={handleChange}
+                    options={DISTRITOS_LIMA}
+                    placeholder="Seleccione Distrito"
+                    icon={MapPin}
+                    required
+                    hasError={!!fieldErrors.distrito_asignado}
+                    errorMsg={fieldErrors.distrito_asignado}
+                  />
                 </div>
 
                 {/* Local de Votación Asignado */}
-                <div className="form-group" style={{ marginBottom: 0 }}>
+                <div>
                   <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
                     Local de Votación Asignado <span style={{ color: '#ef4444' }}>*</span>
                   </label>
@@ -1429,7 +1375,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     errorMsg={fieldErrors.local_asignado}
                   />
                 </div>
-              </>
+              </div>
             )}
           </div>
 
@@ -1691,10 +1637,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     <strong style={{ color: '#0f172a' }}>{formData.distrito_vota}</strong>
                   </div>
                   <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Mesa de Votación</span>
-                    <strong style={{ color: '#0f172a' }}>{formData.mesa_vota}</strong>
-                  </div>
-                  <div style={{ gridColumn: 'span 2' }}>
                     <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local / Colegio de Votación</span>
                     <strong style={{ color: '#0f172a' }}>{formData.local_vota}</strong>
                   </div>
@@ -1737,18 +1679,10 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                       </div>
                     </div>
                   ) : !isCoordinadorDistrital ? (
-                    <>
-                      <div>
-                        <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Mesa Asignada</span>
-                        <strong style={{ color: '#0f172a' }}>
-                          {isCoordinadorLocal ? 'No aplica (Coordinador)' : formData.mesa_asignada}
-                        </strong>
-                      </div>
-                      <div>
-                        <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local Asignado</span>
-                        <strong style={{ color: '#0f172a' }}>{formData.local_asignado}</strong>
-                      </div>
-                    </>
+                    <div style={{ gridColumn: 'span 2' }}>
+                      <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local Asignado</span>
+                      <strong style={{ color: '#0f172a' }}>{formData.local_asignado}</strong>
+                    </div>
                   ) : null}
                 </div>
               </div>

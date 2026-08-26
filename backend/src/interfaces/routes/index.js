@@ -91,8 +91,10 @@ export function createApiRouter() {
   router.get('/dashboard/records', (req, res, next) => dashboardCtrl.readAll(req, res, next));
   router.get('/dashboard/export', (req, res, next) => dashboardCtrl.export(req, res, next));
 
-  // Actualización de asignación de mesa/local
+  // Actualización y Eliminación de personeros
+  router.put('/personeros/:dni', (req, res, next) => personeroCtrl.update(req, res, next));
   router.put('/personeros/:dni/assignment', (req, res, next) => personeroCtrl.updateAssignment(req, res, next));
+  router.delete('/personeros/:dni', (req, res, next) => personeroCtrl.delete(req, res, next));
 
   return router;
 }

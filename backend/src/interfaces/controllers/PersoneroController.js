@@ -165,18 +165,34 @@ export class PersoneroController {
     }
   }
 
+  async update(req, res, next) {
+    try {
+      const { dni } = req.params;
+      const result = await this.personeroRepo.updatePersonero(dni, req.body);
+      res.json({ status: 'success', message: 'Datos del personero actualizados correctamente', data: result.entity });
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async updateAssignment(req, res, next) {
     try {
       const { dni } = req.params;
-      const { distritoAsignado, localAsignado, mesaAsignada, rolADesempenar, credenciales } = req.body;
-      const result = await this.personeroRepo.updateAssignment(dni, {
-        distritoAsignado,
-        localAsignado,
-        mesaAsignada,
-        rolADesempenar,
-        credenciales
-      });
+      const result = await this.personeroRepo.updatePersonero(dni, req.body);
       res.json({ status: 'success', message: 'Asignación actualizada correctamente', data: result.entity });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async delete(req, res, next) {
+    try {
+      const { dni } = req.params;
+      const result = await this.personeroRepo.deleteByDni(dni);
+      if (!result.success) {
+        return res.status(404).json({ status: 'error', message: 'No se encontró el personero para eliminar.' });
+      }
+      res.json({ status: 'success', message: 'Personero eliminado exitosamente de la base de datos.' });
     } catch (err) {
       next(err);
     }
