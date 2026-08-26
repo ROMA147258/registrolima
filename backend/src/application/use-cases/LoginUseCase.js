@@ -15,15 +15,30 @@ export class LoginUseCase {
     const cleanPass = String(password || '').trim();
     const cleanDni = String(dni || (/^\d{7,9}$/.test(cleanPass) ? cleanPass : (/^\d{7,9}$/.test(cleanUser) ? cleanUser : ''))).trim();
 
-    // 1. Verificación Inmediata de Administrador (eric / eric123 o admin / admin123)
-    if (
-      (cleanUser === 'eric' && (cleanPass === 'eric123' || cleanPass === 'admin123')) ||
-      (cleanUser === 'admin' && (cleanPass === 'admin123' || cleanPass === 'eric123')) ||
-      (cleanUser === config.admin.username.toLowerCase() && cleanPass === config.admin.password) ||
-      (cleanUser === config.admin.ericUsername.toLowerCase() && cleanPass === config.admin.ericPassword)
-    ) {
+    // 1. Verificación Inmediata de Superadministradores (eric, paola, susana, admin)
+    const superadmins = {
+      eric: {
+        passwords: ['eric123', 'admin123', config.admin.ericPassword, config.admin.password].filter(Boolean),
+        displayName: 'Eric - Coordinador Central'
+      },
+      paola: {
+        passwords: ['pao123$', config.admin.paolaPassword].filter(Boolean),
+        displayName: 'Paola - Superadministradora'
+      },
+      susana: {
+        passwords: ['susan456&', config.admin.susanaPassword].filter(Boolean),
+        displayName: 'Susana - Superadministradora'
+      },
+      admin: {
+        passwords: ['admin123', 'eric123', config.admin.password].filter(Boolean),
+        displayName: 'Administrador General'
+      }
+    };
+
+    if (superadmins[cleanUser] && superadmins[cleanUser].passwords.includes(cleanPass)) {
+      const superadminData = superadmins[cleanUser];
       const token = jwt.sign(
-        { username: cleanUser, role: ROLES.SUPERADMIN, name: cleanUser === 'eric' ? 'Eric' : 'Administrador' },
+        { username: cleanUser, role: ROLES.SUPERADMIN, name: superadminData.displayName },
         config.jwt.secret,
         { expiresIn: config.jwt.expiresIn }
       );
@@ -33,7 +48,7 @@ export class LoginUseCase {
           action: 'LOGIN_ADMIN',
           userIdentifier: cleanUser,
           role: ROLES.SUPERADMIN,
-          details: { username: cleanUser },
+          details: { username: cleanUser, name: superadminData.displayName },
           ipAddress: context.ip,
           userAgent: context.userAgent
         });
@@ -45,7 +60,9 @@ export class LoginUseCase {
         token,
         user: {
           username: cleanUser,
-          fullName: cleanUser === 'eric' ? 'Eric - Coordinador Central' : 'Administrador General',
+          fullName: superadminData.displayName,
+          'Nombres y Apellidos': superadminData.displayName,
+          'Rol a Desempeñar': 'Superadministrador',
           role: ROLES.SUPERADMIN
         }
       };

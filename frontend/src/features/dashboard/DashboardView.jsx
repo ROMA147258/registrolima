@@ -233,62 +233,84 @@ export function DashboardView({ onGoToTraining }) {
 
   // Filtrado de seguridad según rol:
   // 1) Coordinador de Local: solo ve los personeros asignados a su colegio y distrito
-  // 2) Coordinador Zonal: solo ve los colegios de su zona y sus coordinadores locales y personeros
-  // 3) Coordinador de Distrito: ve todos los coordinadores de local y personeros de su distrito
-  // 4) SuperAdmin: ve todos los distritos de Lima
+  // 2) Coordinador Zonal: solo ve los colegios de su zona y sus coordinadores locales y personeros (NUNCA ve Coordinador Distrital ni Superadmin)
+  // 3) Coordinador de Distrito: ve coordinadores zonales, coordinadores de local y personeros de su distrito (NUNCA Superadmin ni otros distritos)
+  // 4) SuperAdmin (Eric, Paola, Susana, Admin): ve todos los niveles y todos los 43 distritos de Lima
   const records = useMemo(() => {
     if (isCoordinadorLocal && coordinatorDistrict && coordinatorLocal) {
       return allRecords.filter(r => {
-        const d = r['Distrito Asignado'] || r['Distrito donde Vota'];
-        const l = r['Local de Votación Asignado'] || r['Local de Votación'];
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota;
+        const l = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || r.localDeVotacion;
+        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+        const isSelf = String(r['D.N.I.'] || r['DNI'] || r.dni || '') === String(user?.DNI || user?.dni || user?.['D.N.I.'] || '');
+        if (isSelf) return true;
+        if (rol.includes('distrito') || rol.includes('distrital') || rol.includes('zonal') || rol.includes('zona')) return false;
         return matchesDistrict(d, coordinatorDistrict) && matchesLocal(l, coordinatorLocal);
       });
     }
+
     if (isCoordinadorZonal && coordinatorDistrict && coordinatorZonalLocales.length > 0) {
       return allRecords.filter(r => {
-        const d = r['Distrito Asignado'] || r['Distrito donde Vota'];
-        const l = r['Local de Votación Asignado'] || r['Local de Votación'];
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota;
+        const l = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || r.localDeVotacion;
+        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
         const isSelf = String(r['D.N.I.'] || r['DNI'] || r.dni || '') === String(user?.DNI || user?.dni || user?.['D.N.I.'] || '');
         if (isSelf) return true;
+        
+        // El Coordinador Zonal NO puede ver nada de Coordinador Distrital ni Superadministrador
+        if (rol.includes('distrito') || rol.includes('distrital') || rol.includes('superadmin')) return false;
         if (!matchesDistrict(d, coordinatorDistrict)) return false;
         return coordinatorZonalLocales.some(zLocal => matchesLocal(l, zLocal));
       });
     }
-    if ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict) {
-      return allRecords.filter(r => matchesDistrict(r['Distrito Asignado'] || r['Distrito donde Vota'], coordinatorDistrict));
+
+    if ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict && !isSuperAdmin) {
+      return allRecords.filter(r => {
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota;
+        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+        const isSelf = String(r['D.N.I.'] || r['DNI'] || r.dni || '') === String(user?.DNI || user?.dni || user?.['D.N.I.'] || '');
+        if (isSelf) return true;
+        if (rol.includes('superadmin')) return false;
+        return matchesDistrict(d, coordinatorDistrict);
+      });
     }
+
     return allRecords;
-  }, [allRecords, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital, isCoordinador, coordinatorDistrict, coordinatorLocal, coordinatorZonalLocales, user]);
+  }, [allRecords, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital, isCoordinador, isSuperAdmin, coordinatorDistrict, coordinatorLocal, coordinatorZonalLocales, user]);
 
   // =========================================================================
   // DISTRIBUCIÓN DE PERSONEROS Y COORDINADORES POR DISTRITO PARA EL GRÁFICO
   // =========================================================================
-  const { personerosByDist, coordsLocalByDist, coordsDistByDist } = useMemo(() => {
+  const { personerosByDist, coordsLocalByDist, coordsZonalByDist, coordsDistByDist } = useMemo(() => {
     const pMap = {};
     const clMap = {};
+    const czMap = {};
     const cdMap = {};
     DISTRITOS_LIMA.forEach(d => {
       pMap[d] = 0;
       clMap[d] = 0;
+      czMap[d] = 0;
       cdMap[d] = 0;
     });
 
     records.forEach(r => {
-      const rawDist = r['Distrito Asignado'] || r['Distrito donde Vota'] || '';
-      const rawRol = String(r['Rol a Desempeñar'] || '').toLowerCase();
+      const rawDist = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota || '';
+      const rawRol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
       const isCoordDist = rawRol.includes('distrito') || rawRol.includes('distrital');
-      const isCoordLocal = !isCoordDist && (rawRol.includes('local') || rawRol.includes('coordinador'));
+      const isCoordZonal = !isCoordDist && (rawRol.includes('zonal') || rawRol.includes('zona'));
+      const isCoordLocal = !isCoordDist && !isCoordZonal && (rawRol.includes('local') || (rawRol.includes('coordinador') && !rawRol.includes('central')));
 
       DISTRITOS_LIMA.forEach(d => {
         if (matchesDistrict(rawDist, d)) {
           if (isCoordDist) cdMap[d]++;
+          else if (isCoordZonal) czMap[d]++;
           else if (isCoordLocal) clMap[d]++;
           else pMap[d]++;
         }
       });
     });
 
-    return { personerosByDist: pMap, coordsLocalByDist: clMap, coordsDistByDist: cdMap };
+    return { personerosByDist: pMap, coordsLocalByDist: clMap, coordsZonalByDist: czMap, coordsDistByDist: cdMap };
   }, [records]);
 
   // =========================================================================
@@ -361,6 +383,7 @@ export function DashboardView({ onGoToTraining }) {
   // KPIs dinámicos sobre los registros filtrados de Tab 1
   let tab1Total = filteredRecords1.length;
   let tab1CoordsDistrital = 0;
+  let tab1CoordsZonal = 0;
   let tab1CoordsLocal = 0;
   let tab1Personeros = 0;
   let tab1Exp = 0;
@@ -368,10 +391,12 @@ export function DashboardView({ onGoToTraining }) {
   let tab1Comp = 0;
 
   filteredRecords1.forEach(r => {
-    const rol = String(r['Rol a Desempeñar'] || '').toLowerCase();
+    const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
     if (rol.includes('distrito') || rol.includes('distrital')) {
       tab1CoordsDistrital++;
-    } else if (rol.includes('local') || rol.includes('coordinador')) {
+    } else if (rol.includes('zonal') || rol.includes('zona')) {
+      tab1CoordsZonal++;
+    } else if (rol.includes('local') || (rol.includes('coordinador') && !rol.includes('central'))) {
       tab1CoordsLocal++;
     } else {
       tab1Personeros++;
@@ -417,8 +442,9 @@ export function DashboardView({ onGoToTraining }) {
 
   const barData1 = useMemo(() => {
     const isPersoneroActive = role1 === 'all' || role1 === 'Personero de Mesa';
-    const isCoordLocalActive = role1 === 'all' || role1 === 'Coordinador de Local';
-    const isCoordDistActive = role1 === 'all' || role1 === 'Coordinador de Distritos';
+    const isCoordLocalActive = (role1 === 'all' || role1 === 'Coordinador de Local') && !isCoordinadorLocal;
+    const isCoordZonalActive = (role1 === 'all' || role1 === 'Coordinador Zonal') && (isSuperAdmin || isCoordinadorDistrital);
+    const isCoordDistActive = (role1 === 'all' || role1 === 'Coordinador de Distritos') && isSuperAdmin;
 
     const datasets = [];
 
@@ -435,7 +461,7 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
-    if (isCoordLocalActive && !isCoordinadorLocal) {
+    if (isCoordLocalActive) {
       datasets.push({
         label: 'Coordinadores de Local',
         data: chartDistricts.map(d => coordsLocalByDist[d] || 0),
@@ -448,7 +474,20 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
-    if (isCoordDistActive && !isCoordinadorLocal) {
+    if (isCoordZonalActive) {
+      datasets.push({
+        label: 'Coordinadores Zonales',
+        data: chartDistricts.map(d => coordsZonalByDist[d] || 0),
+        backgroundColor: chartDistricts.map(d =>
+          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
+            ? '#38bdf8'
+            : '#0284c7'
+        ),
+        borderRadius: 4
+      });
+    }
+
+    if (isCoordDistActive) {
       datasets.push({
         label: 'Coordinadores de Distrito',
         data: chartDistricts.map(d => coordsDistByDist[d] || 0),
@@ -465,7 +504,7 @@ export function DashboardView({ onGoToTraining }) {
       labels: isCoordinadorLocal ? [coordinatorLocal] : chartDistricts,
       datasets
     };
-  }, [chartDistricts, role1, dist1, personerosByDist, coordsLocalByDist, coordsDistByDist, isCoordinadorLocal, coordinatorLocal, tab1Personeros]);
+  }, [chartDistricts, role1, dist1, personerosByDist, coordsLocalByDist, coordsZonalByDist, coordsDistByDist, isCoordinadorLocal, isSuperAdmin, isCoordinadorDistrital, coordinatorLocal, tab1Personeros]);
 
   // =========================================================================
   // FILTRADO TAB 2 (CAPACITACIONES)
@@ -1206,8 +1245,8 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
-                    {!isCoordinadorLocal && <option value="Coordinador Zonal">Coordinador Zonal</option>}
-                    {!isCoordinadorLocal && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
+                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coordinador Zonal</option>}
+                    {isSuperAdmin && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
                   </select>
 
                   {/* Filtro Experiencia */}
@@ -1321,7 +1360,7 @@ export function DashboardView({ onGoToTraining }) {
                 </div>
               </div>
 
-              {/* Indicadores Electorales Clave (7 KPIs Sincronizados) */}
+              {/* Indicadores Electorales Clave (KPIs Jerárquicos Sincronizados) */}
               <div style={{ marginBottom: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
@@ -1329,13 +1368,13 @@ export function DashboardView({ onGoToTraining }) {
                     <span>Indicadores Electorales Sincronizados ({tab1Total})</span>
                   </div>
                   <span style={{ fontSize: '0.74rem', color: textSub }}>
-                    {isFiltered1 ? `Métricas en vivo para ${tab1Total} seleccionados` : 'Métricas del padrón completo'}
+                    {isFiltered1 ? `Métricas en vivo para ${tab1Total} seleccionados` : 'Métricas del padrón'}
                   </span>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
                   
-                  {/* KPI 1 */}
+                  {/* KPI 1 - Total */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px', transition: 'all 0.2s ease' }}>
                     <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>TOTAL FILTRADOS</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
@@ -1345,8 +1384,8 @@ export function DashboardView({ onGoToTraining }) {
                     <div style={{ fontSize: '0.68rem', color: textSub }}>{isFiltered1 ? `De ${records.length} totales` : 'Padrón Somos Perú'}</div>
                   </div>
 
-                  {/* KPI 2 - Coordinadores Distritales */}
-                  {!isCoordinadorLocal && (
+                  {/* KPI 2 - Coordinadores Distritales (Solo Superadministrador) */}
+                  {isSuperAdmin && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0d9488', borderRadius: '10px', padding: '14px' }}>
                       <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. DISTRITALES</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
@@ -1357,7 +1396,19 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* KPI 3 - Coordinadores de Local */}
+                  {/* KPI 3 - Coordinadores Zonales (Superadmin y Distrital) */}
+                  {(isSuperAdmin || isCoordinadorDistrital) && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px' }}>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. ZONALES</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Layers className="w-4 h-4" /></div>
+                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsZonal}</span>
+                      </div>
+                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes Zonales</div>
+                    </div>
+                  )}
+
+                  {/* KPI 4 - Coordinadores de Local (Superadmin, Distrital y Zonal) */}
                   {!isCoordinadorLocal && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
                       <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. DE LOCAL</div>
@@ -1369,7 +1420,7 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* KPI 4 - Personeros Mesa */}
+                  {/* KPI 5 - Personeros Mesa */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: '14px' }}>
                     <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONEROS MESA</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
@@ -1807,8 +1858,8 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
-                    {!isCoordinadorLocal && <option value="Coordinador Zonal">Coordinador Zonal</option>}
-                    {!isCoordinadorLocal && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
+                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coordinador Zonal</option>}
+                    {isSuperAdmin && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
                   </select>
 
                   {isFiltered2 && (

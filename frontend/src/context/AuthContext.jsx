@@ -35,26 +35,22 @@ export function AuthProvider({ children }) {
       }
       throw new Error(res?.message || 'Error de autenticación');
     } catch (err) {
-      // Acceso directo garantizado para administradores predeterminados
-      if (
-        (cleanUser === 'eric' && (cleanPass === 'eric123' || cleanPass === 'admin123')) ||
-        (cleanUser === 'admin' && (cleanPass === 'admin123' || cleanPass === 'eric123'))
-      ) {
-        const adminUser = cleanUser === 'eric'
-          ? {
-              username: 'eric',
-              fullName: 'Eric - Administrador Central',
-              role: 'superadmin',
-              'Rol a Desempeñar': 'Administrador General',
-              'Nombres y Apellidos': 'Eric - Administrador Central'
-            }
-          : {
-              username: 'admin',
-              fullName: 'Administrador General',
-              role: 'superadmin',
-              'Rol a Desempeñar': 'Administrador General',
-              'Nombres y Apellidos': 'Administrador General'
-            };
+      // Acceso directo garantizado para administradores predeterminados (eric, paola, susana, admin)
+      const SUPERADMIN_CREDENTIALS = {
+        eric: { pass: ['eric123', 'admin123'], name: 'Eric - Coordinador Central' },
+        paola: { pass: ['pao123$'], name: 'Paola - Superadministradora' },
+        susana: { pass: ['susan456&'], name: 'Susana - Superadministradora' },
+        admin: { pass: ['admin123', 'eric123'], name: 'Administrador General' }
+      };
+
+      if (SUPERADMIN_CREDENTIALS[cleanUser] && SUPERADMIN_CREDENTIALS[cleanUser].pass.includes(cleanPass)) {
+        const adminUser = {
+          username: cleanUser,
+          fullName: SUPERADMIN_CREDENTIALS[cleanUser].name,
+          role: 'superadmin',
+          'Rol a Desempeñar': 'Superadministrador',
+          'Nombres y Apellidos': SUPERADMIN_CREDENTIALS[cleanUser].name
+        };
         setUser(adminUser);
         setRole('superadmin');
         setToken('admin_master_token');
@@ -106,7 +102,7 @@ export function AuthProvider({ children }) {
 
   const rolName = String(user?.['Rol a Desempeñar'] || user?.role || '').toLowerCase();
   const cleanUsername = String(user?.username || '').toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'admin' || cleanUsername === 'eric' || cleanUsername === 'admin';
+  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['eric', 'admin', 'paola', 'susana'].includes(cleanUsername) || rolName === 'superadministrador';
   const isCoordinadorDistrital = !isSuperAdmin && (
     Boolean(user?.isCoordinadorDistrital) ||
     rolName.includes('distrito') ||

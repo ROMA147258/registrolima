@@ -378,3 +378,55 @@ test('Validation Rule 7: Coordinador de Distritos gets auto-generated password a
   assert.equal(loginRes.status, 'success');
   assert.equal(loginRes.user.isCoordinadorDistrital, true);
 });
+
+test('Superadmin Authentication: Eric, Paola, Susana, Admin all succeed and receive superadmin role', async () => {
+  const repo = new MockPersoneroRepository();
+  const audit = new MockAuditRepository();
+  const { LoginUseCase } = await import('../src/application/use-cases/LoginUseCase.js');
+  const loginUseCase = new LoginUseCase(repo, null, audit);
+
+  // 1. Paola
+  const resPaola = await loginUseCase.execute({
+    username: 'paola',
+    password: 'pao123$'
+  });
+  assert.equal(resPaola.status, 'success');
+  assert.equal(resPaola.role, 'superadmin');
+  assert.equal(resPaola.user.role, 'superadmin');
+
+  // 2. Susana
+  const resSusana = await loginUseCase.execute({
+    username: 'susana',
+    password: 'susan456&'
+  });
+  assert.equal(resSusana.status, 'success');
+  assert.equal(resSusana.role, 'superadmin');
+  assert.equal(resSusana.user.role, 'superadmin');
+
+  // 3. Eric
+  const resEric = await loginUseCase.execute({
+    username: 'eric',
+    password: 'eric123'
+  });
+  assert.equal(resEric.status, 'success');
+  assert.equal(resEric.role, 'superadmin');
+
+  // 4. Admin
+  const resAdmin = await loginUseCase.execute({
+    username: 'admin',
+    password: 'admin123'
+  });
+  assert.equal(resAdmin.status, 'success');
+  assert.equal(resAdmin.role, 'superadmin');
+
+  // 5. Wrong credentials fail
+  await assert.rejects(
+    async () => {
+      await loginUseCase.execute({
+        username: 'paola',
+        password: 'wrongpassword'
+      });
+    },
+    /Credenciales incorrectas/
+  );
+});
