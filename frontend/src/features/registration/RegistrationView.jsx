@@ -803,10 +803,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.celular = 'El celular debe contener exactamente 9 dígitos numéricos.';
     }
 
-    if (formData.usa_whatsapp === 'No, otro número' && (!formData.numero_whatsapp_alterno || formData.numero_whatsapp_alterno.trim().length !== 9)) {
-      errors.numero_whatsapp_alterno = 'Ingrese el número de WhatsApp alternativo de 9 dígitos.';
-    }
-
     // 2. Lugar de Votación
     if (!formData.distrito_vota || formData.distrito_vota.trim() === '') {
       errors.distrito_vota = 'Seleccione el distrito donde vota.';
@@ -995,7 +991,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
           )}
 
           {/* SECCIÓN 1: DATOS PERSONALES */}
-          <div style={{ border: fieldErrors.nombres_apellidos || fieldErrors.dni || fieldErrors.celular || fieldErrors.correo_electronico || fieldErrors.numero_whatsapp_alterno ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+          <div style={{ border: fieldErrors.nombres_apellidos || fieldErrors.dni || fieldErrors.celular ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>1</div>
               <span>DATOS PERSONALES</span>
@@ -1103,131 +1099,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   </div>
                 )}
               </div>
-            </div>
-
-            <div className="form-group" style={{ marginBottom: '12px' }}>
-              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>Correo Electrónico</span>
-                <span style={{
-                  background: '#e0f2fe',
-                  color: '#0369a1',
-                  border: '1px solid #7dd3fc',
-                  padding: '2px 9px',
-                  borderRadius: '6px',
-                  fontSize: '0.72rem',
-                  fontWeight: 800,
-                  letterSpacing: '0.5px',
-                  textTransform: 'uppercase',
-                  boxShadow: '0 1px 2px rgba(2, 132, 199, 0.1)'
-                }}>
-                  (Opcional)
-                </span>
-              </label>
-              <div style={{ position: 'relative' }}>
-                <Mail className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.correo_electronico ? '#ef4444' : '#0284c7' }} />
-                <input
-                  id="field-correo_electronico"
-                  type="email"
-                  name="correo_electronico"
-                  value={formData.correo_electronico}
-                  onChange={handleChange}
-                  placeholder="Ej. juan.perez@gmail.com"
-                  className="form-control"
-                  style={{
-                    paddingLeft: '36px',
-                    background: '#ffffff',
-                    border: fieldErrors.correo_electronico ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
-                    color: '#0f172a',
-                    boxShadow: fieldErrors.correo_electronico ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
-                  }}
-                />
-              </div>
-              {fieldErrors.correo_electronico && (
-                <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
-                  <AlertCircle className="w-3.5 h-3.5" />
-                  <span>{fieldErrors.correo_electronico}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Pregunta WhatsApp */}
-            <div className="form-group" style={{ marginBottom: 0 }}>
-              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                ¿El número de celular registrado cuenta con WhatsApp? <span style={{ color: '#ef4444' }}>*</span>
-              </label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                <button
-                  type="button"
-                  onClick={() => handleToggle('usa_whatsapp', 'Sí, mismo número')}
-                  style={{
-                    padding: '10px',
-                    borderRadius: '8px',
-                    border: '1px solid rgb(14, 165, 233)',
-                    background: formData.usa_whatsapp === 'Sí, mismo número' ? 'rgb(14, 165, 233)' : '#ffffff',
-                    color: formData.usa_whatsapp === 'Sí, mismo número' ? '#ffffff' : '#334155',
-                    fontWeight: 800,
-                    fontSize: '0.82rem',
-                    cursor: 'pointer',
-                    transform: formData.usa_whatsapp === 'Sí, mismo número' ? 'scale(0.99)' : 'scale(1)',
-                    boxShadow: formData.usa_whatsapp === 'Sí, mismo número' ? '0 4px 12px rgba(14, 165, 233, 0.3)' : 'none',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
-                  }}
-                >
-                  Sí, mismo número
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggle('usa_whatsapp', 'No, otro número')}
-                  style={{
-                    padding: '10px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: formData.usa_whatsapp === 'No, otro número' ? 'rgb(14, 165, 233)' : '#ffffff',
-                    color: formData.usa_whatsapp === 'No, otro número' ? '#ffffff' : '#334155',
-                    fontWeight: 800,
-                    fontSize: '0.82rem',
-                    cursor: 'pointer',
-                    transform: formData.usa_whatsapp === 'No, otro número' ? 'scale(0.99)' : 'scale(1)',
-                    boxShadow: formData.usa_whatsapp === 'No, otro número' ? '0 4px 12px rgba(14, 165, 233, 0.3)' : 'none',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
-                  }}
-                >
-                  No, otro número
-                </button>
-              </div>
-
-              {formData.usa_whatsapp === 'No, otro número' && (
-                <div style={{ marginTop: '8px', animation: 'fadeIn 0.2s ease' }}>
-                  <div style={{ position: 'relative' }}>
-                    <Phone className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.numero_whatsapp_alterno ? '#ef4444' : '#0284c7' }} />
-                    <input
-                      id="field-numero_whatsapp_alterno"
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      name="numero_whatsapp_alterno"
-                      value={formData.numero_whatsapp_alterno}
-                      onChange={handleChange}
-                      placeholder="Ej. 912345678 (WhatsApp)"
-                      maxLength={9}
-                      className="form-control"
-                      style={{
-                        paddingLeft: '36px',
-                        background: '#ffffff',
-                        border: fieldErrors.numero_whatsapp_alterno ? '2px solid #ef4444' : '1.5px solid #cbd5e1',
-                        color: '#0f172a',
-                        boxShadow: fieldErrors.numero_whatsapp_alterno ? '0 0 0 3px rgba(239, 68, 68, 0.15)' : 'none'
-                      }}
-                    />
-                  </div>
-                  {fieldErrors.numero_whatsapp_alterno && (
-                    <div style={{ color: '#ef4444', fontSize: '0.74rem', marginTop: '4px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '3px' }}>
-                      <AlertCircle className="w-3.5 h-3.5" />
-                      <span>{fieldErrors.numero_whatsapp_alterno}</span>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
           </div>
 
@@ -1806,18 +1677,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Celular Principal</span>
                     <strong style={{ color: '#0f172a' }}>{formData.celular}</strong>
                   </div>
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>WhatsApp</span>
-                    <strong style={{ color: '#0f172a' }}>
-                      {formData.usa_whatsapp === 'Sí, mismo número' ? formData.celular : `${formData.numero_whatsapp_alterno} (Alterno)`}
-                    </strong>
-                  </div>
-                  {formData.correo_electronico && (
-                    <div style={{ gridColumn: 'span 2' }}>
-                      <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Correo Electrónico</span>
-                      <strong style={{ color: '#0f172a' }}>{formData.correo_electronico}</strong>
-                    </div>
-                  )}
                 </div>
               </div>
 
