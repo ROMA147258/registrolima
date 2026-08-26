@@ -1106,7 +1106,23 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
             </div>
 
             <div className="form-group" style={{ marginBottom: '12px' }}>
-              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>Correo Electrónico (Opcional)</label>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>Correo Electrónico</span>
+                <span style={{
+                  background: '#e0f2fe',
+                  color: '#0369a1',
+                  border: '1px solid #7dd3fc',
+                  padding: '2px 9px',
+                  borderRadius: '6px',
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase',
+                  boxShadow: '0 1px 2px rgba(2, 132, 199, 0.1)'
+                }}>
+                  (Opcional)
+                </span>
+              </label>
               <div style={{ position: 'relative' }}>
                 <Mail className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '12px', color: fieldErrors.correo_electronico ? '#ef4444' : '#0284c7' }} />
                 <input

@@ -45,13 +45,13 @@ export const QUESTION_BANK = [
     "id": 4,
     "question": "¿Qué rol cumple el Reniec dentro del proceso electoral?",
     "options": [
-      "Elaborar el Padrón Electoral inicial y mantener permanentemente actualizado el registro único de identidad de los ciudadanos.",
+      "Elaborar la Lista de Electores inicial y mantener permanentemente actualizado el registro único de identidad de los ciudadanos.",
       "Imprimir el tiraje de las cédulas de votación y distribuirlas en furgones blindados a todos los colegios del país.",
       "Capacitar a los miembros de mesa titulares y suplentes y fiscalizar la propaganda política en los medios de comunicación.",
       "Custodiar el material electoral en los locales de votación junto a efectivos de la Policía Nacional y Fuerzas Armadas."
     ],
     "answer": 0,
-    "explanation": "El Reniec prepara y actualiza el padrón electoral con la información del registro de identidad de los ciudadanos."
+    "explanation": "El Reniec prepara y actualiza la lista de electores con la información del registro de identidad de los ciudadanos."
   },
   {
     "id": 5,
@@ -191,7 +191,7 @@ export const QUESTION_BANK = [
     "options": [
       "Miembros de las Fuerzas Armadas y Policía Nacional en servicio activo, jueces, fiscales y funcionarios de organismos electorales.",
       "Ciudadanos mayores de 18 años con DNI vigente que trabajen en empresas privadas o instituciones educativas del país.",
-      "Profesionales independientes, técnicos, comerciantes y trabajadores independientes debidamente inscritos en el padrón.",
+      "Profesionales independientes, técnicos, comerciantes y trabajadores independientes debidamente inscritos en la lista de electores.",
       "Militantes o afiliados inscritos en el padrón del Registro de Organizaciones Políticas (ROP) del partido Somos Perú."
     ],
     "answer": 0,
@@ -216,7 +216,7 @@ export const QUESTION_BANK = [
       "Sí, previa presentación de su credencial original correspondiente y registro formal ante el Presidente de Mesa.",
       "No, el personero que inicia la instalación a las 6:00 a.m. debe permanecer obligatoriamente hasta el cierre final.",
       "Solo en casos de emergencia médica comprobada con certificado visado por el fiscal del Ministerio Público.",
-      "Únicamente si ambos personeros son parientes directos y comparten el mismo domicilio en el padrón electoral."
+      "Únicamente si ambos personeros son parientes directos y comparten el mismo domicilio en la lista de electores."
     ],
     "answer": 0,
     "explanation": "El relevo de personeros está permitido siempre que el nuevo personero presente su credencial y se acredite formalmente."
@@ -297,13 +297,13 @@ export const QUESTION_BANK = [
     "id": 25,
     "question": "¿Qué elementos debe verificar el personero dentro del paquete electoral que entrega la ONPE durante la instalación?",
     "options": [
-      "Cédulas de sufragio, padrón de electores, 5 actas electorales oficiales, ánforas, tampones, lapiceros y hologramas de votación.",
+      "Cédulas de sufragio, lista de electores, 5 actas electorales oficiales, ánforas, tampones, lapiceros y hologramas de votación.",
       "Folletos y volantes de propaganda electoral autorizados de las organizaciones políticas participantes en la contienda.",
       "Los talonarios de boletas de pago de multas electorales del JNE y refrigerios para el personal militar de custodia.",
       "Los manuales de fiscalización del Jurado Electoral Especial y precintos de seguridad para el material de descarte."
     ],
     "answer": 0,
-    "explanation": "El personero verifica que el paquete contenga cédulas íntegras, padrón oficial, útiles electorales y las 5 actas oficiales."
+    "explanation": "El personero verifica que el paquete contenga cédulas íntegras, lista oficial de electores, útiles electorales y las 5 actas oficiales."
   },
   {
     "id": 26,
@@ -324,7 +324,7 @@ export const QUESTION_BANK = [
       "Sí, es un derecho del personero rubricar el reverso de las cédulas de sufragio junto al Presidente de Mesa antes del voto.",
       "No, la ley electoral reserva la facultad de firmar las cédulas de sufragio de forma exclusiva al personal de la ONPE.",
       "Solo si el elector titular de la cédula le otorga un permiso verbal expreso al momento de acercarse a la mesa.",
-      "Únicamente si la mesa de votación cuenta con más de 300 ciudadanos registrados en el padrón electoral oficial."
+      "Únicamente si la mesa de votación cuenta con más de 300 ciudadanos registrados en la lista oficial de electores."
     ],
     "answer": 0,
     "explanation": "El personero tiene derecho a rubricar el reverso de las cédulas de sufragio para garantizar su autenticidad."
@@ -347,7 +347,7 @@ export const QUESTION_BANK = [
     "options": [
       "Verificar que se registre la hora exacta y el motivo del retraso en el rubro de observaciones del Acta de Instalación.",
       "Cerrar la puerta de ingreso del aula e impedir el inicio del sufragio hasta que arribe el fiscal del Ministerio Público.",
-      "Romper el padrón de electores por haberse vencido el plazo reglamentario de inicio de la jornada electoral distrital.",
+      "Romper la lista de electores por haberse vencido el plazo reglamentario de inicio de la jornada electoral distrital.",
       "Acudir a la comisaría del sector para formular una denuncia penal inmediata por delito contra la voluntad popular."
     ],
     "answer": 0,
@@ -391,7 +391,7 @@ export const QUESTION_BANK = [
   },
   {
     "id": 33,
-    "question": "¿Puede votar un ciudadano que no figura en el Padrón Electoral de esa mesa?",
+    "question": "¿Puede votar un ciudadano que no figura en la Lista de Electores de esa mesa?",
     "options": [
       "No, ninguna persona que no se encuentre inscrita en la lista oficial de electores de esa mesa puede emitir su voto.",
       "Sí, siempre que demuestre que reside en una calle vecina al local escolar mostrando el reverso de su DNI físico.",
@@ -399,7 +399,7 @@ export const QUESTION_BANK = [
       "Solo si cuenta con el visto bueno verbal y autorización expresa del personero general del partido en el colegio."
     ],
     "answer": 0,
-    "explanation": "El padrón electoral es inmodificable; solo sufragan quienes están inscritos en la lista de la mesa respectiva."
+    "explanation": "La lista de electores es inmodificable; solo sufragan quienes están inscritos en la lista de la mesa respectiva."
   },
   {
     "id": 34,
@@ -453,13 +453,13 @@ export const QUESTION_BANK = [
     "id": 38,
     "question": "¿Qué procedimiento se sigue ante la impugnación de identidad de un elector?",
     "options": [
-      "La mesa coteja huella y firma con el padrón; si persisten dudas, el voto se recibe en sobre especial impugnado para el JEE.",
+      "La mesa coteja huella y firma con la lista de electores; si persisten dudas, el voto se recibe en sobre especial impugnado para el JEE.",
       "El ciudadano es conducido de inmediato por la Policía Nacional a la carceleta distrital sin permitirle emitir su sufragio.",
-      "El Presidente de Mesa procede a romper el DNI del elector en dos mitades y anula su inscripción en el padrón electoral.",
+      "El Presidente de Mesa procede a romper el DNI del elector en dos mitades y anula su inscripción en la lista de electores.",
       "Se le obliga a cantar el himno nacional y emitir su voto en voz alta delante de todos los personeros presentes en el aula."
     ],
     "answer": 0,
-    "explanation": "La mesa verifica huellas y firma; si se mantiene la duda fundada, el voto se recibe en sobre lacrado de voto impugnado."
+    "explanation": "La mesa verifica huellas y firma en la lista de electores; si se mantiene la duda fundada, el voto se recibe en sobre lacrado de voto impugnado."
   },
   {
     "id": 39,
@@ -489,13 +489,13 @@ export const QUESTION_BANK = [
     "id": 41,
     "question": "¿Cuál es el primer paso obligatorio que debe realizar la mesa antes de abrir el ánfora de sufragio?",
     "options": [
-      "Contar el total de ciudadanos que firmaron en el Padrón de Electores y registrar dicha cifra en el Acta de Sufragio.",
+      "Contar el total de ciudadanos que firmaron en la Lista de Electores y registrar dicha cifra en el Acta de Sufragio.",
       "Vaciar íntegramente las cédulas sobre la carpeta y comenzar a separarlas rápidamente por colores de listas postulantes.",
       "Contar en voz alta los votos a favor del partido Somos Perú antes de revisar las cédulas de las demás agrupaciones.",
       "Solicitar el refrigerio de la cena y suspender temporalmente el conteo hasta que todos los miembros descansen."
     ],
     "answer": 0,
-    "explanation": "Primero se cuenta el total de votantes efectivos en el padrón electoral y se inutilizan las cédulas sobrantes."
+    "explanation": "Primero se cuenta el total de votantes efectivos en la lista de electores y se inutilizan las cédulas sobrantes."
   },
   {
     "id": 42,
@@ -511,11 +511,11 @@ export const QUESTION_BANK = [
   },
   {
     "id": 43,
-    "question": "Si al abrir el ánfora hay MÁS cédulas que ciudadanos que votaron según el padrón, ¿cuál es el protocolo?",
+    "question": "Si al abrir el ánfora hay MÁS cédulas que ciudadanos que votaron según la lista de electores, ¿cuál es el protocolo?",
     "options": [
       "El Presidente extrae al azar y sin desdoblar tantas cédulas como sobrantes haya y procede a destruirlas e inutilizarlas.",
       "Se declara de inmediato la nulidad total de la mesa de votación y se ordena repetir los comicios en ese colegio.",
-      "Se convoca a personas que transiten por el patio escolar para que firmen el padrón hasta igualar el número de cédulas.",
+      "Se convoca a personas que transiten por el patio escolar para que firmen la lista de electores hasta igualar el número de cédulas.",
       "Se adjudican automáticamente las cédulas excedentes a la organización política que obtuvo la mayor votación en el aula."
     ],
     "answer": 0,
@@ -612,7 +612,7 @@ export const QUESTION_BANK = [
       "Tres (3) secciones indivisibles: Acta de Instalación, Acta de Sufragio y Acta de Escrutinio.",
       "Una sola hoja resumen que contiene exclusivamente los resultados numéricos del conteo de votos.",
       "Dos (2) secciones reglamentarias: Acta de Apertura Matutina y Acta de Cierre de la Jornada Cívica.",
-      "Cuatro (4) secciones independientes: Padrón Inicial, Registro de Votación, Cómputo Final y Proclamación."
+      "Cuatro (4) secciones independientes: Lista de Electores Inicial, Registro de Votación, Cómputo Final y Proclamación."
     ],
     "answer": 0,
     "explanation": "El Acta Electoral indivisible consta de: 1. Acta de Instalación, 2. Acta de Sufragio y 3. Acta de Escrutinio."
@@ -663,7 +663,7 @@ export const QUESTION_BANK = [
       "Que el aula escolar designada para la votación no contaba con el mobiliario adecuado ni ventilación suficiente."
     ],
     "answer": 0,
-    "explanation": "El error material surge por sumas incongruentes, datos ilegibles o discordancia entre votos y firmas en el padrón."
+    "explanation": "El error material surge por sumas incongruentes, datos ilegibles o discordancia entre votos y firmas en la lista de electores."
   },
   {
     "id": 56,
