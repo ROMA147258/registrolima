@@ -17,7 +17,6 @@ export function App() {
     isPersonero
   } = useAuth();
   const [viewMode, setViewMode] = useState('register'); // 'register', 'login'
-  const [registeredData, setRegisteredData] = useState(null);
   const [coordLocalTab, setCoordLocalTab] = useState(() => {
     return localStorage.getItem('login_initially_confirmed') === 'true' ? 'dashboard' : 'training';
   });
@@ -87,26 +86,15 @@ export function App() {
   if (viewMode === 'login') {
     return (
       <LoginView
-        onBackToRegister={() => {
-          setRegisteredData(null);
-          setViewMode('register');
-        }}
-        initialUsername={registeredData?.dni || registeredData?.DNI || registeredData?.nombres || ''}
-        successMessage={registeredData ? '¡Registro completado con éxito! Por favor inicie sesión con su usuario y contraseña/DNI.' : ''}
+        onBackToRegister={() => setViewMode('register')}
       />
     );
   }
 
   return (
     <RegistrationView
-      onShowLogin={() => {
-        setRegisteredData(null);
-        setViewMode('login');
-      }}
-      onRegisteredSuccess={(data) => {
-        setRegisteredData(data || {});
-        setViewMode('login');
-      }}
+      onShowLogin={() => setViewMode('login')}
+      onRegisteredSuccess={() => setViewMode('login')}
     />
   );
 }

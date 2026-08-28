@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { User, Lock, LogIn, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
-export function LoginView({ onBackToRegister, initialUsername = '', successMessage = '' }) {
+export function LoginView({ onBackToRegister, successMessage = '' }) {
   const { login } = useAuth();
-  const [username, setUsername] = useState(initialUsername || '');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -161,6 +161,7 @@ export function LoginView({ onBackToRegister, initialUsername = '', successMessa
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder=""
                   required
+                  autoComplete="off"
                   style={{
                     width: '100%',
                     padding: '12px 14px 12px 40px',
@@ -200,6 +201,7 @@ export function LoginView({ onBackToRegister, initialUsername = '', successMessa
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder=""
                   required
+                  autoComplete="new-password"
                   style={{
                     width: '100%',
                     padding: '12px 14px 12px 40px',
