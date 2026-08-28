@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { User, Lock, LogIn, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
-export function LoginView({ onBackToRegister }) {
+export function LoginView({ onBackToRegister, initialUsername = '', successMessage = '' }) {
   const { login } = useAuth();
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(initialUsername || '');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(successMessage || null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg(null);
+    setSuccessMsg(null);
 
     const userVal = username.trim();
     const passVal = password.trim();
@@ -105,6 +107,24 @@ export function LoginView({ onBackToRegister }) {
         {/* Formulario */}
         <div style={{ padding: '24px' }}>
           
+          {successMsg && (
+            <div style={{
+              background: '#f0fdf4',
+              border: '1.5px solid #86efac',
+              borderRadius: '10px',
+              padding: '12px 14px',
+              marginBottom: '18px',
+              color: '#15803d',
+              fontSize: '0.84rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <span>✅ {successMsg}</span>
+            </div>
+          )}
+
           {errorMsg && (
             <div style={{
               background: '#fef2f2',

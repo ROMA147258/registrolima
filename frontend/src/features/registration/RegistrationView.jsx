@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   User, CreditCard, Phone, Mail, MapPin, School, Table, Shield, Layers,
-  LogOut, Check, ChevronDown, AlertCircle, Edit3, Send, CheckCircle2, X
+  LogOut, Check, ChevronDown, AlertCircle, Edit3, Send, CheckCircle2, X, Lock
 } from 'lucide-react';
 import { DISTRITOS_LIMA } from '../../constants/catalogs.js';
 import { api } from '../../services/api.js';

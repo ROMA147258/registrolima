@@ -34,17 +34,64 @@ export const DISTRITOS_LIMA = [
   "Villa El Salvador", "Villa María del Triunfo"
 ];
 
-export const DISTRITO_METAS = {
-  "Ancón": 164, "Ate": 1650, "Barranco": 151, "Breña": 355, "Carabayllo": 855,
-  "Cercado de Lima": 1030, "Chaclacayo": 139, "Chorrillos": 896, "Cieneguilla": 103,
-  "Comas": 1493, "El Agustino": 572, "Independencia": 595, "Jesús María": 431,
-  "La Molina": 571, "La Victoria": 642, "Lince": 294, "Los Olivos": 983,
-  "Lurigancho-Chosica": 548, "Lurín": 247, "Magdalena del Mar": 255,
-  "Miraflores": 480, "Pachacámac": 315, "Pucusana": 44, "Pueblo Libre": 337,
-  "Puente Piedra": 889, "Punta Hermosa": 32, "Punta Negra": 25, "Rímac": 567,
-  "San Bartolo": 24, "San Borja": 420, "San Isidro": 300,
-  "San Juan de Lurigancho": 2800, "San Juan de Miraflores": 1000, "San Luis": 160,
-  "San Martín de Porres": 1800, "San Miguel": 400, "Santa Anita": 550,
-  "Santa María del Mar": 10, "Santa Rosa": 40, "Santiago de Surco": 850,
-  "Surquillo": 280, "Villa El Salvador": 1100, "Villa María del Triunfo": 1000
+export const TOTAL_MESAS_LIMA = 29121;
+export const TOTAL_MESAS_LIMA_METROPOLITANA = 26389;
+
+export const PROVINCIA_METAS = {
+  "LIMA": 26389,
+  "CAÑETE": 1002,
+  "CANTA": 48,
+  "HUARAL": 555,
+  "HUAROCHIRI": 356,
+  "CAJATAMBO": 24,
+  "HUAURA": 655,
+  "BARRANCA": 421,
+  "OYON": 50
 };
+
+export const DISTRITO_METAS = {
+  "Ancón": 164,
+  "Ate": 1671,
+  "Barranco": 149,
+  "Breña": 349,
+  "Carabayllo": 861,
+  "Cercado de Lima": 1015,
+  "Chaclacayo": 138,
+  "Chorrillos": 899,
+  "Cieneguilla": 105,
+  "Comas": 1499,
+  "El Agustino": 566,
+  "Independencia": 595,
+  "Jesús María": 427,
+  "La Molina": 574,
+  "La Victoria": 640,
+  "Lince": 290,
+  "Los Olivos": 984,
+  "Lurigancho-Chosica": 550,
+  "Lurín": 248,
+  "Magdalena del Mar": 256,
+  "Miraflores": 478,
+  "Pachacámac": 319,
+  "Pucusana": 44,
+  "Pueblo Libre": 337,
+  "Puente Piedra": 891,
+  "Punta Hermosa": 33,
+  "Punta Negra": 25,
+  "Rímac": 560,
+  "San Bartolo": 24,
+  "San Borja": 422,
+  "San Isidro": 282,
+  "San Juan de Lurigancho": 2731,
+  "San Juan de Miraflores": 1115,
+  "San Luis": 228,
+  "San Martín de Porres": 1786,
+  "San Miguel": 507,
+  "Santa Anita": 631,
+  "Santa María del Mar": 6,
+  "Santa Rosa": 68,
+  "Santiago de Surco": 1179,
+  "Surquillo": 338,
+  "Villa El Salvador": 1171,
+  "Villa María del Triunfo": 1234
+};
+

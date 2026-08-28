@@ -10,7 +10,7 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { EditAssignmentModal } from '../../components/modals/EditAssignmentModal.jsx';
-import { DISTRITOS_LIMA, DISTRITO_METAS, ROLES } from '../../constants/catalogs.js';
+import { DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA, getMesasForLocal, getMesasForDistrito } from '../../constants/catalogs.js';
 import { api } from '../../services/api.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -344,11 +344,14 @@ export function DashboardView({ onGoToTraining }) {
         return cred === 'confirmado' || preg.includes('aprob') || preg.includes('pasad');
       });
 
+      const schoolMesas = getMesasForLocal(schoolName);
+
       return {
         schoolName,
         coordinadoresLocales: schoolCoords,
         personerosCount: schoolPersoneros.length,
-        accreditedCount: accreditedPersoneros.length
+        accreditedCount: accreditedPersoneros.length,
+        mesasColegio: schoolMesas
       };
     });
   }, [isCoordinadorZonal, coordinatorZonalLocales, allRecords, coordinatorDistrict]);
@@ -409,20 +412,38 @@ export function DashboardView({ onGoToTraining }) {
 
   const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || (isCoordinadorZonal && localZonal1 !== 'all') || role1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
 
-  // Meta territorial dinámica según el distrito asignado o seleccionado
+  // Meta territorial dinámica según el distrito asignado o seleccionado, o colegio, o zona
   const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
-  const selectedDistMeta = activeDistrictName ? (DISTRITO_METAS[activeDistrictName] || 0) : 25397;
-  const targetLabel = isCoordinadorLocal 
-    ? `META ${coordinatorLocal.toUpperCase()}` 
-    : (isCoordinadorZonal 
-      ? `ZONA • ${coordinatorDistrict.toUpperCase()}` 
-      : (activeDistrictName ? `META ${activeDistrictName.toUpperCase()}` : 'AVANCE META TOTAL'));
-  const targetSub = isCoordinadorLocal 
-    ? `Colegio: ${coordinatorLocal}` 
-    : (isCoordinadorZonal 
-      ? `${coordinatorZonalLocales.length} colegios en tu zona` 
-      : (activeDistrictName ? `Meta distrital: ${selectedDistMeta.toLocaleString()}` : 'Meta Lima: 25,397'));
-  const targetPct = selectedDistMeta > 0 ? Math.min(100, ((tab1Total / selectedDistMeta) * 100)).toFixed(1) : '0.0';
+  let targetMesas = TOTAL_MESAS_LIMA; // 29,121 mesas en el Departamento de Lima
+  let targetLabel = 'AVANCE META TOTAL';
+  let targetSub = 'Meta Departamento de Lima: 29,121 mesas';
+
+  if (isCoordinadorLocal && coordinatorLocal) {
+    const schoolMesas = getMesasForLocal(coordinatorLocal);
+    targetMesas = schoolMesas > 0 ? schoolMesas : 1;
+    targetLabel = `META COLEGIO • ${coordinatorLocal.toUpperCase()}`;
+    targetSub = `Colegio: ${coordinatorLocal} • ${schoolMesas} mesas`;
+  } else if (isCoordinadorZonal && coordinatorDistrict) {
+    if (localZonal1 !== 'all') {
+      const schoolMesas = getMesasForLocal(localZonal1);
+      targetMesas = schoolMesas > 0 ? schoolMesas : 1;
+      targetLabel = `META COLEGIO • ${localZonal1.toUpperCase()}`;
+      targetSub = `Colegio en zona: ${localZonal1} • ${schoolMesas} mesas`;
+    } else {
+      const sumZonaMesas = coordinatorZonalLocales.reduce((acc, loc) => acc + (getMesasForLocal(loc) || 0), 0);
+      targetMesas = sumZonaMesas > 0 ? sumZonaMesas : 1;
+      targetLabel = `META ZONA • ${coordinatorDistrict.toUpperCase()}`;
+      targetSub = `${coordinatorZonalLocales.length} colegios en tu zona • ${sumZonaMesas.toLocaleString()} mesas`;
+    }
+  } else if (activeDistrictName) {
+    const dMesas = getMesasForDistrito(activeDistrictName);
+    targetMesas = dMesas > 0 ? dMesas : 1;
+    targetLabel = `META DISTRITAL • ${activeDistrictName.toUpperCase()}`;
+    targetSub = `Meta distrital: ${dMesas.toLocaleString()} mesas`;
+  }
+
+  // Progreso de cobertura (1 personero = 1 mesa)
+  const targetPct = targetMesas > 0 ? Math.min(100, ((tab1Personeros / targetMesas) * 100)).toFixed(1) : '0.0';
 
   // =========================================================================
   // GRÁFICO LIMA METROPOLITANA O DISTRITO DEL COORDINADOR
@@ -1069,7 +1090,7 @@ export function DashboardView({ onGoToTraining }) {
                                 )}
                               </div>
                               <span style={{ fontSize: '0.74rem', color: textSub }}>
-                                {item.personerosCount} personeros asignados ({item.accreditedCount} acreditados)
+                                <strong>{item.personerosCount}</strong> / <strong>{item.mesasColegio || '-'}</strong> mesas cubiertas &bull; {item.accreditedCount} acreditados
                               </span>
                             </div>
                           </div>
@@ -1460,12 +1481,12 @@ export function DashboardView({ onGoToTraining }) {
                     <div style={{ fontSize: '0.68rem', color: textSub }}>4 de Octubre</div>
                   </div>
 
-                  {/* KPI 7 - Dinámico con respecto a la meta distrital o meta Lima */}
+                  {/* KPI 7 - Dinámico con respecto a la meta distrital, colegio o meta Lima */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #eab308', borderRadius: '10px', padding: '14px' }}>
                     <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#eab308' }}>{targetLabel}</div>
                     <div style={{ fontSize: '0.72rem', color: textSub, fontWeight: 700 }}>{targetSub}</div>
                     <div style={{ fontSize: '1.1rem', fontWeight: 900, color: textTitle, marginTop: '6px' }}>
-                      {tab1Total} / {selectedDistMeta.toLocaleString()} <span style={{ fontSize: '0.8rem', color: '#eab308' }}>{targetPct}%</span>
+                      {tab1Personeros} / {targetMesas.toLocaleString()} <span style={{ fontSize: '0.8rem', color: '#eab308' }}>{targetPct}%</span>
                     </div>
                   </div>
 

@@ -1,4 +1,4 @@
-import { DISTRITOS_LIMA, DISTRITO_METAS } from '../../config/constants.js';
+import { DISTRITOS_LIMA, DISTRITO_METAS, TOTAL_MESAS_LIMA } from '../../config/constants.js';
 
 export class GetDashboardDataUseCase {
   constructor(personeroRepository) {
@@ -63,12 +63,10 @@ export class GetDashboardDataUseCase {
       if (c === 'confirmado') credencialesEmitidas++;
     });
 
-    let totalMesasMeta = 0;
-    Object.values(DISTRITO_METAS).forEach(m => { totalMesasMeta += m; });
-
+    const totalMesasMeta = TOTAL_MESAS_LIMA; // 29,121 mesas en total
     const totalMesasCubiertas = coveredMesasSet.size || records.length;
     const mesasPendientes = Math.max(0, totalMesasMeta - totalMesasCubiertas);
-    const porcentajeCobertura = totalMesasMeta > 0 ? Math.round((totalMesasCubiertas / totalMesasMeta) * 100) : 0;
+    const porcentajeCobertura = totalMesasMeta > 0 ? Number(((totalMesasCubiertas / totalMesasMeta) * 100).toFixed(1)) : 0;
 
     return {
       status: 'success',
