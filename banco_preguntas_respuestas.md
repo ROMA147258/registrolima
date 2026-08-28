@@ -1,1108 +1,1208 @@
 # 📋 Banco Oficial de 100 Preguntas y Respuestas de Capacitación Electoral
+### Elecciones Regionales y Municipales 2026
+**Fuente oficial:** *Guion para Video de Capacitación de Personeros (ERM 2026)*
 
-### Elecciones Regionales y Municipales 2026 — Somos Perú (Carlos Bruce)
+> **Nota:** Este documento contiene las 100 preguntas oficiales del sistema con sus alternativas, la respuesta correcta destacada y su respectiva justificación normativa extraída del documento de capacitación.
 
-> **Nota:** Este documento contiene las 100 preguntas del sistema oficial con sus alternativas, la respuesta correcta destacada y su respectiva justificación normativa.
-
 ---
 
-### Pregunta 1: ¿Cuáles son los tres organismos que conforman el Sistema Electoral peruano según la Constitución?
+### Pregunta 1
+**¿Cuáles son los tres momentos principales de la jornada electoral en los que el personero ejerce sus derechos y funciones según el curso virtual?**
 
-- **[CORRECTA] A) Jurado Nacional de Elecciones (JNE), Oficina Nacional de Procesos Electorales (ONPE) y Registro Nacional de Identificación y Estado Civil (Reniec).** ✅
-- B) Poder Judicial del Perú (Corte Suprema), Ministerio Público - Fiscalía de la Nación y Defensoría del Pueblo Constitucional.
-- C) Congreso de la República del Perú, Presidencia del Consejo de Ministros (PCM) y Oficina de Control Institucional de la ONPE.
-- D) Jurado Electoral Especial (JEE), Policía Nacional del Perú (Dirección Territorial) y Comando Conjunto de las Fuerzas Armadas.
+- [x] **A) La instalación de la mesa de sufragio, el sufragio y el escrutinio.** *(Correcta)*
+- [ ] B) La convocatoria oficial, la campaña electoral y el sufragio.
+- [ ] C) La conformación de mesas, la fiscalización previa y la proclamación de resultados.
+- [ ] D) La capacitación obligatoria, el simulacro electoral y la entrega de actas.
 
-💡 **Explicación / Justificación:** El artículo 177 de la Constitución establece que el Sistema Electoral está conformado por el JNE, la ONPE y el Reniec.
+> **💡 Justificación / Explicación:** El guion oficial establece que el curso y la función del personero se estructuran en los tres momentos clave: instalación de la mesa, sufragio y escrutinio.
 
 ---
 
-### Pregunta 2: ¿Cuál es la función principal de la ONPE en las Elecciones Regionales y Municipales 2026?
+### Pregunta 2
+**¿Cuál es el propósito fundamental de la participación del personero durante la jornada electoral?**
 
-- **[CORRECTA] A) Organizar, planificar y ejecutar todos los procesos electorales, así como el cómputo descentralizado y entrega de resultados oficiales.** ✅
-- B) Administrar justicia electoral en última instancia, resolver apelaciones jurídicas y fiscalizar la legalidad del padrón definitivo.
-- C) Elaborar y depurar el registro de identidad de todos los ciudadanos peruanos y emitir el DNI electrónico a nivel nacional.
-- D) Proclamar formalmente a las autoridades ganadoras y expedir las credenciales oficiales de acreditación a los alcaldes y regidores.
+- [x] **A) Contribuir a la transparencia y al normal desarrollo del proceso electoral conforme a la normativa vigente.** *(Correcta)*
+- [ ] B) Reemplazar a los miembros de mesa cuando estos se ausenten o lleguen con retraso al local.
+- [ ] C) Dirigir a los electores hacia las cámaras secretas para acelerar la votación.
+- [ ] D) Contar directamente las cédulas de votación junto al presidente de mesa durante el escrutinio.
 
-💡 **Explicación / Justificación:** La ONPE es la autoridad encargada de la organización técnica, diseño del material, despliegue logístico y cómputo de votos.
+> **💡 Justificación / Explicación:** El personero participa para contribuir a la transparencia y al normal desarrollo del proceso electoral dentro del marco de la normativa electoral.
 
 ---
 
-### Pregunta 3: ¿Qué organismo tiene la competencia exclusiva de administrar justicia electoral y proclamar los resultados oficiales?
+### Pregunta 3
+**¿Bajo qué principios debe desempeñar su función un personero a lo largo de la jornada electoral?**
 
-- **[CORRECTA] A) El Jurado Nacional de Elecciones (JNE) a través de sus Jurados Electorales Especiales (JEE) descentralizados.** ✅
-- B) La Oficina Nacional de Procesos Electorales (ONPE) mediante sus Oficinas Descentralizadas de Procesos Electorales (ODPE).
-- C) El Registro Nacional de Identificación y Estado Civil (Reniec) a través de sus Gerencias de Operaciones Registrales.
-- D) El Tribunal Constitucional del Perú en coordinación con la Sala de Derecho Constitucional y Social de la Corte Suprema.
+- [x] **A) Con responsabilidad, respeto y estricto cumplimiento de las normas electorales vigentes.** *(Correcta)*
+- [ ] B) Con discrecionalidad absoluta y atribuciones para anular votos de oficio.
+- [ ] C) Con autoridad jerárquica sobre los coordinadores de local y miembros de mesa.
+- [ ] D) Con facultad para modificar las decisiones del presidente de mesa sin presentar reclamos formales.
 
-💡 **Explicación / Justificación:** El JNE y los JEE administran justicia electoral, resuelven apelaciones e impugnaciones y proclaman a las autoridades electas.
+> **💡 Justificación / Explicación:** El curso enfatiza que el personero debe actuar con responsabilidad, respeto y estricto apego a la normativa electoral.
 
 ---
 
-### Pregunta 4: ¿Qué rol cumple el Reniec dentro del proceso electoral?
+### Pregunta 4
+**¿Qué documento complementario se recomienda revisar para ampliar la información del curso de capacitación?**
 
-- **[CORRECTA] A) Elaborar la Lista de Electores inicial y mantener permanentemente actualizado el registro único de identidad de los ciudadanos.** ✅
-- B) Imprimir el tiraje de las cédulas de votación y distribuirlas en furgones blindados a todos los colegios del país.
-- C) Capacitar a los miembros de mesa titulares y suplentes y fiscalizar la propaganda política en los medios de comunicación.
-- D) Custodiar el material electoral en los locales de votación junto a efectivos de la Policía Nacional y Fuerzas Armadas.
+- [x] **A) El Manual de instrucciones para personeros.** *(Correcta)*
+- [ ] B) El reglamento interno del Jurado Electoral Especial.
+- [ ] C) El manual operativo de las Fuerzas Armadas y Policía Nacional.
+- [ ] D) La ley orgánica del Poder Judicial.
 
-💡 **Explicación / Justificación:** El Reniec prepara y actualiza la lista de electores con la información del registro de identidad de los ciudadanos.
+> **💡 Justificación / Explicación:** En el cierre del curso se invita expresamente a revisar el 'Manual de instrucciones para personeros' para profundizar los contenidos.
 
 ---
 
-### Pregunta 5: ¿Qué es una ODPE (Oficina Descentralizada de Procesos Electorales)?
+### Pregunta 5
+**¿Qué requisito es indispensable completar al finalizar el curso virtual para obtener el certificado oficial?**
 
-- **[CORRECTA] A) Un órgano temporal de la ONPE encargado de conducir y ejecutar el proceso electoral en una circunscripción determinada.** ✅
-- B) Una sede regional permanente del Reniec dedicada exclusivamente a la entrega de DNI y duplicados en las provincias.
-- C) El centro de operaciones partidario donde se congregan los personeros de mesa para coordinar el repliegue de actas.
-- D) La comandancia policial designada por el Ministerio del Interior para la custodia de las mesas de votación en el distrito.
+- [x] **A) Completar y aprobar la evaluación de capacitación.** *(Correcta)*
+- [ ] B) Firmar una declaración jurada ante la ODPE correspondiente.
+- [ ] C) Entregar una constancia de votación previa al coordinador de mesa.
+- [ ] D) Asistir a un taller presencial de 8 horas pedagógicas.
 
-💡 **Explicación / Justificación:** Las ODPE son órganos descentralizados temporales de la ONPE que ejecutan la logística y el cómputo en cada circunscripción.
+> **💡 Justificación / Explicación:** El curso concluye invitando a completar la evaluación de capacitación para obtener el certificado oficial.
 
 ---
 
-### Pregunta 6: ¿Qué es un Jurado Electoral Especial (JEE)?
+### Pregunta 6
+**¿Qué aspectos centrales sobre la función del personero se revisan a lo largo de la capacitación?**
 
-- **[CORRECTA] A) Un órgano temporal del JNE de primera instancia para impartir justicia electoral, resolver tachas e impugnaciones de actas y votos.** ✅
-- B) Un comité de personeros legales acreditados por los partidos políticos para fiscalizar la mesa de votación en el colegio.
-- C) La mesa de votación instalada en un aula y conformada por los tres miembros de mesa sorteados formalmente por la ONPE.
-- D) La comisión técnica multidisciplinaria de peritos informáticos encargada de auditar el software de conteo rápido descentralizado.
+- [x] **A) Sus derechos, funciones específicas y prohibiciones durante la jornada electoral.** *(Correcta)*
+- [ ] B) Las sanciones penales aplicables exclusivamente a los miembros de mesa suplentes.
+- [ ] C) El presupuesto asignado a la publicidad de los candidatos distritales.
+- [ ] D) Las pautas para diseñar las cédulas de votación y carteles de candidatos.
 
-💡 **Explicación / Justificación:** Los JEE son instancias temporales del JNE que resuelven en primera instancia controversias, actas observadas y votos impugnados.
+> **💡 Justificación / Explicación:** El curso revisa de forma exhaustiva los derechos, funciones y prohibiciones del personero en los tres momentos de la jornada.
 
 ---
 
-### Pregunta 7: ¿En qué fecha se realizará la jornada electoral de las Elecciones Regionales y Municipales 2026?
+### Pregunta 7
+**¿En qué fecha exacta se realizarán las Elecciones Regionales y Municipales 2026?**
 
-- **[CORRECTA] A) El domingo 4 de octubre de 2026 en todo el territorio nacional.** ✅
-- B) El segundo domingo de abril de 2026 junto con los comicios generales.
-- C) El último domingo de noviembre de 2026 en segunda vuelta regional.
-- D) El primer domingo de diciembre de 2026 según el calendario de la ONPE.
+- [x] **A) El domingo 4 de octubre de 2026.** *(Correcta)*
+- [ ] B) El domingo 11 de octubre de 2026.
+- [ ] C) El domingo 27 de setiembre de 2026.
+- [ ] D) El domingo 18 de octubre de 2026.
 
-💡 **Explicación / Justificación:** Conforme a la Ley de Elecciones Municipales y Regionales, los comicios se celebran el primer domingo de octubre (4 de octubre de 2026).
+> **💡 Justificación / Explicación:** El documento oficial indica claramente que la jornada electoral se llevará a cabo el domingo 4 de octubre de 2026.
 
 ---
 
-### Pregunta 8: ¿Qué ley regula el marco general de las elecciones en el Perú?
+### Pregunta 8
+**¿Cuántas autoridades en total serán elegidas en las Elecciones Regionales y Municipales 2026 en los ámbitos regional, provincial y distrital?**
 
-- **[CORRECTA] A) Ley Orgánica de Elecciones (Ley N° 26859) y sus modificatorias vigentes.** ✅
-- B) Ley General de Sociedades Mercantiles (Ley N° 26887) y sus estatutos.
-- C) Ley del Procedimiento Administrativo General (Ley N° 27444) del Estado.
-- D) Código Procesal Constitucional y Ley de Control Interno Gubernamental.
+- [x] **A) 13 148 autoridades.** *(Correcta)*
+- [ ] B) 12 450 autoridades.
+- [ ] C) 14 200 autoridades.
+- [ ] D) 10 814 autoridades.
 
-💡 **Explicación / Justificación:** La Ley N° 26859 es la Ley Orgánica de Elecciones que rige todo el sistema electoral nacional.
+> **💡 Justificación / Explicación:** Según los datos oficiales del guion, se elegirán en total 13 148 autoridades a nivel nacional.
 
 ---
 
-### Pregunta 9: ¿Qué ley regula específicamente los comicios municipales en Lima y el Perú?
+### Pregunta 9
+**¿Cuántas autoridades regionales serán elegidas en los comicios de 2026?**
 
-- **[CORRECTA] A) Ley de Elecciones Municipales (Ley N° 26864) y reglamentos conexos del JNE.** ✅
-- B) Ley de Presupuesto del Sector Público para Gobiernos Locales y Regionales.
-- C) Ley Marco del Sistema Tributario y Catastro de las Municipalidades del Perú.
-- D) Ley Orgánica de Municipalidades (Ley N° 27972) en su capítulo de regidores.
+- [x] **A) 414 autoridades regionales.** *(Correcta)*
+- [ ] B) 520 autoridades regionales.
+- [ ] C) 350 autoridades regionales.
+- [ ] D) 1 920 autoridades regionales.
 
-💡 **Explicación / Justificación:** La Ley N° 26864 es la norma especial aplicable a las Elecciones Municipales.
+> **💡 Justificación / Explicación:** El desglose oficial establece que se elegirán 414 autoridades regionales.
 
 ---
 
-### Pregunta 10: ¿Cuál es la fórmula práctica que resume la misión del personero según el manual de capacitación?
+### Pregunta 10
+**¿Cuántas autoridades provinciales serán elegidas en las Elecciones Regionales y Municipales 2026?**
 
-- **[CORRECTA] A) Presencia temprana + Acta firmada + Evidencia fotográfica + Reporte inmediato = Defensa efectiva del voto.** ✅
-- B) Velocidad en el llenado + Conteo manual apresurado + Foto parcial de la pizarra = Éxito electoral garantizado.
-- C) Asistencia pasiva al colegio + Firma rápida de hojas + Retiro anticipado a las 5 p.m. = Cumplimiento de labor.
-- D) Vigilancia a la distancia + Custodia externa de ánforas + Espera del resultado de la ONPE = Victoria electoral.
+- [x] **A) 1 920 autoridades provinciales.** *(Correcta)*
+- [ ] B) 2 150 autoridades provinciales.
+- [ ] C) 1 800 autoridades provinciales.
+- [ ] D) 414 autoridades provinciales.
 
-💡 **Explicación / Justificación:** El manual establece como regla de oro: Presencia + acta + evidencia + reporte inmediato = defensa efectiva del voto.
+> **💡 Justificación / Explicación:** El documento especifica exactamente 1 920 autoridades en el nivel provincial.
 
 ---
 
-### Pregunta 11: ¿Quién es el Personero Legal Titular de una organización política?
+### Pregunta 11
+**¿Cuántas autoridades distritales serán elegidas en las Elecciones Regionales y Municipales 2026?**
 
-- **[CORRECTA] A) El representante legal facultado ante el JNE y los JEE para realizar trámites legales, inscripciones y acreditaciones oficiales.** ✅
-- B) El personero de mesa encargado de recibir el material y coordinar la logística de refrigerios con el comité de campaña distrital.
-- C) El primer ciudadano en votar en la mesa de sufragio que asume la fiscalización de las cédulas durante toda la jornada cívica.
-- D) El presidente de mesa designado por sorteo público para conducir el acto de votación y redactar las actas electorales.
+- [x] **A) 10 814 autoridades distritales.** *(Correcta)*
+- [ ] B) 11 500 autoridades distritales.
+- [ ] C) 9 920 autoridades distritales.
+- [ ] D) 13 148 autoridades distritales.
 
-💡 **Explicación / Justificación:** El Personero Legal representa oficialmente a la organización política ante el JNE y los Jurados Electorales Especiales.
+> **💡 Justificación / Explicación:** El guion precisa que se elegirán 10 814 autoridades a nivel distrital.
 
 ---
 
-### Pregunta 12: ¿Cuál es la función del Personero Técnico?
+### Pregunta 12
+**¿Qué niveles de gobierno serán renovados mediante la votación ciudadana en esta jornada electoral de 2026?**
 
-- **[CORRECTA] A) Fiscalizar los sistemas informáticos, centros de cómputo, software de transmisión de datos y simulacros de la ONPE.** ✅
-- B) Realizar el mantenimiento preventivo y configuración de las computadoras e impresoras térmicas de la sede central de la ODPE.
-- C) Efectuar el conteo físico simultáneo de las cédulas de votación en todas las aulas de un centro educativo distrital.
-- D) Custodiar el convoy de camiones que transporta los paquetes electorales desde el almacén central hacia los locales de sufragio.
+- [x] **A) Los gobiernos regionales, las municipalidades provinciales y las municipalidades distritales.** *(Correcta)*
+- [ ] B) El Congreso de la República, el Parlamento Andino y la Presidencia de la República.
+- [ ] C) Exclusivamente las alcaldías distritales de Lima Metropolitana y el Callao.
+- [ ] D) Las juntas vecinales y los juzgados de paz letrados únicamente.
 
-💡 **Explicación / Justificación:** El Personero Técnico fiscaliza el software, la digitación, el procesamiento de actas y los servidores de cómputo de la ONPE.
+> **💡 Justificación / Explicación:** La ciudadanía elegirá a las autoridades para conducir los gobiernos regionales y las municipalidades provinciales y distritales.
 
 ---
 
-### Pregunta 13: ¿Cuál es la responsabilidad del Coordinador de Local de Votación de Somos Perú?
+### Pregunta 13
+**¿Por qué se considera a la jornada del 4 de octubre de 2026 de gran trascendencia?**
 
-- **[CORRECTA] A) Coordinar, ubicar, supervisar y asistir a los Personeros de Mesa en todas las aulas del local de votación asignado.** ✅
-- B) Asumir de inmediato la presidencia de las mesas de votación donde no hayan concurrido los tres miembros titulares.
-- C) Controlar la puerta principal del local escolar y decidir qué ciudadanos tienen autorización para ingresar a votar.
-- D) Custodiar y trasladar personalmente las actas de escrutinio en sobre plomo lacrado hacia la sede distrital de la ODPE.
+- [x] **A) Por su importancia para la ciudadanía y para el fortalecimiento de la democracia mediante la elección descentralizada de autoridades.** *(Correcta)*
+- [ ] B) Porque será la primera elección realizada sin padrón electoral físico.
+- [ ] C) Porque sustituirá por completo las funciones del Jurado Nacional de Elecciones.
+- [ ] D) Porque todos los personeros asumirán la presidencia de las mesas de sufragio.
 
-💡 **Explicación / Justificación:** El Coordinador de Local lidera la red de personeros de mesa, asegura la cobertura total y apoya en incidentes.
+> **💡 Justificación / Explicación:** Es una jornada clave para la gobernabilidad descentralizada y la consolidación del sistema democrático en el país.
 
 ---
 
-### Pregunta 14: ¿Cuántos personeros de una MISMA organización política pueden estar acreditados SIMULTÁNEAMENTE en una sola mesa de sufragio?
+### Pregunta 14
+**¿Qué suma total resulta de sumar 414 autoridades regionales, 1 920 provinciales y 10 814 distritales?**
 
-- **[CORRECTA] A) Solo un (1) personero acreditado a la vez actuando activamente ante la mesa de sufragio.** ✅
-- B) Hasta tres (3) personeros acreditados para alternar turnos y funciones dentro de la misma aula.
-- C) Todos los personeros y simpatizantes que porten el distintivo o chaleco oficial del partido político.
-- D) Exactamente dos (2) personeros: un personero titular con voto y un personero adjunto con derecho a voz.
+- [x] **A) 13 148 autoridades.** *(Correcta)*
+- [ ] B) 13 500 autoridades.
+- [ ] C) 12 800 autoridades.
+- [ ] D) 14 000 autoridades.
 
-💡 **Explicación / Justificación:** La ley electoral establece que solo un personero por cada partido político puede actuar simultáneamente ante la mesa de sufragio.
+> **💡 Justificación / Explicación:** 414 + 1 920 + 10 814 da como resultado exacto 13 148 autoridades elegidas.
 
 ---
 
-### Pregunta 15: ¿Qué documento debe portar obligatoriamente el Personero de Mesa para identificarse y ejercer su función?
+### Pregunta 15
+**¿Quién es el personero según la definición oficial brindada en la capacitación?**
 
-- **[CORRECTA] A) Su DNI físico original vigente y la Credencial oficial emitida y firmada por el Personero Legal del partido.** ✅
-- B) Su fotocopia simple de DNI a colores acompañada de un carnet partidario y folletos informativos de la lista.
-- C) Una constancia notarial de residencia distrital junto a una carta de recomendación del candidato a alcalde.
-- D) Su pasaporte peruano original o carnet de colegiatura profesional visado por la junta electoral comunal.
+- [x] **A) El ciudadano acreditado por una organización política para representar, cuidar y defender sus intereses durante el proceso electoral.** *(Correcta)*
+- [ ] B) Un funcionario temporal contratado por la ONPE para supervisar la labor de los miembros de mesa.
+- [ ] C) El representante legal del Jurado Electoral Especial designado en cada colegio.
+- [ ] D) Un elector voluntario encargado de transportar las actas electorales hacia la sede central.
 
-💡 **Explicación / Justificación:** El personero se acredita con su DNI original y su credencial oficial partidaria autorizada.
+> **💡 Justificación / Explicación:** El personero es el ciudadano formalmente acreditado por una organización política para representar, cuidar y defender sus intereses.
 
 ---
 
-### Pregunta 16: ¿Quiénes NO pueden ser personeros según la Ley Orgánica de Elecciones?
+### Pregunta 16
+**¿Qué exige el adecuado ejercicio de la función de personero?**
 
-- **[CORRECTA] A) Miembros de las Fuerzas Armadas y Policía Nacional en servicio activo, jueces, fiscales y funcionarios de organismos electorales.** ✅
-- B) Ciudadanos mayores de 18 años con DNI vigente que trabajen en empresas privadas o instituciones educativas del país.
-- C) Profesionales independientes, técnicos, comerciantes y trabajadores independientes debidamente inscritos en la lista de electores.
-- D) Militantes o afiliados inscritos en el padrón del Registro de Organizaciones Políticas (ROP) del partido Somos Perú.
+- [x] **A) Responsabilidad, respeto y estricto cumplimiento de las disposiciones electorales vigentes.** *(Correcta)*
+- [ ] B) Haber sido previamente miembro de mesa titular o presidente de mesa.
+- [ ] C) Estar inscrito en el padrón del Registro Nacional de Detenciones.
+- [ ] D) Contar con un título profesional en Derecho Constitucional o Electoral.
 
-💡 **Explicación / Justificación:** Militares, policías en activo, magistrados del PJ y MP, y personal de ONPE/JNE/Reniec están legalmente impedidos de ser personeros.
+> **💡 Justificación / Explicación:** El ejercicio de la función de personero exige responsabilidad, respeto y estricto cumplimiento de las normas.
 
 ---
 
-### Pregunta 17: ¿Los candidatos a cargos de elección popular pueden actuar como Personeros de Mesa en el mismo proceso?
+### Pregunta 17
+**¿Quiénes de los siguientes ciudadanos tienen impedimento legal para ejercer como personeros?**
 
-- **[CORRECTA] A) No, los candidatos no pueden ser personeros en la circunscripción electoral donde postulan a un cargo público.** ✅
-- B) Sí, siempre que guarden silencio durante la votación y no porten propaganda electoral visible en su vestimenta.
-- C) Sí, pero únicamente pueden ejercer la personería en la mesa de sufragio específica donde les corresponde votar.
-- D) Solo si obtienen una autorización expresa por escrito del Coordinador de Local de la ONPE y del fiscal de turno.
+- [x] **A) Los candidatos, los miembros de mesa y los funcionarios o servidores del sistema electoral.** *(Correcta)*
+- [ ] B) Los ciudadanos mayores de 65 años y las personas con discapacidad motriz.
+- [ ] C) Los electores inscritos en distritos distintos al lugar de votación.
+- [ ] D) Los ciudadanos afiliados a partidos políticos con inscripción vigente.
 
-💡 **Explicación / Justificación:** La normativa electoral prohíbe que candidatos actúen como personeros para evitar coacción o proselitismo en mesa.
+> **💡 Justificación / Explicación:** La normativa prohíbe ser personeros a candidatos, miembros de mesa, servidores del sistema electoral y miembros activos de FF.AA. y PNP.
 
 ---
 
-### Pregunta 18: ¿Puede un personero alternar o relevar a otro personero de su misma organización en la mesa?
+### Pregunta 18
+**¿Pueden los miembros en actividad de las Fuerzas Armadas o de la Policía Nacional del Perú actuar como personeros?**
 
-- **[CORRECTA] A) Sí, previa presentación de su credencial original correspondiente y registro formal ante el Presidente de Mesa.** ✅
-- B) No, el personero que inicia la instalación a las 6:00 a.m. debe permanecer obligatoriamente hasta el cierre final.
-- C) Solo en casos de emergencia médica comprobada con certificado visado por el fiscal del Ministerio Público.
-- D) Únicamente si ambos personeros son parientes directos y comparten el mismo domicilio en la lista de electores.
+- [x] **A) No, tienen impedimento legal expreso mientras se encuentren en situación de actividad.** *(Correcta)*
+- [ ] B) Sí, siempre que vistan ropa de civil y no porten armas de reglamento.
+- [ ] C) Sí, únicamente si cuentan con autorización escrita del coordinador de local de la ONPE.
+- [ ] D) Solo pueden actuar como personeros de local de votación, pero no de mesa.
 
-💡 **Explicación / Justificación:** El relevo de personeros está permitido siempre que el nuevo personero presente su credencial y se acredite formalmente.
+> **💡 Justificación / Explicación:** Los miembros en actividad de las FF.AA. y de la PNP tienen impedimento legal para desempeñarse como personeros.
 
 ---
 
-### Pregunta 19: ¿A partir de qué edad un ciudadano puede ser acreditado como personero de mesa?
+### Pregunta 19
+**¿Puede un candidato a alcalde o regidor desempeñarse como personero de mesa en la misma elección?**
 
-- **[CORRECTA] A) A partir de los 18 años cumplidos (ciudadano en pleno ejercicio de sus derechos civiles y políticos).** ✅
-- B) A partir de los 21 años cumplidos acreditando no tener multas electorales pendientes de pago en el JNE.
-- C) A los 16 años si cuenta con autorización notarial de sus padres y libreta militar de inscripción obligatoria.
-- D) A partir de los 25 años cumplidos habiendo culminado estudios técnicos o universitarios superiores.
+- [x] **A) No, los candidatos tienen impedimento expreso para desempeñarse como personeros.** *(Correcta)*
+- [ ] B) Sí, siempre que no intervenga en el conteo de votos de su propia lista.
+- [ ] C) Sí, pero solo en locales de votación ubicados fuera de su distrito.
+- [ ] D) Sí, si la mesa de sufragio no cuenta con personeros acreditados.
 
-💡 **Explicación / Justificación:** Todo ciudadano mayor de 18 años en goce de sus derechos civiles y con DNI puede desempeñarse como personero.
+> **💡 Justificación / Explicación:** Los candidatos a cargos de elección popular están expresamente impedidos de ejercer como personeros.
 
 ---
 
-### Pregunta 20: ¿Qué nivel de jerarquía tiene el Personero de Mesa frente al Presidente de Mesa de Sufragio?
+### Pregunta 20
+**¿Puede un miembro de mesa titular o suplente actuar simultáneamente como personero en la jornada electoral?**
 
-- **[CORRECTA] A) El personero es un fiscalizador externo con derecho a voz y observación; el Presidente de Mesa es la máxima autoridad del aula.** ✅
-- B) El personero tiene jerarquía superior a los miembros de mesa y puede ordenar la destitución de los suplentes de la fila.
-- C) Tienen exactamente las mismas facultades y votan por consenso en todas las decisiones técnicas de la mesa de sufragio.
-- D) El personero asume el mando de la mesa únicamente si pertenece al partido político que obtuvo mayoría en la elección previa.
+- [x] **A) No, los miembros de mesa se encuentran expresamente impedidos de ejercer como personeros.** *(Correcta)*
+- [ ] B) Sí, si renuncia verbalmente a su cargo de miembro de mesa al inicio de la jornada.
+- [ ] C) Sí, pero únicamente durante la etapa de escrutinio de votos.
+- [ ] D) Solo si no se presentan los otros miembros suplentes a la mesa.
 
-💡 **Explicación / Justificación:** Los miembros de mesa constituyen la máxima autoridad del acto electoral; el personero fiscaliza y deja constancia de observaciones.
+> **💡 Justificación / Explicación:** Existe incompatibilidad e impedimento legal directo entre ser miembro de mesa y desempeñarse como personero.
 
 ---
 
-### Pregunta 21: ¿A qué hora exacta debe presentarse el Personero de Mesa en su local de votación el día 4 de octubre?
+### Pregunta 21
+**¿A quién representa formalmente el personero durante los comicios electorales?**
 
-- **[CORRECTA] A) A las 6:00 a.m. para asegurar su ingreso oportuno y presenciar la conformación e instalación formal de la mesa.** ✅
-- B) A las 7:30 a.m. minutos antes de que el personal de las Fuerzas Armadas abra las puertas del recinto escolar.
-- C) A las 10:00 a.m. cuando el flujo de electores desciende y se estabiliza la fila de sufragio en el patio central.
-- D) A las 4:30 p.m. con el fin de participar exclusivamente en el conteo de cédulas y firma de las actas oficiales.
+- [x] **A) A la organización política que lo acreditó conforme a ley.** *(Correcta)*
+- [ ] B) Al Jurado Nacional de Elecciones y sus dependencias descentralizadas.
+- [ ] C) A la Oficina Nacional de Procesos Electorales (ONPE).
+- [ ] D) A la totalidad de los electores de la mesa de votación.
 
-💡 **Explicación / Justificación:** El personero debe estar a las 6:00 a.m. para verificar la instalación, apertura de paquetes y firma de cédulas.
+> **💡 Justificación / Explicación:** El personero representa legítimamente los intereses de su organización política acreditante.
 
 ---
 
-### Pregunta 22: ¿Cuántos miembros conforman reglamentariamente la Mesa de Sufragio?
+### Pregunta 22
+**¿Qué entidad u organización otorga la condición y representatividad al personero?**
 
-- **[CORRECTA] A) Tres (3) miembros titulares: Presidente de Mesa, Secretario y Tercer Miembro.** ✅
-- B) Dos (2) miembros titulares: Presidente de Mesa y Secretario General de Mesa.
-- C) Cinco (5) miembros: un Presidente, dos Secretarios y dos Vocales de fiscalización.
-- D) Un Presidente de Mesa y los dos personeros acreditados de las listas mayoritarias.
+- [x] **A) La organización política participante que expide su acreditación correspondiente.** *(Correcta)*
+- [ ] B) El Ministerio del Interior mediante resolución ministerial.
+- [ ] C) La Defensoría del Pueblo mediante oficio formal.
+- [ ] D) El presidente de la mesa de sufragio al momento de ingresar al aula.
 
-💡 **Explicación / Justificación:** La mesa de sufragio se compone de tres miembros: Presidente, Secretario y Tercer Miembro.
+> **💡 Justificación / Explicación:** El personero es designado y acreditado por la respectiva organización política para defender sus intereses.
 
 ---
 
-### Pregunta 23: ¿Qué ocurre a las 7:00 a.m. si no asisten los miembros titulares sorteados por la ONPE?
+### Pregunta 23
+**¿Cuáles son los dos tipos de personeros cuyos roles se explican en el curso virtual?**
 
-- **[CORRECTA] A) La mesa se instala con los suplentes presentes; si faltaran, se convoca a ciudadanos de la fila de electores de esa mesa.** ✅
-- B) La mesa de sufragio se cancela definitivamente y los electores son reubicados en otras mesas del mismo colegio.
-- C) Los personeros de los partidos asumen de forma interina los cargos titulares de Presidente y Secretario de Mesa.
-- D) El oficial de las Fuerzas Armadas o Policía Nacional asume la presidencia de la mesa para iniciar la votación.
+- [x] **A) Personero de local de votación y personero de mesa.** *(Correcta)*
+- [ ] B) Personero judicial y personero técnico informático.
+- [ ] C) Personero de cómputo distrital y personero de prensa.
+- [ ] D) Personero de propaganda y personero de seguridad.
 
-💡 **Explicación / Justificación:** Si faltan titulares, asumen suplentes; si no hay suficientes, se designa a electores de la fila. Los personeros no pueden integrar la mesa.
+> **💡 Justificación / Explicación:** El curso distingue con claridad entre el personero de local de votación y el personero de mesa.
 
 ---
 
-### Pregunta 24: ¿Puede un personero de mesa ser obligado o aceptar conformar la Mesa de Sufragio como miembro si faltan electores?
+### Pregunta 24
+**¿Cuál es la función principal del personero de local de votación?**
 
-- **[CORRECTA] A) No, está expresamente prohibido por la Ley Orgánica de Elecciones que los personeros integren la mesa de sufragio.** ✅
-- B) Sí, siempre que el fiscal de prevención del delito del Ministerio Público emita un acta de autorización excepcional.
-- C) Sí, únicamente si faltan 10 minutos para las 12:00 m. y la mesa se encuentra en riesgo inminente de no ser instalada.
-- D) Solo si renuncia en ese instante a su credencial partidaria mediante una declaración jurada manuscrita en el aula.
+- [x] **A) Observar el desarrollo general de las actividades electorales dentro del local de votación.** *(Correcta)*
+- [ ] B) Contar los votos en las mesas donde haya discrepancia entre miembros de mesa.
+- [ ] C) Autorizar el ingreso de los votantes al centro educativo.
+- [ ] D) Custodiar las ánforas electorales durante el traslado nocturno.
 
-💡 **Explicación / Justificación:** El artículo 57 de la LOE prohíbe taxativamente que personeros y candidatos conformen la mesa de sufragio.
+> **💡 Justificación / Explicación:** La función principal del personero de local es observar el desarrollo de las actividades electorales dentro del local.
 
 ---
 
-### Pregunta 25: ¿Qué elementos debe verificar el personero dentro del paquete electoral que entrega la ONPE durante la instalación?
+### Pregunta 25
+**¿Qué labor de coordinación le corresponde al personero de local de votación con respecto a los personeros de su partido?**
 
-- **[CORRECTA] A) Cédulas de sufragio, lista de electores, 5 actas electorales oficiales, ánforas, tampones, lapiceros y hologramas de votación.** ✅
-- B) Folletos y volantes de propaganda electoral autorizados de las organizaciones políticas participantes en la contienda.
-- C) Los talonarios de boletas de pago de multas electorales del JNE y refrigerios para el personal militar de custodia.
-- D) Los manuales de fiscalización del Jurado Electoral Especial y precintos de seguridad para el material de descarte.
+- [x] **A) Coordinar y orientar a los personeros de mesa de su propia organización política.** *(Correcta)*
+- [ ] B) Ordenar a los personeros de mesa que anulen los votos en blanco de oficio.
+- [ ] C) Asignarles multas a los personeros de mesa que lleguen tarde.
+- [ ] D) Retirar a los personeros de mesa de otras organizaciones políticas.
 
-💡 **Explicación / Justificación:** El personero verifica que el paquete contenga cédulas íntegras, lista oficial de electores, útiles electorales y las 5 actas oficiales.
+> **💡 Justificación / Explicación:** El personero de local tiene el rol de coordinar y brindar orientación a los personeros de mesa de su agrupación.
 
 ---
 
-### Pregunta 26: ¿Qué debe comprobar el personero antes de que se arme y selle el ánfora de votación?
+### Pregunta 26
+**¿Con qué autoridad del sistema electoral puede mantener comunicación el personero de local de votación cuando corresponda?**
 
-- **[CORRECTA] A) Que el ánfora esté completamente vacía, limpia y sin ninguna cédula, papel o elemento extraño en su interior.** ✅
-- B) Que el ánfora lleve adherido el sticker o logotipo oficial de su organización política en la cara frontal exterior.
-- C) Que el ánfora contenga una reserva inicial de 10 cédulas de votación precalificadas por los miembros de la mesa.
-- D) Que el ánfora esté confeccionada en madera sólida o acrílico transparente conforme al reglamento de la ODPE.
+- [x] **A) Con el coordinador de local de la ONPE.** *(Correcta)*
+- [ ] B) Con el comandante general de la Policía Nacional.
+- [ ] C) Con los jueces supremos del Poder Judicial.
+- [ ] D) Con los candidatos de las listas opositoras.
 
-💡 **Explicación / Justificación:** Es fundamental constatar visualmente que el ánfora esté absolutamente vacía antes de colocarle el precinto de seguridad.
+> **💡 Justificación / Explicación:** Debe mantener comunicación y coordinación con el coordinador de local de la ONPE.
 
 ---
 
-### Pregunta 27: ¿Tiene derecho el personero a firmar en el reverso de las cédulas de votación?
+### Pregunta 27
+**¿A partir de qué momento debe encontrarse presente el personero de local de votación en el centro de sufragio?**
 
-- **[CORRECTA] A) Sí, es un derecho del personero rubricar el reverso de las cédulas de sufragio junto al Presidente de Mesa antes del voto.** ✅
-- B) No, la ley electoral reserva la facultad de firmar las cédulas de sufragio de forma exclusiva al personal de la ONPE.
-- C) Solo si el elector titular de la cédula le otorga un permiso verbal expreso al momento de acercarse a la mesa.
-- D) Únicamente si la mesa de votación cuenta con más de 300 ciudadanos registrados en la lista oficial de electores.
+- [x] **A) Desde el inicio de la jornada electoral.** *(Correcta)*
+- [ ] B) Únicamente a partir del cierre del sufragio a las 5:00 p.m.
+- [ ] C) Solo durante el traslado de las ánforas a la ODPE.
+- [ ] D) A partir del mediodía para supervisar el refrigerio.
 
-💡 **Explicación / Justificación:** El personero tiene derecho a rubricar el reverso de las cédulas de sufragio para garantizar su autenticidad.
+> **💡 Justificación / Explicación:** Debe estar presente desde el inicio de la jornada electoral para cumplir su labor de vigilancia y orientación.
 
 ---
 
-### Pregunta 28: ¿Qué es el Acta de Instalación y qué datos esenciales consigna?
+### Pregunta 28
+**¿Qué naturaleza tiene la labor del personero de local de votación?**
 
-- **[CORRECTA] A) Documento que registra la hora de instalación, nombres y firmas de los miembros, cantidad de cédulas recibidas y observaciones.** ✅
-- B) El comprobante de pago oficial que la ONPE otorga a los tres miembros de mesa en retribución a su jornada cívica.
-- C) La lista detallada de los ciudadanos omisos que deberán abonar la multa electoral por no haber asistido temprano.
-- D) El acta final de cómputo que contiene el número de votos válidos obtenidos por cada una de las listas postulantes.
+- [x] **A) Es una labor de observación y vigilancia, sin interferir en las funciones de los miembros de mesa.** *(Correcta)*
+- [ ] B) Es una labor ejecutiva con facultad para sancionar a los coordinadores de local.
+- [ ] C) Es una labor policial orientada a la detención de electores indocumentados.
+- [ ] D) Es una labor registral para emitir duplicados de DNI in situ.
 
-💡 **Explicación / Justificación:** El Acta de Instalación certifica el inicio formal de la mesa, la hora de apertura, el número de cédulas y observaciones.
+> **💡 Justificación / Explicación:** Su labor es eminentemente de observación y vigilancia permanente, sin incurrir en interferencias.
 
 ---
 
-### Pregunta 29: ¿Qué debe hacer el personero si la mesa se instala con retraso (después de las 8:00 a.m.)?
+### Pregunta 29
+**¿Puede el personero de local de votación asumir las funciones de un miembro de mesa ausente?**
 
-- **[CORRECTA] A) Verificar que se registre la hora exacta y el motivo del retraso en el rubro de observaciones del Acta de Instalación.** ✅
-- B) Cerrar la puerta de ingreso del aula e impedir el inicio del sufragio hasta que arribe el fiscal del Ministerio Público.
-- C) Romper la lista de electores por haberse vencido el plazo reglamentario de inicio de la jornada electoral distrital.
-- D) Acudir a la comisaría del sector para formular una denuncia penal inmediata por delito contra la voluntad popular.
+- [x] **A) No, no debe interferir en las funciones de los miembros de mesa ni asumir tareas que no le corresponden.** *(Correcta)*
+- [ ] B) Sí, si el presidente de mesa no asiste antes de las 8:00 a.m.
+- [ ] C) Sí, siempre que cuente con el visto bueno del personero de otro partido.
+- [ ] D) Solo en las mesas donde no haya miembros suplentes disponibles.
 
-💡 **Explicación / Justificación:** Todo retraso o incidencia debe dejarse asentado con hora exacta en las observaciones del Acta de Instalación.
+> **💡 Justificación / Explicación:** El personero de local no puede bajo ninguna circunstancia asumir funciones de miembro de mesa ni interferir en ellas.
 
 ---
 
-### Pregunta 30: ¿Hasta qué hora límite puede instalarse una mesa de sufragio si no se consiguen miembros?
+### Pregunta 30
+**¿Puede el personero de local de votación reemplazar a los personeros de mesa de su propia organización política?**
 
-- **[CORRECTA] A) Hasta las 12:00 del mediodía (12:00 m.); de no instalarse a esa hora, la mesa se declara oficialmente como no instalada.** ✅
-- B) Hasta las 8:30 a.m. improrrogablemente; pasados esos minutos, todos los votos de la mesa se consideran nulos.
-- C) Hasta las 4:00 p.m. siempre que los electores de la fila acepten firmar un compromiso notarial de instalación tardía.
-- D) Hasta las 8:00 p.m. si el local escolar cuenta con alumbrado eléctrico óptimo y resguardo de la Policía Nacional.
+- [x] **A) No, no puede reemplazar ni asumir las funciones de los personeros de mesa.** *(Correcta)*
+- [ ] B) Sí, puede actuar como personero de mesa en todas las aulas a la vez.
+- [ ] C) Sí, siempre que no haya personeros de otros partidos en el aula.
+- [ ] D) Solo si el coordinador de local de la ONPE lo autoriza por escrito.
 
-💡 **Explicación / Justificación:** Si a las 12:00 m. la mesa no logró conformarse con electores de la fila, se levanta acta de mesa no instalada.
+> **💡 Justificación / Explicación:** El guion establece expresamente que el personero de local no puede reemplazar ni asumir funciones de personeros de mesa.
 
 ---
 
-### Pregunta 31: ¿En qué horario se realiza la etapa de sufragio (votación de los ciudadanos)?
+### Pregunta 31
+**¿Con qué facilidades cuenta el personero de local de votación para ejercer su función?**
 
-- **[CORRECTA] A) De 8:00 a.m. a 5:00 p.m. ininterrumpidamente.** ✅
-- B) De 7:00 a.m. a 4:00 p.m. en dos turnos rotativos.
-- C) De 6:00 a.m. a 6:00 p.m. con receso de almuerzo.
-- D) De 9:00 a.m. a 7:00 p.m. según horario escalonado.
+- [x] **A) Contará con las facilidades necesarias dentro del local para ejercer su labor de observación conforme a ley.** *(Correcta)*
+- [ ] B) Tendrá acceso exclusivo a los sistemas informáticos de transmisión de datos de la ONPE.
+- [ ] C) Podrá disponer del uso de vehículos oficiales del sistema electoral.
+- [ ] D) Tendrá derecho a inspeccionar las pertenencias personales de los miembros de mesa.
 
-💡 **Explicación / Justificación:** El horario de votación para las elecciones 2026 es de 8:00 a.m. a 5:00 p.m.
+> **💡 Justificación / Explicación:** La normativa electoral garantiza que contará con las facilidades requeridas para realizar su función de observación.
 
 ---
 
-### Pregunta 32: ¿Con qué documento oficial puede votar un ciudadano en su mesa de sufragio?
+### Pregunta 32
+**¿Qué diferencia el ámbito de actuación del personero de local frente al personero de mesa?**
 
-- **[CORRECTA] A) Únicamente con su DNI físico (azul, amarillo o electrónico), vigente o caduco según resolución del Reniec/JNE.** ✅
-- B) Con una fotocopia notariada a color de su DNI o una constancia digital mostrada en la pantalla de su teléfono móvil.
-- C) Con su pasaporte diplomático o licencia de conducir electrónica de clase A-1 emitida por el MTC en cualquier caso.
-- D) Con su partida de nacimiento original en papel membretado acompañada de dos recibos de servicios públicos del hogar.
+- [x] **A) El personero de local observa el ámbito general del recinto y orienta a sus personeros, mientras el personero de mesa actúa directamente en la mesa acreditada.** *(Correcta)*
+- [ ] B) El personero de local puede votar dos veces y el de mesa solo una vez.
+- [ ] C) El personero de local firma las cédulas y el de mesa solo firma las actas.
+- [ ] D) El personero de mesa fiscaliza a la Policía y el de local a las Fuerzas Armadas.
 
-💡 **Explicación / Justificación:** El DNI físico es el único documento legal para sufragar en territorio nacional.
+> **💡 Justificación / Explicación:** Cada tipo de personero tiene un ámbito de competencia y funciones específicas bien delimitadas en el recinto electoral.
 
 ---
 
-### Pregunta 33: ¿Puede votar un ciudadano que no figura en la Lista de Electores de esa mesa?
+### Pregunta 33
+**¿Qué documentos obligatorios debe presentar el personero de mesa al presidente de mesa al momento de apersonarse?**
 
-- **[CORRECTA] A) No, ninguna persona que no se encuentre inscrita en la lista oficial de electores de esa mesa puede emitir su voto.** ✅
-- B) Sí, siempre que demuestre que reside en una calle vecina al local escolar mostrando el reverso de su DNI físico.
-- C) Sí, previo pago de la tasa correspondiente de derecho de voto extemporáneo directamente al Presidente de Mesa.
-- D) Solo si cuenta con el visto bueno verbal y autorización expresa del personero general del partido en el colegio.
+- [x] **A) Su DNI físico y su credencial oficial otorgada por su organización política.** *(Correcta)*
+- [ ] B) Su pasaporte vigente y su constancia de votación anterior.
+- [ ] C) Una copia legalizada de su partida de nacimiento y certificado de antecedentes policiales.
+- [ ] D) Únicamente el carné de afiliación partidaria.
 
-💡 **Explicación / Justificación:** La lista de electores es inmodificable; solo sufragan quienes están inscritos en la lista de la mesa respectiva.
+> **💡 Justificación / Explicación:** Al presentarse en la mesa, el personero debe mostrar obligatoriamente su DNI y su respectiva credencial al presidente de mesa.
 
 ---
 
-### Pregunta 34: ¿Qué es el Voto Asistido y a quiénes aplica?
+### Pregunta 34
+**¿Qué facilidad física debe asignarle el presidente de mesa al personero acreditado?**
 
-- **[CORRECTA] A) El derecho de electores con discapacidad o adultos mayores con dificultad motriz a ser acompañados por una persona de su confianza.** ✅
-- B) El asesoramiento obligatorio que el personero de la lista mayoritaria brinda al elector sobre cómo marcar el símbolo partidario.
-- C) La asistencia directa del efectivo militar de custodia para introducir la cédula de votación dentro de la ranura del ánfora.
-- D) El dictado en voz alta de las opciones electorales por parte del secretario de mesa antes de que el ciudadano entre a la cabina.
+- [x] **A) Una silla desde la cual pueda observar con claridad el desarrollo de las actividades electorales.** *(Correcta)*
+- [ ] B) Un escritorio propio ubicado al lado de la cámara secreta.
+- [ ] C) Una mesa exclusiva para redactar notas de prensa partidarias.
+- [ ] D) Un espacio reservado fuera del aula de votación.
 
-💡 **Explicación / Justificación:** El voto asistido permite que un ciudadano con discapacidad motriz o visual ingrese a la cabina acompañado por una persona de su confianza.
+> **💡 Justificación / Explicación:** El presidente de mesa le asignará una silla que le permita observar adecuadamente las actividades electorales en el aula.
 
 ---
 
-### Pregunta 35: ¿Puede el personero ingresar a la cabina secreta de votación con el elector?
+### Pregunta 35
+**¿En qué momentos de la jornada electoral puede ejercer sus funciones el personero de mesa?**
 
-- **[CORRECTA] A) No, está terminantemente prohibido por ley vulnerar el secreto inviolable del voto de los electores en la cabina.** ✅
-- B) Sí, siempre y cuando el ciudadano declare abiertamente que simpatiza con los ideales del partido Somos Perú.
-- C) Sí, con la finalidad de verificar técnicamente que el elector marque la cruz dentro del corazón del símbolo oficial.
-- D) Solo si el elector solicita formalmente una recomendación de voto al personero para la elección de alcalde distrital.
+- [x] **A) Durante la instalación, el sufragio y el escrutinio en la mesa o mesas donde fue acreditado.** *(Correcta)*
+- [ ] B) Únicamente durante la primera hora de votación en la mañana.
+- [ ] C) Exclusivamente durante la etapa de escrutinio después de las 5:00 p.m.
+- [ ] D) Solo durante el refrigerio de los miembros de mesa.
 
-💡 **Explicación / Justificación:** El voto es secreto y personal; ningún personero ni autoridad puede ingresar a la cabina secreta con un elector.
+> **💡 Justificación / Explicación:** El personero de mesa puede ejercer su labor en los tres momentos completos de la jornada electoral: instalación, sufragio y escrutinio.
 
 ---
 
-### Pregunta 36: ¿Qué debe hacer el personero si encuentra cédulas marcadas o propaganda dentro de la cabina de votación?
+### Pregunta 36
+**¿Cuál es la responsabilidad central del personero de mesa frente al trabajo de los miembros de mesa?**
 
-- **[CORRECTA] A) Alertar de inmediato al Presidente de Mesa para que verifique la cabina y retire todo material no autorizado.** ✅
-- B) Guardar las cédulas marcadas en su bolsillo o maletín y retirarlas del colegio al culminar la jornada electoral.
-- C) Marcar rápidamente con lapicero las cédulas en blanco restantes a favor de la candidatura de Somos Perú en el aula.
-- D) Empezar a gritar en el patio escolar y paralizar unilateralmente la votación en todas las aulas del centro educativo.
+- [x] **A) Observar el trabajo de los miembros de mesa sin interferir en sus funciones y velar por la transparencia del proceso.** *(Correcta)*
+- [ ] B) Asumir la firma de las cédulas de forma obligatoria en reemplazo del secretario.
+- [ ] C) Indicar a los miembros de mesa cómo calificar cada voto de manera vinculante.
+- [ ] D) Impedir que voten los ciudadanos que no simpaticen con su organización política.
 
-💡 **Explicación / Justificación:** El personero debe exigir la revisión periódica de la cabina por parte del presidente para evitar propaganda o cédulas adulteradas.
+> **💡 Justificación / Explicación:** Su responsabilidad es observar el trabajo de la mesa con respeto, sin interferir, velando por la transparencia.
 
 ---
 
-### Pregunta 37: ¿Qué es la impugnación de la identidad de un elector?
+### Pregunta 37
+**¿Qué acción formal debe tomar el personero de mesa si advierte un hecho que pudiera afectar el normal desarrollo y transparencia del proceso?**
 
-- **[CORRECTA] A) Cuestionar fundadamente que el portador del DNI no es el verdadero titular registrado o que el DNI presentado es adulterado.** ✅
-- B) Reclamar porque el ciudadano viste una prenda de vestir con colores alusivos a una organización política rival.
-- C) Impedir que un ciudadano vote por no tener una antigüedad de residencia superior a cinco años en el distrito electoral.
-- D) Formular una queja porque el elector se demoró más de tres minutos dentro de la cabina de votación para marcar su cédula.
+- [x] **A) Formular las observaciones o reclamos que correspondan ante la mesa de sufragio.** *(Correcta)*
+- [ ] B) Retirar inmediatamente el ánfora electoral del aula de votación.
+- [ ] C) Clausurar la mesa de votación de manera unilateral.
+- [ ] D) Convocar a los medios de comunicación dentro del aula para una conferencia.
 
-💡 **Explicación / Justificación:** La impugnación de identidad procede cuando se presume suplantación de identidad del titular del DNI.
+> **💡 Justificación / Explicación:** Tiene el derecho y deber de formular observaciones o reclamos formales ante hechos irregulares.
 
 ---
 
-### Pregunta 38: ¿Qué procedimiento se sigue ante la impugnación de identidad de un elector?
+### Pregunta 38
+**¿En qué mesa o mesas puede ejercer sus funciones el personero de mesa?**
 
-- **[CORRECTA] A) La mesa coteja huella y firma con la lista de electores; si persisten dudas, el voto se recibe en sobre especial impugnado para el JEE.** ✅
-- B) El ciudadano es conducido de inmediato por la Policía Nacional a la carceleta distrital sin permitirle emitir su sufragio.
-- C) El Presidente de Mesa procede a romper el DNI del elector en dos mitades y anula su inscripción en la lista de electores.
-- D) Se le obliga a cantar el himno nacional y emitir su voto en voz alta delante de todos los personeros presentes en el aula.
+- [x] **A) En la mesa o mesas específicas en las que haya sido formalmente acreditado por su organización política.** *(Correcta)*
+- [ ] B) En cualquier mesa del país sin necesidad de credencial previa.
+- [ ] C) En todas las mesas del distrito de manera simultánea e indiscriminada.
+- [ ] D) Únicamente en la mesa donde votan sus familiares directos.
 
-💡 **Explicación / Justificación:** La mesa verifica huellas y firma en la lista de electores; si se mantiene la duda fundada, el voto se recibe en sobre lacrado de voto impugnado.
+> **💡 Justificación / Explicación:** El personero ejerce sus funciones estrictamente en la mesa o mesas para las que cuenta con acreditación formal.
 
 ---
 
-### Pregunta 39: ¿A qué hora se cierran las puertas del local de votación para el ingreso de ciudadanos?
+### Pregunta 39
+**¿Qué postura de conducta debe mantener el personero de mesa ante los miembros de mesa durante toda la jornada?**
 
-- **[CORRECTA] A) A las 5:00 p.m. en punto en todo el territorio nacional.** ✅
-- B) A las 4:00 p.m. con tolerancia de 15 minutos en Lima Metropolitana.
-- C) A las 6:00 p.m. si aún permanece iluminado el patio del colegio.
-- D) A las 7:00 p.m. por tratarse de un proceso electoral regional y municipal.
+- [x] **A) Una conducta de respeto, vigilancia atenta y no interferencia en las decisiones y funciones de la mesa.** *(Correcta)*
+- [ ] B) Una actitud beligerante y de confrontación verbal constante.
+- [ ] C) Una postura de total indiferencia y ausencia del aula.
+- [ ] D) Una subordinación absoluta a las instrucciones de los personeros de otros partidos.
 
-💡 **Explicación / Justificación:** A las 5:00 p.m. se cierran los accesos del local de sufragio en todo el país.
+> **💡 Justificación / Explicación:** Debe conducirse siempre con respeto, profesionalismo y apego estricto a las normas de conducta electoral.
 
 ---
 
-### Pregunta 40: Si a las 5:00 p.m. aún hay electores en la cola dentro del local de votación, ¿pueden votar?
+### Pregunta 40
+**¿A quién debe dirigirse en primera instancia el personero de mesa cuando formula una observación o reclamo?**
 
-- **[CORRECTA] A) Sí, todos los electores que se encuentren dentro del recinto escolar a las 5:00 p.m. tienen derecho a emitir su voto.** ✅
-- B) No, al sonar las 5:00 p.m. se desaloja la cola con las Fuerzas Armadas y se anulan todas las cédulas restantes en mesa.
-- C) Solo se permite el sufragio a los diez primeros ciudadanos que encabecen la fila frente a la puerta del aula de votación.
-- D) Únicamente se admite el voto de las personas adultas mayores de 65 años y mujeres gestantes que permanezcan en espera.
+- [x] **A) A los miembros de mesa, dirigiéndose respetuosamente al presidente de la mesa de sufragio.** *(Correcta)*
+- [ ] B) Directamente al personal de las Fuerzas Armadas apostado en la puerta.
+- [ ] C) A los electores que se encuentren en la fila de votación.
+- [ ] D) Al fiscal de turno a través de una llamada telefónica dentro del aula.
 
-💡 **Explicación / Justificación:** La ley ampara el derecho a votar de todos los ciudadanos que ingresaron al recinto electoral antes de las 5:00 p.m.
+> **💡 Justificación / Explicación:** Las observaciones y reclamos se plantean ante la mesa de sufragio, encabezada por su presidente.
 
 ---
 
-### Pregunta 41: ¿Cuál es el primer paso obligatorio que debe realizar la mesa antes de abrir el ánfora de sufragio?
+### Pregunta 41
+**¿Qué actividades principales realizan los miembros de mesa durante la etapa de instalación?**
 
-- **[CORRECTA] A) Contar el total de ciudadanos que firmaron en la Lista de Electores y registrar dicha cifra en el Acta de Sufragio.** ✅
-- B) Vaciar íntegramente las cédulas sobre la carpeta y comenzar a separarlas rápidamente por colores de listas postulantes.
-- C) Contar en voz alta los votos a favor del partido Somos Perú antes de revisar las cédulas de las demás agrupaciones.
-- D) Solicitar el refrigerio de la cena y suspender temporalmente el conteo hasta que todos los miembros descansen.
+- [x] **A) Reciben, verifican y organizan el material electoral para acondicionar la mesa e iniciar actividades.** *(Correcta)*
+- [ ] B) Proceden al conteo final y llenado de las actas de escrutinio.
+- [ ] C) Verifican la identidad de los votantes que ingresan al local de votación.
+- [ ] D) Custodian las puertas de acceso del colegio junto a la Policía Nacional.
 
-💡 **Explicación / Justificación:** Primero se cuenta el total de votantes efectivos en la lista de electores y se inutilizan las cédulas sobrantes.
+> **💡 Justificación / Explicación:** En la instalación, los miembros de mesa reciben el material electoral, revisan su contenido y acondicionan el aula.
 
 ---
 
-### Pregunta 42: ¿Qué se debe hacer con las cédulas de votación sobrantes (no utilizadas)?
+### Pregunta 42
+**¿Qué verificación respecto a la relación de electores puede hacer el personero durante la instalación?**
 
-- **[CORRECTA] A) Inutilizarlas cortando la esquina superior derecha y anotando la cantidad exacta en el Acta de Sufragio.** ✅
-- B) Guardarlas en el maletín de los personeros de confianza para utilizarlas como borradores en las capacitaciones.
-- C) Arrojarlas directamente al tacho de basura del aula sin efectuar ningún conteo ni registro formal en las actas.
-- D) Entregarlas como recuerdo cívico a los electores que se quedaron esperando en la puerta del centro de votación.
+- [x] **A) Verificar que la relación de electores se encuentre colocada en el lugar visible correspondiente fuera del aula.** *(Correcta)*
+- [ ] B) Retirar la lista de electores para llevarla a su local partidario.
+- [ ] C) Tachar los nombres de los electores que no pertenecen a su organización política.
+- [ ] D) Modificar el número de mesa impreso en la relación de electores.
 
-💡 **Explicación / Justificación:** Las cédulas sobrantes se cuentan, se inutilizan cortándoles una esquina y se registran en el Acta de Sufragio.
+> **💡 Justificación / Explicación:** El personero tiene derecho a verificar que la relación de electores esté correctamente pegada en el exterior del aula.
 
 ---
 
-### Pregunta 43: Si al abrir el ánfora hay MÁS cédulas que ciudadanos que votaron según la lista de electores, ¿cuál es el protocolo?
+### Pregunta 43
+**¿Qué puede verificar el personero dentro de la cámara secreta durante la instalación?**
 
-- **[CORRECTA] A) El Presidente extrae al azar y sin desdoblar tantas cédulas como sobrantes haya y procede a destruirlas e inutilizarlas.** ✅
-- B) Se declara de inmediato la nulidad total de la mesa de votación y se ordena repetir los comicios en ese colegio.
-- C) Se convoca a personas que transiten por el patio escolar para que firmen la lista de electores hasta igualar el número de cédulas.
-- D) Se adjudican automáticamente las cédulas excedentes a la organización política que obtuvo la mayor votación en el aula.
+- [x] **A) Que los carteles de candidatos estén debidamente colocados conforme a las disposiciones establecidas.** *(Correcta)*
+- [ ] B) Que existan boletas de propaganda de su partido colocadas sobre la mesa de sufragio.
+- [ ] C) Que las ventanas de la cámara secreta permanezcan completamente abiertas.
+- [ ] D) Que haya cámaras de video grabando el voto de los ciudadanos.
 
-💡 **Explicación / Justificación:** El artículo 276 de la LOE manda extraer al azar las cédulas sobrantes sin abrirlas e inutilizarlas de inmediato.
+> **💡 Justificación / Explicación:** El personero puede verificar que los carteles de candidatos oficiales estén colocados en la cámara secreta.
 
 ---
 
-### Pregunta 44: ¿Qué se considera VOTO VÁLIDO según la normativa electoral?
+### Pregunta 44
+**¿Es obligatorio para el personero firmar las cédulas de sufragio durante la instalación?**
 
-- **[CORRECTA] A) Aquel que contiene una marca en cruz (+) o aspa (X) cuya intersección de líneas se ubique dentro del recuadro o símbolo del partido.** ✅
-- B) Cualquier trazo libre, dibujo o subrayado sin importar en qué parte de la columna caiga el punto de intersección de la marca.
-- C) Una firma personal con nombres y apellidos completos colocada encima de la fotografía o símbolo del candidato postulante.
-- D) Un símbolo de visto bueno o check (✔) de gran tamaño que abarque transversalmente toda la extensión de la cédula electoral.
+- [x] **A) No, es un derecho opcional; puede firmar el reverso de las cédulas si así lo desea.** *(Correcta)*
+- [ ] B) Sí, si no firma todas las cédulas la mesa queda automáticamente anulada.
+- [ ] C) Sí, es obligatorio firmar antes que el presidente de mesa de forma obligatoria.
+- [ ] D) No, a los personeros les está estrictamente prohibido tocar el reverso de las cédulas.
 
-💡 **Explicación / Justificación:** El criterio del JNE define el voto válido por la marca en cruz (+) o aspa (X) con intersección dentro de la casilla o símbolo.
+> **💡 Justificación / Explicación:** Firmar las cédulas de sufragio es una facultad o derecho opcional del personero ('si así lo deseas').
 
 ---
 
-### Pregunta 45: Si los trazos de la cruz (+) sobrepasan el recuadro del símbolo de Somos Perú pero su punto de intersección está DENTRO, ¿es válido?
+### Pregunta 45
+**¿Es obligatoria u opcional la firma del personero en el acta de instalación?**
 
-- **[CORRECTA] A) Sí, es VOTO VÁLIDO porque la intersección de las dos líneas se encuentra perfectamente dentro de la casilla o símbolo partidario.** ✅
-- B) No, es voto nulo porque los extremos o brazos de la cruz superaron las líneas perimétricas del recuadro impreso en la cédula.
-- C) Es considerado voto en blanco debido a que el trazo no se mantuvo estrictamente confinado dentro del área delimitada.
-- D) Debe someterse a consulta y votación del personal de la Policía Nacional destacado para la seguridad del local de votación.
+- [x] **A) Es opcional; el personero tiene el derecho de firmar el acta de instalación si así lo decide.** *(Correcta)*
+- [ ] B) Es obligatoria para que el acta tenga validez legal ante el JNE.
+- [ ] C) Es prohibida; solo los miembros de mesa pueden tocar el acta electoral.
+- [ ] D) Es obligatoria únicamente para el personero del partido oficialista.
 
-💡 **Explicación / Justificación:** Si la intersección de las líneas está dentro del recuadro, el voto es 100% válido, aunque los brazos del trazo excedan los límites.
+> **💡 Justificación / Explicación:** El documento oficial señala expresamente que firmar el acta de instalación es de carácter opcional para el personero.
 
 ---
 
-### Pregunta 46: ¿Qué es un VOTO NULO?
+### Pregunta 46
+**¿Qué derecho tiene el personero si advierte una anomalía legal grave durante la instalación?**
 
-- **[CORRECTA] A) Cédula con marcas extrañas, palabras ofensivas, signos distintos a cruz/aspa, marcas en dos partidos distintos o roturas intencionales.** ✅
-- B) Cédula que se encuentra completamente limpia y sin ningún tipo de marca gráfica en ninguna de las opciones impresas.
-- C) Cédula de votación que ha sido doblada en cuatro partes simétricas para facilitar su ingreso por la ranura del ánfora.
-- D) Cédula electoral que lleva la rúbrica o firma del Presidente de Mesa estampada en el reverso antes de iniciar el sufragio.
+- [x] **A) Solicitar la nulidad de la mesa de sufragio cuando se configure alguna causal prevista en la normativa electoral.** *(Correcta)*
+- [ ] B) Quemar el material electoral para impedir el inicio de la votación.
+- [ ] C) Obligar al presidente de mesa a retirarse del aula de votación.
+- [ ] D) Suspender las elecciones en todo el distrito de manera indefinida.
 
-💡 **Explicación / Justificación:** Marcas dobles, insultos, dibujos, letras o roturas anulan la validez del voto.
+> **💡 Justificación / Explicación:** El personero puede solicitar la nulidad de la mesa si se configuran causales expresas contempladas en la ley electoral.
 
 ---
 
-### Pregunta 47: ¿Qué es un VOTO EN BLANCO?
+### Pregunta 47
+**¿Cómo debe ejercerse el derecho de formular observaciones o reclamos durante la instalación?**
 
-- **[CORRECTA] A) Cédula que no contiene ninguna marca, trazo, signo ni anotación en ninguna de las opciones electorales disponibles.** ✅
-- B) Cédula de votación que tiene una cruz suave marcada con lápiz que fue borrada parcialmente por el ciudadano en la cabina.
-- C) Cédula electoral marcada con un lapicero de tinta líquida de color rojo en vez del bolígrafo azul reglamentario de la ONPE.
-- D) Cédula de sufragio que fue doblada al revés por el elector dejando visible la firma del Presidente de Mesa en el ánfora.
+- [x] **A) Sin obstaculizar ni interferir en las funciones de los miembros de mesa.** *(Correcta)*
+- [ ] B) Impidiendo que los miembros de mesa abran los paquetes de cédulas.
+- [ ] C) Amenazando con denuncias penales inmediatas a los electores presentes.
+- [ ] D) Bloqueando la puerta de ingreso al aula hasta ser atendido.
 
-💡 **Explicación / Justificación:** Voto en blanco es aquel donde el elector no expresó ninguna preferencia y dejó los recuadros sin marcar.
+> **💡 Justificación / Explicación:** Los derechos deben ejercerse siempre de manera ordenada, sin obstaculizar ni paralizar la labor de la mesa.
 
 ---
 
-### Pregunta 48: ¿Qué debe hacer el personero si un miembro de mesa pretende declarar NULO un voto válido de Somos Perú?
+### Pregunta 48
+**¿Qué debe hacer el personero si desea firmar las cédulas de sufragio en la instalación?**
 
-- **[CORRECTA] A) Defender enérgicamente el voto citando las normas de la cartilla ONPE/JNE; si insisten, IMPUGNAR la cédula para que decida el JEE.** ✅
-- B) Aceptar en silencio la decisión de los miembros de mesa para evitar tensiones o discusiones acaloradas dentro del aula escolar.
-- C) Romper de inmediato el acta de escrutinio para forzar a que no se contabilice ningún resultado de esa mesa de votación.
-- D) Retirarse del aula sin firmar las actas electorales ni solicitar copia de escrutinio al finalizar el proceso de conteo.
+- [x] **A) Hacerlo de acuerdo con el procedimiento dispuesto por la mesa, rubricando en el espacio correspondiente del reverso.** *(Correcta)*
+- [ ] B) Escribir frases políticas de su partido en el anverso de la cédula.
+- [ ] C) Marcar el símbolo de su candidato en todas las cédulas antes de entregarlas.
+- [ ] D) Llevarse un paquete de cédulas fuera del aula para rubricarlas con calma.
 
-💡 **Explicación / Justificación:** El personero debe defender el voto fundamentando la intersección del trazo y, si la mesa discrepa, solicitar la impugnación formal.
+> **💡 Justificación / Explicación:** La firma se efectúa en el reverso de las cédulas conforme al procedimiento reglamentario sin alterar el anverso.
 
 ---
 
-### Pregunta 49: ¿Quién resuelve en la mesa la impugnación de un voto durante el escrutinio?
+### Pregunta 49
+**¿Qué material clave organizan y revisan los miembros de mesa durante la instalación?**
 
-- **[CORRECTA] A) Los tres miembros de mesa por mayoría de votos; si el personero apela la decisión, el voto va al sobre lacrado para el JEE.** ✅
-- B) El personero de la organización política que obtuvo la mayor cantidad de votos acumulados en las aulas del colegio.
-- C) El Coordinador de Local de la ONPE de manera exclusiva e inapelable mediante resolución técnica administrativa verbal.
-- D) El oficial de las Fuerzas Armadas o Policía Nacional que presta servicios de vigilancia en la puerta de ingreso al aula.
+- [x] **A) Las cédulas de sufragio, el padrón electoral, las actas electorales, los tampones, lapiceros y hologramas.** *(Correcta)*
+- [ ] B) Los teléfonos celulares personales y folletos propagandísticos de los candidatos.
+- [ ] C) Las banderas y afiches de los partidos políticos contendientes.
+- [ ] D) Las cartas fianza bancarias presentadas por los personeros.
 
-💡 **Explicación / Justificación:** La mesa vota; si el personero mantiene su impugnación, la cédula se lacra en el sobre de votos impugnados para fallo del JEE.
+> **💡 Justificación / Explicación:** Verifican todo el material oficial contenido en el ánfora de útiles e instalación proveída por la ONPE.
 
 ---
 
-### Pregunta 50: ¿Puede el Personero de Mesa manipular o desdoblar las cédulas de sufragio con sus propias manos durante el escrutinio?
+### Pregunta 50
+**¿Qué ocurre si el personero decide no firmar el acta de instalación?**
 
-- **[CORRECTA] A) No, solo los miembros de mesa pueden tocar y desdoblar físicamente las cédulas de votación extraídas del ánfora.** ✅
-- B) Sí, con la finalidad de colaborar activamente para que el conteo de votos avance con mayor rapidez y fluidez en la mesa.
-- C) Sí, en caso de que los tres miembros de mesa manifiesten cansancio físico evidente tras diez horas continuas de labor.
-- D) Solo si utiliza guantes quirúrgicos esterilizados y cuenta con la autorización previa del fiscalizador del JNE.
+- [x] **A) La mesa continúa su funcionamiento válido con las firmas de los miembros de mesa presentes.** *(Correcta)*
+- [ ] B) La mesa se declara inválida y se descartan todos los votos de la jornada.
+- [ ] C) El personero recibe una sanción económica inmediata de la ODPE.
+- [ ] D) Se debe esperar hasta que se presente otro personero que acepte firmar.
 
-💡 **Explicación / Justificación:** Los personeros observan y fiscalizan a la vista de las cédulas, pero la manipulación física corresponde exclusivamente a los miembros de mesa.
+> **💡 Justificación / Explicación:** La firma del personero es facultativa; si decide no firmar, no se invalida la instalación de la mesa.
 
 ---
 
-### Pregunta 51: ¿De cuántas secciones se compone el Acta Electoral completa?
+### Pregunta 51
+**¿Cuál es la definición del momento del sufragio durante la jornada electoral?**
 
-- **[CORRECTA] A) Tres (3) secciones indivisibles: Acta de Instalación, Acta de Sufragio y Acta de Escrutinio.** ✅
-- B) Una sola hoja resumen que contiene exclusivamente los resultados numéricos del conteo de votos.
-- C) Dos (2) secciones reglamentarias: Acta de Apertura Matutina y Acta de Cierre de la Jornada Cívica.
-- D) Cuatro (4) secciones independientes: Lista de Electores Inicial, Registro de Votación, Cómputo Final y Proclamación.
+- [x] **A) Es la etapa en la que los electores ejercen su derecho al voto de manera libre y secreta.** *(Correcta)*
+- [ ] B) Es la fase en la que se cuenta el dinero de las multas de los miembros ausentes.
+- [ ] C) Es el momento exclusivo en que los candidatos dan entrevistas en el local de votación.
+- [ ] D) Es la etapa en la que se imprimen las actas de resultados definitivos.
 
-💡 **Explicación / Justificación:** El Acta Electoral indivisible consta de: 1. Acta de Instalación, 2. Acta de Sufragio y 3. Acta de Escrutinio.
+> **💡 Justificación / Explicación:** El sufragio es la etapa medular de la jornada donde los ciudadanos acuden a ejercer su derecho al voto.
 
 ---
 
-### Pregunta 52: ¿Cuántos ejemplares oficiales del Acta Electoral se llenan y firman en cada mesa de sufragio?
+### Pregunta 52
+**¿Cómo deben ingresar los electores a la cámara secreta para emitir su voto según la regla general?**
 
-- **[CORRECTA] A) Cinco (5) ejemplares oficiales idénticos con sobres de colores diferenciados para cada entidad y personeros.** ✅
-- B) Únicamente dos (2) ejemplares oficiales: uno para la sede central de la ONPE y otro para el archivo del colegio.
-- C) Tres (3) ejemplares simples que se distribuyen entre los tres miembros titulares de la mesa de sufragio.
-- D) Diez (10) ejemplares impresos en papel autocopiativo para repartir a todos los partidos políticos inscritos.
+- [x] **A) Solos, salvo cuando requieran asistencia justificada de acuerdo con las disposiciones vigentes (voto asistido).** *(Correcta)*
+- [ ] B) Acompañados siempre por el personero de su preferencia política.
+- [ ] C) En parejas para agilizar el flujo de votantes en el aula.
+- [ ] D) Junto a un efectivo policial para verificar la marca en la cédula.
 
-💡 **Explicación / Justificación:** Se redactan 5 ejemplares oficiales destinados a la ODPE, JEE, ONPE, JNE y archivo de personeros.
+> **💡 Justificación / Explicación:** Los electores deben ingresar solos a la cámara, a menos que califiquen para voto asistido por discapacidad o necesidad manifiesta.
 
 ---
 
-### Pregunta 53: ¿A quiénes corresponden los 5 ejemplares oficiales del Acta Electoral?
+### Pregunta 53
+**¿En qué orden vota el personero de mesa cuando le corresponde sufragar en la misma mesa donde fue acreditado?**
 
-- **[CORRECTA] A) 1. ODPE (sobre plomo), 2. JEE (sobre celeste), 3. ONPE (sobre verde), 4. JNE (sobre rojo) y 5. Personeros (sobre morado).** ✅
-- B) Todos los 5 ejemplares permanecen bajo custodia permanente en la dirección del centro educativo donde se votó.
-- C) Tres ejemplares para la Comandancia de la Policía Nacional y dos ejemplares para el archivo de los miembros de mesa.
-- D) Un ejemplar para cada uno de los cinco primeros ciudadanos que emitieron su voto al abrirse la mesa en la mañana.
+- [x] **A) Vota después de los miembros de mesa presentes en la mesa de sufragio.** *(Correcta)*
+- [ ] B) Vota en primer lugar antes que el presidente de mesa y secretarios.
+- [ ] C) Debe esperar obligatoriamente hasta las 5:00 p.m. después de que vote el último elector.
+- [ ] D) No puede votar en su mesa asignada bajo ninguna circunstancia.
 
-💡 **Explicación / Justificación:** Los 5 ejemplares tienen sobres de seguridad de colores reglamentarios asignados a cada entidad y personeros.
+> **💡 Justificación / Explicación:** Si al personero le corresponde sufragar en dicha mesa, vota inmediatamente después de los miembros de mesa presentes.
 
 ---
 
-### Pregunta 54: ¿Qué debe verificar el personero al llenarse el Acta de Escrutinio en letras y números?
+### Pregunta 54
+**¿Qué derecho puede ejercer el personero si duda legítimamente sobre la identidad de una persona que se presenta a votar?**
 
-- **[CORRECTA] A) Que los votos de Somos Perú coincidan exactamente en números y letras, sin borrones, enmendaduras ni tachaduras.** ✅
-- B) Que no figure consignado ningún voto a favor de las organizaciones políticas rivales en ninguna de las casillas.
-- C) Que el acta esté suscrita únicamente por el Presidente de Mesa sin requerir la firma del Secretario ni del Tercer Miembro.
-- D) Que los casilleros numéricos se llenen con lápiz de grafito para permitir correcciones posteriores en la central.
+- [x] **A) Impugnar la identidad del elector cuando existan motivos fundados para ello.** *(Correcta)*
+- [ ] B) Retener por la fuerza el DNI del ciudadano e interrogarlo.
+- [ ] C) Expulsar físicamente al elector del centro de votación.
+- [ ] D) Obligar al elector a votar en blanco como penalización.
 
-💡 **Explicación / Justificación:** Debe verificarse la perfecta coincidencia entre cifras y letras para evitar que el acta sea clasificada como 'Observada'.
+> **💡 Justificación / Explicación:** El personero tiene el derecho explícito de impugnar la identidad del elector ante sospecha fundada de suplantación.
 
 ---
 
-### Pregunta 55: ¿Qué significa que un Acta Electoral sea declarada 'Observada por Error Material'?
+### Pregunta 55
+**¿Qué documentos puede firmar el personero al finalizar el sufragio si así lo desea?**
 
-- **[CORRECTA] A) Que la suma de votos no coincide con el total de votantes, o existen datos numéricos ilegibles o inconsistentes.** ✅
-- B) Que el material electoral fue objeto de sustracción o daño físico por personas desconocidas en el local escolar.
-- C) Que resultó ganadora una lista de candidatos cuya inscripción fue revocada en última instancia por el pleno del JNE.
-- D) Que el aula escolar designada para la votación no contaba con el mobiliario adecuado ni ventilación suficiente.
+- [x] **A) La última página de la lista de electores y las actas de sufragio.** *(Correcta)*
+- [ ] B) Los DNI de todos los electores que acudieron a la mesa.
+- [ ] C) El reverso de los comprobantes de pago de los miembros de mesa.
+- [ ] D) Las cédulas que no fueron utilizadas por los electores ausentes.
 
-💡 **Explicación / Justificación:** El error material surge por sumas incongruentes, datos ilegibles o discordancia entre votos y firmas en la lista de electores.
+> **💡 Justificación / Explicación:** Tiene la opción de firmar la última página de la lista de electores y las respectivas actas de sufragio.
 
 ---
 
-### Pregunta 56: ¿Qué es el 'Cartel de Resultados' de la mesa de sufragio?
+### Pregunta 56
+**¿A qué grupos de personas se les debe garantizar obligatoriamente atención preferente durante el sufragio?**
 
-- **[CORRECTA] A) El cartel oficial impreso con el resumen de votos que se pega en la puerta del aula de votación al finalizar el escrutinio.** ✅
-- B) El afiche publicitario de gran formato con la fotografía del candidato a la alcaldía provincial de Lima Metropolitana.
-- C) El letrero de señalización institucional que indica el número correlativo de aula y rango de apellidos de la mesa.
-- D) La lista completa de electores habilitados que se publica en el patio central del colegio para consulta ciudadana.
+- [x] **A) A personas con discapacidad, movilidad reducida, mujeres gestantes y adultos mayores.** *(Correcta)*
+- [ ] B) Exclusivamente a los personeros y dirigentes de partidos políticos.
+- [ ] C) A los electores que lleguen con prendas alusivas a los candidatos.
+- [ ] D) Únicamente a los electores menores de 25 años.
 
-💡 **Explicación / Justificación:** El Cartel de Resultados publica los resultados del conteo en la puerta del aula para conocimiento público.
+> **💡 Justificación / Explicación:** La normativa exige garantizar atención preferente a personas con discapacidad, movilidad reducida, gestantes y adultos mayores.
 
 ---
 
-### Pregunta 57: ¿Tiene derecho el personero a recibir una copia física firmada del Acta de Escrutinio?
+### Pregunta 57
+**¿Qué es el Módulo Temporal de Votación y cómo funciona?**
 
-- **[CORRECTA] A) Sí, es un derecho legal inalienable de los personeros acreditados recibir su copia oficial firmada por la mesa.** ✅
-- B) No, las actas electorales constituyen documentos reservados y confidenciales de uso exclusivo del personal de la ONPE.
-- C) Solo si abona previamente la tarifa fijada por concepto de fotocopia directamente al Presidente de Mesa en el aula.
-- D) Únicamente si la candidatura de su organización política obtuvo el primer lugar en el cómputo de votos de esa mesa.
+- [x] **A) Es un espacio accesible en el primer piso al que se trasladan los miembros de mesa para atender a electores con dificultades de desplazamiento.** *(Correcta)*
+- [ ] B) Es una mesa especial donde votan exclusivamente los candidatos presidenciales.
+- [ ] C) Es una carpa exterior donde se reciben votos por correo electrónico.
+- [ ] D) Es una oficina donde se registran los reclamos de impugnación de personeros.
 
-💡 **Explicación / Justificación:** El artículo 291 de la LOE garantiza que los personeros reciban una copia auténtica firmada del acta de escrutinio.
+> **💡 Justificación / Explicación:** Permite que los miembros de mesa trasladen el material al primer piso para atender a votantes que no pueden subir escaleras.
 
 ---
 
-### Pregunta 58: ¿Qué debe hacer el personero inmediatamente después de obtener su copia del Acta de Escrutinio?
+### Pregunta 58
+**¿Cómo debe comportarse el personero cuando se realiza la votación en el Módulo Temporal de Votación?**
 
-- **[CORRECTA] A) Tomar una fotografía nítida del Acta y del Cartel de Resultados y transmitirla de inmediato al sistema ConteoLima / Somos Perú.** ✅
-- B) Guardar el documento en su domicilio particular y llevarlo a la sede partidaria transcurridos varios días de la elección.
-- C) Publicar la fotografía en sus redes sociales personales sin haber verificado antes la exactitud de las cifras registradas.
-- D) Romper la hoja de copia para evitar que los personeros de otros partidos políticos tomen conocimiento de los resultados.
+- [x] **A) Puede observar el procedimiento respetando la privacidad, autonomía y derecho de sufragio del elector.** *(Correcta)*
+- [ ] B) Debe ingresar a la cámara del módulo para sugerirle por quién votar.
+- [ ] C) Debe oponerse al traslado del material electoral bajo advertencia de nulidad.
+- [ ] D) Debe tomar fotografías del rostro del elector y su cédula marcada.
 
-💡 **Explicación / Justificación:** La fotografía nítida y transmisión inmediata al sistema del partido permite consolidar el conteo rápido de Somos Perú.
+> **💡 Justificación / Explicación:** Puede acompañar y observar el procedimiento resguardando el secreto del voto y la dignidad del elector.
 
 ---
 
-### Pregunta 59: ¿Cómo debe tomarse la fotografía del Acta de Escrutinio para el reporte digital?
+### Pregunta 59
+**¿En qué caso puede el personero solicitar la nulidad de la mesa de sufragio durante la etapa de votación?**
 
-- **[CORRECTA] A) De forma vertical, con buena iluminación, encuadre completo de los 4 bordes, sin sombras y con letras y números totalmente legibles.** ✅
-- B) Con flash nocturno a tres metros de distancia desde el pasillo exterior del pabellón escolar sin enfocar las firmas.
-- C) Fotografiando únicamente la casilla con el número de votos de Somos Perú omitiendo el encabezado y las firmas de los miembros.
-- D) En movimiento mientras se traslada rápidamente por las escaleras del centro de votación hacia la salida principal.
+- [x] **A) Cuando los miembros de mesa ejerzan intimidación o violencia sobre los electores, o se configure otra causal legal prevista.** *(Correcta)*
+- [ ] B) Cuando un elector demore más de un minuto en marcar su cédula de sufragio.
+- [ ] C) Cuando la mayoría de electores asista vistiendo prendas de color azul o rojo.
+- [ ] D) Cuando haya fila de electores esperando en el pasillo exterior del aula.
 
-💡 **Explicación / Justificación:** Una foto nítida, completa, sin sombras y con firmas visibles es vital para la validación del centro de cómputo partidario.
+> **💡 Justificación / Explicación:** La violencia o intimidación ejercida por miembros de mesa sobre los electores es causal legal expresa para solicitar nulidad.
 
 ---
 
-### Pregunta 60: ¿Qué debe hacer el personero si el Presidente de Mesa se niega a firmar o entregarle la copia del acta?
+### Pregunta 60
+**¿Qué se debe respetar estrictamente al momento de asistir a una persona con discapacidad o movilidad reducida?**
 
-- **[CORRECTA] A) Exigir la presencia inmediata del Coordinador de Local de la ONPE y de su Coordinador de Somos Perú para levantar la incidencia legal.** ✅
-- B) Aceptar pasivamente la negativa de la autoridad de mesa y retirarse de inmediato hacia su domicilio sin reclamar.
-- C) Intentar arrebatar el ánfora y los sobres lacrados por la fuerza forcejeando con los miembros de mesa en el aula.
-- D) Firmar de puño y letra el casillero del presidente de mesa haciéndose pasar por la autoridad para validar su propia copia.
+- [x] **A) Su privacidad, autonomía y el ejercicio libre y secreto de su derecho al voto.** *(Correcta)*
+- [ ] B) La preferencia política del personero de mesa que lo acompaña.
+- [ ] C) El orden alfabético estricto de los apellidos de los candidatos.
+- [ ] D) La imposición de que vote únicamente por listas completas.
 
-💡 **Explicación / Justificación:** La negativa a entregar copia del acta es una infracción legal grave; se debe convocar de inmediato a los coordinadores y fiscalizadores.
+> **💡 Justificación / Explicación:** Se debe salvaguardar en todo momento la autonomía, confidencialidad y libre decisión del ciudadano.
 
 ---
 
-### Pregunta 61: ¿Qué distintivo o prenda tiene permitido llevar el Personero de Mesa dentro del local de votación?
+### Pregunta 61
+**¿Puede un personero impedir que una mujer gestante o un adulto mayor reciba atención preferente?**
 
-- **[CORRECTA] A) Únicamente su Credencial Oficial reglamentaria en fotocheck visible de dimensiones no mayores a 10 x 7 cm.** ✅
-- B) Camisetas, gorros, chalecos y casacas con propaganda explícita, lemas de campaña y colores alusivos al candidato.
-- C) Banderas y banderolas gigantes de la organización política Somos Perú colgadas sobre los hombros o en las manos.
-- D) Megáfonos, parlantes portátiles y volantes de propaganda electoral para distribuir a los ciudadanos en los pasillos.
+- [x] **A) No, la atención preferente es un mandato obligatorio que garantiza la accesibilidad electoral.** *(Correcta)*
+- [ ] B) Sí, si los demás electores de la fila manifiestan su disconformidad a viva voz.
+- [ ] C) Sí, si la persona llega dentro de la última media hora de la jornada.
+- [ ] D) Solo si la persona no cuenta con carné partidario.
 
-💡 **Explicación / Justificación:** La ley prohíbe todo tipo de vestimenta o distintivo proselitista dentro de locales de sufragio; solo se porta la credencial reglamentaria.
+> **💡 Justificación / Explicación:** La atención preferente es un derecho ineludible de los electores amparado por las leyes electorales y de inclusión.
 
 ---
 
-### Pregunta 62: ¿Qué sanción puede recibir un personero que realiza proselitismo político dentro del local de votación?
+### Pregunta 62
+**¿Qué derecho tiene el personero durante todo el desarrollo de la etapa de sufragio?**
 
-- **[CORRECTA] A) Expulsión inmediata del local de votación por las Fuerzas Armadas/Policía y denuncia penal por delito electoral.** ✅
-- B) Una amonestación verbal amistosa por parte del conserje del colegio sin generar ningún tipo de reporte formal.
-- C) Un descuento simbólico del diez por ciento de los votos obtenidos por su organización política al finalizar el conteo.
-- D) La obligación cívica de permanecer barriendo y limpiando las aulas del local escolar hasta el día siguiente.
+- [x] **A) Presenciar el acto de votación y formular observaciones o reclamos que correspondan.** *(Correcta)*
+- [ ] B) Sellar los DNI de los electores con el logo de su organización política.
+- [ ] C) Entregar volantes informativos a los ciudadanos en la fila de votación.
+- [ ] D) Interrogar a los miembros de mesa sobre sus preferencias electorales personales.
 
-💡 **Explicación / Justificación:** Hacer propaganda en locales de sufragio es delito electoral y causa de expulsión inmediata y proceso penal.
+> **💡 Justificación / Explicación:** El personero tiene derecho a presenciar el acto y elevar observaciones o reclamos ante irregularidades.
 
 ---
 
-### Pregunta 63: ¿Puede el personero conversar, orientar o indicar por quién votar a los electores en la fila?
+### Pregunta 63
+**¿Qué actividades centrales realizan los miembros de mesa durante la etapa de escrutinio?**
 
-- **[CORRECTA] A) No, está estrictamente prohibido por ley intentar influir, coaccionar, inducir o sugerir el voto de los electores.** ✅
-- B) Sí, siempre que el ciudadano le consulte de manera discreta y en voz baja mientras espera su turno en el pasillo.
-- C) Solo a los ciudadanos jóvenes que manifiesten no conocer a los candidatos postulantes a la alcaldía de Lima.
-- D) Está permitido siempre que la conversación se desarrolle sin que el efectivo policial de custodia se dé cuenta.
+- [x] **A) Realizan el conteo y la calificación de los votos y registran los resultados en las actas electorales correspondientes.** *(Correcta)*
+- [ ] B) Organizan las filas de los electores rezagados para que puedan votar.
+- [ ] C) Redactan las resoluciones de sanción a los personeros ausentes.
+- [ ] D) Entregan las credenciales definitivas a los candidatos ganadores.
 
-💡 **Explicación / Justificación:** El personero no puede interferir con los electores ni realizar actos de inducción al voto bajo ninguna circunstancia.
+> **💡 Justificación / Explicación:** El escrutinio comprende la apertura del ánfora, conteo, calificación de cada voto y llenado minucioso de las actas.
 
 ---
 
-### Pregunta 64: ¿Qué debe hacer un personero si detecta propaganda electoral (volantes, afiches o pintas) dentro del aula o cabina de votación?
+### Pregunta 64
+**¿Cuáles son los principales derechos del personero de mesa durante el escrutinio?**
 
-- **[CORRECTA] A) Solicitar formalmente al Presidente de Mesa y al personal de la ONPE su retiro inmediato antes de continuar con la votación.** ✅
-- B) Colocar afiches y volantes de Somos Perú en la carpeta contigua para equilibrar la visibilidad de ambas organizaciones.
-- C) Tomar fotografías con su teléfono celular y retirarse del aula escolar sin dar aviso a ninguna autoridad electoral.
-- D) Destruir la cabina de votación de cartón y arrojarla por la ventana del aula en señal de protesta por la propaganda.
+- [x] **A) Presenciar la lectura de votos, observar el contenido de cada cédula, impugnar votos, firmar actas y solicitar copia del acta electoral.** *(Correcta)*
+- [ ] B) Sumar los votos con su propia calculadora e imponer su resultado al presidente de mesa.
+- [ ] C) Guardarse las cédulas controvertidas en su maletín personal.
+- [ ] D) Llenar directamente las actas de escrutinio con su puño y letra.
 
-💡 **Explicación / Justificación:** Cualquier propaganda dentro del aula o cabina debe ser retirada de inmediato por los miembros de mesa o la ONPE.
+> **💡 Justificación / Explicación:** Sus derechos comprenden presenciar la lectura, observar cédulas, impugnar votos, formular reclamos, firmar y solicitar copia del acta.
 
 ---
 
-### Pregunta 65: ¿Puede un personero abandonar su mesa de sufragio antes de que concluya el llenado y firma de las actas?
+### Pregunta 65
+**¿Qué puede hacer el personero si considera que un voto calificado por los miembros de mesa es nulo o válido erróneamente?**
 
-- **[CORRECTA] A) No, el personero debe permanecer vigilante hasta que las actas estén 100% firmadas, lacradas y tenga su copia en mano.** ✅
-- B) Sí, puede retirarse a las 5:00 p.m. apenas el personal de custodia cierre las rejas de acceso al centro educativo.
-- C) Sí, una vez que constate visualmente que su candidato favorito obtuvo ventaja en el conteo preliminar de la pizarra.
-- D) Tiene autorización para retirarse libremente en el momento en que considere oportuno salir a cenar con sus familiares.
+- [x] **A) Impugnar el voto conforme al procedimiento establecido en la normativa electoral.** *(Correcta)*
+- [ ] B) Romper la cédula de sufragio en señal de protesta inmediata.
+- [ ] C) Quitarle el ánfora a los miembros de mesa y llamar a la policía.
+- [ ] D) Anular automáticamente toda la mesa de votación sin trámite alguno.
 
-💡 **Explicación / Justificación:** El trabajo del personero culmina solo cuando tiene en mano la copia oficial del acta de escrutinio firmada y la transmite.
+> **💡 Justificación / Explicación:** El personero tiene el derecho de impugnar el voto para que sea resuelto en última instancia por el Jurado Electoral Especial.
 
 ---
 
-### Pregunta 66: ¿Qué actitud debe mantener el personero ante discusiones o provocaciones de personeros rivales?
+### Pregunta 66
+**¿Tiene derecho el personero a solicitar una copia del acta electoral al culminar el escrutinio?**
 
-- **[CORRECTA] A) Mantener la calma, actuar con firmeza y educación, basarse en el manual y solicitar la intervención del Presidente de Mesa.** ✅
-- B) Responder con insultos y agresiones físicas para imponer respeto frente a los demás personeros de la mesa de sufragio.
-- C) Abandonar de inmediato el aula de votación y dejar sin fiscalización todos los votos del partido político en la mesa.
-- D) Desconectar los cables del fluido eléctrico del pabellón escolar para suspender temporalmente el acto de escrutinio.
+- [x] **A) Sí, tiene derecho a solicitar y recibir una copia del acta electoral de acuerdo con el procedimiento establecido.** *(Correcta)*
+- [ ] B) No, las copias de las actas son de uso reservado exclusivo para la ONPE y el JNE.
+- [ ] C) Solo si su partido político obtuvo el primer o segundo lugar en la mesa.
+- [ ] D) Únicamente si paga una tasa administrativa en efectivo a los miembros de mesa.
 
-💡 **Explicación / Justificación:** La serenidad, el conocimiento normativo y el profesionalismo son las mejores herramientas de defensa del voto.
+> **💡 Justificación / Explicación:** La ley garantiza a los personeros acreditados la entrega de una copia oficial del acta electoral de escrutinio.
 
 ---
 
-### Pregunta 67: ¿Puede un personero tocar o trasladar las ánforas de votación durante la jornada?
+### Pregunta 67
+**¿Es obligatoria la firma del personero en las actas de escrutinio?**
 
-- **[CORRECTA] A) No, el traslado y custodia física corresponde a los miembros de mesa, personal de ONPE y resguardo militar/policial.** ✅
-- B) Sí, el personero debe cargar el ánfora en sus brazos durante todo el día para garantizar que nadie la manipule.
-- C) Sí, en los momentos en que el Presidente de Mesa requiera ausentarse temporalmente para acudir a los servicios higiénicos.
-- D) Solo si el Presidente de Mesa manifiesta no contar con suficiente fuerza física para trasladar el material electoral.
+- [x] **A) No, firmar las actas de escrutinio es un derecho voluntario u opcional ('si así lo deseas').** *(Correcta)*
+- [ ] B) Sí, sin la firma del personero el acta no ingresa al centro de cómputo.
+- [ ] C) Sí, y si se niega a firmar se le impone una multa electoral.
+- [ ] D) Es obligatoria únicamente para el personero que impugnó votos.
 
-💡 **Explicación / Justificación:** El personero custodia visualmente el traslado de las ánforas y sobres, pero no las manipula físicamente.
+> **💡 Justificación / Explicación:** Firmar las actas es un derecho facultativo del personero acreditado.
 
 ---
 
-### Pregunta 68: ¿Qué debe hacer el personero si un miembro de mesa comete un error al llenar una casilla del acta con lapicero?
+### Pregunta 68
+**¿Qué conducta debe mantener el personero durante todo el escrutinio?**
 
-- **[CORRECTA] A) Exigir que se anote la corrección formal en el rubro de observaciones del acta, sin realizar borrones o tachaduras ilegibles.** ✅
-- B) Aplicar abundante corrector líquido blanco sobre todo el casillero numérico y escribir la nueva cifra encima del líquido.
-- C) Romper de inmediato la hoja oficial del acta electoral y solicitar un nuevo paquete de repuesto a la sede de la ODPE.
-- D) Dejar la casilla con números sobrepuestos para que el personal de cómputo del Jurado Electoral Especial interprete la cifra.
+- [x] **A) Una conducta respetuosa, evitando cualquier acción o ruido que interfiera con el trabajo de los miembros de mesa.** *(Correcta)*
+- [ ] B) Una actitud de constante interrupción verbal para dilatar el conteo de votos.
+- [ ] C) Permanecer fuera del aula con la puerta cerrada con llave.
+- [ ] D) Tomar el control físico del conteo de cédulas para acelerar la jornada.
 
-💡 **Explicación / Justificación:** Nunca debe usarse corrector ni tachaduras informales; toda salvedad se consigna en el rubro de observaciones del acta.
+> **💡 Justificación / Explicación:** El escrutinio exige máxima concentración; el personero debe conducirse con estricto respeto y prudencia.
 
 ---
 
-### Pregunta 69: ¿Qué documento recibe el personero de mesa como constancia de su asistencia y labor por parte de la ONPE?
+### Pregunta 69
+**¿Qué derecho tiene el personero si se produce una causal grave de nulidad durante el escrutinio?**
 
-- **[CORRECTA] A) La constancia o certificado oficial de asistencia del personero emitida y firmada por los funcionarios de la ONPE.** ✅
-- B) Un cheque bancario con el pago de dietas y compensación económica similar al que reciben los miembros de mesa titulares.
-- C) Un diploma de honor y condecoración cívica otorgada en sesión solemne por la Mesa Directiva del Congreso de la República.
-- D) Un carnet de pase libre en el transporte público y exoneración permanente del pago de arbitrios e impuestos municipales.
+- [x] **A) Solicitar formalmente la nulidad de la mesa de sufragio conforme a las causales contempladas en la ley.** *(Correcta)*
+- [ ] B) Retirar los sobres con actas y esconderlos fuera del local de votación.
+- [ ] C) Obligar al secretario a escribir un resultado ficticio en las actas.
+- [ ] D) Declarar electo a su candidato de forma provisional en el aula.
 
-💡 **Explicación / Justificación:** La ONPE entrega constancias oficiales de participación a los personeros acreditados en mesa.
+> **💡 Justificación / Explicación:** Puede interponer el pedido formal de nulidad de la mesa si concurre una causal legal manifiesta.
 
 ---
 
-### Pregunta 70: ¿Por qué es crucial la presencia de personeros en el 100% de mesas de Lima Metropolitana?
+### Pregunta 70
+**¿Cómo se califica y registra el contenido de cada cédula de sufragio durante el escrutinio?**
 
-- **[CORRECTA] A) Porque una mesa sin personero queda vulnerable a la anulación indebida de votos o asignación errónea de actas.** ✅
-- B) Porque si una mesa no cuenta con un personero partidario presente, la ley electoral prohíbe que pueda instalarse.
-- C) Con el propósito de que el patio y pasillos del centro de votación registren mayor concurrencia de público durante el día.
-- D) Para que la organización política gane el reconocimiento público como el partido con mayor número de simpatizantes.
+- [x] **A) El presidente extrae una a una las cédulas, lee en voz alta el voto, lo muestra y se registra en la hoja borrador y actas.** *(Correcta)*
+- [ ] B) Se cuenta el bulto total de cédulas al peso sin abrirlas.
+- [ ] C) Cada personero califica las cédulas de su candidato en una mesa separada.
+- [ ] D) Se introducen las cédulas en una máquina destructora tras ser contadas.
 
-💡 **Explicación / Justificación:** La cobertura total de mesas asegura que ningún voto de Somos Perú sea vulnerado ni anulado injustamente.
+> **💡 Justificación / Explicación:** Las cédulas se leen en voz alta una por una y se exhiben para que personeros y miembros verifiquen el sentido del voto.
 
 ---
 
-### Pregunta 71: CASO 1: Un elector marca una cruz (+) sobre el corazón de Somos Perú. Una línea de la cruz es corta y la otra larga, pero se cruzan DENTRO del recuadro. ¿Cómo se califica el voto?
+### Pregunta 71
+**¿Qué sucede con las actas electorales una vez llenadas y suscritas al finalizar el escrutinio?**
 
-- **[CORRECTA] A) VOTO VÁLIDO a favor de Somos Perú, ya que la intersección se ubica dentro del área delimitada del símbolo.** ✅
-- B) VOTO NULO por no constituir una cruz con proporciones geométricas perfectamente simétricas en sus cuatro brazos.
-- C) VOTO EN BLANCO debido a que la disparidad en la longitud de los trazos evidencia falta de claridad en la intención.
-- D) VOTO IMPUGNADO obligatorio que debe ser derivado sin excepción a la sede del Jurado Electoral Especial distrital.
+- [x] **A) Se introducen en sus respectivos sobres de colores de seguridad para su entrega oficial a la ODPE, JEE y personeros.** *(Correcta)*
+- [ ] B) Se entregan a los medios de prensa para su custodia durante la noche.
+- [ ] C) Se dejan abiertas sobre las mesas del colegio hasta el día siguiente.
+- [ ] D) Se destruyen inmediatamente una vez leídos los resultados.
 
-💡 **Explicación / Justificación:** No se exige perfección geométrica; si el trazo es una cruz o aspa y la intersección está dentro del recuadro, el voto es VÁLIDO.
+> **💡 Justificación / Explicación:** Se introducen y lacran en los sobres de seguridad oficiales para su distribución a los organismos electorales y personeros.
 
 ---
 
-### Pregunta 72: CASO 2: En la cédula provincial, el elector marca el aspa (X) sobre Somos Perú, pero en la cédula distrital marca otro partido. ¿Se anulan ambas opciones?
+### Pregunta 72
+**¿Qué debe hacer el personero de mesa al recibir la copia del acta electoral de escrutinio?**
 
-- **[CORRECTA] A) No, las elecciones Provincial y Distrital son independientes; el voto provincial es VÁLIDO para Somos Perú y el distrital para el otro partido.** ✅
-- B) Sí, la legislación electoral anula íntegramente toda la cédula de votación si el elector opta por emitir un voto cruzado.
-- C) Solo se considera válido el voto para el concejo distrital, quedando anulada automáticamente la columna del concejo provincial.
-- D) El Presidente de Mesa tiene la atribución legal de decidir a su criterio cuál de las dos columnas mantiene su validez.
+- [x] **A) Verificar que los datos coincidan, custodiarla y entregarla a la coordinación de su organización política.** *(Correcta)*
+- [ ] B) Regalarla a los electores presentes en los exteriores del colegio.
+- [ ] C) Tacharla con plumón indeleble si su partido no resultó ganador.
+- [ ] D) Dejarla olvidada en el pupitre del aula de votación.
 
-💡 **Explicación / Justificación:** El voto cruzado es perfectamente legal; la calificación de cada columna (Provincial / Distrital) es independiente.
+> **💡 Justificación / Explicación:** El personero debe custodiar celosamente la copia del acta y remitirla a su centro de cómputo partidario.
 
 ---
 
-### Pregunta 73: CASO 3: Un elector marca una cruz en Somos Perú, pero escribe 'Carlos Bruce Alcalde' al lado del símbolo. ¿Cómo se califica el voto?
+### Pregunta 73
+**¿Pueden los miembros de mesa negarse a entregar la copia del acta de escrutinio a un personero acreditado?**
 
-- **[CORRECTA] A) Es VOTO NULO, porque toda escritura, frase, lema o palabra añadida en la cédula invalida y anula el sufragio.** ✅
-- B) Es VOTO VÁLIDO porque el texto escrito ratifica de forma inequívoca la voluntad y simpatía del elector por el candidato.
-- C) Es VOTO EN BLANCO debido a que los textos manuales anulan la cruz pero no contabilizan como voto nulo en el acta.
-- D) Debe considerarse voto impugnado y remitirse en sobre morado directamente al centro de cómputo de la ODPE.
+- [x] **A) No, el personero acreditado tiene pleno derecho legal a recibir una copia del acta de escrutinio debidamente suscrita.** *(Correcta)*
+- [ ] B) Sí, si el presidente de mesa decide que no hubo tiempo suficiente.
+- [ ] C) Sí, si el personero no llevó su propio lapicero al aula.
+- [ ] D) Solo pueden negarse si el partido político es de alcance provincial.
 
-💡 **Explicación / Justificación:** Cualquier texto, frase o signo adicional a la cruz o aspa dentro de la cédula constituye causal expresa de nulidad del voto.
+> **💡 Justificación / Explicación:** La entrega de la copia del acta electoral a los personeros acreditados es una obligación legal ineludible.
 
 ---
 
-### Pregunta 74: CASO 4: Un elector marca una cruz cuya intersección de líneas cae EXACTAMENTE sobre la línea perimétrica negra del recuadro de Somos Perú. ¿Cómo se califica?
+### Pregunta 74
+**¿Qué garantiza la presencia del personero durante el escrutinio de votos?**
 
-- **[CORRECTA] A) Es VOTO VÁLIDO, ya que la jurisprudencia del JNE establece que la línea límite forma parte integral del recuadro.** ✅
-- B) Es VOTO NULO inmediato por no haber colocado el centro del trazo en el espacio blanco central del recuadro.
-- C) Es VOTO EN BLANCO porque la línea divisoria pertenece tanto al recuadro como al fondo neutro de la cédula.
-- D) Debe anularse de oficio por orden del fiscalizador del Jurado Nacional de Elecciones acreditado en el aula.
+- [x] **A) Garantiza que el procedimiento de conteo y calificación se desarrolle con apego a las normas y total transparencia.** *(Correcta)*
+- [ ] B) Que su organización política gane la mesa automáticamente.
+- [ ] C) Que no sea necesario contar las cédulas que se encuentren en blanco.
+- [ ] D) Que el presidente de mesa delegue su firma en el personero presente.
 
-💡 **Explicación / Justificación:** La línea del recuadro se considera parte del mismo; por tanto, la intersección sobre la línea es VÁLIDA según el JNE.
+> **💡 Justificación / Explicación:** La vigilancia del personero es un pilar fundamental para salvaguardar la transparencia y fidelidad del cómputo.
 
 ---
 
-### Pregunta 75: CASO 5: Un elector marca una cruz en Somos Perú y también marca una cruz en otro partido en la MISMA columna provincial. ¿Cómo se califica?
+### Pregunta 75
+**¿Está permitido al personero preguntar a los electores por su preferencia electoral?**
 
-- **[CORRECTA] A) Es VOTO NULO en esa columna, porque se marcaron dos organizaciones políticas distintas para el mismo cargo provincial.** ✅
-- B) Es VOTO VÁLIDO para el partido que tenga la cruz con trazo más grueso o más visible sobre la cédula de votación.
-- C) Se divide medio voto (0.5) para cada una de las dos organizaciones políticas marcadas en la hoja de escrutinio.
-- D) Se sortea con una moneda al aire entre los dos personeros acreditados para definir a quién le corresponde el voto.
+- [x] **A) No, está expresamente prohibido preguntar a los electores por quién van a votar o por quién votaron.** *(Correcta)*
+- [ ] B) Sí, siempre que lo haga en voz baja dentro de la cámara secreta.
+- [ ] C) Sí, para elaborar encuestas a boca de urna para su partido.
+- [ ] D) Solo si el elector es un familiar cercano del personero.
 
-💡 **Explicación / Justificación:** La doble marcación en una misma columna para el mismo cargo anula el voto por imposibilidad de determinar la preferencia.
+> **💡 Justificación / Explicación:** El secreto del voto es inviolable; está terminantemente prohibido interrogar a los electores sobre su voto.
 
 ---
 
-### Pregunta 76: CASO 6: Un elector realiza un trazo en forma de visto bueno o check (✔) dentro del corazón de Somos Perú. ¿Es válido?
+### Pregunta 76
+**¿Qué prohibición rige respecto a discutir con electores, miembros de mesa, personal de ONPE u otros personeros?**
 
-- **[CORRECTA] A) No, es VOTO NULO porque la ley electoral exige expresamente que la marca sea una cruz (+) o un aspa (X).** ✅
-- B) Sí, es voto válido porque el check demuestra claramente la aprobación ciudadana a la candidatura de Somos Perú.
-- C) Es considerado voto en blanco debido a que el check no constituye una cruz pero tampoco lleva inscripciones ofensivas.
-- D) Se admite como voto válido únicamente si los tres miembros de mesa expresan su conformidad por unanimidad.
+- [x] **A) Está prohibido discutir dentro del aula; cualquier controversia debe canalizarse mediante reclamos u observaciones respetuosas.** *(Correcta)*
+- [ ] B) Está permitido discutir libremente si se trata de temas doctrinarios del partido.
+- [ ] C) Se permite la confrontación verbal siempre que no haya presencia policial.
+- [ ] D) Solo está prohibido discutir con el coordinador del JNE, pero no con miembros de mesa.
 
-💡 **Explicación / Justificación:** La ley es taxativa: solo la cruz (+) o el aspa (X) constituyen votos válidos; cualquier otro signo (check, círculo, etc.) es NULO.
+> **💡 Justificación / Explicación:** Está terminantemente prohibido entablar discusiones o altercados dentro del aula de votación.
 
 ---
 
-### Pregunta 77: CASO 7: Un elector marca la cruz (+) con lapicero de tinta roja en lugar del lapicero azul entregado por la mesa. ¿Es válido el voto?
+### Pregunta 77
+**¿Puede el personero realizar proselitismo político o propaganda dentro del local de votación?**
 
-- **[CORRECTA] A) Sí, es VOTO VÁLIDO porque el color de la tinta no anula el voto si la marca y la intersección cumplen la ley.** ✅
-- B) No, es voto nulo porque el reglamento de la ONPE prohíbe el uso de lapiceros con tinta de color rojo en la cabina.
-- C) Es voto en blanco porque la tinta roja no es detectada correctamente por los lectores ópticos de escaneo del JNE.
-- D) Debe ser retenido el elector por la Policía Nacional para investigar la procedencia del bolígrafo no reglamentario.
+- [x] **A) No, está expresamente prohibido realizar cualquier tipo de proselitismo o propaganda dentro del local de votación.** *(Correcta)*
+- [ ] B) Sí, repartiendo volantes pequeños que no excedan el tamaño de la cédula.
+- [ ] C) Sí, portando camisetas o banderolas con los rostros de los candidatos.
+- [ ] D) Solo en las áreas comunes del patio durante el receso del mediodía.
 
-💡 **Explicación / Justificación:** El color de la tinta no es causal de nulidad; si el trazo es cruz o aspa con intersección dentro, el voto es 100% VÁLIDO.
+> **💡 Justificación / Explicación:** El proselitismo político está estrictamente prohibido dentro de todos los locales de votación durante la jornada.
 
 ---
 
-### Pregunta 78: CASO 8: La cédula presenta una ligera rasgadura accidental en un extremo al momento de abrir el ánfora, pero los símbolos y votos están intactos. ¿Es válido?
+### Pregunta 78
+**¿Tiene permitido el personero manipular directamente el material electoral (cédulas, actas, ánforas)?**
 
-- **[CORRECTA] A) Sí, es VOTO VÁLIDO siempre que la rotura sea fortuita y no afecte la integridad de las opciones ni contenga signos intencionales.** ✅
-- B) No, cualquier rasgadura por pequeña que sea determina la nulidad automática e insubsanable de la cédula electoral.
-- C) Se convierte de inmediato en voto en blanco y se archiva en el sobre de cédulas inutilizadas de la mesa de sufragio.
-- D) Debe someterse a votación de los personeros de todos los partidos políticos rivales para resolver su validez.
+- [x] **A) No, está prohibido manipular el material electoral; dicha función corresponde exclusivamente a los miembros de mesa.** *(Correcta)*
+- [ ] B) Sí, puede ayudar a doblar las cédulas y meterlas en el ánfora.
+- [ ] C) Sí, puede escribir los números en las actas de escrutinio para ayudar a la mesa.
+- [ ] D) Solo si el presidente de mesa le pide ayuda por encontrarse cansado.
 
-💡 **Explicación / Justificación:** El principio de conservación del voto protege la voluntad popular cuando la rotura es accidental y no altera las marcas.
+> **💡 Justificación / Explicación:** La manipulación física del material electoral corresponde con exclusividad a los miembros de mesa; los personeros solo observan.
 
 ---
 
-### Pregunta 79: CASO 9: Un elector marca una cruz en el símbolo de Somos Perú, pero la línea vertical está formada por dos trazos paralelos (repasados). ¿Es válido?
+### Pregunta 79
+**¿Pueden dos personeros de la misma organización política desempeñarse simultáneamente en la misma mesa de sufragio?**
 
-- **[CORRECTA] A) Sí, es VOTO VÁLIDO; el repaso o rectificación del trazo no anula el voto si mantiene la forma de cruz o aspa dentro del recuadro.** ✅
-- B) No, es voto nulo porque el repaso de líneas se considera una marca doble que vulnera el principio de trazo único.
-- C) Es voto en blanco porque denota duda en la voluntad del elector al momento de marcar dentro de la cabina de sufragio.
-- D) Debe ser anulado únicamente si el personero de la agrupación política rival formula una objeción por escrito.
+- [x] **A) No, está prohibido desempeñar funciones en la misma mesa junto con otro personero de la misma organización política.** *(Correcta)*
+- [ ] B) Sí, pueden estar hasta cuatro personeros de la misma lista para vigilar mejor.
+- [ ] C) Sí, si uno es titular y el otro se sienta al costado como asesor.
+- [ ] D) Solo si la mesa tiene más de 300 electores en el padrón.
 
-💡 **Explicación / Justificación:** El trazo repasado o reforzado por el elector no invalida el voto si se mantiene la figura de cruz o aspa con intersección válida.
+> **💡 Justificación / Explicación:** Solo se admite un personero acreditado por organización política actuando simultáneamente en la misma mesa.
 
 ---
 
-### Pregunta 80: CASO 10: En una mesa de votación, el Presidente quiere anular un voto de Somos Perú porque la cruz está ligeramente inclinada. ¿Qué debe hacer el personero?
+### Pregunta 80
+**¿Qué consecuencia o sanción puede disponer la mesa si un personero incumple reiteradamente las prohibiciones?**
 
-- **[CORRECTA] A) Defender el voto citando la jurisprudencia del JNE que ampara aspas o cruces inclinadas, y si insisten, impugnar el voto formalmente.** ✅
-- B) Permitir la anulación del voto para no retrasar el cierre del escrutinio ni generar discusiones en el aula escolar.
-- C) Ceder el voto a favor de otra organización política para llegar a un acuerdo armonioso con los miembros de mesa.
-- D) Retirarse del local escolar sin exigir la entrega de la copia del acta de escrutinio firmada por las autoridades.
+- [x] **A) Los miembros de mesa pueden disponer su retiro del aula con el auxilio de la fuerza pública, conforme a la normativa electoral.** *(Correcta)*
+- [ ] B) La inhabilitación de su DNI por un periodo de cinco años.
+- [ ] C) La anulación inmediata de todos los votos obtenidos por su organización política.
+- [ ] D) El pago obligatorio de una fianza en efectivo en ese mismo instante.
 
-💡 **Explicación / Justificación:** El aspa inclinada es perfectamente válida; el personero debe defenderla con firmeza y, de ser necesario, impugnarla para el JEE.
+> **💡 Justificación / Explicación:** Ante faltas graves o desacato de prohibiciones, los miembros de mesa tienen la facultad legal de ordenar el retiro del personero del aula.
 
 ---
 
-### Pregunta 81: ¿Qué datos del Acta de Escrutinio deben digitarse con máxima prioridad en el sistema digital de Somos Perú?
+### Pregunta 81
+**¿Puede el personero de local de votación reemplazar y asumir las funciones del personero de mesa de su agrupación?**
 
-- **[CORRECTA] A) Número de mesa, total de votantes, votos válidos de Somos Perú (Provincial y Distrital), votos blancos y votos nulos.** ✅
-- B) Los nombres y números de teléfono celular personales de los tres miembros de mesa que condujeron el escrutinio.
-- C) La lista completa de electores que no asistieron a votar en esa mesa para reportarlos a la central de multas.
-- D) El número de serie impreso en el candado de seguridad del ánfora de votación y el color de las cortinas del aula.
+- [x] **A) No, el personero de local de votación tiene prohibido reemplazar o asumir las funciones de los personeros de mesa.** *(Correcta)*
+- [ ] B) Sí, en cualquier momento que el personero de local lo considere oportuno.
+- [ ] C) Sí, si el personero de local tiene mayor rango partidario que el personero de mesa.
+- [ ] D) Solo si el personero de mesa abandona el local para almorzar.
 
-💡 **Explicación / Justificación:** Los datos numéricos esenciales del escrutinio y la foto del acta permiten consolidar el cómputo paralelo de Somos Perú.
+> **💡 Justificación / Explicación:** El guion especifica con claridad que el personero de local no puede sustituir ni asumir funciones de personero de mesa.
 
 ---
 
-### Pregunta 82: ¿Por qué es indispensable adjuntar la foto del Acta de Escrutinio al momento de enviar el reporte digital?
+### Pregunta 82
+**¿Por qué existen y se aplican rigurosamente las prohibiciones a los personeros?**
 
-- **[CORRECTA] A) Para que el equipo de validación del Centro de Cómputo de Somos Perú coteje la coincidencia de las cifras digitadas con la imagen real.** ✅
-- B) Para archivar la imagen en la galería de fotos del teléfono celular y compartirla en grupos de mensajería instantánea.
-- C) Para comprobar que el aula de votación contaba con iluminación eléctrica suficiente durante el conteo nocturno de votos.
-- D) Para certificar que el personero cumplió con vestir la indumentaria reglamentaria durante todo el proceso electoral.
+- [x] **A) Para preservar el orden, la transparencia, la neutralidad y el normal desarrollo de las actividades electorales.** *(Correcta)*
+- [ ] B) Para limitar arbitrariamente la labor de fiscalización de los partidos políticos.
+- [ ] C) Para impedir que los partidos conozcan los resultados de las mesas.
+- [ ] D) Para beneficiar a la organización política que inscribió primero sus listas.
 
-💡 **Explicación / Justificación:** La foto del acta es la prueba documental irrefutable que respalda y valida la digitación en el sistema central de cómputo.
+> **💡 Justificación / Explicación:** Las prohibiciones tienen por objeto salvaguardar la paz, neutralidad, orden y legitimidad de los comicios.
 
 ---
 
-### Pregunta 83: ¿Qué debe hacer el personero si no tiene cobertura de internet en su teléfono dentro del local de votación?
+### Pregunta 83
+**¿Cómo debe evaluarse cada elección contenida en la cédula de sufragio durante el escrutinio?**
 
-- **[CORRECTA] A) Ubicarse en una zona con señal en el patio o coordinar de inmediato con su Coordinador de Local de Somos Perú para la transmisión.** ✅
-- B) Esperar hasta el día siguiente para enviar el reporte de resultados cuando regrese a su centro de labores habitual.
-- C) Eliminar la fotografía del acta de su teléfono celular al considerar que no podrá ser transmitida por falta de conexión.
-- D) Prestar su credencial de personero a un ciudadano de la calle para que busque una cabina de internet comercial.
+- [x] **A) De manera independiente; la calificación de una elección no determina la calificación de otra en la misma cédula.** *(Correcta)*
+- [ ] B) De manera conjunta; si se anula la elección provincial, se anula automáticamente la distrital y regional.
+- [ ] C) Priorizando siempre la elección regional por sobre las demás elecciones.
+- [ ] D) Promediando los votos marcados en todas las columnas de la cédula.
 
-💡 **Explicación / Justificación:** El personero debe coordinar con su Coordinador de Local o buscar señal en áreas abiertas para transmitir los datos a la brevedad.
+> **💡 Justificación / Explicación:** Cada columna o elección contenida en la cédula de sufragio es autónoma y se evalúa de manera totalmente independiente.
 
 ---
 
-### Pregunta 84: ¿Qué información debe verificar el personero en el Cartel de Resultados antes de fotografiarlo?
+### Pregunta 84
+**¿Cuáles son las tres categorías en las que se clasifican los votos durante el escrutinio?**
 
-- **[CORRECTA] A) Que las cifras numéricas pegadas en la puerta coincidan exactamente con las cifras del Acta de Escrutinio oficial firmada.** ✅
-- B) Que el cartel lleve la firma y sello notarial de un juez de paz letrado de la circunscripción judicial correspondiente.
-- C) Que el papel del cartel no presente arrugas ni pliegues en los bordes superiores provocados por el pegamento adhesivo.
-- D) Que figure impresa la fotografía a colores de todos los candidatos a regidores que integran la lista provincial.
+- [x] **A) Votos válidos, votos nulos y votos en blanco.** *(Correcta)*
+- [ ] B) Votos preferenciales, votos observados y votos diferidos.
+- [ ] C) Votos presidenciales, votos parlamentarios y votos municipales.
+- [ ] D) Votos digitales, votos manuales y votos telefónicos.
 
-💡 **Explicación / Justificación:** El cartel de resultados debe reflejar fielmente las mismas cantidades asentadas en el acta oficial de escrutinio.
+> **💡 Justificación / Explicación:** En el escrutinio, los votos se clasifican legalmente en: votos válidos, votos nulos y votos en blanco.
 
 ---
 
-### Pregunta 85: ¿A quién debe entregar el Personero de Mesa su copia física original del Acta de Escrutinio al concluir la jornada?
+### Pregunta 85
+**¿Qué requisitos caracterizan a un voto válido según la normativa electoral?**
 
-- **[CORRECTA] A) A su Coordinador de Local o Coordinador Distrital de Somos Perú para su custodia y consolidación en el centro partidario.** ✅
-- B) Al personal de las Fuerzas Armadas que resguarda la puerta de salida principal del local de votación distrital.
-- C) Al conserje o director de la institución educativa para que la guarde en el archivo administrativo del colegio.
-- D) A los personeros de las organizaciones políticas contendientes que hayan quedado en segundo lugar en la mesa.
+- [x] **A) Que la voluntad del elector se identifique claramente mediante una cruz (+) o un aspa (x) cuya intersección esté dentro del recuadro.** *(Correcta)*
+- [ ] B) Que el elector haya firmado al pie del símbolo de su partido preferido.
+- [ ] C) Que se use un plumón de color verde o rojo exclusivamente.
+- [ ] D) Que el trazo cubra toda la página de la cédula de extremo a extremo.
 
-💡 **Explicación / Justificación:** El acta original se entrega a la cadena de mando partidaria (Coordinador de Local / Distrital) para el archivo legal de Somos Perú.
+> **💡 Justificación / Explicación:** El voto válido expresa voluntad inequívoca mediante cruz o aspa con el punto de intersección dentro del recuadro oficial.
 
 ---
 
-### Pregunta 86: ¿Qué rol cumple el Centro de Cómputo Partidario de Somos Perú en Lima Metropolitana?
+### Pregunta 86
+**¿Determina la nulidad del voto si el trazo de la cruz o aspa es tenue o sobrepasa ligeramente el recuadro?**
 
-- **[CORRECTA] A) Procesar, verificar y consolidar en tiempo real las actas de las 43 circunscripciones de Lima para el conteo rápido oficial.** ✅
-- B) Imprimir duplicados de credenciales de personeros y enviarlas por mensajería motorizada durante la noche electoral.
-- C) Gestionar la compra y distribución de refrigerios para los fiscales del Ministerio Público asignados a los colegios.
-- D) Emitir resoluciones judiciales de proclamación de alcaldes distritales electos en primera vuelta electoral.
+- [x] **A) No determina por sí misma la nulidad, siempre que la intersección esté dentro del recuadro y la intención del elector sea clara.** *(Correcta)*
+- [ ] B) Sí, cualquier trazo que toque la línea exterior es nulo automáticamente.
+- [ ] C) Sí, porque la normativa exige trazos milimétricamente perfectos.
+- [ ] D) Solo si el personero del partido rival formula una objeción verbal.
 
-💡 **Explicación / Justificación:** El Centro de Cómputo de Somos Perú realiza el conteo paralelo y la defensa técnica de las actas ante los organismos electorales.
+> **💡 Justificación / Explicación:** Una marca tenue o que sobrepase ligeramente no anula el voto si la intersección se ubica dentro del recuadro legal.
 
 ---
 
-### Pregunta 87: ¿Qué debe hacer el personero si las cifras del acta oficial de la ONPE difieren de la copia que tiene en su poder?
+### Pregunta 87
+**¿Cuál de los siguientes casos constituye causal expresa de voto nulo?**
 
-- **[CORRECTA] A) Alertar de inmediato al Personero Legal con su copia física original para interponer el recurso de nulidad o corrección ante el JEE.** ✅
-- B) Aceptar las cifras publicadas por la ONPE asumiendo que el sistema informático estatal no comete errores materiales.
-- C) Acudir a un medio de comunicación televisivo para romper la copia del acta en vivo como señal de inconformidad.
-- D) Presentar una queja en el libro de reclamaciones de la municipalidad distrital donde se llevó a cabo el sufragio.
+- [x] **A) Marcar el símbolo de más de una organización política en una misma elección.** *(Correcta)*
+- [ ] B) Realizar una cruz con los brazos ligeramente desiguales pero con intersección en el recuadro.
+- [ ] C) Efectuar un trazo con un lapicero de tinta azul entregado por la mesa.
+- [ ] D) Marcar una cruz que sobrepase ligeramente el borde del recuadro del candidato.
 
-💡 **Explicación / Justificación:** La copia física del personero es la prueba fehaciente para exigir el cotejo de actas ante el Jurado Electoral Especial.
+> **💡 Justificación / Explicación:** Marcar dos o más organizaciones políticas para la misma elección anula el voto por imposibilidad de identificar una voluntad única.
 
 ---
 
-### Pregunta 88: ¿Por qué es fundamental que la fotografía del acta capture las firmas de los tres miembros de mesa y personeros?
+### Pregunta 88
+**¿Qué ocurre si el elector utiliza un signo diferente de la cruz o el aspa (por ejemplo un círculo, visto bueno o palabra)?**
 
-- **[CORRECTA] A) Porque las firmas dan validez legal al documento y permiten validar la autenticidad del acta frente a cualquier observación del JEE.** ✅
-- B) Para verificar la caligrafía artística de los miembros de mesa y compararla con los registros de la firma digital de Reniec.
-- C) Para solicitar autógrafos conmemorativos a las autoridades de mesa al finalizar la jornada cívica en el centro educativo.
-- D) Para publicar las firmas en páginas web de acceso libre sin contar con la autorización de los titulares del DNI.
+- [x] **A) El voto es considerado nulo conforme a las causales establecidas en la ley.** *(Correcta)*
+- [ ] B) El voto se cuenta como válido si el elector no manchó la foto del candidato.
+- [ ] C) El voto se convierte automáticamente en voto en blanco.
+- [ ] D) Se le consulta telefónicamente al elector para confirmar su voto.
 
-💡 **Explicación / Justificación:** Las firmas de los miembros y personeros son el requisito legal de validez del acta electoral ante los tribunales del JNE.
+> **💡 Justificación / Explicación:** El uso de signos o marcas diferentes a la cruz (+) o el aspa (x) acarrea la nulidad del voto.
 
 ---
 
-### Pregunta 89: ¿Qué debe hacer el personero si la batería de su teléfono móvil se agota antes de transmitir el acta?
+### Pregunta 89
+**¿Es nulo un voto si la cédula contiene el nombre, firma o número de DNI del elector?**
 
-- **[CORRECTA] A) Acudir inmediatamente a su Coordinador de Local de Somos Perú para que utilice su dispositivo móvil o cargador de respaldo.** ✅
-- B) Abandonar el colegio electoral y dirigirse a su domicilio particular para recargar la batería de su teléfono celular.
-- C) Pedir prestado el teléfono celular al efectivo militar de guardia para enviar las fotos a sus contactos personales.
-- D) Esperar a que amanezca el día lunes para acercarse a la sede central de la ODPE a entregar su reporte por escrito.
+- [x] **A) Sí, es nulo porque vulnera el principio constitucional de voto secreto e incluye datos de identificación ajenos.** *(Correcta)*
+- [ ] B) No, es válido porque ratifica formalmente la autoría del votante.
+- [ ] C) Solo si la firma no coincide con el padrón del Reniec.
+- [ ] D) Se considera voto en blanco pero no nulo.
 
-💡 **Explicación / Justificación:** El personero debe apoyarse en la estructura del local (Coordinador de Local) para garantizar la transmisión inmediata del acta.
+> **💡 Justificación / Explicación:** Toda cédula que contenga firmas, nombres, números de DNI o frases ajenas queda viciada de nulidad absoluta.
 
 ---
 
-### Pregunta 90: ¿Qué herramienta tecnológica oficial utiliza el personero de Somos Perú para registrar su capacitación y actas?
+### Pregunta 90
+**¿Qué sucede si la intersección de la cruz o el aspa se encuentra fuera del recuadro correspondiente?**
 
-- **[CORRECTA] A) La plataforma oficial ConteoLima / Somos Perú (Sistema Integrado de Capacitación, Acreditación y Conteo Electoral 2026).** ✅
-- B) Hojas de cálculo compartidas sin contraseña alojadas en servidores gratuitos de almacenamiento en la nube pública.
-- C) Mensajes de texto simples (SMS) enviados de forma abierta a números telefónicos no verificados de operadores locales.
-- D) Correos electrónicos tradicionales remitidos a cuentas de correo comercial sin protocolo de seguridad ni encriptación.
+- [x] **A) El voto es considerado nulo.** *(Correcta)*
+- [ ] B) El voto es válido si los extremos tocan el recuadro.
+- [ ] C) Se le otorga el voto al partido cuyo recuadro esté más cerca.
+- [ ] D) Se cuenta como voto en blanco para no perjudicar la estadística.
 
-💡 **Explicación / Justificación:** La plataforma ConteoLima / Somos Perú es el sistema seguro oficial diseñado para la gestión de personeros y conteo de votos 2026.
+> **💡 Justificación / Explicación:** Si el punto de cruce o intersección de las líneas queda fuera del recuadro del símbolo o fotografía, el voto es nulo.
 
 ---
 
-### Pregunta 91: ¿Cuál es el valor ético primordial que debe regir la conducta de todo personero de Somos Perú?
+### Pregunta 91
+**¿Cuándo se considera que un voto está en blanco?**
 
-- **[CORRECTA] A) La lealtad, honestidad, puntualidad y defensa inquebrantable de la voluntad popular expresada en las urnas electorales.** ✅
-- B) La búsqueda del beneficio económico personal a través del cobro indebido de honorarios a los electores de la fila.
-- C) El enfrentamiento verbal y la confrontación constante con las autoridades del local escolar para imponer su criterio.
-- D) La permisividad ante irregularidades con la finalidad de retirarse temprano del centro educativo durante la noche.
+- [x] **A) Cuando el elector no realiza ninguna marca o trazo en la opción o columna correspondiente de la cédula.** *(Correcta)*
+- [ ] B) Cuando el elector marca con una cruz muy tenue.
+- [ ] C) Cuando el elector dobla la cédula en cuatro partes iguales.
+- [ ] D) Cuando se marca una cruz en el símbolo y un aspa en el recuadro contiguo.
 
-💡 **Explicación / Justificación:** La ética, la lealtad partidaria, la puntualidad y la defensa limpia del voto son los pilares fundamentales del personero democrático.
+> **💡 Justificación / Explicación:** El voto en blanco se produce cuando la casilla correspondiente no presenta ninguna marca efectuada por el elector.
 
 ---
 
-### Pregunta 92: ¿Qué debe llevar el personero en su kit personal el día de las elecciones para asegurar su jornada?
+### Pregunta 92
+**¿Dónde debe ubicarse el personero de mesa durante el escrutinio?**
 
-- **[CORRECTA] A) DNI vigente, credencial oficial, lapicero azul, cargador portátil (powerbank), refrigerio ligero y manual de personero.** ✅
-- B) Cámara fotográfica profesional con trípode pesado, megáfono de alta potencia y pancartas de propaganda política.
-- C) Juegos de mesa, naipes y audífonos para entretenerse durante las horas de baja afluencia de electores en la mesa.
-- D) Talonarios de recibos por honorarios y sellos membretados para cobrar servicios de asesoría jurídica a los miembros.
+- [x] **A) Puede acercar su silla a la mesa de sufragio manteniendo una distancia prudente para observar sin obstaculizar.** *(Correcta)*
+- [ ] B) Debe sentarse entre el presidente y el secretario de la mesa.
+- [ ] C) Debe colocarse de pie detrás de los miembros de mesa sujetando las actas.
+- [ ] D) Debe retirarse al patio y observar a través de la ventana del aula.
 
-💡 **Explicación / Justificación:** El kit básico garantiza autonomía, conectividad y herramientas legales para desenvolverse con éxito durante toda la jornada.
+> **💡 Justificación / Explicación:** Puede acercar su silla manteniendo una distancia prudente que le permita ver con claridad sin interferir.
 
 ---
 
-### Pregunta 93: ¿Cómo debe coordinar el Personero de Mesa con su Coordinador de Local ante cualquier incidencia grave en el aula?
+### Pregunta 93
+**¿Qué premisa fundamental resume la postura del personero durante el escrutinio: 'Observar no significa...'?**
 
-- **[CORRECTA] A) Comunicar la alerta de inmediato por llamada o mensajería interna sin abandonar la fiscalización visual de la mesa de votación.** ✅
-- B) Salir corriendo del aula escolar gritando por los pasillos hasta encontrar al coordinador en la puerta principal del local.
-- C) Ignorar el incidente y esperar a que los personeros de otras agrupaciones políticas decidan resolver la controversia.
-- D) Publicar una denuncia informal en redes sociales sin haber informado previamente a la cadena de mando de Somos Perú.
+- [x] **A) 'Observar no significa intervenir'. Su función es vigilar y recurrir a los canales formales cuando corresponda.** *(Correcta)*
+- [ ] B) 'Observar no significa permanecer en silencio ante cualquier decisión'.
+- [ ] C) 'Observar no significa acatar las normas de la ONPE'.
+- [ ] D) 'Observar no significa asistir a la instalación'.
 
-💡 **Explicación / Justificación:** La comunicación fluida con el Coordinador de Local permite activar el soporte legal sin descuidar la custodia de la mesa.
+> **💡 Justificación / Explicación:** El lema rector del curso enfatiza: 'Observar no significa intervenir'; la función es de vigilancia formal y responsable.
 
 ---
 
-### Pregunta 94: ¿Qué representa el símbolo del CORAZÓN de Somos Perú en la cédula de votación?
+### Pregunta 94
+**¿Qué ocurre si una cédula no cuenta con la firma del presidente de mesa en el reverso cuando correspondía?**
 
-- **[CORRECTA] A) La opción electoral histórica fundada por Alberto Andrade Carmona y liderada por Carlos Bruce para el progreso de Lima.** ✅
-- B) Un logotipo comercial de una empresa privada de servicios de saneamiento y transporte urbano de la capital.
-- C) Una marca decorativa institucional seleccionada por la ONPE para identificar a los votantes del sector sur de Lima.
-- D) El distintivo de una federación deportiva metropolitana que promueve actividades recreativas en los distritos.
+- [x] **A) Es una situación que determina la nulidad de la cédula conforme a las disposiciones legales vigentes.** *(Correcta)*
+- [ ] B) El personero puede firmarla en ese instante para subsanar la omisión.
+- [ ] C) Se cuenta como voto válido si los miembros de mesa dan su acuerdo unánime.
+- [ ] D) Se traslada la cédula a otra mesa para que el presidente de al lado la firme.
 
-💡 **Explicación / Justificación:** El corazón es el símbolo histórico de Somos Perú, emblema de vocación municipal, obras y desarrollo para Lima Metropolitana.
+> **💡 Justificación / Explicación:** La falta de firma del presidente de mesa en los casos previstos por la normativa acarrea la nulidad de la cédula.
 
 ---
 
-### Pregunta 95: ¿Qué debe hacer el personero si observa que personas extrañas merodean el aula con actitudes sospechosas durante el conteo?
+### Pregunta 95
+**¿Cuál es el horario oficial en el que se desarrollará la jornada de votación el domingo 4 de octubre de 2026?**
 
-- **[CORRECTA] A) Exigir al Presidente de Mesa que solicite el resguardo inmediato de los efectivos de las Fuerzas Armadas o Policía Nacional.** ✅
-- B) Enfrentar físicamente a las personas en el pasillo exterior del aula escolar utilizando la fuerza para desalojarlas.
-- C) Esconderse debajo de la carpeta escolar y dejar el material electoral y las actas desprotegidas en manos de terceros.
-- D) Entregar las cédulas de votación a los desconocidos para evitar situaciones de riesgo o tensión dentro del recinto escolar.
+- [x] **A) Desde las 7:00 de la mañana hasta las 5:00 de la tarde.** *(Correcta)*
+- [ ] B) Desde las 8:00 de la mañana hasta las 4:00 de la tarde.
+- [ ] C) Desde las 6:00 de la mañana hasta las 6:00 de la tarde.
+- [ ] D) Desde las 7:00 de la mañana hasta las 3:00 de la tarde.
 
-💡 **Explicación / Justificación:** La seguridad del aula corresponde a las Fuerzas Armadas y Policía Nacional a solicitud formal de las autoridades de mesa.
+> **💡 Justificación / Explicación:** El documento oficial estipula claramente el horario de votación: desde las 7:00 a.m. hasta las 5:00 p.m.
 
 ---
 
-### Pregunta 96: ¿Por qué el personero no debe firmar actas electorales en blanco bajo ninguna circunstancia?
+### Pregunta 96
+**¿Por qué es importante que el personero se presente oportunamente en el local de votación antes de las 7:00 a.m.?**
 
-- **[CORRECTA] A) Porque firmar en blanco permite la manipulación dolosa o adulteración de cifras numéricas, constituyendo una falta gravísima.** ✅
-- B) Porque el lapicero azul se gasta innecesariamente antes de que se inicie el conteo oficial de los votos en la mesa.
-- C) Porque las normas de la ONPE obligan a que las firmas se estampen únicamente con lapiceros de tinta dorada especial.
-- D) Porque el Presidente de Mesa no tiene derecho a solicitar la rúbrica de los personeros antes de las 5:00 de la tarde.
+- [x] **A) Para presenciar la instalación de la mesa desde su inicio y verificar todo el material electoral oportunamente.** *(Correcta)*
+- [ ] B) Para ganar el derecho de ser designado presidente de mesa de facto.
+- [ ] C) Para repartir propaganda a los primeros electores que lleguen.
+- [ ] D) Para cobrar una bonificación económica especial por puntualidad.
 
-💡 **Explicación / Justificación:** Jamás se firma un acta en blanco; las actas se rubrican única y exclusivamente cuando todas las cifras han sido llenadas en limpio.
+> **💡 Justificación / Explicación:** La presencia temprana permite fiscalizar la instalación oportuna de la mesa, el material y las cédulas desde el primer instante.
 
 ---
 
-### Pregunta 97: ¿Qué debe hacer el personero si al finalizar el escrutinio un miembro de mesa se niega a firmar el acta?
+### Pregunta 97
+**¿Qué valores y actitudes deben regir permanentemente la participación de los personeros?**
 
-- **[CORRECTA] A) Verificar que se deje constancia expresa de la negativa en el rubro de observaciones; el acta mantiene plena validez con las demás firmas.** ✅
-- B) Anular todo el proceso de votación de la mesa y ordenar que los ciudadanos vuelvan a votar al domingo siguiente.
-- C) Obligar físicamente al miembro de mesa tomándole la mano para forzar el trazo de su firma sobre el papel bond.
-- D) Declarar nulos todos los votos obtenidos por el partido Somos Perú en esa mesa y quemar los ejemplares del acta.
+- [x] **A) Respeto, responsabilidad, vocación de servicio y estricto cumplimiento de las normas electorales.** *(Correcta)*
+- [ ] B) Imposición de criterios partidarios por encima de las leyes de la República.
+- [ ] C) Búsqueda de la confrontación sistemática con las autoridades de mesa.
+- [ ] D) Retiro anticipado de la mesa apenas culmine la votación a las 5:00 p.m.
 
-💡 **Explicación / Justificación:** La negativa de un miembro a firmar se anota en observaciones; el acta es válida con la firma de los demás miembros presentes.
+> **💡 Justificación / Explicación:** El curso concluye reiterando que la labor debe guiarse por el respeto, la responsabilidad cívica y la legalidad.
 
 ---
 
-### Pregunta 98: ¿Cuál es el momento exacto en que culmina la responsabilidad del Personero de Mesa de Somos Perú?
+### Pregunta 98
+**¿A qué contribuye de manera decisiva la labor comprometida de los personeros de mesa y local?**
 
-- **[CORRECTA] A) Cuando tiene su copia oficial del acta en mano, ha verificado las cifras, tomó la foto nítida y la transmitió exitosamente.** ✅
-- B) A las 5:00 p.m. cuando suena el timbre de cierre de las puertas de ingreso del local de votación escolar.
-- C) Cuando termina de almorzar su refrigerio en el patio central del colegio con los demás personeros de mesa.
-- D) En el instante en que el primer elector introduce su cédula de votación dentro de la ranura del ánfora plástica.
+- [x] **A) Al fortalecimiento de la transparencia, la integridad y la legitimidad del proceso electoral.** *(Correcta)*
+- [ ] B) A la postergación innecesaria de la publicación de resultados.
+- [ ] C) A la anulación masiva de mesas en los distritos opositores.
+- [ ] D) A la reducción de miembros de mesa en las elecciones futuras.
 
-💡 **Explicación / Justificación:** La labor concluye con la obtención, custodia y transmisión digital del acta oficial de escrutinio al sistema partidario.
+> **💡 Justificación / Explicación:** La vigilancia ciudadana y partidaria fortalece la transparencia, integridad y legitimidad democrática.
 
 ---
 
-### Pregunta 99: ¿Qué mensaje de aliento resume el espíritu de trabajo del personero de Somos Perú en las Elecciones 2026?
+### Pregunta 99
+**¿Qué debe hacer el personero tras finalizar el estudio del curso para consolidar su acreditación?**
 
-- **[CORRECTA] A) ¡Cada voto cuenta, cada acta se defiende y con Carlos Bruce construiremos una Lima moderna, segura y ordenada!** ✅
-- B) ¡Cumplir con el horario mínimo de asistencia y retirarse antes de que oscurezca para evitar el tráfico de la ciudad!
-- C) ¡Dejar que los miembros de mesa cuenten los votos solos porque ellos son las únicas autoridades designadas por ley!
-- D) ¡Esperar con resignación los resultados oficiales de la ONPE sin importar si las actas fueron impugnadas injustamente!
+- [x] **A) Rendir y aprobar la evaluación de capacitación para obtener su certificado oficial de personero.** *(Correcta)*
+- [ ] B) Solicitar la anulación preventiva de las mesas donde no tenga personeros suplentes.
+- [ ] C) Presentar una carta de renuncia ante la ODPE de su jurisdicción.
+- [ ] D) Publicar los resultados de su mesa en redes sociales antes de firmar las actas.
 
-💡 **Explicación / Justificación:** El compromiso cívico es total: puntualidad, defensa activa y custodia del acta hasta la transmisión final.
+> **💡 Justificación / Explicación:** Completar la evaluación permite certificar y acreditar fehacientemente los conocimientos adquiridos para la jornada.
 
 ---
 
-### Pregunta 100: ¿Cuál es la consigna final del Equipo de Personeros de Lima Metropolitana con Carlos Bruce?
+### Pregunta 100
+**¿Cuál es la consigna institucional para los personeros durante las Elecciones Regionales y Municipales 2026?**
 
-- **[CORRECTA] A) ¡Cuidar cada voto de Somos Perú con lealtad, firmeza, actas en mano y corazón por el progreso de Lima!** ✅
-- B) ¡Llegar después de las 9:00 a.m. y retirarse a las 4:00 p.m. para evitar cansancio físico durante la jornada!
-- C) ¡No solicitar copias de las actas de escrutinio para no generar demoras en el trabajo del personal de la ONPE!
-- D) ¡Dejar las mesas de votación sin personeros acreditados confiando en la buena fe de los personeros rivales!
+- [x] **A) Cuidar cada voto con responsabilidad, firmeza, respeto, actas en mano y dentro del marco de la ley electoral.** *(Correcta)*
+- [ ] B) Discutir todas las decisiones de los miembros de mesa sin importar el reglamento.
+- [ ] C) Abandonar la mesa de sufragio antes del escrutinio si el resultado parece adverso.
+- [ ] D) Manipular las cédulas de votación durante el conteo para acelerar el proceso.
 
-💡 **Explicación / Justificación:** La consigna institucional es la defensa integral, leal y documentada de cada voto por el progreso de Lima.
+> **💡 Justificación / Explicación:** Defender y cuidar cada voto con responsabilidad, firmeza cívica, actas en mano y pleno apego a la legalidad.
 
 ---
 

@@ -296,8 +296,8 @@ export function TrainingView({ onGoToDashboard }) {
               <FileText className="w-6 h-6" />
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Leer PDF Instructivo</div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Leer el manual electoral</div>
+              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Leer Guion Oficial / Manual</div>
+              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Leer el guion y manual electoral (15 secciones)</div>
             </div>
             {isPdfDone ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
           </div>
