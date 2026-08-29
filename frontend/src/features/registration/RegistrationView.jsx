@@ -1500,7 +1500,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     const checked = e.target.checked;
                     setFormData(prev => ({
                       ...prev,
-                      se_compromete: checked ? 'Sí, me comprometo el 4 de Octubre del 2026' : ''
+                      se_compromete: checked ? 'Sí, me comprometo a asistir el 4 de Octubre del 2026' : ''
                     }));
                     if (fieldErrors.se_compromete) {
                       setFieldErrors(prev => ({ ...prev, se_compromete: null }));
@@ -1515,7 +1515,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   }}
                 />
                 <span style={{ fontSize: '0.84rem', fontWeight: 800, color: formData.se_compromete ? '#0284c7' : '#1e293b' }}>
-                  Sí, me comprometo el 4 de Octubre del 2026 <span style={{ color: '#ef4444' }}>*</span>
+                  Sí, me comprometo a asistir el 4 de Octubre del 2026 <span style={{ color: '#ef4444' }}>*</span>
                 </span>
               </label>
               {fieldErrors.se_compromete && (
