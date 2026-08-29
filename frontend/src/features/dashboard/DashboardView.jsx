@@ -1618,16 +1618,16 @@ export function DashboardView({ onGoToTraining }) {
                     /* TARJETAS EN MÓVIL */
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '10px' }}>
                       {filteredRecords1.map((r, idx) => {
-                        const dni = r['D.N.I.'] || r['DNI'];
-                        const cel = r['Celular'] || '-';
+                        const dni = r['D.N.I.'] || r['DNI'] || r.dni || '-';
+                        const cel = r['Celular'] || r.celular || '-';
                         const exp = getExp(r);
                         const mov = getMov(r);
-                        const rol = r['Rol a Desempeñar'] || 'Personero de Mesa';
+                        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa');
                         const isPersonero = rol.toLowerCase().includes('personero');
-                        const distrito = r['Distrito Asignado'] || r['Distrito donde Vota'] || '-';
-                        const local = r['Local de Votación Asignado'] || r['Local de Votación'] || '-';
-                        const mesaAsig = r['Mesa Asignada'];
-                        const hasMesa = mesaAsig && mesaAsig !== '-' && mesaAsig.toLowerCase() !== 'no aplica';
+                        const distrito = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '-';
+                        const local = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || '-';
+                        const mesaAsig = r['Mesa Asignada'] ?? r.mesaAsignada ?? '';
+                        const hasMesa = mesaAsig && String(mesaAsig) !== '-' && String(mesaAsig).trim().toLowerCase() !== 'no aplica';
 
                         return (
                           <div key={idx} style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px', boxShadow: isDark ? 'none' : '0 1px 4px rgba(0,0,0,0.06)' }}>
@@ -1733,10 +1733,10 @@ export function DashboardView({ onGoToTraining }) {
                             const mov = getMov(r);
                             const comp = getComp(r);
 
-                            const rol = r['Rol a Desempeñar'] || 'Personero de Mesa';
+                            const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa');
                             const isPersonero = rol.toLowerCase().includes('personero');
-                            const mesaAsig = r['Mesa Asignada'];
-                            const hasMesa = mesaAsig && mesaAsig !== '-' && mesaAsig.toLowerCase() !== 'no aplica';
+                            const mesaAsig = r['Mesa Asignada'] ?? r.mesaAsignada ?? '';
+                            const hasMesa = mesaAsig && String(mesaAsig) !== '-' && String(mesaAsig).trim().toLowerCase() !== 'no aplica';
 
                             return (
                               <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
@@ -2432,7 +2432,7 @@ export function DashboardView({ onGoToTraining }) {
           )}
 
           <button
-            onClick={fetchData}
+            onClick={() => fetchData(false)}
             style={{
               flex: 1,
               display: 'flex',

@@ -6,8 +6,8 @@ import { DISTRITOS_LIMA, ROLES } from '../../constants/catalogs.js';
 import { api } from '../../services/api.js';
 
 export function EditAssignmentModal({ personero, onClose, onSaved }) {
-  const rawMesa = personero['Mesa Asignada'] || personero.mesaAsignada || '';
-  const initialMesa = (rawMesa === '-' || rawMesa.toLowerCase() === 'no aplica') ? '' : rawMesa;
+  const rawMesa = personero?.['Mesa Asignada'] ?? personero?.mesaAsignada ?? '';
+  const initialMesa = (rawMesa === '-' || String(rawMesa).trim().toLowerCase() === 'no aplica') ? '' : String(rawMesa);
 
   const [formData, setFormData] = useState({
     nombresApellidos: personero['Nombres y Apellidos'] || personero.nombresApellidos || '',
