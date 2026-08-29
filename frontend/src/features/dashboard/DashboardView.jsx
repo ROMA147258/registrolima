@@ -14,6 +14,7 @@ import { DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA, getMesasForLoc
 import { api } from '../../services/api.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+ChartJS.defaults.events = ['mousemove', 'mouseout', 'click'];
 
 // Helper de normalización distrital
 function normalizeDistrictName(name) {
