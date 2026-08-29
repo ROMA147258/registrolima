@@ -5,31 +5,25 @@ import { LoginView } from './features/authentication/LoginView.jsx';
 import { TrainingView } from './features/training/TrainingView.jsx';
 import { DashboardView } from './features/dashboard/DashboardView.jsx';
 import { PublicVerificationView } from './features/verification/PublicVerificationView.jsx';
+
 export function App() {
   const {
     user,
     isLoggedIn,
     isSuperAdmin,
     isCoordinadorDistrital,
+    isCoordinadorZonal,
     isCoordinadorLocal,
     isCoordinador,
     isEvaluationApproved,
     isPersonero
   } = useAuth();
+  
   const [viewMode, setViewMode] = useState('register'); // 'register', 'login'
-  const [coordLocalTab, setCoordLocalTab] = useState(() => {
-    return localStorage.getItem('login_initially_confirmed') === 'true' ? 'dashboard' : 'training';
-  });
+  const [coordLocalTab, setCoordLocalTab] = useState('dashboard');
   const [isVerificationMode, setIsVerificationMode] = useState(
     window.location.hash.startsWith('#verificar')
   );
-
-  useEffect(() => {
-    if (user) {
-      const isConfirmedAtLogin = localStorage.getItem('login_initially_confirmed') === 'true';
-      setCoordLocalTab(isConfirmedAtLogin ? 'dashboard' : 'training');
-    }
-  }, [user?.['D.N.I.'], user?.DNI, user?.dni]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -47,13 +41,14 @@ export function App() {
 
   // 2. Usuario Autenticado
   if (isLoggedIn) {
-    // 1. SuperAdmin (admin, eric) entra DIRECTAMENTE al Dashboard
+    // 1. SuperAdmin (admin, eric, paola, susana) entra DIRECTAMENTE al Dashboard
     if (isSuperAdmin) {
       return <DashboardView />;
     }
 
-    // 2. Coordinador de Distritos y Coordinador de Local: Requieren OBLIGATORIAMENTE aprobar evaluación (Credenciales = Confirmado)
-    if (isCoordinadorDistrital || isCoordinadorLocal || isCoordinador) {
+    // 2. Coordinadores (Distrital, Zonal, Local o General)
+    if (isCoordinadorDistrital || isCoordinadorZonal || isCoordinadorLocal || isCoordinador) {
+      // Si aún no ha aprobado la evaluación, se le muestra la vista de capacitación
       if (!isEvaluationApproved) {
         return (
           <TrainingView
@@ -62,7 +57,7 @@ export function App() {
         );
       }
 
-      // Si ya aprobó (Confirmado), puede alternar entre Dashboard y su Certificado/Ficha
+      // Si ya aprobó (Confirmado), permanece en Dashboard por defecto salvo que elija ver su certificado/ficha
       if (coordLocalTab === 'training') {
         return (
           <TrainingView
@@ -98,4 +93,5 @@ export function App() {
     />
   );
 }
+
 export default App;

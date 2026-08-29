@@ -200,9 +200,16 @@ export function DashboardView({ onGoToTraining }) {
     setErrorMsg(null);
     try {
       const res = await api.getDashboardSummary();
-      setData(res);
+      if (res && res.records) {
+        setData(res);
+      } else if (res && Array.isArray(res)) {
+        setData({ records: res });
+      } else if (res) {
+        setData(res);
+      }
       setLastSync(new Date());
     } catch (err) {
+      console.warn('Dashboard fetch notice:', err.message);
       if (!isBackground) setErrorMsg(err.message || 'Error al conectar con la base de datos.');
     } finally {
       if (!isBackground) setLoading(false);
@@ -210,26 +217,32 @@ export function DashboardView({ onGoToTraining }) {
   };
 
   useEffect(() => {
+    let isMounted = true;
     fetchData();
 
     // Sincronización automática periódica cada 20 segundos
     const interval = setInterval(() => {
-      fetchData(true);
+      if (isMounted) {
+        fetchData(true);
+      }
     }, 20000);
 
     // Sincronizar al volver a la pestaña
     const handleFocus = () => {
-      fetchData(true);
+      if (isMounted) {
+        fetchData(true);
+      }
     };
     window.addEventListener('focus', handleFocus);
 
     return () => {
+      isMounted = false;
       clearInterval(interval);
       window.removeEventListener('focus', handleFocus);
     };
   }, []);
 
-  const allRecords = data?.records || [];
+  const allRecords = Array.isArray(data?.records) ? data.records : (Array.isArray(data) ? data : []);
 
   // Filtrado de seguridad según rol:
   // 1) Coordinador de Local: solo ve los personeros asignados a su colegio y distrito
@@ -521,8 +534,17 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
+    if (datasets.length === 0) {
+      datasets.push({
+        label: 'Personeros de Mesa',
+        data: (chartDistricts || []).map(() => 0),
+        backgroundColor: '#0284c7',
+        borderRadius: 4
+      });
+    }
+
     return {
-      labels: isCoordinadorLocal ? [coordinatorLocal] : chartDistricts,
+      labels: isCoordinadorLocal ? [coordinatorLocal || 'Local'] : (chartDistricts || []),
       datasets
     };
   }, [chartDistricts, role1, dist1, personerosByDist, coordsLocalByDist, coordsZonalByDist, coordsDistByDist, isCoordinadorLocal, isSuperAdmin, isCoordinadorDistrital, coordinatorLocal, tab1Personeros]);
@@ -531,7 +553,8 @@ export function DashboardView({ onGoToTraining }) {
   // FILTRADO TAB 2 (CAPACITACIONES)
   // =========================================================================
   const filteredRecords2 = useMemo(() => {
-    return records.filter(r => {
+    return (records || []).filter(r => {
+      if (!r) return false;
       const q = search2.toLowerCase().trim();
       const dni = String(r['D.N.I.'] || r['DNI'] || r.dni || '').toLowerCase();
       const name = String(r['Nombres y Apellidos'] || r.nombresApellidos || '').toLowerCase();
@@ -559,7 +582,8 @@ export function DashboardView({ onGoToTraining }) {
   let v0 = 0, v1 = 0, v2 = 0;
   let p0 = 0, p1 = 0, p2 = 0;
 
-  filteredRecords2.forEach(r => {
+  (filteredRecords2 || []).forEach(r => {
+    if (!r) return;
     const cred = String(r.Credenciales || r.credenciales || '').toLowerCase();
     if (cred === 'confirmado') tab2Confirmados++;
     else tab2Pendientes++;
@@ -573,34 +597,34 @@ export function DashboardView({ onGoToTraining }) {
     if (p === 0) p0++; else if (p === 1) p1++; else p2++;
   });
 
-  const doughnutData2 = {
+  const doughnutData2 = useMemo(() => ({
     labels: ['Confirmados (OK)', 'Bloqueados (Pendiente)'],
     datasets: [
       {
-        data: [tab2Confirmados, tab2Pendientes],
+        data: [tab2Confirmados || 0, tab2Pendientes || 0],
         backgroundColor: ['#10b981', '#f59e0b'],
         borderWidth: 0
       }
     ]
-  };
+  }), [tab2Confirmados, tab2Pendientes]);
 
-  const barData2 = {
+  const barData2 = useMemo(() => ({
     labels: ['0/2 (Sin iniciar)', '1/2 (En proceso)', '2/2 (Completado)'],
     datasets: [
       {
         label: 'Videos Vistos',
-        data: [v0, v1, v2],
+        data: [v0 || 0, v1 || 0, v2 || 0],
         backgroundColor: '#38bdf8',
         borderRadius: 4
       },
       {
         label: 'Manuales PDF',
-        data: [p0, p1, p2],
+        data: [p0 || 0, p1 || 0, p2 || 0],
         backgroundColor: '#a855f7',
         borderRadius: 4
       }
     ]
-  };
+  }), [v0, v1, v2, p0, p1, p2]);
 
   // Variables de estilo reactivas al Modo Oscuro / Claro
   const bgMain = isDark ? '#0b1329' : '#f8fafc';
