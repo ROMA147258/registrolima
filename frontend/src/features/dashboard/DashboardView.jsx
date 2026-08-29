@@ -121,12 +121,21 @@ export function DashboardView({ onGoToTraining }) {
   const { user, isCoordinador, isCoordinadorDistrital, isCoordinadorZonal, isCoordinadorLocal, isSuperAdmin, logout } = useAuth();
   const { toggleTheme, isDark } = useTheme();
 
-  // Detección de pantalla móvil (< 768px)
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  // Detección de pantalla móvil (< 768px) con debounce para estabilidad táctil
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 768 : false);
   useEffect(() => {
-    const handler = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
+    let timeoutId = null;
+    const handler = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 150);
+    };
+    window.addEventListener('resize', handler, { passive: true });
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', handler);
+    };
   }, []);
 
   const coordinatorDistrict = useMemo(() => {
@@ -1536,10 +1545,15 @@ export function DashboardView({ onGoToTraining }) {
                 </div>
                 <div style={{ height: isMobile ? '200px' : '230px' }}>
                   <Bar
+                    key={`bar-distritos-${isDark ? 'dark' : 'light'}-${isMobile ? 'mob' : 'desk'}`}
                     data={barData1}
                     options={{
                       responsive: true,
                       maintainAspectRatio: false,
+                      interaction: {
+                        mode: 'nearest',
+                        intersect: false
+                      },
                       scales: {
                         x: {
                           ticks: {
@@ -1560,6 +1574,10 @@ export function DashboardView({ onGoToTraining }) {
                         }
                       },
                       plugins: {
+                        tooltip: {
+                          enabled: true,
+                          intersect: false
+                        },
                         legend: {
                           display: true,
                           position: 'top',
@@ -2069,7 +2087,19 @@ export function DashboardView({ onGoToTraining }) {
                     <span>Estado de Credenciales {dist2 !== 'all' ? `(${dist2})` : ''}</span>
                   </div>
                   <div style={{ height: '220px' }}>
-                    <Doughnut data={doughnutData2} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: textTitle } } } }} />
+                    <Doughnut
+                      key={`doughnut-cred-${isDark ? 'dark' : 'light'}-${isMobile ? 'mob' : 'desk'}`}
+                      data={doughnutData2}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'nearest', intersect: false },
+                        plugins: {
+                          tooltip: { enabled: true, intersect: false },
+                          legend: { labels: { color: textTitle } }
+                        }
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -2080,10 +2110,12 @@ export function DashboardView({ onGoToTraining }) {
                   </div>
                   <div style={{ height: isMobile ? '200px' : '220px' }}>
                     <Bar
+                      key={`bar-progreso-${isDark ? 'dark' : 'light'}-${isMobile ? 'mob' : 'desk'}`}
                       data={barData2}
                       options={{
                         responsive: true,
                         maintainAspectRatio: false,
+                        interaction: { mode: 'nearest', intersect: false },
                         scales: {
                           x: {
                             ticks: {
@@ -2101,6 +2133,7 @@ export function DashboardView({ onGoToTraining }) {
                           }
                         },
                         plugins: {
+                          tooltip: { enabled: true, intersect: false },
                           legend: {
                             labels: {
                               color: textTitle,
