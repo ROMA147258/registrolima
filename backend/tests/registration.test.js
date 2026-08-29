@@ -194,7 +194,7 @@ test('Validation Rule 3: Coordinador de Local allows strictly 1 per school', asy
         local_asignado: 'IE Mercedes Indacochea'
       });
     },
-    /1 Coordinador de Local asignado/
+    /1 (Personero de Local de Votación|Coordinador de Local) asignado/
   );
 
   // Coordinator 3 at DIFFERENT school 'IE Corazon de Jesus' in same district Barranco (Allowed)
@@ -366,7 +366,7 @@ test('Validation Rule 7: Coordinador de Distritos gets auto-generated password a
         password: 'wrong_password'
       });
     },
-    /Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada/
+    /Contraseña incorrecta. El Coordinador (Distrital|de Distritos) debe ingresar con su clave asignada/
   );
 
   // Login with CORRECT generated password -> Must succeed

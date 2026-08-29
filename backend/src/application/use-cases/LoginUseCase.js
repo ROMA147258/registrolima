@@ -88,7 +88,7 @@ export class LoginUseCase {
           if (expectedKey) {
             const userPassClean = cleanPass.replace(/[-\s]/g, '').toUpperCase();
             if (userPassClean !== expectedKey.toUpperCase()) {
-              throw new Error('Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada.');
+              throw new Error('Contraseña incorrecta. El Coordinador Distrital debe ingresar con su clave asignada.');
             }
           }
         }
@@ -150,7 +150,7 @@ export class LoginUseCase {
         };
       }
     } catch (err) {
-      if (err.message && err.message.includes('Coordinador de Distritos')) {
+      if (err.message && (err.message.includes('Coordinador Distrital') || err.message.includes('Coordinador de Distritos'))) {
         throw err;
       }
       console.error('Error buscando personero/coordinador en base de datos:', err);
@@ -177,7 +177,7 @@ export class LoginUseCase {
             if (expectedKey) {
               const userPassClean = cleanPass.replace(/[-\s]/g, '').toUpperCase();
               if (userPassClean !== expectedKey.toUpperCase()) {
-                throw new Error('Contraseña incorrecta. El Coordinador de Distritos debe ingresar con su clave asignada.');
+                throw new Error('Contraseña incorrecta. El Coordinador Distrital debe ingresar con su clave asignada.');
               }
             }
           }

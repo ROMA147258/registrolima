@@ -8,9 +8,9 @@ export const ROLES = {
 
 export const ELECTORAL_ROLES = [
   'Personero de Mesa',
-  'Coordinador de Local',
+  'Personero de Local de Votación',
   'Coordinador Zonal',
-  'Coordinador de Distritos'
+  'Coordinador Distrital'
 ];
 
 export const TRAINING_RULES = {

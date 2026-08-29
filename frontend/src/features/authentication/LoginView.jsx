@@ -79,12 +79,13 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
           <h1 style={{
             fontFamily: 'Cinzel, serif',
             color: '#0f172a',
-            fontSize: '1.35rem',
+            fontSize: '1.25rem',
             fontWeight: 900,
             margin: '0 0 4px 0',
-            letterSpacing: '0.5px'
+            letterSpacing: '0.5px',
+            lineHeight: 1.25
           }}>
-            SOMOS PERÚ 2026
+            ELECCIONES REGIONALES Y MUNICIPALES 2026
           </h1>
 
           <div style={{
@@ -94,7 +95,7 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
             letterSpacing: '0.8px',
             textTransform: 'uppercase'
           }}>
-            Portal de Acceso y Control Electoral
+            Plataforma de Capacitación y Seguimiento
           </div>
 
           <div style={{ display: 'flex', height: '3px', width: '100px', margin: '10px auto 0', borderRadius: '2px', overflow: 'hidden' }}>

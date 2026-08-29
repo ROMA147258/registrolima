@@ -90,10 +90,10 @@ export function TrainingView({ onGoToDashboard }) {
             </h1>
             <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
               {isCoordinadorDistrital
-                ? 'Evaluación y Acreditación de Coordinador de Distritos'
+                ? 'Evaluación y Acreditación de Coordinador Distrital'
                 : (isCoordinadorZonal
                   ? 'Evaluación y Acreditación de Coordinador Zonal'
-                  : (isCoordinadorLocal ? 'Evaluación y Acreditación de Coordinador de Local' : 'Ficha de Capacitación de Personeros'))}
+                  : (isCoordinadorLocal ? 'Evaluación y Acreditación de Personero de Local de Votación' : 'Ficha de Capacitación de Personeros'))}
             </span>
           </div>
 
@@ -129,7 +129,7 @@ export function TrainingView({ onGoToDashboard }) {
             animation: 'fadeIn 0.2s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: isFullyAccredited ? '#047857' : '#0369a1', fontSize: '0.86rem', marginBottom: '4px' }}>
-              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador de Distritos' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Coordinador de Local')}</span>
+              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador Distrital' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Personero de Local de Votación')}</span>
             </div>
             <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#065f46' : '#334155', lineHeight: 1.45 }}>
               {isFullyAccredited ? (

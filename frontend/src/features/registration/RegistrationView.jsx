@@ -463,7 +463,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     local_asignado: '',
     tiene_experiencia: 'No',
     cuenta_movilidad: 'No',
-    se_compromete: 'Sí, me comprometo el 4 de Octubre del 2026'
+    se_compromete: ''
   });
 
   const [localesVota, setLocalesVota] = useState([]);
@@ -476,9 +476,9 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   const [distritalSuccessData, setDistritalSuccessData] = useState(null);
   const [copiedKey, setCopiedKey] = useState(false);
 
-  const isCoordinadorLocal = formData.rol_electoral === 'Coordinador de Local';
+  const isCoordinadorLocal = formData.rol_electoral === 'Personero de Local de Votación' || formData.rol_electoral === 'Coordinador de Local';
   const isCoordinadorZonal = formData.rol_electoral === 'Coordinador Zonal';
-  const isCoordinadorDistrital = formData.rol_electoral === 'Coordinador de Distritos';
+  const isCoordinadorDistrital = formData.rol_electoral === 'Coordinador Distrital' || formData.rol_electoral === 'Coordinador de Distritos';
   const isPersoneroMesa = formData.rol_electoral === 'Personero de Mesa';
   const isCoordinador = isCoordinadorLocal || isCoordinadorZonal || isCoordinadorDistrital;
 
@@ -775,7 +775,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       ...prev,
       rol_electoral: role,
       mesa_asignada: 'No aplica',
-      local_asignado: role === 'Coordinador de Distritos' 
+      local_asignado: (role === 'Coordinador Distrital' || role === 'Coordinador de Distritos')
         ? 'No aplica' 
         : (prev.local_asignado === 'No aplica' ? '' : prev.local_asignado)
     }));
@@ -821,7 +821,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.distrito_asignado = 'Seleccione el distrito donde será asignado.';
     }
 
-    if (formData.rol_electoral !== 'Coordinador de Distritos' && (!formData.local_asignado || formData.local_asignado.trim() === '' || formData.local_asignado === 'No aplica')) {
+    if (formData.rol_electoral !== 'Coordinador Distrital' && formData.rol_electoral !== 'Coordinador de Distritos' && (!formData.local_asignado || formData.local_asignado.trim() === '' || formData.local_asignado === 'No aplica')) {
       errors.local_asignado = formData.rol_electoral === 'Coordinador Zonal'
         ? 'Debe seleccionar al menos un colegio o local de votación asignado.'
         : 'Seleccione el local de votación asignado.';
@@ -836,8 +836,8 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.cuenta_movilidad = 'Indique si cuenta con movilidad propia.';
     }
 
-    if (!formData.se_compromete) {
-      errors.se_compromete = 'Confirme su compromiso para las elecciones.';
+    if (!formData.se_compromete || !formData.se_compromete.includes('Sí')) {
+      errors.se_compromete = 'Debe marcar la casilla obligatoria de compromiso para continuar.';
     }
 
     // Combinar con errores de duplicidad detectados en tiempo real (Nombres, DNI, Celular, Mesa, Local, Distrito)
@@ -1188,7 +1188,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
               <button
                 type="button"
-                onClick={() => handleRoleChange('Coordinador de Local')}
+                onClick={() => handleRoleChange('Personero de Local de Votación')}
                 style={{
                   minHeight: '44px',
                   padding: '10px 8px',
@@ -1209,7 +1209,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 }}
               >
                 <School className="w-4 h-4 flex-shrink-0" />
-                <span>Coordinador de Local</span>
+                <span>Personero de Local de Votación</span>
               </button>
 
               <button
@@ -1240,7 +1240,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
               <button
                 type="button"
-                onClick={() => handleRoleChange('Coordinador de Distritos')}
+                onClick={() => handleRoleChange('Coordinador Distrital')}
                 style={{
                   minHeight: '44px',
                   padding: '10px 8px',
@@ -1261,7 +1261,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 }}
               >
                 <MapPin className="w-4 h-4 flex-shrink-0" />
-                <span>Coordinador de Distritos</span>
+                <span>Coordinador Distrital</span>
               </button>
             </div>
 
@@ -1477,47 +1477,52 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
             </div>
 
             <div className="form-group" id="field-se_compromete" style={{ marginBottom: 0 }}>
-              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
-                ¿Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones? <span style={{ color: '#ef4444' }}>*</span>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  border: fieldErrors.se_compromete ? '2px solid #ef4444' : (formData.se_compromete ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1'),
+                  background: formData.se_compromete ? 'rgba(14, 165, 233, 0.08)' : '#ffffff',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  userSelect: 'none'
+                }}
+              >
+                <input
+                  type="checkbox"
+                  id="checkbox-se_compromete"
+                  name="se_compromete"
+                  checked={Boolean(formData.se_compromete && formData.se_compromete.includes('Sí'))}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    setFormData(prev => ({
+                      ...prev,
+                      se_compromete: checked ? 'Sí, me comprometo el 4 de Octubre del 2026' : ''
+                    }));
+                    if (fieldErrors.se_compromete) {
+                      setFieldErrors(prev => ({ ...prev, se_compromete: null }));
+                    }
+                  }}
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    accentColor: 'rgb(14, 165, 233)',
+                    cursor: 'pointer',
+                    flexShrink: 0
+                  }}
+                />
+                <span style={{ fontSize: '0.84rem', fontWeight: 800, color: formData.se_compromete ? '#0284c7' : '#1e293b' }}>
+                  Sí, me comprometo el 4 de Octubre del 2026 <span style={{ color: '#ef4444' }}>*</span>
+                </span>
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-                <button
-                  type="button"
-                  onClick={() => handleToggle('se_compromete', 'Sí, me comprometo el 4 de Octubre del 2026')}
-                  style={{
-                    padding: '8px',
-                    borderRadius: '8px',
-                    border: '1px solid rgb(14, 165, 233)',
-                    background: formData.se_compromete.includes('Sí') ? 'rgb(14, 165, 233)' : '#ffffff',
-                    color: formData.se_compromete.includes('Sí') ? '#ffffff' : '#334155',
-                    fontWeight: 800,
-                    fontSize: '0.75rem',
-                    cursor: 'pointer',
-                    transform: formData.se_compromete.includes('Sí') ? 'scale(0.99)' : 'scale(1)',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  Sí, me comprometo el 4 de Octubre del 2026
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggle('se_compromete', 'No podré asistir')}
-                  style={{
-                    padding: '8px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: formData.se_compromete === 'No podré asistir' ? 'rgb(14, 165, 233)' : '#ffffff',
-                    color: formData.se_compromete === 'No podré asistir' ? '#ffffff' : '#334155',
-                    fontWeight: 800,
-                    fontSize: '0.75rem',
-                    cursor: 'pointer',
-                    transform: formData.se_compromete === 'No podré asistir' ? 'scale(0.99)' : 'scale(1)',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  No podré asistir
-                </button>
-              </div>
+              {fieldErrors.se_compromete && (
+                <span style={{ color: '#ef4444', fontSize: '0.72rem', fontWeight: 700, marginTop: '4px', display: 'block' }}>
+                  {fieldErrors.se_compromete}
+                </span>
+              )}
             </div>
           </div>
 

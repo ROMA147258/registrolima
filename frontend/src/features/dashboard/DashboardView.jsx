@@ -1107,7 +1107,7 @@ export function DashboardView({ onGoToTraining }) {
                                     alignItems: 'center',
                                     gap: '4px'
                                   }}>
-                                    👤 Coord. Local: {item.coordinadoresLocales[0]['Nombres y Apellidos'] || item.coordinadoresLocales[0].nombresApellidos}
+                                    👤 Personero Local: {item.coordinadoresLocales[0]['Nombres y Apellidos'] || item.coordinadoresLocales[0].nombresApellidos}
                                   </span>
                                 ) : (
                                   <span style={{
@@ -1133,7 +1133,7 @@ export function DashboardView({ onGoToTraining }) {
                         {/* Coordinadores Locales de este Colegio */}
                         <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '8px' }}>
                           <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '6px' }}>
-                            Coordinador(es) de Local de este colegio:
+                            Personero(s) de Local de este colegio:
                           </span>
 
                           {item.coordinadoresLocales.length > 0 ? (
@@ -1198,7 +1198,7 @@ export function DashboardView({ onGoToTraining }) {
                               gap: '6px'
                             }}>
                               <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                              <span>Aún no hay Coordinador de Local registrado para este colegio</span>
+                              <span>Aún no hay Personero de Local de Votación registrado para este colegio</span>
                             </div>
                           )}
                         </div>
@@ -1299,9 +1299,9 @@ export function DashboardView({ onGoToTraining }) {
                   >
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
-                    {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
+                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Local de Votación</option>}
                     {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coordinador Zonal</option>}
-                    {isSuperAdmin && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
+                    {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
                   </select>
 
                   {/* Filtro Experiencia */}
@@ -1463,10 +1463,10 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* KPI 4 - Coordinadores de Local (Superadmin, Distrital y Zonal) */}
+                  {/* KPI 4 - Personeros de Local (Superadmin, Distrital y Zonal) */}
                   {!isCoordinadorLocal && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. DE LOCAL</div>
+                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONEROS LOCAL</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
                         <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
                         <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsLocal}</span>
@@ -1970,9 +1970,9 @@ export function DashboardView({ onGoToTraining }) {
                   >
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
-                    {!isCoordinadorLocal && <option value="Coordinador de Local">Coordinador de Local</option>}
+                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Local de Votación</option>}
                     {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coordinador Zonal</option>}
-                    {isSuperAdmin && <option value="Coordinador de Distritos">Coordinador de Distritos</option>}
+                    {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
                   </select>
 
                   {isFiltered2 && (

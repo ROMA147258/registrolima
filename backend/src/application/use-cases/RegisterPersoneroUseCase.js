@@ -84,19 +84,19 @@ export class RegisterPersoneroUseCase {
         }
       }
     } else if (rolNorm.includes('distrito') || rolNorm.includes('distrital')) {
-      // Coordinador de Distritos: Máximo 1 usuario por distrito asignado
+      // Coordinador Distrital: Máximo 1 usuario por distrito asignado
       if (distAsig) {
         const countDist = await this.personeroRepo.countCoordinadoresDistritales(distAsig);
         if (countDist >= 1) {
-          throw new Error(`El distrito de '${distAsig}' ya cuenta con un Coordinador de Distritos asignado. Solo se permite 1 usuario por distrito asignado.`);
+          throw new Error(`El distrito de '${distAsig}' ya cuenta con un Coordinador Distrital asignado. Solo se permite 1 usuario por distrito asignado.`);
         }
       }
     } else if (rolNorm.includes('coordinador') || rolNorm.includes('local')) {
-      // Coordinador de Local: Máximo 1 por cada colegio
+      // Personero de Local de Votación: Máximo 1 por cada colegio
       if (distAsig && localAsig && localAsig.toLowerCase() !== 'no aplica') {
         const countLocal = await this.personeroRepo.countCoordinadoresByLocal(distAsig, localAsig);
         if (countLocal >= 1) {
-          throw new Error(`Cupo lleno: El colegio '${localAsig}' en ${distAsig} ya cuenta con 1 Coordinador de Local asignado.`);
+          throw new Error(`Cupo lleno: El colegio '${localAsig}' en ${distAsig} ya cuenta con 1 Personero de Local de Votación asignado.`);
         }
       }
     } else {

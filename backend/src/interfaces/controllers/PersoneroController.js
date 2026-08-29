@@ -117,20 +117,20 @@ export class PersoneroController {
         }
       }
 
-      // 7. Validar Coordinador de Local: Máximo 1 por cada colegio
-      if (distrito && local && (cleanRol === 'coordinador de local' || (cleanRol.includes('local') && !cleanRol.includes('zonal')))) {
+      // 7. Validar Personero de Local de Votación: Máximo 1 por cada colegio
+      if (distrito && local && (cleanRol === 'personero de local de votación' || cleanRol === 'coordinador de local' || (cleanRol.includes('local') && !cleanRol.includes('zonal')))) {
         const countLocal = await this.personeroRepo.countCoordinadoresByLocal(distrito, local);
         if (countLocal >= 1) {
           return res.json({
             status: 'success',
             available: false,
             field: 'local_asignado',
-            message: `Cupo lleno: El colegio '${local}' en ${distrito} ya cuenta con 1 Coordinador de Local asignado.`
+            message: `Cupo lleno: El colegio '${local}' en ${distrito} ya cuenta con 1 Personero de Local de Votación asignado.`
           });
         }
       }
 
-      // 8. Validar Coordinador de Distritos (Máximo 1 por distrito)
+      // 8. Validar Coordinador Distrital (Máximo 1 por distrito)
       if (distrito && (cleanRol.includes('distrito') || cleanRol.includes('distrital'))) {
         const count = await this.personeroRepo.countCoordinadoresDistritales(distrito);
         if (count >= 1) {
@@ -138,7 +138,7 @@ export class PersoneroController {
             status: 'success',
             available: false,
             field: 'distrito_asignado',
-            message: `El distrito de '${distrito}' ya cuenta con su Coordinador de Distritos.`
+            message: `El distrito de '${distrito}' ya cuenta con su Coordinador Distrital.`
           });
         }
       }
