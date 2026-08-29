@@ -1641,6 +1641,7 @@ export function DashboardView({ onGoToTraining }) {
                         const cel = r['Celular'] || r.celular || '-';
                         const exp = getExp(r);
                         const mov = getMov(r);
+                        const comp = getComp(r);
                         const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa');
                         const isPersonero = rol.toLowerCase().includes('personero');
                         const distrito = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '-';
