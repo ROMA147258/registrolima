@@ -16,14 +16,60 @@
   background: var(--bg-color);
 }
 
-/* Card Component */
-.app-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--card-shadow);
-  overflow: hidden;
-  transition: all 0.2s ease;
+/* Silky Smooth Fluid Filter & List Animations */
+@keyframes fluidEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.975);
+  }
+  60% {
+    opacity: 0.85;
+    transform: translateY(-2px) scale(1.005);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes kpiPulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmerGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(2, 132, 199, 0);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(2, 132, 199, 0.25);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(2, 132, 199, 0);
+  }
+}
+
+.animate-fluid-container {
+  animation: fluidEntrance 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-filter-in {
+  animation: fluidEntrance 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.transition-spring {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-kpi-change {
+  animation: kpiPulse 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .app-card-header {
