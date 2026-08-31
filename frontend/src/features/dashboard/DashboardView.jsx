@@ -554,6 +554,17 @@ export function DashboardView({ onGoToTraining }) {
         return asig === normSchool || asig.includes(normSchool) || normSchool.includes(asig);
       });
 
+      const distritoNombre = school.distrito || (schoolPersoneros[0] && (schoolPersoneros[0]['Distrito Asignado'] || schoolPersoneros[0].distritoAsignado || schoolPersoneros[0]['Distrito donde Vota'] || schoolPersoneros[0].distritoDondeVota)) || (dist1 !== 'all' ? dist1 : 'Lima');
+      const normDist = normalizeDistrictName(distritoNombre);
+
+      const zonalPersonero = (records || []).find(r => {
+        const rol = normalizeDistrictName(r['Rol a Desempeñar'] || r.rolADesempenar || '');
+        if (!rol.includes('ZONAL')) return false;
+        const d = normalizeDistrictName(r['Distrito Asignado'] || r.distritoAsignado || r['Distrito donde Vota'] || r.distritoDondeVota || '');
+        const asig = normalizeLocalName(r['Local de Votación Asignado'] || r.localDeVotacionAsignado || '');
+        return d === normDist || asig.includes(normSchool) || normSchool.includes(asig);
+      });
+
       const plvPersonero = schoolPersoneros.find(r => {
         const rol = normalizeDistrictName(r['Rol a Desempeñar'] || r.rolADesempenar);
         return rol.includes('LOCAL') || rol.includes('PLV') || rol.includes('PCV');
@@ -581,12 +592,14 @@ export function DashboardView({ onGoToTraining }) {
 
       return {
         ...school,
+        distrito: distritoNombre,
         totalMesas,
         asignadas,
         cobertura,
         totalElectores,
         statusLabel,
         statusColor,
+        zonalPersonero,
         plvPersonero,
         mesaPersoneros,
         allPersoneros: schoolPersoneros
@@ -1534,7 +1547,7 @@ export function DashboardView({ onGoToTraining }) {
                     }}
                   >
                     <School className="w-4 h-4" />
-                    <span>Centros y Mesas (Cards)</span>
+                    <span>Centros y Mesas</span>
                   </button>
 
                   <button
@@ -1555,7 +1568,7 @@ export function DashboardView({ onGoToTraining }) {
                     }}
                   >
                     <LayoutGrid className="w-4 h-4" />
-                    <span>Padrón Detallado (Tabla)</span>
+                    <span>Padrón Detallado</span>
                   </button>
                 </div>
 
@@ -1630,6 +1643,23 @@ export function DashboardView({ onGoToTraining }) {
                           e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.03)';
                         }}
                       >
+                        {/* Distrito */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
+                            color: '#0284c7',
+                            padding: '2px 8px',
+                            borderRadius: '6px',
+                            fontSize: '0.72rem',
+                            fontWeight: 800
+                          }}>
+                            📍 Distrito: {school.distrito}
+                          </span>
+                        </div>
+
                         {/* Cabecera del Card: Icono + Nombre + Badge de Cobertura */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1697,32 +1727,50 @@ export function DashboardView({ onGoToTraining }) {
                           <span>{school.statusLabel}</span>
                         </div>
 
-                        {/* Personero de Local (PLV) */}
-                        <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '8px' }}>
-                          {school.plvPersonero ? (
-                            <div style={{
-                              background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
-                              color: '#0284c7',
-                              padding: '4px 10px',
-                              borderRadius: '20px',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              fontSize: '0.74rem',
-                              fontWeight: 800
-                            }}>
-                              <div style={{ width: '24px', height: '18px', borderRadius: '10px', background: '#0284c7', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.58rem', fontWeight: 900 }}>
-                                PLV
-                              </div>
-                              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '240px' }}>
-                                {school.plvPersonero['Nombres y Apellidos'] || school.plvPersonero.nombresApellidos}
+                        {/* Mando del Colegio: Coordinador Zonal y Personero de Local de Votación */}
+                        <div style={{
+                          background: isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc',
+                          borderRadius: '8px',
+                          padding: '8px 10px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '6px',
+                          border: `1px solid ${borderCol}`,
+                          marginTop: '2px'
+                        }}>
+                          {/* 1. Coordinador Zonal */}
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.74rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden' }}>
+                              <span style={{ background: '#ede9fe', color: '#6d28d9', padding: '2px 6px', borderRadius: '4px', fontWeight: 800, fontSize: '0.66rem', flexShrink: 0 }}>
+                                🗺️ Coord. Zonal
+                              </span>
+                              <span style={{ fontWeight: 700, color: school.zonalPersonero ? textTitle : textSub, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {school.zonalPersonero ? (school.zonalPersonero['Nombres y Apellidos'] || school.zonalPersonero.nombresApellidos) : 'Por designar'}
                               </span>
                             </div>
-                          ) : (
-                            <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 700 }}>
-                              ⚠️ Sin Personero de Local asignado
-                            </span>
-                          )}
+                            {school.zonalPersonero && (school.zonalPersonero['Celular'] || school.zonalPersonero.celular) && (
+                              <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '0.7rem', flexShrink: 0 }}>
+                                📱 {school.zonalPersonero['Celular'] || school.zonalPersonero.celular}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* 2. Personero de Local de Votación (PLV) */}
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.74rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden' }}>
+                              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', fontWeight: 800, fontSize: '0.66rem', flexShrink: 0 }}>
+                                🏫 PLV
+                              </span>
+                              <span style={{ fontWeight: 700, color: school.plvPersonero ? textTitle : '#f59e0b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {school.plvPersonero ? (school.plvPersonero['Nombres y Apellidos'] || school.plvPersonero.nombresApellidos) : 'Sin Personero de Local'}
+                              </span>
+                            </div>
+                            {school.plvPersonero && (school.plvPersonero['Celular'] || school.plvPersonero.celular) && (
+                              <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '0.7rem', flexShrink: 0 }}>
+                                📱 {school.plvPersonero['Celular'] || school.plvPersonero.celular}
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                       </div>
