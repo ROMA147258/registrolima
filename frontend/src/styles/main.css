@@ -193,6 +193,7 @@
 .modal-body {
   padding: 20px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-footer {
@@ -202,3 +203,97 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+/* ==========================================================================
+   RESPONSIVE WEB DESIGN (RWD) MEDIA QUERIES & UTILITIES
+   ========================================================================== */
+
+/* Fluid container with padding */
+.responsive-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: clamp(12px, 3vw, 28px);
+  padding-right: clamp(12px, 3vw, 28px);
+}
+
+/* Responsive Table Horizontal Scroll */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.table-responsive::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: rgba(14, 165, 233, 0.4);
+  border-radius: 4px;
+}
+
+/* Responsive 7 KPIs Grid */
+.kpis-responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 1024px) {
+  .kpis-responsive-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Responsive Filter Bar Grid */
+.filters-responsive-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.filters-responsive-bar > * {
+  flex: 1 1 180px;
+}
+
+/* Mobile Specific Tweaks (<= 768px) */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 14px;
+  }
+
+  .app-card-header,
+  .app-card-body,
+  .app-card-footer {
+    padding: 14px 16px;
+  }
+
+  .modal-content {
+    max-width: 95vw;
+    border-radius: var(--radius-md);
+  }
+
+  .form-control,
+  .btn-primary,
+  .btn-secondary {
+    min-height: 42px; /* Touch target accessibility */
+    font-size: 0.9rem;
+  }
+
+  /* Safe Area Inset Support for modern smartphones */
+  .mobile-safe-bottom {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 16px));
+  }
+}
+
+/* Large Screens (>= 1440px) */
+@media (min-width: 1440px) {
+  .responsive-container {
+    max-width: 1600px;
+  }
+}
+

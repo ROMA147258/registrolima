@@ -109,7 +109,7 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           )}
 
           {/* Nombres y Celular */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
             <InputField
               label="Nombres y Apellidos"
               icon={User}
@@ -132,7 +132,7 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           </div>
 
           {/* Rol y Credencial */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
             <SelectField
               label="Rol a Desempeñar"
               icon={Award}
@@ -153,7 +153,7 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           </div>
 
           {/* Distrito y Mesa Asignada (Solo para Personero de Mesa) */}
-          <div style={{ display: 'grid', gridTemplateColumns: (formData.rolADesempenar || '').toLowerCase().includes('personero') ? '1fr 1fr' : '1fr', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: (formData.rolADesempenar || '').toLowerCase().includes('personero') ? 'repeat(auto-fit, minmax(220px, 1fr))' : '1fr', gap: '12px' }}>
             <SelectField
               label="Distrito Asignado"
               icon={MapPin}
@@ -193,7 +193,7 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           />
 
           {/* Footer con Guardar y Eliminar */}
-          <div className="modal-footer" style={{ marginTop: '20px', padding: '14px 0 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #334155' }}>
+          <div className="modal-footer" style={{ marginTop: '20px', padding: '14px 0 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', borderTop: '1px solid #334155' }}>
             <button
               type="button"
               onClick={handleDelete}
@@ -201,8 +201,9 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '6px',
-                padding: '9px 15px',
+                padding: '10px 16px',
                 borderRadius: '8px',
                 border: '1px solid #ef4444',
                 background: '#fef2f2',
@@ -210,7 +211,8 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
                 fontWeight: 700,
                 fontSize: '0.82rem',
                 cursor: (deleting || saving) ? 'not-allowed' : 'pointer',
-                transition: 'all 0.15s ease'
+                transition: 'all 0.15s ease',
+                flex: '1 1 160px'
               }}
             >
               <Trash2 className="w-4 h-4" />
@@ -223,8 +225,9 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '6px',
-                padding: '9px 20px',
+                padding: '10px 20px',
                 borderRadius: '8px',
                 background: 'rgb(14, 165, 233)',
                 color: '#ffffff',
@@ -232,7 +235,8 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
                 fontSize: '0.85rem',
                 border: 'none',
                 cursor: (saving || deleting) ? 'not-allowed' : 'pointer',
-                boxShadow: '0 2px 8px rgba(14, 165, 233, 0.35)'
+                boxShadow: '0 2px 8px rgba(14, 165, 233, 0.35)',
+                flex: '1 1 160px'
               }}
             >
               <Save className="w-4 h-4" />

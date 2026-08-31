@@ -17,6 +17,7 @@ import {
   TOTAL_MESAS_LIMA_METROPOLITANA, TOTAL_LOCALES_LIMA_METROPOLITANA, TOTAL_ELECTORES_LIMA_METROPOLITANA,
   getMesasForLocal, getMesasForDistrito, getElectoresForDistrito, getLocalesCountForDistrito
 } from '../../constants/catalogs.js';
+import { getLocalesByDistrito } from '../../constants/localesCatalog.js';
 import { api } from '../../services/api.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -175,6 +176,9 @@ export function DashboardView({ onGoToTraining }) {
   const [exp1, setExp1] = useState('all');
   const [mov1, setMov1] = useState('all');
   const [comp1, setComp1] = useState('all');
+  const [viewMode1, setViewMode1] = useState('cards'); // 'cards', 'tabla', 'directorio'
+  const [selectedSchoolDetail, setSelectedSchoolDetail] = useState(null);
+  const [expandedMesa, setExpandedMesa] = useState(null);
 
   // Filtros Tab 2 (Capacitaciones)
   const [search2, setSearch2] = useState('');
@@ -517,96 +521,70 @@ export function DashboardView({ onGoToTraining }) {
   const coberturaMesasPct = targetMesas > 0 ? Math.min(100, ((tab1Personeros / targetMesas) * 100)).toFixed(1) : '0.0';
   const coberturaLocalesPct = targetLocales > 0 ? Math.min(100, ((countLocalesConPLV / targetLocales) * 100)).toFixed(1) : '0.0';
 
-  // =========================================================================
-  // GRÁFICO LIMA METROPOLITANA O DISTRITO DEL COORDINADOR
-  // =========================================================================
-  const isSingleDistrict = Boolean(
-    (isCoordinador && coordinatorDistrict) ||
-    (dist1 !== 'all') ||
-    isCoordinadorLocal
-  );
+  // Catálogo de colegios para la vista Cards (dash1.jpeg)
+  const districtSchools = useMemo(() => {
+    const targetDist = dist1 !== 'all' ? dist1 : (coordinatorDistrict || 'San Isidro');
+    const rawSchools = getLocalesByDistrito(targetDist);
+    
+    return rawSchools.map(school => {
+      const normSchool = normalizeLocalName(school.nombre);
 
-  const chartDistricts = useMemo(() => {
-    if (isCoordinadorLocal && coordinatorLocal) return [coordinatorLocal];
-    if (isCoordinador && coordinatorDistrict) return [coordinatorDistrict];
-    if (dist1 !== 'all') return [dist1];
-    return DISTRITOS_LIMA;
-  }, [isCoordinadorLocal, coordinatorLocal, isCoordinador, coordinatorDistrict, dist1]);
-
-  const barData1 = useMemo(() => {
-    const isPersoneroActive = role1 === 'all' || role1 === 'Personero de Mesa';
-    const isCoordLocalActive = (role1 === 'all' || role1 === 'Coordinador de Local') && !isCoordinadorLocal;
-    const isCoordZonalActive = (role1 === 'all' || role1 === 'Coordinador Zonal') && (isSuperAdmin || isCoordinadorDistrital);
-    const isCoordDistActive = (role1 === 'all' || role1 === 'Coordinador de Distritos') && isSuperAdmin;
-
-    const datasets = [];
-
-    if (isPersoneroActive) {
-      datasets.push({
-        label: 'Personeros de Mesa',
-        data: chartDistricts.map(d => personerosByDist[d] || (isCoordinadorLocal ? tab1Personeros : 0)),
-        backgroundColor: chartDistricts.map(d =>
-          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
-            ? '#f59e0b'
-            : '#0284c7'
-        ),
-        borderRadius: 4
+      const schoolPersoneros = (records || []).filter(r => {
+        const asig = normalizeLocalName(r['Local de Votación Asignado'] || r.localDeVotacionAsignado || r['Local de Votación'] || r.localDeVotacion);
+        return asig === normSchool || asig.includes(normSchool) || normSchool.includes(asig);
       });
-    }
 
-    if (isCoordLocalActive) {
-      datasets.push({
-        label: 'Coordinadores de Local',
-        data: chartDistricts.map(d => coordsLocalByDist[d] || 0),
-        backgroundColor: chartDistricts.map(d =>
-          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
-            ? '#fbbf24'
-            : '#8b5cf6'
-        ),
-        borderRadius: 4
+      const plvPersonero = schoolPersoneros.find(r => {
+        const rol = normalizeDistrictName(r['Rol a Desempeñar'] || r.rolADesempenar);
+        return rol.includes('LOCAL') || rol.includes('PLV') || rol.includes('PCV');
       });
-    }
 
-    if (isCoordZonalActive) {
-      datasets.push({
-        label: 'Coordinadores Zonales',
-        data: chartDistricts.map(d => coordsZonalByDist[d] || 0),
-        backgroundColor: chartDistricts.map(d =>
-          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
-            ? '#38bdf8'
-            : '#0284c7'
-        ),
-        borderRadius: 4
+      const mesaPersoneros = schoolPersoneros.filter(r => {
+        const rol = normalizeDistrictName(r['Rol a Desempeñar'] || r.rolADesempenar);
+        return !rol.includes('LOCAL') && !rol.includes('PLV') && !rol.includes('PCV') && !rol.includes('DISTRIT');
       });
-    }
 
-    if (isCoordDistActive) {
-      datasets.push({
-        label: 'Coordinadores de Distrito',
-        data: chartDistricts.map(d => coordsDistByDist[d] || 0),
-        backgroundColor: chartDistricts.map(d =>
-          (dist1 !== 'all' && normalizeDistrictName(d) === normalizeDistrictName(dist1))
-            ? '#34d399'
-            : '#0d9488'
-        ),
-        borderRadius: 4
-      });
-    }
+      const totalMesas = school.mesas || Math.max(1, Math.round((school.electores || 3000) / 300));
+      const asignadas = mesaPersoneros.length;
+      const cobertura = totalMesas > 0 ? Math.min(100, Math.round((asignadas / totalMesas) * 100)) : 0;
+      const totalElectores = school.electores || totalMesas * 300;
 
-    if (datasets.length === 0) {
-      datasets.push({
-        label: 'Personeros de Mesa',
-        data: (chartDistricts || []).map(() => 0),
-        backgroundColor: '#0284c7',
-        borderRadius: 4
-      });
-    }
+      let statusLabel = 'Crítico';
+      let statusColor = '#ef4444';
+      if (cobertura >= 80) {
+        statusLabel = 'Completo';
+        statusColor = '#10b981';
+      } else if (cobertura >= 50) {
+        statusLabel = 'Regular';
+        statusColor = '#f59e0b';
+      }
 
-    return {
-      labels: isCoordinadorLocal ? [coordinatorLocal || 'Local'] : (chartDistricts || []),
-      datasets
-    };
-  }, [chartDistricts, role1, dist1, personerosByDist, coordsLocalByDist, coordsZonalByDist, coordsDistByDist, isCoordinadorLocal, isSuperAdmin, isCoordinadorDistrital, coordinatorLocal, tab1Personeros]);
+      return {
+        ...school,
+        totalMesas,
+        asignadas,
+        cobertura,
+        totalElectores,
+        statusLabel,
+        statusColor,
+        plvPersonero,
+        mesaPersoneros,
+        allPersoneros: schoolPersoneros
+      };
+    });
+  }, [records, dist1, coordinatorDistrict]);
+
+  const filteredDistrictSchools = useMemo(() => {
+    if (!search1.trim()) return districtSchools;
+    const term = search1.toLowerCase().trim();
+    return districtSchools.filter(s => {
+      return s.nombre.toLowerCase().includes(term) ||
+        (s.direccion && s.direccion.toLowerCase().includes(term)) ||
+        s.allPersoneros.some(p => (p['Nombres y Apellidos'] || p.nombresApellidos || '').toLowerCase().includes(term) || String(p['D.N.I.'] || p.dni || '').includes(term));
+    });
+  }, [districtSchools, search1]);
+
+
 
   // =========================================================================
   // FILTRADO TAB 2 (CAPACITACIONES)
@@ -657,7 +635,7 @@ export function DashboardView({ onGoToTraining }) {
   });
 
   const doughnutData2 = useMemo(() => ({
-    labels: ['Confirmados (OK)', 'Bloqueados (Pendiente)'],
+    labels: ['Confirmados (Acreditados)', 'Pendientes / Bloqueados'],
     datasets: [
       {
         data: [tab2Confirmados || 0, tab2Pendientes || 0],
@@ -673,14 +651,14 @@ export function DashboardView({ onGoToTraining }) {
       {
         label: 'Videos Vistos',
         data: [v0 || 0, v1 || 0, v2 || 0],
-        backgroundColor: '#38bdf8',
-        borderRadius: 4
+        backgroundColor: '#0284c7',
+        borderRadius: 6
       },
       {
         label: 'Manuales PDF',
         data: [p0 || 0, p1 || 0, p2 || 0],
-        backgroundColor: '#a855f7',
-        borderRadius: 4
+        backgroundColor: '#8b5cf6',
+        borderRadius: 6
       }
     ]
   }), [v0, v1, v2, p0, p1, p2]);
@@ -904,36 +882,7 @@ export function DashboardView({ onGoToTraining }) {
               </button>
             )}
 
-            {/* Tab 3: Conexión a Base de Datos (Solo Administrador) */}
-            {isSuperAdmin && (
-              <button
-                onClick={() => setActiveTab('sql')}
-                title={isSidebarCollapsed ? 'Conexión a Base de Datos' : undefined}
-                style={{
-                  padding: isSidebarCollapsed ? '10px' : '10px 12px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  background: activeTab === 'sql' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
-                  color: activeTab === 'sql' ? '#0284c7' : textSub,
-                  fontWeight: 700,
-                  fontSize: '0.84rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                  gap: '10px',
-                  textAlign: 'left',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <Cable className="w-4 h-4 flex-shrink-0" />
-                {!isSidebarCollapsed && (
-                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    Base de Datos
-                  </span>
-                )}
-              </button>
-            )}
+
           </div>
 
           {/* Footer Sidebar */}
@@ -1045,27 +994,7 @@ export function DashboardView({ onGoToTraining }) {
               </div>
             )}
 
-            {/* Botón Sincronizar */}
-            <button
-              onClick={() => fetchData(false)}
-              title="Sincronizar datos"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '5px 10px',
-                borderRadius: '6px',
-                border: `1px solid ${borderCol}`,
-                background: bgCard,
-                color: textTitle,
-                fontSize: '0.76rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
-              {!isMobile && <span>Sincronizar</span>}
-            </button>
+
 
             {/* Toggle Modo Oscuro / Claro */}
             <button
@@ -1495,424 +1424,538 @@ export function DashboardView({ onGoToTraining }) {
 
               {/* Indicadores Electorales Clave (KPIs Electorales Sincronizados) */}
               <div style={{ marginBottom: '20px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px', marginBottom: '12px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
                     <LayoutGrid className="w-4 h-4 text-sky-500" />
                     <span>Indicadores Electorales • {scopeLabel}</span>
                   </div>
                   <span style={{ fontSize: '0.74rem', color: textSub }}>
-                    {isFiltered1 ? `Métricas en vivo para ${tab1Total} seleccionados` : `Padrón y metas de ${scopeLabel}`}
+                    {isFiltered1 ? `Métricas para ${tab1Total} seleccionados` : `Padrón y metas de ${scopeLabel}`}
                   </span>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(130px, 1fr))' : 'repeat(auto-fit, minmax(140px, 1fr))', gap: isMobile ? '8px' : '12px' }}>
                   
                   {/* KPI 1 - Electores */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px', transition: 'all 0.2s ease' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>ELECTORES</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Users className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{targetElectores.toLocaleString()}</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>ELECTORES</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Users className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{targetElectores.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Total Padrón ({scopeLabel})</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Total Padrón ({scopeLabel})</div>
                   </div>
 
                   {/* KPI 2 - Mesas */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>MESAS</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Layers className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{targetMesas.toLocaleString()}</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>MESAS</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Layers className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{targetMesas.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>1 Personero cada Mesa</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>1 Personero cada Mesa</div>
                   </div>
 
                   {/* KPI 3 - Locales */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>LOCALES</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><School className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{targetLocales.toLocaleString()}</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>LOCALES</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{targetLocales.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Centros de Votación</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Centros de Votación</div>
                   </div>
 
                   {/* KPI 4 - Personeros de Mesa */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONERO DE MESA</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ShieldCheck className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Personeros.toLocaleString()}</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>PERSONERO DE MESA</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><ShieldCheck className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1Personeros.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Asignados</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Asignados</div>
                   </div>
 
                   {/* KPI 5 - Cobertura de Mesas % */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #14b8a6', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COBERTURA DE MESAS</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(20, 184, 166, 0.2)' : '#ccfbf1', color: '#14b8a6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: '#059669' }}>{coberturaMesasPct}%</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #14b8a6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COBERTURA DE MESAS</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(20, 184, 166, 0.2)' : '#ccfbf1', color: '#14b8a6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><CheckCircle2 className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: '#059669' }}>{coberturaMesasPct}%</span>
                     </div>
                     <div style={{ width: '100%', height: '4px', background: isDark ? '#334155' : '#e2e8f0', borderRadius: '2px', overflow: 'hidden', margin: '3px 0' }}>
                       <div style={{ width: `${Math.min(100, Math.max(0, parseFloat(coberturaMesasPct)))}%`, height: '100%', background: '#10b981', borderRadius: '2px', transition: 'width 0.4s ease' }}></div>
                     </div>
-                    <div style={{ fontSize: '0.66rem', color: textSub }}>{tab1Personeros} / {targetMesas.toLocaleString()} mesas cubiertas</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>{tab1Personeros} / {targetMesas.toLocaleString()} mesas</div>
                   </div>
 
                   {/* KPI 6 - Locales con PLV */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>LOCALES CON PLV</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{countLocalesConPLV} / {targetLocales}</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>LOCALES CON PLV</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserCheck className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{countLocalesConPLV} / {targetLocales}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Con Personero LV</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Con Personero LV</div>
                   </div>
 
                   {/* KPI 7 - Cobertura de Locales % */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COBERTURA DE LOCALES</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Building2 className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: '#7c3aed' }}>{coberturaLocalesPct}%</span>
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0 }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COBERTURA DE LOCALES</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Building2 className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: '#7c3aed' }}>{coberturaLocalesPct}%</span>
                     </div>
                     <div style={{ width: '100%', height: '4px', background: isDark ? '#334155' : '#e2e8f0', borderRadius: '2px', overflow: 'hidden', margin: '3px 0' }}>
                       <div style={{ width: `${Math.min(100, Math.max(0, parseFloat(coberturaLocalesPct)))}%`, height: '100%', background: '#8b5cf6', borderRadius: '2px', transition: 'width 0.4s ease' }}></div>
                     </div>
-                    <div style={{ fontSize: '0.66rem', color: textSub }}>{countLocalesConPLV} / {targetLocales} locales cubiertos</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>{countLocalesConPLV} / {targetLocales} locales cubiertos</div>
                   </div>
 
                 </div>
               </div>
 
-              {/* Gráfico Resultado Lima Metropolitana o Colegio / Distrito */}
-              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: isMobile ? '14px' : '18px', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap', gap: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: isMobile ? '0.85rem' : '0.92rem', fontWeight: 900, color: textTitle }}>
-                    <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
-                    <span>
-                      {isCoordinadorLocal && coordinatorLocal
-                        ? `Colegio: ${coordinatorLocal}`
-                        : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                          ? `Distrito: ${coordinatorDistrict}`
-                          : (dist1 !== 'all' ? `Distrito: ${dist1}` : 'Lima Metropolitana (43 Distritos)'))}
-                    </span>
-                  </div>
-                  <span style={{ background: isDark ? '#1e293b' : '#e0f2fe', color: '#0284c7', padding: '3px 10px', borderRadius: '12px', fontSize: '0.74rem', fontWeight: 800 }}>
-                    {tab1Total} registros
-                  </span>
-                </div>
-                <div style={{ height: isMobile ? '200px' : '230px' }}>
-                  <Bar
-                    key={`bar-distritos-${isDark ? 'dark' : 'light'}-${isMobile ? 'mob' : 'desk'}`}
-                    data={barData1}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      interaction: {
-                        mode: 'nearest',
-                        intersect: false
-                      },
-                      scales: {
-                        x: {
-                          ticks: {
-                            color: textSub,
-                            font: {
-                              size: isSingleDistrict ? 13 : (isMobile ? 8 : 9),
-                              weight: isSingleDistrict ? 'bold' : 'normal'
-                            },
-                            maxRotation: isSingleDistrict ? 0 : 45,
-                            minRotation: isSingleDistrict ? 0 : 45
-                          },
-                          grid: { display: false }
-                        },
-                        y: {
-                          ticks: { color: textSub, stepSize: 1 },
-                          beginAtZero: true,
-                          grid: { color: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }
-                        }
-                      },
-                      plugins: {
-                        tooltip: {
-                          enabled: true,
-                          intersect: false
-                        },
-                        legend: {
-                          display: true,
-                          position: 'top',
-                          labels: {
-                            color: textTitle,
-                            font: { size: 10, weight: 'bold' }
-                          }
-                        }
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Tabla Padrón Electoral de Personeros */}
-              <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', overflow: 'hidden' }}>
-                <div style={{ padding: '16px 20px', borderBottom: `1px solid ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
-                    <LayoutGrid className="w-4 h-4 text-amber-500" />
-                    <span>
-                      {isCoordinadorLocal && coordinatorLocal
-                        ? `Padrón de Personeros de Mesa • Colegio ${coordinatorLocal}`
-                        : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
-                          ? `Padrón Electoral de ${coordinatorDistrict} (Coordinadores de Local y Personeros)`
-                          : 'Padrón Electoral de Personeros')}
-                    </span>
-                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: textSub, marginLeft: '8px' }}>
-                      ({filteredRecords1.length} {filteredRecords1.length === 1 ? 'resultado' : 'resultados'})
-                    </span>
-                  </div>
-
-                  <a
-                    href={api.getExportUrl('xlsx', coordinatorDistrict || (dist1 !== 'all' ? dist1 : ''))}
-                    download
+              {/* BOTONES DE VISTA DE TAB 1: [ Cards ] [ Tabla Padrón ] [ Directorio ] [ Excel ] */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => setViewMode1('cards')}
                     style={{
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: viewMode1 === 'cards' ? '#002B66' : (isDark ? '#1e293b' : '#f1f5f9'),
+                      color: viewMode1 === 'cards' ? '#ffffff' : textSub,
+                      fontWeight: 800,
+                      fontSize: '0.82rem',
+                      cursor: 'pointer',
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '6px',
-                      padding: '8px 16px',
-                      borderRadius: '8px',
-                      background: '#10b981',
-                      color: '#ffffff',
-                      textDecoration: 'none',
-                      fontSize: '0.82rem',
-                      fontWeight: 700
+                      transition: 'all 0.15s ease'
                     }}
                   >
-                    <FileSpreadsheet className="w-4 h-4" />
-                    <span>Descargar Excel {isCoordinadorLocal ? `(${coordinatorLocal})` : (coordinatorDistrict ? `(${coordinatorDistrict})` : (dist1 !== 'all' ? `(${dist1})` : ''))}</span>
-                  </a>
+                    <School className="w-4 h-4" />
+                    <span>Centros y Mesas (Cards)</span>
+                  </button>
+
+                  <button
+                    onClick={() => setViewMode1('tabla')}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: viewMode1 === 'tabla' ? '#002B66' : (isDark ? '#1e293b' : '#f1f5f9'),
+                      color: viewMode1 === 'tabla' ? '#ffffff' : textSub,
+                      fontWeight: 800,
+                      fontSize: '0.82rem',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <LayoutGrid className="w-4 h-4" />
+                    <span>Padrón Detallado (Tabla)</span>
+                  </button>
                 </div>
 
-                {/* ---- VISTA TABLA (escritorio) / TARJETAS (móvil) ---- */}
-                {filteredRecords1.length > 0 ? (
-                  isMobile ? (
-                    /* TARJETAS EN MÓVIL */
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '10px' }}>
-                      {filteredRecords1.map((r, idx) => {
-                        const dni = r['D.N.I.'] || r['DNI'] || r.dni || '-';
-                        const cel = r['Celular'] || r.celular || '-';
-                        const exp = getExp(r);
-                        const mov = getMov(r);
-                        const comp = getComp(r);
-                        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa');
-                        const isPersonero = rol.toLowerCase().includes('personero');
-                        const distrito = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '-';
-                        const local = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || '-';
-                        const mesaAsig = r['Mesa Asignada'] ?? r.mesaAsignada ?? '';
-                        const hasMesa = mesaAsig && String(mesaAsig) !== '-' && String(mesaAsig).trim().toLowerCase() !== 'no aplica';
+                <a
+                  href={api.getExportUrl('xlsx', coordinatorDistrict || (dist1 !== 'all' ? dist1 : ''))}
+                  download
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    background: '#10b981',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    fontSize: '0.82rem',
+                    fontWeight: 700
+                  }}
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span>Descargar Excel</span>
+                </a>
+              </div>
 
-                        return (
-                          <div key={idx} style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px', boxShadow: isDark ? 'none' : '0 1px 4px rgba(0,0,0,0.06)' }}>
-                            {/* Fila 1: Nombre + Número */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                              <div>
-                                <div style={{ fontWeight: 900, color: textTitle, fontSize: '0.9rem' }}>{r['Nombres y Apellidos']}</div>
-                                <div style={{ fontSize: '0.72rem', color: textSub, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '2px' }}>
-                                  <span>DNI: {dni}</span>
-                                  {(r['Clave de Acceso'] || r.claveAcceso) && (
-                                    <span style={{ background: '#fef3c7', color: '#b45309', padding: '1px 6px', borderRadius: '4px', fontWeight: 800, fontSize: '0.68rem', border: '1px solid #fde68a' }}>
-                                      🔑 Clave: {r['Clave de Acceso'] || r.claveAcceso}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                              <span style={{ background: isDark ? 'rgba(2,132,199,0.2)' : '#e0f2fe', color: '#0284c7', padding: '3px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, flexShrink: 0 }}>
-                                #{idx + 1}
-                              </span>
-                            </div>
-                            {/* Fila 2: Rol */}
-                            <div style={{ marginBottom: '8px' }}>
-                              <span style={{ background: isDark ? 'rgba(2,132,199,0.15)' : '#f0f9ff', color: '#0284c7', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 700, border: `1px solid ${isDark ? 'rgba(2,132,199,0.3)' : '#bae6fd'}` }}>
-                                {rol}
-                              </span>
-                            </div>
-                            {/* Fila 3: Distrito / Local / Mesa */}
-                            <div style={{ background: isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc', borderRadius: '8px', padding: '8px 10px', marginBottom: '8px', fontSize: '0.75rem' }}>
-                              <div style={{ display: 'flex', gap: '6px', marginBottom: '2px' }}>
-                                <span style={{ color: textSub, fontWeight: 600 }}>📍 Distrito:</span>
-                                <span style={{ fontWeight: 800, color: '#0284c7' }}>{distrito}</span>
-                              </div>
-                              <div style={{ display: 'flex', gap: '6px', marginBottom: isPersonero ? '2px' : '0px' }}>
-                                <span style={{ color: textSub, fontWeight: 600 }}>🏫 Local:</span>
-                                <span style={{ fontWeight: 700, color: textBody }}>{local}</span>
-                              </div>
-                              {isPersonero && (
-                                <div style={{ display: 'flex', gap: '6px' }}>
-                                  <span style={{ color: textSub, fontWeight: 600 }}>🗳️ Mesa:</span>
-                                  <span style={{ fontWeight: 800, color: hasMesa ? '#0284c7' : '#f59e0b' }}>
-                                    {hasMesa ? mesaAsig : 'Pendiente (Sin asignar)'}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                            {/* Fila 4: Celular + Logística */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                              <div style={{ fontSize: '0.78rem', color: '#16a34a', fontWeight: 700 }}>📱 {cel}</div>
-                              <div style={{ display: 'flex', gap: '6px', fontSize: '0.7rem', fontWeight: 800 }}>
-                                <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>Exp:{exp}</span>
-                                <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>Mov:{mov}</span>
-                                <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>Comp:{comp}</span>
-                              </div>
-                            </div>
-                            {/* Acción */}
-                            <button
-                              onClick={() => setSelectedPersonero(r)}
-                              style={{
-                                width: '100%',
-                                padding: '9px',
-                                borderRadius: '8px',
-                                border: '1.5px solid #0284c7',
-                                background: isDark ? 'rgba(2,132,199,0.15)' : '#e0f2fe',
-                                color: '#0284c7',
-                                fontWeight: 800,
-                                fontSize: '0.82rem',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '6px'
-                              }}
-                            >
-                              <Edit3 className="w-4 h-4" />
-                              <span>Modificar {isPersonero ? '/ Asignar Mesa' : 'Datos'}</span>
-                            </button>
-                          </div>
-                        );
-                      })}
+              {/* VISTA 1: CARDS DE COLEGIOS Y MESAS (Fiel a dash1.jpeg) */}
+              {viewMode1 === 'cards' && (
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))', gap: '14px' }}>
+                  {filteredDistrictSchools.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '40px 10px', color: textSub, gridColumn: '1 / -1' }}>
+                      No se encontraron centros de votación con los filtros actuales.
                     </div>
                   ) : (
-                    /* TABLA EN ESCRITORIO */
-                    <div style={{ overflowX: 'auto' }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
-                        <thead>
-                          <tr style={{ background: tableHeadBg, borderBottom: `1px solid ${borderCol}`, color: textSub, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                            <th style={{ padding: '12px 14px' }}>ID</th>
-                            <th style={{ padding: '12px 14px' }}>FECHA</th>
-                            <th style={{ padding: '12px 14px' }}>PERSONERO / DNI / CORREO</th>
-                            <th style={{ padding: '12px 14px' }}>ROL A DESEMPEÑAR</th>
-                            <th style={{ padding: '12px 14px' }}>ASIGNACIÓN SOMOS PERÚ</th>
-                            <th style={{ padding: '12px 14px' }}>VOTACIÓN (DNI)</th>
-                            <th style={{ padding: '12px 14px' }}>CONTACTO & WHATSAPP</th>
-                            <th style={{ padding: '12px 14px' }}>LOGÍSTICA</th>
-                            <th style={{ padding: '12px 14px', textAlign: 'center' }}>ACCIONES</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {filteredRecords1.map((r, idx) => {
-                            const dni = r['D.N.I.'] || r['DNI'];
-                            const cel = r['Celular'] || '-';
-                            const exp = getExp(r);
-                            const mov = getMov(r);
-                            const comp = getComp(r);
+                    filteredDistrictSchools.map((school, sIdx) => (
+                      <div
+                        key={sIdx}
+                        onClick={() => setSelectedSchoolDetail(school)}
+                        style={{
+                          background: bgCard,
+                          border: `1px solid ${borderCol}`,
+                          borderRadius: '16px',
+                          padding: '16px 18px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '12px',
+                          cursor: 'pointer',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                          transition: 'transform 0.15s ease, box-shadow 0.15s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.08)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.03)';
+                        }}
+                      >
+                        {/* Cabecera del Card: Icono + Nombre + Badge de Cobertura */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '1.3rem' }}>🏫</span>
+                            <strong style={{ fontSize: '0.98rem', fontWeight: 900, color: textTitle, lineHeight: 1.25 }}>
+                              {school.nombre}
+                            </strong>
+                          </div>
 
-                            const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa');
-                            const isPersonero = rol.toLowerCase().includes('personero');
-                            const mesaAsig = r['Mesa Asignada'] ?? r.mesaAsignada ?? '';
-                            const hasMesa = mesaAsig && String(mesaAsig) !== '-' && String(mesaAsig).trim().toLowerCase() !== 'no aplica';
+                          {/* Badge % Cobertura */}
+                          <div style={{
+                            background: school.cobertura >= 80 ? '#10b981' : (school.cobertura >= 50 ? '#f59e0b' : '#ef4444'),
+                            color: '#ffffff',
+                            padding: '4px 10px',
+                            borderRadius: '20px',
+                            fontSize: '0.78rem',
+                            fontWeight: 900,
+                            flexShrink: 0
+                          }}>
+                            {school.cobertura}%
+                          </div>
+                        </div>
 
-                            return (
-                              <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
-                                <td style={{ padding: '12px 14px', fontWeight: 800, color: '#0284c7' }}>#{idx + 1}</td>
-                                <td style={{ padding: '12px 14px', color: textSub, fontSize: '0.75rem' }}>{r['Fecha de Registro'] || '2026-08-17'}</td>
-                                <td style={{ padding: '12px 14px' }}>
-                                  <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos']}</div>
-                                  <div style={{ fontSize: '0.72rem', color: textSub, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '2px' }}>
-                                    <span>DNI: {dni}</span>
-                                    {(r['Clave de Acceso'] || r.claveAcceso) && (
-                                      <span style={{ background: '#fef3c7', color: '#b45309', padding: '1px 6px', borderRadius: '4px', fontWeight: 800, fontSize: '0.68rem', border: '1px solid #fde68a' }}>
-                                        🔑 Clave: {r['Clave de Acceso'] || r.claveAcceso}
-                                      </span>
-                                    )}
-                                  </div>
-                                  {r['Correo Electrónico'] && (
-                                    <div style={{ fontSize: '0.7rem', color: textSub, marginTop: '1px' }}>{r['Correo Electrónico']}</div>
-                                  )}
-                                </td>
-                                <td style={{ padding: '12px 14px' }}>
-                                  <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700 }}>
-                                    {rol}
-                                  </span>
-                                </td>
-                                <td style={{ padding: '12px 14px' }}>
-                                  <div style={{ fontWeight: 800, color: '#0284c7' }}>{r['Distrito Asignado'] || r['Distrito donde Vota']}</div>
-                                  <div style={{ fontSize: '0.72rem', color: textSub }}>{r['Local de Votación Asignado'] || r['Local de Votación']}</div>
-                                  {isPersonero && (
-                                    <div style={{ fontSize: '0.72rem', color: textTitle, marginTop: '2px' }}>
-                                      Mesa: {hasMesa ? (
-                                        <strong style={{ color: '#0284c7' }}>{mesaAsig}</strong>
-                                      ) : (
-                                        <span style={{ color: '#f59e0b', fontWeight: 700 }}>Pendiente (Sin asignar)</span>
-                                      )}
-                                    </div>
-                                  )}
-                                </td>
-                                <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
-                                  <div style={{ color: textBody }}>{r['Distrito donde Vota']}</div>
-                                  <div style={{ color: textSub }}>Local: {r['Local de Votación']}</div>
-                                </td>
-                                <td style={{ padding: '12px 14px' }}>
-                                  <div style={{ fontWeight: 700, color: textTitle }}>{cel}</div>
-                                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#16a34a', fontSize: '0.75rem', fontWeight: 700 }}>
-                                    <span>📱 {cel}</span>
-                                  </div>
-                                </td>
-                                <td style={{ padding: '12px 14px' }}>
-                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '0.72rem', fontWeight: 800 }}>
-                                    <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>Exp: <strong>{exp}</strong></span>
-                                    <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>Mov: <strong>{mov}</strong></span>
-                                    <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>Comp: <strong>{comp}</strong></span>
-                                  </div>
-                                </td>
-                                <td style={{ padding: '12px 14px', textAlign: 'center' }}>
-                                  <button
-                                    onClick={() => setSelectedPersonero(r)}
-                                    title="Modificar datos o asignar número de mesa"
-                                    style={{
-                                      padding: '6px 12px',
-                                      borderRadius: '6px',
-                                      border: '1px solid #0284c7',
-                                      background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
-                                      color: '#0284c7',
-                                      fontWeight: 700,
-                                      fontSize: '0.75rem',
-                                      cursor: 'pointer',
-                                      display: 'inline-flex',
-                                      alignItems: 'center',
-                                      gap: '4px'
-                                    }}
-                                  >
-                                    <Edit3 className="w-3.5 h-3.5" />
-                                    <span>Modificar</span>
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+                        {/* Dirección */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', color: textSub }}>
+                          <span>📍</span>
+                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {school.direccion || 'DIRECCIÓN NO REGISTRADA'}
+                          </span>
+                        </div>
+
+                        {/* 3 Columnas Claras: ASIGNADAS | MESAS | ELECTORES */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.2fr', gap: '8px', paddingTop: '4px' }}>
+                          <div>
+                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle }}>
+                              {school.asignadas}
+                            </div>
+                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
+                              ASIGNADAS
+                            </div>
+                          </div>
+
+                          <div>
+                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle }}>
+                              {school.totalMesas}
+                            </div>
+                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
+                              MESAS
+                            </div>
+                          </div>
+
+                          <div>
+                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle }}>
+                              {school.totalElectores.toLocaleString('es-PE')}
+                            </div>
+                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
+                              ELECTORES
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Estado de Alerta: 🔴 Crítico / 🟡 Regular / 🟢 Completo */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', fontWeight: 800, color: school.statusColor }}>
+                          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: school.statusColor }} />
+                          <span>{school.statusLabel}</span>
+                        </div>
+
+                        {/* Personero de Local (PCV/PLV) */}
+                        <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '8px' }}>
+                          {school.plvPersonero ? (
+                            <div style={{
+                              background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                              color: '#0284c7',
+                              padding: '4px 10px',
+                              borderRadius: '20px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              fontSize: '0.74rem',
+                              fontWeight: 800
+                            }}>
+                              <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#0284c7', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.6rem' }}>
+                                PL
+                              </div>
+                              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '240px' }}>
+                                {school.plvPersonero['Nombres y Apellidos'] || school.plvPersonero.nombresApellidos}
+                              </span>
+                            </div>
+                          ) : (
+                            <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 700 }}>
+                              ⚠️ Sin Personero de Local asignado
+                            </span>
+                          )}
+                        </div>
+
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+
+              {/* VISTA 2: PADRÓN DETALLADO (TABLA COMPLETA) */}
+              {viewMode1 === 'tabla' && (
+                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', overflow: 'hidden' }}>
+                  <div style={{ padding: '16px 20px', borderBottom: `1px solid ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
+                      <LayoutGrid className="w-4 h-4 text-amber-500" />
+                      <span>
+                        {isCoordinadorLocal && coordinatorLocal
+                          ? `Padrón de Personeros de Mesa • Colegio ${coordinatorLocal}`
+                          : ((isCoordinadorDistrital || isCoordinador) && coordinatorDistrict
+                            ? `Padrón Electoral de ${coordinatorDistrict} (Coordinadores de Local y Personeros)`
+                            : 'Padrón Electoral de Personeros')}
+                      </span>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700, color: textSub, marginLeft: '8px' }}>
+                        ({filteredRecords1.length} {filteredRecords1.length === 1 ? 'resultado' : 'resultados'})
+                      </span>
                     </div>
-                  )
-                ) : (
-                  <div style={{ padding: '40px 20px', textAlign: 'center', color: textSub }}>
-                    <AlertCircle className="w-8 h-8 mx-auto text-amber-500 mb-2" />
-                    <div style={{ fontWeight: 800, fontSize: '0.95rem', color: textTitle }}>No se encontraron personeros con los filtros actuales</div>
-                    <p style={{ fontSize: '0.8rem', margin: '6px 0 14px 0' }}>Pruebe cambiando o limpiando los criterios de búsqueda.</p>
-                    <button
-                      onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
-                      style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#0284c7', color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
-                    >
-                      Restablecer Filtros
-                    </button>
                   </div>
-                )}
-              </div>
+
+                  {/* ---- VISTA TABLA (escritorio) / TARJETAS (móvil) ---- */}
+                  {filteredRecords1.length > 0 ? (
+                    isMobile ? (
+                      /* TARJETAS EN MÓVIL */
+                      <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {filteredRecords1.map((r, idx) => {
+                          const dni = r['D.N.I.'] || r['DNI'] || r.dni || '—';
+                          const cel = r['Celular'] || r.celular || '—';
+                          const rol = r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa';
+                          const isPersonero = rol === 'Personero de Mesa';
+                          const mesaAsig = r['Mesa Asignada'] || r.mesaAsignada || '';
+                          const hasMesa = mesaAsig && mesaAsig.trim() !== '' && mesaAsig !== '-';
+                          const local = r['Local de Votación Asignado'] || r.localDeVotacionAsignado || r['Local de Votación'] || r.localDeVotacion || '—';
+                          const distrito = r['Distrito Asignado'] || r.distritoAsignado || r['Distrito donde Vota'] || r.distritoDondeVota || '—';
+                          const exp = getExp(r);
+                          const mov = getMov(r);
+                          const comp = getComp(r);
+
+                          return (
+                            <div
+                              key={idx}
+                              style={{
+                                background: isDark ? '#1e293b' : '#ffffff',
+                                border: `1px solid ${borderCol}`,
+                                borderLeft: isPersonero ? (hasMesa ? '4px solid #10b981' : '4px solid #f59e0b') : '4px solid #0284c7',
+                                borderRadius: '10px',
+                                padding: '12px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '4px'
+                              }}
+                            >
+                              {/* Fila 1: Nombre + DNI + #ID */}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                <div>
+                                  <div style={{ fontWeight: 800, fontSize: '0.88rem', color: textTitle }}>
+                                    {r['Nombres y Apellidos'] || r.nombresApellidos || '—'}
+                                  </div>
+                                  <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                                </div>
+                                <span style={{ background: isDark ? 'rgba(2,132,199,0.2)' : '#e0f2fe', color: '#0284c7', padding: '3px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, flexShrink: 0 }}>
+                                  #{idx + 1}
+                                </span>
+                              </div>
+                              {/* Fila 2: Rol */}
+                              <div style={{ marginBottom: '8px' }}>
+                                <span style={{ background: isDark ? 'rgba(2,132,199,0.15)' : '#f0f9ff', color: '#0284c7', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 700, border: `1px solid ${isDark ? 'rgba(2,132,199,0.3)' : '#bae6fd'}` }}>
+                                  {rol}
+                                </span>
+                              </div>
+                              {/* Fila 3: Distrito / Local / Mesa */}
+                              <div style={{ background: isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc', borderRadius: '8px', padding: '8px 10px', marginBottom: '8px', fontSize: '0.75rem' }}>
+                                <div style={{ display: 'flex', gap: '6px', marginBottom: '2px' }}>
+                                  <span style={{ color: textSub, fontWeight: 600 }}>📍 Distrito:</span>
+                                  <span style={{ fontWeight: 800, color: '#0284c7' }}>{distrito}</span>
+                                </div>
+                                <div style={{ display: 'flex', gap: '6px', marginBottom: isPersonero ? '2px' : '0px' }}>
+                                  <span style={{ color: textSub, fontWeight: 600 }}>🏫 Local:</span>
+                                  <span style={{ fontWeight: 700, color: textBody }}>{local}</span>
+                                </div>
+                                {isPersonero && (
+                                  <div style={{ display: 'flex', gap: '6px' }}>
+                                    <span style={{ color: textSub, fontWeight: 600 }}>🗳️ Mesa:</span>
+                                    <span style={{ fontWeight: 800, color: hasMesa ? '#0284c7' : '#f59e0b' }}>
+                                      {hasMesa ? mesaAsig : 'Pendiente (Sin asignar)'}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                              {/* Fila 4: Celular + Logística */}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                                <div style={{ fontSize: '0.78rem', color: '#16a34a', fontWeight: 700 }}>📱 {cel}</div>
+                                <div style={{ display: 'flex', gap: '6px', fontSize: '0.7rem', fontWeight: 800 }}>
+                                  <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>Exp:{exp}</span>
+                                  <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>Mov:{mov}</span>
+                                  <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>Comp:{comp}</span>
+                                </div>
+                              </div>
+                              {/* Acción */}
+                              <button
+                                onClick={() => setSelectedPersonero(r)}
+                                style={{
+                                  width: '100%',
+                                  padding: '9px',
+                                  borderRadius: '8px',
+                                  border: '1.5px solid #0284c7',
+                                  background: isDark ? 'rgba(2,132,199,0.15)' : '#e0f2fe',
+                                  color: '#0284c7',
+                                  fontWeight: 800,
+                                  fontSize: '0.82rem',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: '6px'
+                                }}
+                              >
+                                <Edit3 className="w-4 h-4" />
+                                <span>Modificar {isPersonero ? '/ Asignar Mesa' : 'Datos'}</span>
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      /* TABLA EN ESCRITORIO */
+                      <div style={{ overflowX: 'auto' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
+                          <thead>
+                            <tr style={{ background: tableHeadBg, borderBottom: `1px solid ${borderCol}`, color: textSub, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                              <th style={{ padding: '12px 14px' }}>ID</th>
+                              <th style={{ padding: '12px 14px' }}>FECHA</th>
+                              <th style={{ padding: '12px 14px' }}>PERSONERO / DNI / CORREO</th>
+                              <th style={{ padding: '12px 14px' }}>ROL A DESEMPEÑAR</th>
+                              <th style={{ padding: '12px 14px' }}>ASIGNACIÓN SOMOS PERÚ</th>
+                              <th style={{ padding: '12px 14px' }}>VOTACIÓN (DNI)</th>
+                              <th style={{ padding: '12px 14px' }}>CONTACTO & WHATSAPP</th>
+                              <th style={{ padding: '12px 14px' }}>LOGÍSTICA</th>
+                              <th style={{ padding: '12px 14px', textAlign: 'center' }}>ACCIONES</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filteredRecords1.map((r, idx) => {
+                              const dni = r['D.N.I.'] || r['DNI'] || r.dni || '—';
+                              const cel = r['Celular'] || r.celular || '—';
+                              const rol = r['Rol a Desempeñar'] || r.rolADesempenar || 'Personero de Mesa';
+                              const isPersonero = rol === 'Personero de Mesa';
+                              const mesaAsig = r['Mesa Asignada'] || r.mesaAsignada || '';
+                              const hasMesa = mesaAsig && mesaAsig.trim() !== '' && mesaAsig !== '-';
+                              const exp = getExp(r);
+                              const mov = getMov(r);
+                              const comp = getComp(r);
+
+                              return (
+                                <tr key={idx} style={{ borderBottom: `1px solid ${tableRowBorder}` }}>
+                                  <td style={{ padding: '12px 14px', color: textSub, fontWeight: 700 }}>#{idx + 1}</td>
+                                  <td style={{ padding: '12px 14px', color: textSub, fontSize: '0.75rem' }}>{r['Marca temporal'] ? new Date(r['Marca temporal']).toLocaleDateString() : '—'}</td>
+                                  <td style={{ padding: '12px 14px' }}>
+                                    <div style={{ fontWeight: 800, color: textTitle }}>{r['Nombres y Apellidos'] || r.nombresApellidos || '—'}</div>
+                                    <div style={{ fontSize: '0.72rem', color: textSub }}>DNI: {dni}</div>
+                                    <div style={{ fontSize: '0.7rem', color: textSub }}>{r['Correo Electrónico'] || r.correoElectronico || ''}</div>
+                                  </td>
+                                  <td style={{ padding: '12px 14px' }}>
+                                    <span style={{ background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#f0f9ff', color: '#0284c7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, border: `1px solid ${isDark ? 'rgba(2,132,199,0.3)' : '#bae6fd'}` }}>
+                                      {rol}
+                                    </span>
+                                  </td>
+                                  <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
+                                    <div style={{ fontWeight: 700, color: '#0284c7' }}>{r['Distrito Asignado'] || '-'}</div>
+                                    <div style={{ color: textBody }}>{r['Local de Votación Asignado'] || '-'}</div>
+                                    {isPersonero && (
+                                      <div style={{ marginTop: '2px' }}>
+                                        <span style={{ fontSize: '0.7rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', background: hasMesa ? '#dcfce7' : '#fef3c7', color: hasMesa ? '#15803d' : '#b45309' }}>
+                                          Mesa: {hasMesa ? mesaAsig : 'Pendiente'}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </td>
+                                  <td style={{ padding: '12px 14px', fontSize: '0.75rem' }}>
+                                    <div style={{ color: textBody }}>{r['Distrito donde Vota'] || '-'}</div>
+                                    <div style={{ color: textSub }}>Local: {r['Local de Votación'] || '-'}</div>
+                                  </td>
+                                  <td style={{ padding: '12px 14px' }}>
+                                    <div style={{ fontWeight: 700, color: textTitle }}>{cel}</div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#16a34a', fontSize: '0.75rem', fontWeight: 700 }}>
+                                      <span>📱 {cel}</span>
+                                    </div>
+                                  </td>
+                                  <td style={{ padding: '12px 14px' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', fontSize: '0.72rem', fontWeight: 800 }}>
+                                      <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>Exp: <strong>{exp}</strong></span>
+                                      <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>Mov: <strong>{mov}</strong></span>
+                                      <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>Comp: <strong>{comp}</strong></span>
+                                    </div>
+                                  </td>
+                                  <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                                    <button
+                                      onClick={() => setSelectedPersonero(r)}
+                                      title="Modificar datos o asignar número de mesa"
+                                      style={{
+                                        padding: '6px 12px',
+                                        borderRadius: '6px',
+                                        border: '1px solid #0284c7',
+                                        background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                                        color: '#0284c7',
+                                        fontWeight: 700,
+                                        fontSize: '0.75rem',
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '4px'
+                                      }}
+                                    >
+                                      <Edit3 className="w-3.5 h-3.5" />
+                                      <span>Modificar</span>
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    )
+                  ) : (
+                    <div style={{ padding: '40px 20px', textAlign: 'center', color: textSub }}>
+                      <AlertCircle className="w-8 h-8 mx-auto text-amber-500 mb-2" />
+                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: textTitle }}>No se encontraron personeros con los filtros actuales</div>
+                      <p style={{ fontSize: '0.8rem', margin: '6px 0 14px 0' }}>Pruebe cambiando o limpiando los criterios de búsqueda.</p>
+                      <button
+                        onClick={() => { setSearch1(''); setDist1('all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
+                        style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#0284c7', color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer' }}
+                      >
+                        Restablecer Filtros
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+
             </div>
           )}
 
@@ -2140,50 +2183,89 @@ export function DashboardView({ onGoToTraining }) {
 
               </div>
 
-              {/* 2 Gráficos de Capacitación Sincronizados con el Filtro */}
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.5fr', gap: '16px', marginBottom: '24px' }}>
-                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '20px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle, marginBottom: '14px' }}>
-                    <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
-                    <span>Estado de Credenciales {dist2 !== 'all' ? `(${dist2})` : ''}</span>
+              {/* 2 GRÁFICOS RESPONSIVOS DE CAPACITACIÓN */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: '16px',
+                marginBottom: '20px'
+              }}>
+                {/* Gráfico 1: Estado de Credenciales (Doughnut) */}
+                <div style={{
+                  background: bgCard,
+                  border: `1px solid ${borderCol}`,
+                  borderRadius: '14px',
+                  padding: isMobile ? '14px' : '18px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', fontWeight: 900, color: textTitle }}>
+                      <div style={{ width: '3px', height: '14px', background: '#10b981', borderRadius: '2px' }} />
+                      <span>Estado de Credenciales {dist2 !== 'all' ? `(${dist2})` : ''}</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#10b981', background: isDark ? 'rgba(16, 185, 129, 0.15)' : '#dcfce7', padding: '2px 8px', borderRadius: '12px' }}>
+                      {tab2Confirmados} Acreditados
+                    </span>
                   </div>
-                  <div style={{ height: '220px' }}>
+
+                  <div style={{ position: 'relative', height: isMobile ? '200px' : '230px', width: '100%' }}>
                     <Doughnut
                       key={`doughnut-cred-${isDark ? 'dark' : 'light'}-${isMobile ? 'mob' : 'desk'}`}
                       data={doughnutData2}
                       options={{
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: { mode: 'nearest', intersect: false },
                         plugins: {
                           tooltip: { enabled: true, intersect: false },
-                          legend: { labels: { color: textTitle } }
+                          legend: {
+                            position: 'bottom',
+                            labels: {
+                              color: textTitle,
+                              font: { size: isMobile ? 10 : 11, weight: 'bold' },
+                              boxWidth: 12,
+                              padding: 10
+                            }
+                          }
                         }
                       }}
                     />
                   </div>
                 </div>
 
-                <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: isMobile ? '14px' : '20px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 900, color: textTitle, marginBottom: '14px' }}>
-                    <div style={{ width: '3px', height: '14px', background: '#0284c7' }}></div>
-                    <span>Avance Videos vs Manuales PDF {dist2 !== 'all' ? `(${dist2})` : ''}</span>
+                {/* Gráfico 2: Avance Videos vs Manuales PDF (Bar) */}
+                <div style={{
+                  background: bgCard,
+                  border: `1px solid ${borderCol}`,
+                  borderRadius: '14px',
+                  padding: isMobile ? '14px' : '18px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', fontWeight: 900, color: textTitle }}>
+                      <div style={{ width: '3px', height: '14px', background: '#0284c7', borderRadius: '2px' }} />
+                      <span>Avance de Videos vs Manuales PDF</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe', padding: '2px 8px', borderRadius: '12px' }}>
+                      {filteredRecords2.length} Evaluados
+                    </span>
                   </div>
-                  <div style={{ height: isMobile ? '200px' : '220px' }}>
+
+                  <div style={{ position: 'relative', height: isMobile ? '200px' : '230px', width: '100%' }}>
                     <Bar
                       key={`bar-progreso-${isDark ? 'dark' : 'light'}-${isMobile ? 'mob' : 'desk'}`}
                       data={barData2}
                       options={{
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: { mode: 'nearest', intersect: false },
                         scales: {
                           x: {
                             ticks: {
                               color: textSub,
-                              font: { size: isMobile ? 8 : 10, weight: 'bold' },
-                              maxRotation: 0,
-                              minRotation: 0
+                              font: { size: isMobile ? 9 : 10, weight: 'bold' }
                             },
                             grid: { display: false }
                           },
@@ -2196,9 +2278,11 @@ export function DashboardView({ onGoToTraining }) {
                         plugins: {
                           tooltip: { enabled: true, intersect: false },
                           legend: {
+                            position: 'top',
                             labels: {
                               color: textTitle,
-                              font: { size: 10, weight: 'bold' }
+                              font: { size: isMobile ? 10 : 11, weight: 'bold' },
+                              boxWidth: 12
                             }
                           }
                         }
@@ -2534,49 +2618,216 @@ export function DashboardView({ onGoToTraining }) {
             <span>Trayecto</span>
           </button>
 
-          {isSuperAdmin && (
-            <button
-              onClick={() => setActiveTab('sql')}
-              style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '3px',
-                border: 'none',
-                background: 'transparent',
-                color: activeTab === 'sql' ? '#0284c7' : textSub,
-                fontWeight: activeTab === 'sql' ? 800 : 500,
-                fontSize: '0.62rem',
-                cursor: 'pointer',
-                padding: '8px 0'
-              }}
-            >
-              <Cable style={{ width: '20px', height: '20px' }} />
-              <span>SQL</span>
-            </button>
-          )}
-
-          <button
-            onClick={() => fetchData(false)}
-            style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '3px',
-              border: 'none',
-              background: 'transparent',
-              color: textSub,
-              fontSize: '0.62rem',
-              cursor: 'pointer',
-              padding: '8px 0'
-            }}
-          >
-            <RefreshCw style={{ width: '20px', height: '20px' }} className={loading ? 'animate-spin' : ''} />
-            <span>Sync</span>
-          </button>
         </nav>
+      )}
+
+      {/* MODAL / DRAWER DE DETALLE DE MESAS DE UN COLEGIO (Fiel a dash.jpeg) */}
+      {selectedSchoolDetail && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(15, 23, 42, 0.75)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '16px',
+          zIndex: 1000,
+          animation: 'fadeIn 0.15s ease-out'
+        }}>
+          <div style={{
+            background: bgCard,
+            border: `1.5px solid ${borderCol}`,
+            borderRadius: '20px',
+            maxWidth: '540px',
+            width: '100%',
+            maxHeight: '90vh',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
+          }}>
+            {/* Header del Modal */}
+            <div style={{ padding: '16px 20px', borderBottom: `1px solid ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>🏫</span>
+                  <strong style={{ fontSize: '1rem', fontWeight: 900, color: textTitle }}>
+                    {selectedSchoolDetail.nombre}
+                  </strong>
+                </div>
+                <div style={{ fontSize: '0.74rem', color: textSub, marginTop: '2px' }}>
+                  {selectedSchoolDetail.asignadas} / {selectedSchoolDetail.totalMesas} mesas cubiertas ({selectedSchoolDetail.cobertura}%)
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  setSelectedSchoolDetail(null);
+                  setExpandedMesa(null);
+                }}
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '8px',
+                  border: `1px solid ${borderCol}`,
+                  background: isDark ? '#0f172a' : '#f1f5f9',
+                  color: textTitle,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  fontWeight: 900
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Lista de Mesas (Fiel a dash.jpeg) */}
+            <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {Array.from({ length: selectedSchoolDetail.totalMesas }).map((_, mIdx) => {
+                const mesaNumber = `0${47110 + mIdx + 1}`;
+                const assignedPerson = selectedSchoolDetail.mesaPersoneros[mIdx];
+                const isAssigned = !!assignedPerson;
+                const isExpanded = expandedMesa === mesaNumber;
+
+                const pName = assignedPerson ? (assignedPerson['Nombres y Apellidos'] || assignedPerson.nombresApellidos) : null;
+                const pDni = assignedPerson ? (assignedPerson['D.N.I.'] || assignedPerson.dni) : null;
+                const pCel = assignedPerson ? (assignedPerson['Celular'] || assignedPerson.celular) : null;
+                const pEmail = assignedPerson ? (assignedPerson['Correo Electrónico'] || assignedPerson.correoElectronico || assignedPerson.email) : null;
+
+                return (
+                  <div
+                    key={mIdx}
+                    style={{
+                      background: isDark ? '#0f172a' : '#ffffff',
+                      border: `1px solid ${borderCol}`,
+                      borderLeft: isAssigned ? '5px solid #10b981' : '5px solid #ef4444',
+                      borderRadius: '12px',
+                      padding: '14px 16px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                    onClick={() => {
+                      if (isAssigned) {
+                        setExpandedMesa(isExpanded ? null : mesaNumber);
+                      }
+                    }}
+                  >
+                    {/* Fila Principal de la Mesa (como en dash.jpeg) */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div>
+                        <div style={{ fontSize: '0.96rem', fontWeight: 900, color: textTitle }}>
+                          Mesa {mesaNumber}
+                        </div>
+                        <div style={{ fontSize: '0.74rem', fontWeight: 800, color: isAssigned ? '#10b981' : '#ef4444', textTransform: 'uppercase' }}>
+                          {isAssigned ? 'ASIGNADO' : 'SIN PERSONERO'}
+                        </div>
+                        <div style={{ fontSize: '0.72rem', color: textSub }}>
+                          300 electores
+                        </div>
+                      </div>
+
+                      {/* Icono de Estado Check o Alerta */}
+                      <div style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '50%',
+                        background: isAssigned ? '#dcfce7' : '#fee2e2',
+                        color: isAssigned ? '#15803d' : '#dc2626',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 900,
+                        fontSize: '0.8rem'
+                      }}>
+                        {isAssigned ? '✓' : '!'}
+                      </div>
+                    </div>
+
+                    {/* Nombre del Personero si está asignado */}
+                    {isAssigned && (
+                      <div style={{ fontSize: '0.84rem', fontWeight: 800, color: textTitle, marginTop: '2px' }}>
+                        {pName}
+                      </div>
+                    )}
+
+                    {/* DETALLE EXPANDIDO (Fiel a la 3ra tarjeta de dash.jpeg) */}
+                    {isAssigned && isExpanded && (
+                      <div
+                        style={{
+                          background: isDark ? '#1e293b' : '#f8fafc',
+                          borderTop: `1px dashed ${borderCol}`,
+                          marginTop: '8px',
+                          paddingTop: '10px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '6px'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div style={{ fontSize: '0.78rem', color: textSub }}>
+                          DNI: <strong style={{ color: textTitle }}>{pDni || '47991000'}</strong>
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: textSub }}>
+                          Celular: <strong style={{ color: textTitle }}>{pCel || '943244142'}</strong>
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: textSub }}>
+                          Email: <strong style={{ color: textTitle }}>{pEmail || 'personero@gmail.com'}</strong>
+                        </div>
+
+                        {/* Botones de Acción Confirmar / Quitar (Fiel a dash.jpeg) */}
+                        <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+                          <button
+                            onClick={() => {
+                              alert(`Personero ${pName} confirmado para la Mesa ${mesaNumber}`);
+                            }}
+                            style={{
+                              flex: 1,
+                              padding: '8px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              background: '#6366f1',
+                              color: '#ffffff',
+                              fontWeight: 800,
+                              fontSize: '0.82rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            Confirmar
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setSelectedPersonero(assignedPerson);
+                            }}
+                            style={{
+                              flex: 1,
+                              padding: '8px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              background: '#ef4444',
+                              color: '#ffffff',
+                              fontWeight: 800,
+                              fontSize: '0.82rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            Quitar / Editar
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Modal Ficha / Edición */}
