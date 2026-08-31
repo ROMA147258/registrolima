@@ -35,9 +35,27 @@ export function CredentialCard({ user, onBack }) {
 
   return (
     <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto' }}>
-      
+      <style>{`
+        @media print {
+          .no-print, nav, header, button {
+            display: none !important;
+          }
+          body {
+            background: #ffffff !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          #printable-certificate {
+            box-shadow: none !important;
+            border: 8px solid #002B66 !important;
+            margin: 0 auto !important;
+            page-break-inside: avoid !important;
+          }
+        }
+      `}</style>
+
       {/* Botones Superiores de Control con Alto Contraste y Colores Institucionales */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+      <div className="no-print" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
         {onBack && (
           <button
             onClick={onBack}

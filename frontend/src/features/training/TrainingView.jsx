@@ -302,7 +302,7 @@ export function TrainingView({ onGoToDashboard }) {
             {isPdfDone ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
           </div>
 
-          {/* 3. Cuestionario de Preguntas */}
+          {/* 3. Cuestionario de Preguntas (Siempre Visible) */}
           <div
             onClick={() => { if (canTakeQuiz) setActiveModal('quiz'); }}
             style={{
@@ -330,33 +330,34 @@ export function TrainingView({ onGoToDashboard }) {
             {isQuizPassed ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : (canTakeQuiz ? <ChevronRight className="w-5 h-5 text-amber-500" /> : <Lock className="w-4 h-4 text-slate-400" />)}
           </div>
 
-          {/* 4. Mi Certificado Oficial */}
-          <div
-            onClick={() => { if (isFullyAccredited) setViewingCertificate(true); }}
-            style={{
-              background: isFullyAccredited ? 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)' : '#f1f5f9',
-              border: isFullyAccredited ? '1.5px solid rgb(14, 165, 233)' : '1px solid #e2e8f0',
-              borderRadius: '14px',
-              padding: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-              cursor: isFullyAccredited ? 'pointer' : 'not-allowed',
-              opacity: isFullyAccredited ? 1 : 0.85,
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: isFullyAccredited ? 'rgb(14, 165, 233)' : '#e2e8f0', color: isFullyAccredited ? '#ffffff' : '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              {isFullyAccredited ? <Award className="w-6 h-6" /> : <Lock className="w-5 h-5" />}
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: isFullyAccredited ? '#0369a1' : '#0f172a' }}>Mi Certificado Oficial</div>
-              <div style={{ fontSize: '0.75rem', color: isFullyAccredited ? 'rgb(14, 165, 233)' : '#64748b' }}>
-                {isFullyAccredited ? 'Listo para Ver y Descargar' : 'Bloqueado (Aprobar 5/5 en Cuestionario)'}
+          {/* 4. Mi Certificado Oficial (Oculto cuando ya reciben su certificado) */}
+          {!isFullyAccredited && (
+            <div
+              style={{
+                background: '#f1f5f9',
+                border: '1px solid #e2e8f0',
+                borderRadius: '14px',
+                padding: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                cursor: 'not-allowed',
+                opacity: 0.85,
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#e2e8f0', color: '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Lock className="w-5 h-5" />
               </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Mi Certificado Oficial</div>
+                <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                  Bloqueado (Aprobar 5/5 en Cuestionario)
+                </div>
+              </div>
+              <Lock className="w-4 h-4 text-slate-400" />
             </div>
-            {isFullyAccredited ? <ChevronRight className="w-5 h-5 text-sky-600" /> : <Lock className="w-4 h-4 text-slate-400" />}
-          </div>
+          )}
 
         </div>
 

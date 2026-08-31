@@ -4383,6 +4383,78 @@ function normStr(str) {
     .replace(/[^a-z0-9]/g, '');
 }
 
+export const DISTRITO_ELECTORAL_DATA = {
+  "BREÑA": { "locales": 23, "mesas": 349, "electores": 104700 },
+  "CARABAYLLO": { "locales": 59, "mesas": 861, "electores": 258300 },
+  "CHORRILLOS": { "locales": 74, "mesas": 899, "electores": 269700 },
+  "BARRANCO": { "locales": 12, "mesas": 149, "electores": 44700 },
+  "INDEPENDENCIA": { "locales": 49, "mesas": 595, "electores": 178500 },
+  "LA MOLINA": { "locales": 41, "mesas": 574, "electores": 172200 },
+  "LA VICTORIA": { "locales": 45, "mesas": 640, "electores": 192000 },
+  "SAN LUIS": { "locales": 16, "mesas": 190, "electores": 57000 },
+  "JESUS MARIA": { "locales": 22, "mesas": 427, "electores": 128100 },
+  "LIMA": { "locales": 56, "mesas": 1015, "electores": 304500 },
+  "ATE": { "locales": 123, "mesas": 1671, "electores": 501300 },
+  "EL AGUSTINO": { "locales": 44, "mesas": 566, "electores": 169800 },
+  "ANCON": { "locales": 10, "mesas": 164, "electores": 49200 },
+  "PUENTE PIEDRA": { "locales": 68, "mesas": 891, "electores": 267300 },
+  "SANTA ROSA": { "locales": 10, "mesas": 68, "electores": 20400 },
+  "COMAS": { "locales": 143, "mesas": 1499, "electores": 449700 },
+  "RIMAC": { "locales": 37, "mesas": 560, "electores": 168000 },
+  "LINCE": { "locales": 13, "mesas": 290, "electores": 87000 },
+  "MAGDALENA DEL MAR": { "locales": 18, "mesas": 256, "electores": 76800 },
+  "SAN ISIDRO": { "locales": 9, "mesas": 282, "electores": 84600 },
+  "MIRAFLORES": { "locales": 27, "mesas": 478, "electores": 143400 },
+  "SURQUILLO": { "locales": 23, "mesas": 338, "electores": 101400 },
+  "SANTIAGO DE SURCO": { "locales": 66, "mesas": 1179, "electores": 353700 },
+  "LURIN": { "locales": 17, "mesas": 248, "electores": 74400 },
+  "PACHACAMAC": { "locales": 25, "mesas": 319, "electores": 95700 },
+  "PUCUSANA": { "locales": 5, "mesas": 44, "electores": 13200 },
+  "PUNTA HERMOSA": { "locales": 3, "mesas": 33, "electores": 9900 },
+  "PUNTA NEGRA": { "locales": 3, "mesas": 25, "electores": 7500 },
+  "SAN BARTOLO": { "locales": 2, "mesas": 24, "electores": 7200 },
+  "SANTA MARIA DEL MAR": { "locales": 1, "mesas": 6, "electores": 1800 },
+  "CIENEGUILLA": { "locales": 7, "mesas": 105, "electores": 31500 },
+  "VILLA MARIA DEL TRIUNFO": { "locales": 89, "mesas": 1234, "electores": 370200 },
+  "LOS OLIVOS": { "locales": 63, "mesas": 984, "electores": 295200 },
+  "CHACLACAYO": { "locales": 8, "mesas": 138, "electores": 41400 },
+  "LURIGANCHO": { "locales": 41, "mesas": 550, "electores": 165000 },
+  "PUEBLO LIBRE": { "locales": 22, "mesas": 337, "electores": 101100 },
+  "SAN BORJA": { "locales": 26, "mesas": 422, "electores": 126600 },
+  "SAN JUAN DE LURIGANCHO": { "locales": 219, "mesas": 2731, "electores": 819300 },
+  "SAN JUAN DE MIRAFLORES": { "locales": 70, "mesas": 1115, "electores": 334500 },
+  "SAN MARTIN DE PORRES": { "locales": 172, "mesas": 1786, "electores": 535800 },
+  "SAN MIGUEL": { "locales": 30, "mesas": 507, "electores": 152100 },
+  "SANTA ANITA": { "locales": 37, "mesas": 631, "electores": 189300 },
+  "VILLA EL SALVADOR": { "locales": 76, "mesas": 1171, "electores": 351300 }
+};
+
+export const TOTAL_LOCALES_LIMA_METROPOLITANA = 1904;
+export const TOTAL_ELECTORES_LIMA_METROPOLITANA = 7905300;
+
+export function getElectoresForDistrito(distName) {
+  if (!distName || distName === 'all') return TOTAL_ELECTORES_LIMA_METROPOLITANA;
+  const n = normStr(distName);
+  for (const [d, info] of Object.entries(DISTRITO_ELECTORAL_DATA)) {
+    if (normStr(d) === n) return info.electores;
+  }
+  if (n === 'lima' || n.includes('cercado')) return DISTRITO_ELECTORAL_DATA['LIMA'].electores;
+  if (n.includes('chosica') || n.includes('lurigancho')) return DISTRITO_ELECTORAL_DATA['LURIGANCHO'].electores;
+  const mesas = getMesasForDistrito(distName);
+  return mesas ? mesas * 300 : 0;
+}
+
+export function getLocalesCountForDistrito(distName) {
+  if (!distName || distName === 'all') return TOTAL_LOCALES_LIMA_METROPOLITANA;
+  const n = normStr(distName);
+  for (const [d, info] of Object.entries(DISTRITO_ELECTORAL_DATA)) {
+    if (normStr(d) === n) return info.locales;
+  }
+  if (n === 'lima' || n.includes('cercado')) return DISTRITO_ELECTORAL_DATA['LIMA'].locales;
+  if (n.includes('chosica') || n.includes('lurigancho')) return DISTRITO_ELECTORAL_DATA['LURIGANCHO'].locales;
+  return 0;
+}
+
 export function getMesasForLocal(localName) {
   if (!localName) return 0;
   const n = normStr(localName);
@@ -4392,7 +4464,7 @@ export function getMesasForLocal(localName) {
 }
 
 export function getMesasForDistrito(distName) {
-  if (!distName) return 0;
+  if (!distName || distName === 'all') return TOTAL_MESAS_LIMA_METROPOLITANA;
   const n = normStr(distName);
   for (const [d, mesas] of Object.entries(DISTRITO_METAS)) {
     if (normStr(d) === n) return mesas;

@@ -416,8 +416,8 @@ export function QuizModal({ onClose, onPassQuiz }) {
                     transition: 'all 0.2s ease'
                   }}
                 >
-                  <Award className="w-4 h-4" />
-                  <span>Ver Mi Certificado Oficial</span>
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Finalizar y Continuar</span>
                 </button>
               )}
             </>
@@ -462,7 +462,7 @@ export function QuizModal({ onClose, onPassQuiz }) {
                   justifyContent: 'center',
                   border: '2px solid #10b981'
                 }}>
-                  <Award className="w-10 h-10" />
+                  <CheckCircle2 className="w-10 h-10" />
                 </div>
               </div>
 
@@ -478,7 +478,7 @@ export function QuizModal({ onClose, onPassQuiz }) {
 
               {/* Descripción */}
               <p style={{ fontSize: '0.88rem', color: '#cbd5e1', lineHeight: 1.5, margin: '0 0 26px 0' }}>
-                Has obtenido un puntaje perfecto de 5/5 (100%). Tu capacitación ha sido registrada exitosamente y tu Certificado Oficial de Acreditación ya se encuentra habilitado.
+                Has obtenido un puntaje perfecto de 5/5 (100%). Tu capacitación y evaluación electoral han sido aprobadas exitosamente.
               </p>
 
               {/* Botón de Acción */}
@@ -501,8 +501,8 @@ export function QuizModal({ onClose, onPassQuiz }) {
                   boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
                 }}
               >
-                <span>Ver Mi Certificado Oficial</span>
-                <ArrowRight className="w-5 h-5" />
+                <span>Finalizar y Continuar</span>
+                <CheckCircle2 className="w-5 h-5" />
               </button>
 
             </div>

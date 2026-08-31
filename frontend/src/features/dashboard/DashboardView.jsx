@@ -3,14 +3,20 @@ import {
   LayoutGrid, GraduationCap, Cable, RefreshCw, LogOut, Moon, Sun,
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
   FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
-  AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School, Layers, Building2
+  AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School, Layers, Building2,
+  Navigation
 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { EditAssignmentModal } from '../../components/modals/EditAssignmentModal.jsx';
-import { DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA, getMesasForLocal, getMesasForDistrito } from '../../constants/catalogs.js';
+import { TrayectoView } from './TrayectoView.jsx';
+import {
+  DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA,
+  TOTAL_MESAS_LIMA_METROPOLITANA, TOTAL_LOCALES_LIMA_METROPOLITANA, TOTAL_ELECTORES_LIMA_METROPOLITANA,
+  getMesasForLocal, getMesasForDistrito, getElectoresForDistrito, getLocalesCountForDistrito
+} from '../../constants/catalogs.js';
 import { api } from '../../services/api.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -437,36 +443,79 @@ export function DashboardView({ onGoToTraining }) {
 
   // Meta territorial dinámica según el distrito asignado o seleccionado, o colegio, o zona
   const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
-  let targetMesas = TOTAL_MESAS_LIMA; // 29,121 mesas en el Departamento de Lima
-  let targetLabel = 'AVANCE META TOTAL';
-  let targetSub = 'Meta Departamento de Lima: 29,121 mesas';
+  
+  let targetElectores = TOTAL_ELECTORES_LIMA_METROPOLITANA; // 7,905,300
+  let targetMesas = TOTAL_MESAS_LIMA_METROPOLITANA; // 26,351
+  let targetLocales = TOTAL_LOCALES_LIMA_METROPOLITANA; // 1,904
+  let scopeLabel = 'Lima Metropolitana';
 
   if (isCoordinadorLocal && coordinatorLocal) {
-    const schoolMesas = getMesasForLocal(coordinatorLocal);
-    targetMesas = schoolMesas > 0 ? schoolMesas : 1;
-    targetLabel = `META COLEGIO • ${coordinatorLocal.toUpperCase()}`;
-    targetSub = `Colegio: ${coordinatorLocal} • ${schoolMesas} mesas`;
+    const schoolMesas = getMesasForLocal(coordinatorLocal) || 1;
+    targetMesas = schoolMesas;
+    targetElectores = schoolMesas * 300;
+    targetLocales = 1;
+    scopeLabel = coordinatorLocal;
   } else if (isCoordinadorZonal && coordinatorDistrict) {
     if (localZonal1 !== 'all') {
-      const schoolMesas = getMesasForLocal(localZonal1);
-      targetMesas = schoolMesas > 0 ? schoolMesas : 1;
-      targetLabel = `META COLEGIO • ${localZonal1.toUpperCase()}`;
-      targetSub = `Colegio en zona: ${localZonal1} • ${schoolMesas} mesas`;
+      const schoolMesas = getMesasForLocal(localZonal1) || 1;
+      targetMesas = schoolMesas;
+      targetElectores = schoolMesas * 300;
+      targetLocales = 1;
+      scopeLabel = localZonal1;
     } else {
       const sumZonaMesas = coordinatorZonalLocales.reduce((acc, loc) => acc + (getMesasForLocal(loc) || 0), 0);
       targetMesas = sumZonaMesas > 0 ? sumZonaMesas : 1;
-      targetLabel = `META ZONA • ${coordinatorDistrict.toUpperCase()}`;
-      targetSub = `${coordinatorZonalLocales.length} colegios en tu zona • ${sumZonaMesas.toLocaleString()} mesas`;
+      targetElectores = targetMesas * 300;
+      targetLocales = coordinatorZonalLocales.length > 0 ? coordinatorZonalLocales.length : 1;
+      scopeLabel = `Zona de ${coordinatorDistrict}`;
     }
   } else if (activeDistrictName) {
     const dMesas = getMesasForDistrito(activeDistrictName);
     targetMesas = dMesas > 0 ? dMesas : 1;
-    targetLabel = `META DISTRITAL • ${activeDistrictName.toUpperCase()}`;
-    targetSub = `Meta distrital: ${dMesas.toLocaleString()} mesas`;
+    targetElectores = getElectoresForDistrito(activeDistrictName) || (targetMesas * 300);
+    targetLocales = getLocalesCountForDistrito(activeDistrictName) || 1;
+    scopeLabel = activeDistrictName;
   }
 
-  // Progreso de cobertura (1 personero = 1 mesa)
-  const targetPct = targetMesas > 0 ? Math.min(100, ((tab1Personeros / targetMesas) * 100)).toFixed(1) : '0.0';
+  // Cálculo de locales con PLV (Personero de Local de Votación)
+  const countLocalesConPLV = useMemo(() => {
+    if (isCoordinadorLocal) {
+      return tab1CoordsLocal > 0 ? 1 : 0;
+    }
+    const distinctSchoolsWithPLV = new Set();
+    allRecords.forEach(r => {
+      const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+      const isPLV = (rol.includes('local') || (rol.includes('coordinador') && !rol.includes('distrito') && !rol.includes('distrital') && !rol.includes('zonal') && !rol.includes('zona'))) && !rol.includes('zonal');
+      if (!isPLV) return;
+
+      const rDist = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '';
+      const rLoc = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || '';
+      if (!rLoc || rLoc === '-' || rLoc.toLowerCase() === 'no aplica') return;
+
+      if (isCoordinadorZonal) {
+        if (localZonal1 !== 'all') {
+          if (normalizeLocalName(rLoc) === normalizeLocalName(localZonal1)) {
+            distinctSchoolsWithPLV.add(normalizeLocalName(rLoc));
+          }
+        } else {
+          if (coordinatorZonalLocales.some(zl => normalizeLocalName(zl) === normalizeLocalName(rLoc))) {
+            distinctSchoolsWithPLV.add(normalizeLocalName(rLoc));
+          }
+        }
+      } else if (activeDistrictName) {
+        if (normalizeDistrictName(rDist) === normalizeDistrictName(activeDistrictName)) {
+          distinctSchoolsWithPLV.add(normalizeLocalName(rLoc));
+        }
+      } else {
+        distinctSchoolsWithPLV.add(normalizeLocalName(rLoc));
+      }
+    });
+    return distinctSchoolsWithPLV.size;
+  }, [allRecords, activeDistrictName, isCoordinadorLocal, isCoordinadorZonal, localZonal1, coordinatorZonalLocales, tab1CoordsLocal]);
+
+  // Coberturas en Porcentaje
+  const coberturaMesasPct = targetMesas > 0 ? Math.min(100, ((tab1Personeros / targetMesas) * 100)).toFixed(1) : '0.0';
+  const coberturaLocalesPct = targetLocales > 0 ? Math.min(100, ((countLocalesConPLV / targetLocales) * 100)).toFixed(1) : '0.0';
 
   // =========================================================================
   // GRÁFICO LIMA METROPOLITANA O DISTRITO DEL COORDINADOR
@@ -791,6 +840,35 @@ export function DashboardView({ onGoToTraining }) {
               {!isSidebarCollapsed && (
                 <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   Capacitaciones
+                </span>
+              )}
+            </button>
+
+            {/* Tab 3: Trayecto y Rutas de Personeros (Para SuperAdmin y Coordinadores) */}
+            <button
+              onClick={() => setActiveTab('trayecto')}
+              title={isSidebarCollapsed ? 'Trayecto y Rutas' : undefined}
+              style={{
+                padding: isSidebarCollapsed ? '10px' : '10px 12px',
+                borderRadius: '8px',
+                border: 'none',
+                background: activeTab === 'trayecto' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                color: activeTab === 'trayecto' ? '#0284c7' : textSub,
+                fontWeight: 700,
+                fontSize: '0.84rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
+                gap: '10px',
+                textAlign: 'left',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <Navigation className="w-4 h-4 text-sky-500 flex-shrink-0" />
+              {!isSidebarCollapsed && (
+                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  Trayecto
                 </span>
               )}
             </button>
@@ -1415,113 +1493,94 @@ export function DashboardView({ onGoToTraining }) {
                 </div>
               </div>
 
-              {/* Indicadores Electorales Clave (KPIs Jerárquicos Sincronizados) */}
+              {/* Indicadores Electorales Clave (KPIs Electorales Sincronizados) */}
               <div style={{ marginBottom: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 900, color: textTitle }}>
                     <LayoutGrid className="w-4 h-4 text-sky-500" />
-                    <span>Indicadores Electorales Sincronizados ({tab1Total})</span>
+                    <span>Indicadores Electorales • {scopeLabel}</span>
                   </div>
                   <span style={{ fontSize: '0.74rem', color: textSub }}>
-                    {isFiltered1 ? `Métricas en vivo para ${tab1Total} seleccionados` : 'Métricas del padrón'}
+                    {isFiltered1 ? `Métricas en vivo para ${tab1Total} seleccionados` : `Padrón y metas de ${scopeLabel}`}
                   </span>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
                   
-                  {/* KPI 1 - Total */}
+                  {/* KPI 1 - Electores */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px', transition: 'all 0.2s ease' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>TOTAL FILTRADOS</div>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>ELECTORES</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
                       <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Users className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Total}</span>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{targetElectores.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>{isFiltered1 ? `De ${records.length} totales` : 'Padrón Somos Perú'}</div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Total Padrón ({scopeLabel})</div>
                   </div>
 
-                  {/* KPI 2 - Coordinadores Distritales (Solo Superadministrador) */}
-                  {isSuperAdmin && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0d9488', borderRadius: '10px', padding: '14px' }}>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. DISTRITALES</div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(13, 148, 136, 0.2)' : '#ccfbf1', color: '#0d9488', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ShieldCheck className="w-4 h-4" /></div>
-                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsDistrital}</span>
-                      </div>
-                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Distrito</div>
-                    </div>
-                  )}
-
-                  {/* KPI 3 - Coordinadores Zonales (Superadmin y Distrital) */}
-                  {(isSuperAdmin || isCoordinadorDistrital) && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: '14px' }}>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COORD. ZONALES</div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Layers className="w-4 h-4" /></div>
-                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsZonal}</span>
-                      </div>
-                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes Zonales</div>
-                    </div>
-                  )}
-
-                  {/* KPI 4 - Personeros de Local (Superadmin, Distrital y Zonal) */}
-                  {!isCoordinadorLocal && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
-                      <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONEROS LOCAL</div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                        <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
-                        <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1CoordsLocal}</span>
-                      </div>
-                      <div style={{ fontSize: '0.68rem', color: textSub }}>Líderes de Colegio</div>
-                    </div>
-                  )}
-
-                  {/* KPI 5 - Personeros Mesa */}
+                  {/* KPI 2 - Mesas */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONEROS MESA</div>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>MESAS</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ShieldCheck className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Personeros}</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Layers className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{targetMesas.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Defensa del Voto</div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>1 Personero cada Mesa</div>
                   </div>
 
-                  {/* KPI 4 */}
+                  {/* KPI 3 - Locales */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>LOCALES</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><School className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{targetLocales.toLocaleString()}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Centros de Votación</div>
+                  </div>
+
+                  {/* KPI 4 - Personeros de Mesa */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>CON EXPERIENCIA</div>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>PERSONERO DE MESA</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Exp}</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ShieldCheck className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Personeros.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Elecciones Previas</div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Asignados</div>
                   </div>
 
-                  {/* KPI 5 */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f97316', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>CON MOVILIDAD</div>
+                  {/* KPI 5 - Cobertura de Mesas % */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #14b8a6', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COBERTURA DE MESAS</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(249, 115, 22, 0.2)' : '#ffedd5', color: '#f97316', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Car className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Mov}</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(20, 184, 166, 0.2)' : '#ccfbf1', color: '#14b8a6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CheckCircle2 className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: '#059669' }}>{coberturaMesasPct}%</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>Vehículo Propio</div>
+                    <div style={{ width: '100%', height: '4px', background: isDark ? '#334155' : '#e2e8f0', borderRadius: '2px', overflow: 'hidden', margin: '3px 0' }}>
+                      <div style={{ width: `${Math.min(100, Math.max(0, parseFloat(coberturaMesasPct)))}%`, height: '100%', background: '#10b981', borderRadius: '2px', transition: 'width 0.4s ease' }}></div>
+                    </div>
+                    <div style={{ fontSize: '0.66rem', color: textSub }}>{tab1Personeros} / {targetMesas.toLocaleString()} mesas cubiertas</div>
                   </div>
 
-                  {/* KPI 6 */}
+                  {/* KPI 6 - Locales con PLV */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: '14px' }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>LOCALES CON PLV</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserCheck className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{countLocalesConPLV} / {targetLocales}</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>Con Personero LV</div>
+                  </div>
+
+                  {/* KPI 7 - Cobertura de Locales % */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COMPROMISO 2026</div>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub }}>COBERTURA DE LOCALES</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Calendar className="w-4 h-4" /></div>
-                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: textTitle }}>{tab1Comp}</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Building2 className="w-4 h-4" /></div>
+                      <span style={{ fontSize: '1.45rem', fontWeight: 900, color: '#7c3aed' }}>{coberturaLocalesPct}%</span>
                     </div>
-                    <div style={{ fontSize: '0.68rem', color: textSub }}>4 de Octubre</div>
-                  </div>
-
-                  {/* KPI 7 - Dinámico con respecto a la meta distrital, colegio o meta Lima */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #eab308', borderRadius: '10px', padding: '14px' }}>
-                    <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#eab308' }}>{targetLabel}</div>
-                    <div style={{ fontSize: '0.72rem', color: textSub, fontWeight: 700 }}>{targetSub}</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: textTitle, marginTop: '6px' }}>
-                      {tab1Personeros} / {targetMesas.toLocaleString()} <span style={{ fontSize: '0.8rem', color: '#eab308' }}>{targetPct}%</span>
+                    <div style={{ width: '100%', height: '4px', background: isDark ? '#334155' : '#e2e8f0', borderRadius: '2px', overflow: 'hidden', margin: '3px 0' }}>
+                      <div style={{ width: `${Math.min(100, Math.max(0, parseFloat(coberturaLocalesPct)))}%`, height: '100%', background: '#8b5cf6', borderRadius: '2px', transition: 'width 0.4s ease' }}></div>
                     </div>
+                    <div style={{ fontSize: '0.66rem', color: textSub }}>{countLocalesConPLV} / {targetLocales} locales cubiertos</div>
                   </div>
 
                 </div>
@@ -2382,6 +2441,17 @@ export function DashboardView({ onGoToTraining }) {
             </div>
           )}
 
+          {/* =========================================================================
+              TAB 3: TRAYECTO TERRITORIAL Y RUTAS DE PERSONEROS
+              ========================================================================= */}
+          {activeTab === 'trayecto' && (
+            <TrayectoView
+              records={records}
+              isDark={isDark}
+              defaultDistrict={coordinatorDistrict || 'San Isidro'}
+            />
+          )}
+
         </div>
       </div>
 
@@ -2441,6 +2511,27 @@ export function DashboardView({ onGoToTraining }) {
           >
             <GraduationCap style={{ width: '20px', height: '20px' }} />
             <span>Capacitaciones</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('trayecto')}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              border: 'none',
+              background: 'transparent',
+              color: activeTab === 'trayecto' ? '#0284c7' : textSub,
+              fontWeight: activeTab === 'trayecto' ? 800 : 500,
+              fontSize: '0.62rem',
+              cursor: 'pointer',
+              padding: '8px 0'
+            }}
+          >
+            <Navigation style={{ width: '20px', height: '20px' }} />
+            <span>Trayecto</span>
           </button>
 
           {isSuperAdmin && (
