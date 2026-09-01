@@ -5,11 +5,19 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('auth_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('auth_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
   });
-  const [role, setRole] = useState(() => localStorage.getItem('user_role') || null);
-  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
+  const [role, setRole] = useState(() => {
+    try { return localStorage.getItem('user_role') || null; } catch (e) { return null; }
+  });
+  const [token, setToken] = useState(() => {
+    try { return localStorage.getItem('token') || null; } catch (e) { return null; }
+  });
 
   const login = async (credentials) => {
     const cleanUser = String(credentials.username || credentials.fullName || '').toLowerCase().trim();

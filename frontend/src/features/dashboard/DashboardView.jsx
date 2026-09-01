@@ -4,7 +4,7 @@ import {
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
   FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
   AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School, Layers, Building2,
-  Navigation
+  Navigation, MapPin
 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -606,10 +606,11 @@ export function DashboardView({ onGoToTraining }) {
       };
     });
 
-    // Filtrar para mostrar ÚNICAMENTE colegios que ya tienen personeros o coordinadores registrados
-    const onlyRegisteredSchools = mapped.filter(school => school.allPersoneros.length > 0);
+    // Si hay colegios con registrados, priorizar los registrados; si un distrito no tiene registros aún, mostrar sus colegios para visualización
+    const onlyRegisteredSchools = mapped.filter(school => school.allPersoneros && school.allPersoneros.length > 0);
+    const displaySchools = onlyRegisteredSchools.length > 0 ? onlyRegisteredSchools : mapped;
 
-    return onlyRegisteredSchools.sort((a, b) => (b.allPersoneros.length - a.allPersoneros.length) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre));
+    return displaySchools.sort((a, b) => (b.allPersoneros.length - a.allPersoneros.length) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre));
   }, [records, dist1, coordinatorDistrict, isCoordinadorLocal, coordinatorLocal]);
 
   const filteredDistrictSchools = useMemo(() => {
@@ -1447,80 +1448,54 @@ export function DashboardView({ onGoToTraining }) {
                   style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(130px, 1fr))' : 'repeat(auto-fit, minmax(140px, 1fr))', gap: isMobile ? '8px' : '12px' }}
                 >
                   
-                  {/* KPI 1 - Electores */}
+                  {/* KPI 1 - Personeros Registrados */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>ELECTORES</div>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>PERSONEROS REGISTRADOS</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
                       <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Users className="w-3.5 h-3.5" /></div>
-                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{targetElectores.toLocaleString()}</span>
-                    </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>Total Padrón ({scopeLabel})</div>
-                  </div>
-
-                  {/* KPI 2 - Mesas */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #6366f1', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>MESAS</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Layers className="w-3.5 h-3.5" /></div>
-                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{targetMesas.toLocaleString()}</span>
-                    </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>1 Personero cada Mesa</div>
-                  </div>
-
-                  {/* KPI 3 - Locales */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>LOCALES</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
-                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{targetLocales.toLocaleString()}</span>
-                    </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>Centros de Votación</div>
-                  </div>
-
-                  {/* KPI 4 - Personeros de Mesa */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>PERSONERO DE MESA</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><ShieldCheck className="w-3.5 h-3.5" /></div>
                       <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1Personeros.toLocaleString()}</span>
                     </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>Asignados</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Registrados en Padrón ({scopeLabel})</div>
                   </div>
 
-                  {/* KPI 5 - Cobertura de Mesas % */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #14b8a6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COBERTURA DE MESAS</div>
+                  {/* KPI 2 - Locales de Votación con Registros */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>LOCALES REGISTRADOS</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(20, 184, 166, 0.2)' : '#ccfbf1', color: '#14b8a6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><CheckCircle2 className="w-3.5 h-3.5" /></div>
-                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: '#059669' }}>{coberturaMesasPct}%</span>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{districtSchools.length.toLocaleString()}</span>
                     </div>
-                    <div style={{ width: '100%', height: '4px', background: isDark ? '#334155' : '#e2e8f0', borderRadius: '2px', overflow: 'hidden', margin: '3px 0' }}>
-                      <div style={{ width: `${Math.min(100, Math.max(0, parseFloat(coberturaMesasPct)))}%`, height: '100%', background: '#10b981', borderRadius: '2px', transition: 'width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)' }}></div>
-                    </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>{tab1Personeros} / {targetMesas.toLocaleString()} mesas</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Centros de Votación Activos</div>
                   </div>
 
-                  {/* KPI 6 - Locales con PLV */}
+                  {/* KPI 3 - Personeros de Local (PLV) */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
                     <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>LOCALES CON PLV</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
                       <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserCheck className="w-3.5 h-3.5" /></div>
-                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{countLocalesConPLV} / {targetLocales}</span>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{countLocalesConPLV}</span>
                     </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>Con Personero LV</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Personeros de Local Asignados</div>
                   </div>
 
-                  {/* KPI 7 - Cobertura de Locales % */}
+                  {/* KPI 4 - Coordinadores Zonales */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COBERTURA DE LOCALES</div>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COORD. ZONALES</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Building2 className="w-3.5 h-3.5" /></div>
-                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: '#7c3aed' }}>{coberturaLocalesPct}%</span>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><MapPin className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsZonal}</span>
                     </div>
-                    <div style={{ width: '100%', height: '4px', background: isDark ? '#334155' : '#e2e8f0', borderRadius: '2px', overflow: 'hidden', margin: '3px 0' }}>
-                      <div style={{ width: `${Math.min(100, Math.max(0, parseFloat(coberturaLocalesPct)))}%`, height: '100%', background: '#8b5cf6', borderRadius: '2px', transition: 'width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)' }}></div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Zonales Asignados</div>
+                  </div>
+
+                  {/* KPI 5 - Coordinadores Distritales */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COORD. DISTRITALES</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><ShieldCheck className="w-3.5 h-3.5" /></div>
+                      <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsDistrital}</span>
                     </div>
-                    <div style={{ fontSize: '0.65rem', color: textSub }}>{countLocalesConPLV} / {targetLocales} locales cubiertos</div>
+                    <div style={{ fontSize: '0.65rem', color: textSub }}>Distritales Activos</div>
                   </div>
 
                 </div>
@@ -1669,17 +1644,20 @@ export function DashboardView({ onGoToTraining }) {
                             </strong>
                           </div>
 
-                          {/* Badge % Cobertura */}
+                          {/* Badge Registrados */}
                           <div style={{
-                            background: school.cobertura >= 80 ? '#10b981' : (school.cobertura >= 50 ? '#f59e0b' : '#ef4444'),
+                            background: '#10b981',
                             color: '#ffffff',
                             padding: '4px 10px',
                             borderRadius: '20px',
-                            fontSize: '0.78rem',
+                            fontSize: '0.76rem',
                             fontWeight: 900,
-                            flexShrink: 0
+                            flexShrink: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px'
                           }}>
-                            {school.cobertura}%
+                            <span>👥 {school.asignadas} {school.asignadas === 1 ? 'Registrado' : 'Registrados'}</span>
                           </div>
                         </div>
 
@@ -1691,40 +1669,28 @@ export function DashboardView({ onGoToTraining }) {
                           </span>
                         </div>
 
-                        {/* 3 Columnas Claras: ASIGNADAS | MESAS | ELECTORES */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.2fr', gap: '8px', paddingTop: '4px' }}>
+                        {/* Bloque Claro de Personeros Asignados */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '8px 12px',
+                          background: isDark ? 'rgba(2, 132, 199, 0.1)' : '#f0f9ff',
+                          borderRadius: '8px',
+                          border: '1px solid #bae6fd'
+                        }}>
                           <div>
-                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle }}>
+                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: '#0369a1', textTransform: 'uppercase' }}>
+                              PERSONEROS REGISTRADOS
+                            </div>
+                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0284c7', lineHeight: 1.1 }}>
                               {school.asignadas}
                             </div>
-                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
-                              ASIGNADAS
-                            </div>
                           </div>
-
-                          <div>
-                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle }}>
-                              {school.totalMesas}
-                            </div>
-                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
-                              MESAS
-                            </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', fontWeight: 800, color: '#16a34a' }}>
+                            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#16a34a' }} />
+                            <span>Activo</span>
                           </div>
-
-                          <div>
-                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: textTitle }}>
-                              {school.totalElectores.toLocaleString('es-PE')}
-                            </div>
-                            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
-                              ELECTORES
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Estado de Alerta: 🔴 Crítico / 🟡 Regular / 🟢 Completo */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', fontWeight: 800, color: school.statusColor }}>
-                          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: school.statusColor }} />
-                          <span>{school.statusLabel}</span>
                         </div>
 
                         {/* Mando del Colegio: Coordinador Zonal y Personero de Local de Votación */}
@@ -2868,7 +2834,7 @@ export function DashboardView({ onGoToTraining }) {
                   </strong>
                 </div>
                 <div style={{ fontSize: '0.74rem', color: textSub, marginTop: '2px' }}>
-                  {selectedSchoolDetail.asignadas} / {selectedSchoolDetail.totalMesas} mesas cubiertas ({selectedSchoolDetail.cobertura}%)
+                  {selectedSchoolDetail.allPersoneros.length} {selectedSchoolDetail.allPersoneros.length === 1 ? 'personero registrado' : 'personeros registrados'} en este centro
                 </div>
               </div>
 
@@ -2895,147 +2861,90 @@ export function DashboardView({ onGoToTraining }) {
               </button>
             </div>
 
-            {/* Lista de Mesas (Fiel a dash.jpeg) */}
-            <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {Array.from({ length: selectedSchoolDetail.totalMesas }).map((_, mIdx) => {
-                const mesaNumber = `0${47110 + mIdx + 1}`;
-                const assignedPerson = selectedSchoolDetail.mesaPersoneros[mIdx];
-                const isAssigned = !!assignedPerson;
-                const isExpanded = expandedMesa === mesaNumber;
+            {/* Lista Real de Personeros del Colegio */}
+            <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {selectedSchoolDetail.allPersoneros.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '30px', color: textSub, fontSize: '0.85rem' }}>
+                  No hay personeros registrados en este local aún.
+                </div>
+              ) : (
+                selectedSchoolDetail.allPersoneros.map((assignedPerson, mIdx) => {
+                  const pName = assignedPerson['Nombres y Apellidos'] || assignedPerson.nombresApellidos || 'Sin Nombre';
+                  const pDni = assignedPerson['D.N.I.'] || assignedPerson.dni || '-';
+                  const pCel = assignedPerson['Celular'] || assignedPerson.celular || '-';
+                  const pRol = assignedPerson['Rol a Desempeñar'] || assignedPerson.rolName || 'Personero';
+                  const pEmail = assignedPerson['Correo Electrónico'] || assignedPerson.correoElectronico || assignedPerson.email || '-';
+                  const isExpanded = expandedMesa === `p-${mIdx}`;
 
-                const pName = assignedPerson ? (assignedPerson['Nombres y Apellidos'] || assignedPerson.nombresApellidos) : null;
-                const pDni = assignedPerson ? (assignedPerson['D.N.I.'] || assignedPerson.dni) : null;
-                const pCel = assignedPerson ? (assignedPerson['Celular'] || assignedPerson.celular) : null;
-                const pEmail = assignedPerson ? (assignedPerson['Correo Electrónico'] || assignedPerson.correoElectronico || assignedPerson.email) : null;
-
-                return (
-                  <div
-                    key={mIdx}
-                    style={{
-                      background: isDark ? '#0f172a' : '#ffffff',
-                      border: `1px solid ${borderCol}`,
-                      borderLeft: isAssigned ? '5px solid #10b981' : '5px solid #ef4444',
-                      borderRadius: '12px',
-                      padding: '14px 16px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '8px',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease'
-                    }}
-                    onClick={() => {
-                      if (isAssigned) {
-                        setExpandedMesa(isExpanded ? null : mesaNumber);
-                      }
-                    }}
-                  >
-                    {/* Fila Principal de la Mesa (como en dash.jpeg) */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ fontSize: '0.96rem', fontWeight: 900, color: textTitle }}>
-                          Mesa {mesaNumber}
-                        </div>
-                        <div style={{ fontSize: '0.74rem', fontWeight: 800, color: isAssigned ? '#10b981' : '#ef4444', textTransform: 'uppercase' }}>
-                          {isAssigned ? 'ASIGNADO' : 'SIN PERSONERO'}
-                        </div>
-                        <div style={{ fontSize: '0.72rem', color: textSub }}>
-                          300 electores
-                        </div>
-                      </div>
-
-                      {/* Icono de Estado Check o Alerta */}
-                      <div style={{
-                        width: '28px',
-                        height: '28px',
-                        borderRadius: '50%',
-                        background: isAssigned ? '#dcfce7' : '#fee2e2',
-                        color: isAssigned ? '#15803d' : '#dc2626',
+                  return (
+                    <div
+                      key={mIdx}
+                      style={{
+                        background: isDark ? '#0f172a' : '#ffffff',
+                        border: `1px solid ${borderCol}`,
+                        borderLeft: '5px solid #10b981',
+                        borderRadius: '12px',
+                        padding: '12px 14px',
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontWeight: 900,
-                        fontSize: '0.8rem'
-                      }}>
-                        {isAssigned ? '✓' : '!'}
-                      </div>
-                    </div>
+                        flexDirection: 'column',
+                        gap: '6px',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                      onClick={() => setExpandedMesa(isExpanded ? null : `p-${mIdx}`)}
+                    >
+                      {/* Fila Principal del Personero */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                          <div style={{ fontSize: '0.92rem', fontWeight: 900, color: textTitle }}>
+                            {pName}
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                            <span style={{ fontSize: '0.72rem', fontWeight: 800, background: '#dcfce7', color: '#15803d', padding: '1px 6px', borderRadius: '4px' }}>
+                              {pRol}
+                            </span>
+                            <span style={{ fontSize: '0.72rem', color: textSub }}>
+                              DNI: <strong>{pDni}</strong>
+                            </span>
+                          </div>
+                        </div>
 
-                    {/* Nombre del Personero si está asignado */}
-                    {isAssigned && (
-                      <div style={{ fontSize: '0.84rem', fontWeight: 800, color: textTitle, marginTop: '2px' }}>
-                        {pName}
-                      </div>
-                    )}
-
-                    {/* DETALLE EXPANDIDO (Fiel a la 3ra tarjeta de dash.jpeg) */}
-                    {isAssigned && isExpanded && (
-                      <div
-                        style={{
-                          background: isDark ? '#1e293b' : '#f8fafc',
-                          borderTop: `1px dashed ${borderCol}`,
-                          marginTop: '8px',
-                          paddingTop: '10px',
+                        <div style={{
+                          width: '26px',
+                          height: '26px',
+                          borderRadius: '50%',
+                          background: '#dcfce7',
+                          color: '#15803d',
                           display: 'flex',
-                          flexDirection: 'column',
-                          gap: '6px'
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div style={{ fontSize: '0.78rem', color: textSub }}>
-                          DNI: <strong style={{ color: textTitle }}>{pDni || '47991000'}</strong>
-                        </div>
-                        <div style={{ fontSize: '0.78rem', color: textSub }}>
-                          Celular: <strong style={{ color: textTitle }}>{pCel || '943244142'}</strong>
-                        </div>
-                        <div style={{ fontSize: '0.78rem', color: textSub }}>
-                          Email: <strong style={{ color: textTitle }}>{pEmail || 'personero@gmail.com'}</strong>
-                        </div>
-
-                        {/* Botones de Acción Confirmar / Quitar (Fiel a dash.jpeg) */}
-                        <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
-                          <button
-                            onClick={() => {
-                              alert(`Personero ${pName} confirmado para la Mesa ${mesaNumber}`);
-                            }}
-                            style={{
-                              flex: 1,
-                              padding: '8px',
-                              borderRadius: '8px',
-                              border: 'none',
-                              background: '#6366f1',
-                              color: '#ffffff',
-                              fontWeight: 800,
-                              fontSize: '0.82rem',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            Confirmar
-                          </button>
-
-                          <button
-                            onClick={() => {
-                              setSelectedPersonero(assignedPerson);
-                            }}
-                            style={{
-                              flex: 1,
-                              padding: '8px',
-                              borderRadius: '8px',
-                              border: 'none',
-                              background: '#ef4444',
-                              color: '#ffffff',
-                              fontWeight: 800,
-                              fontSize: '0.82rem',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            Quitar / Editar
-                          </button>
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontWeight: 900,
+                          fontSize: '0.78rem'
+                        }}>
+                          ✓
                         </div>
                       </div>
-                    )}
-                  </div>
-                );
-              })}
+
+                      {/* DETALLE EXPANDIDO */}
+                      {isExpanded && (
+                        <div style={{
+                          marginTop: '8px',
+                          paddingTop: '8px',
+                          borderTop: `1px dashed ${borderCol}`,
+                          fontSize: '0.75rem',
+                          color: textSub,
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1fr',
+                          gap: '6px'
+                        }}>
+                          <div>📱 <strong>Celular:</strong> {pCel}</div>
+                          <div>✉️ <strong>Email:</strong> {pEmail}</div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
