@@ -117,15 +117,15 @@ export class PersoneroController {
         }
       }
 
-      // 7. Validar Personero de Local de Votación: Máximo 1 por cada colegio
+      // 7. Validar Personero de Local de Votación: Máximo 2 por cada colegio
       if (distrito && local && (cleanRol === 'personero de local de votación' || cleanRol === 'coordinador de local' || (cleanRol.includes('local') && !cleanRol.includes('zonal')))) {
         const countLocal = await this.personeroRepo.countCoordinadoresByLocal(distrito, local);
-        if (countLocal >= 1) {
+        if (countLocal >= 2) {
           return res.json({
             status: 'success',
             available: false,
             field: 'local_asignado',
-            message: `Cupo lleno: El colegio '${local}' en ${distrito} ya cuenta con 1 Personero de Local de Votación asignado.`
+            message: `Cupo lleno: El colegio '${local}' en ${distrito} ya cuenta con 2 Personeros de Local de Votación asignados.`
           });
         }
       }

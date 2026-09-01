@@ -167,46 +167,58 @@ test('Validation Rule 2: Personero de Mesa cannot be assigned to the same mesa t
   );
 });
 
-test('Validation Rule 3: Coordinador de Local allows strictly 1 per school', async () => {
+test('Validation Rule 3: Personero de Local allows strictly up to 2 per school', async () => {
   const repo = new MockPersoneroRepository();
   const audit = new MockAuditRepository();
   const useCase = new RegisterPersoneroUseCase(repo, audit);
 
   // Coordinator 1 at 'IE Mercedes Indacochea' in Barranco (Allowed)
-  await useCase.execute({
+  const coord1 = await useCase.execute({
     nombres_apellidos: 'Coordinador Local 1',
     dni: '55551111',
     celular: '955551111',
-    rol_electoral: 'Coordinador de Local',
+    rol_electoral: 'Personero de Local de Votación',
     distrito_asignado: 'Barranco',
     local_asignado: 'IE Mercedes Indacochea'
   });
+  assert.ok(coord1, 'Primer personero de local debe permitirse');
 
-  // Coordinator 2 at SAME school 'IE Mercedes Indacochea' in Barranco -> Must fail
+  // Coordinator 2 at SAME school 'IE Mercedes Indacochea' in Barranco (Allowed - Max 2)
+  const coord2 = await useCase.execute({
+    nombres_apellidos: 'Coordinador Local 2',
+    dni: '55552222',
+    celular: '955552222',
+    rol_electoral: 'Personero de Local de Votación',
+    distrito_asignado: 'Barranco',
+    local_asignado: 'IE Mercedes Indacochea'
+  });
+  assert.ok(coord2, 'Segundo personero de local debe permitirse (hasta 2 por colegio)');
+
+  // Coordinator 3 at SAME school 'IE Mercedes Indacochea' in Barranco -> Must fail (Cupo lleno)
   await assert.rejects(
     async () => {
       await useCase.execute({
-        nombres_apellidos: 'Coordinador Local 2',
-        dni: '55552222',
-        celular: '955552222',
-        rol_electoral: 'Coordinador de Local',
+        nombres_apellidos: 'Coordinador Local 3',
+        dni: '55553333',
+        celular: '955553333',
+        rol_electoral: 'Personero de Local de Votación',
         distrito_asignado: 'Barranco',
         local_asignado: 'IE Mercedes Indacochea'
       });
     },
-    /1 (Personero de Local de Votación|Coordinador de Local) asignado/
+    /Cupo lleno: El colegio 'IE Mercedes Indacochea' en Barranco ya cuenta con 2 Personeros de Local de Votación asignados/
   );
 
-  // Coordinator 3 at DIFFERENT school 'IE Corazon de Jesus' in same district Barranco (Allowed)
-  const coord3 = await useCase.execute({
-    nombres_apellidos: 'Coordinador Local 3',
-    dni: '55553333',
-    celular: '955553333',
-    rol_electoral: 'Coordinador de Local',
+  // Coordinator 4 at DIFFERENT school 'IE Corazon de Jesus' in same district Barranco (Allowed)
+  const coord4 = await useCase.execute({
+    nombres_apellidos: 'Coordinador Local 4',
+    dni: '55554444',
+    celular: '955554444',
+    rol_electoral: 'Personero de Local de Votación',
     distrito_asignado: 'Barranco',
     local_asignado: 'IE Corazon de Jesus'
   });
-  assert.ok(coord3, 'Coordinador en otro colegio del mismo distrito debe permitirse');
+  assert.ok(coord4, 'Personero en otro colegio del mismo distrito debe permitirse');
 });
 
 test('Validation Rule 4: Coordinador de Distritos allows strictly 1 user per assigned district', async () => {

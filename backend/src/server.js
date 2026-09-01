@@ -8,7 +8,18 @@ import { MigrationRunner } from './infrastructure/database/MigrationRunner.js';
 
 const app = express();
 
+// Desactivar ETags para evitar respuestas 304 Not Modified que vacían el estado del cliente
+app.set('etag', false);
+
 // Middlewares
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
+
 app.use(cors({
   origin: '*', // Permitir solicitudes locales y celulares en la misma red Wi-Fi
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

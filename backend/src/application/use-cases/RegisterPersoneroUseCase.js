@@ -92,11 +92,11 @@ export class RegisterPersoneroUseCase {
         }
       }
     } else if (rolNorm.includes('coordinador') || rolNorm.includes('local')) {
-      // Personero de Local de Votación: Máximo 1 por cada colegio
+      // Personero de Local de Votación: Máximo 2 por cada colegio
       if (distAsig && localAsig && localAsig.toLowerCase() !== 'no aplica') {
         const countLocal = await this.personeroRepo.countCoordinadoresByLocal(distAsig, localAsig);
-        if (countLocal >= 1) {
-          throw new Error(`Cupo lleno: El colegio '${localAsig}' en ${distAsig} ya cuenta con 1 Personero de Local de Votación asignado.`);
+        if (countLocal >= 2) {
+          throw new Error(`Cupo lleno: El colegio '${localAsig}' en ${distAsig} ya cuenta con 2 Personeros de Local de Votación asignados.`);
         }
       }
     } else {

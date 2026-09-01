@@ -495,15 +495,20 @@ export class PostgresPersoneroRepository {
     const cleanRol = String(rol || '').toLowerCase().trim();
     const assignedSet = new Set();
 
-    // 1. Si es Coordinador de Local: consultar colegios ocupados en rcoordinadores
+    // 1. Si es Coordinador / Personero de Local: solo reportar colegios que ya alcanzaron el cupo de 2 personeros
     if (cleanRol.includes('local') && !cleanRol.includes('zonal')) {
       try {
-        let qLocal = `SELECT local_de_votacion_asignado FROM rcoordinadores WHERE LOWER(TRIM(distrito_asignado)) = $1`;
+        let qLocal = `
+          SELECT local_de_votacion_asignado, COUNT(*) as qty
+          FROM rcoordinadores
+          WHERE LOWER(TRIM(distrito_asignado)) = $1
+        `;
         const paramsL = [cleanDist];
         if (excludeDni) {
           qLocal += ` AND TRIM(dni) != $2`;
           paramsL.push(String(excludeDni).trim());
         }
+        qLocal += ` GROUP BY local_de_votacion_asignado HAVING COUNT(*) >= 2`;
         const resL = await pool.query(qLocal, paramsL);
         resL.rows.forEach(r => {
           const val = (r.local_de_votacion_asignado || '').trim();
@@ -718,6 +723,37 @@ export class PostgresPersoneroRepository {
     const mes = params.mesaAsignada !== undefined ? params.mesaAsignada : params.mesa;
     const rol = params.rolADesempenar || params.rol;
     const cred = params.credenciales || params.estado;
+
+    let targetTableName = tableName;
+    if (rol) {
+      const cleanRol = String(rol).toLowerCase().trim();
+      if (cleanRol.includes('zonal') || cleanRol.includes('zona')) {
+        targetTableName = 'rcoordinadoresz';
+      } else if (cleanRol.includes('distrito') || cleanRol.includes('distrital')) {
+        targetTableName = 'rcoordinadoresd';
+      } else if (cleanRol.includes('coordinador') || cleanRol.includes('local')) {
+        targetTableName = 'rcoordinadores';
+      } else {
+        targetTableName = 'rpersoneros';
+      }
+    }
+
+    if (targetTableName !== tableName) {
+      const entityData = {
+        ...existing.entity,
+        nombresApellidos: nombres || existing.entity.nombresApellidos,
+        celular: cel || existing.entity.celular,
+        distritoAsignado: dist !== undefined ? dist : existing.entity.distritoAsignado,
+        localDeVotacionAsignado: loc !== undefined ? loc : existing.entity.localDeVotacionAsignado,
+        mesaAsignada: mes !== undefined ? mes : existing.entity.mesaAsignada,
+        rolADesempenar: rol || existing.entity.rolADesempenar,
+        credenciales: cred || existing.entity.credenciales
+      };
+      await this.save(entityData);
+      await pool.query(`DELETE FROM ${tableName} WHERE dni = $1`, [cleanDni]);
+      const updated = await this.findByDni(cleanDni);
+      return updated;
+    }
 
     const query = `
       UPDATE ${tableName}
