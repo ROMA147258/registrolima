@@ -38,8 +38,8 @@ export function AuthProvider({ children }) {
       // Acceso directo garantizado para administradores predeterminados (eric, paola, pola, susana, admin)
       const SUPERADMIN_CREDENTIALS = {
         eric: { pass: ['eric123', 'admin123'], name: 'Eric - Coordinador Central' },
-        paola: { pass: ['pao123$', 'pola123'], name: 'Paola - Superadministradora' },
-        pola: { pass: ['pao123$', 'pola123', 'admin123'], name: 'Pola - Superadministradora' },
+        paola: { pass: ['pao123*', 'pao123$', 'pola123', 'admin123'], name: 'Paola - Superadministradora' },
+        pola: { pass: ['pao123*', 'pao123$', 'pola123', 'admin123'], name: 'Pola - Superadministradora' },
         susana: { pass: ['susan456&', 'susana123', 'admin123'], name: 'Susana - Superadministradora' },
         admin: { pass: ['admin123', 'eric123'], name: 'Administrador General' }
       };

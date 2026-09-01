@@ -32,7 +32,7 @@ export const config = {
     ericUsername: process.env.ERIC_USERNAME || 'eric',
     ericPassword: process.env.ERIC_PASSWORD || 'eric123',
     paolaUsername: process.env.PAOLA_USERNAME || 'paola',
-    paolaPassword: process.env.PAOLA_PASSWORD || 'pao123$',
+    paolaPassword: process.env.PAOLA_PASSWORD || 'pao123*',
     susanaUsername: process.env.SUSANA_USERNAME || 'susana',
     susanaPassword: process.env.SUSANA_PASSWORD || 'susan456&'
   },
