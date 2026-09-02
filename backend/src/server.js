@@ -49,22 +49,20 @@ app.use(errorHandler);
 
 // Inicializar Servidor y Migraciones
 const PORT = config.port || 3000;
-if (!process.env.VERCEL) {
-  app.listen(PORT, '0.0.0.0', async () => {
-    console.log('==========================================================');
-    console.log(`🚀 SERVIDOR API BACKEND INICIADO`);
-    console.log(`📡 Puerto: ${PORT} | URL: http://localhost:${PORT}/api`);
-    console.log('==========================================================');
+app.listen(PORT, '0.0.0.0', async () => {
+  console.log('==========================================================');
+  console.log(`🚀 SERVIDOR API BACKEND INICIADO`);
+  console.log(`📡 Puerto: ${PORT} | URL: http://localhost:${PORT}/api`);
+  console.log('==========================================================');
 
-    try {
-      console.log('🔄 Conectando a PostgreSQL y verificando migraciones...');
-      await dbPool.getPool();
-      await MigrationRunner.runMigrations();
-      console.log('✅ Base de datos PostgreSQL y migraciones listas.');
-    } catch (err) {
-      console.warn('⚠️ Base de datos PostgreSQL offline o no disponible en este momento:', err.message);
-    }
-  });
-}
+  try {
+    console.log('🔄 Conectando a PostgreSQL y verificando migraciones...');
+    await dbPool.getPool();
+    await MigrationRunner.runMigrations();
+    console.log('✅ Base de datos PostgreSQL y migraciones listas.');
+  } catch (err) {
+    console.warn('⚠️ Base de datos PostgreSQL offline o no disponible en este momento:', err.message);
+  }
+});
 
 export default app;
