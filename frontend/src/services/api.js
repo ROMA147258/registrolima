@@ -6,14 +6,12 @@ async function request(endpoint, options = {}) {
 
   const headers = {
     'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache',
-    'Pragma': 'no-cache',
     ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
     ...(options.headers || {})
   };
 
   try {
-    const res = await fetch(url, { ...options, headers, cache: 'no-store' });
+    const res = await fetch(url, { ...options, headers });
     if (res.status === 304) {
       return null; // No sobreescribir datos si el servidor indica no modificado
     }
