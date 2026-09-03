@@ -822,7 +822,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     }
 
     if (!formData.local_asignado && !isCoordinadorDistrital) {
-      errors.local_asignado = 'Seleccione el local de votación asignado.';
+      errors.local_asignado = 'Seleccione el centro de votación asignado.';
     }
 
     // 4. Compromiso y Logística
@@ -1207,7 +1207,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 }}
               >
                 <School className="w-4 h-4 flex-shrink-0" />
-                <span>Personero de Local de Votación</span>
+                <span>Personero de Centro de Votación</span>
               </button>
 
               <button
@@ -1325,10 +1325,10 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   />
                 </div>
 
-                {/* Local de Votación Asignado */}
+                {/* Centro de Votación Asignado */}
                 <div>
                   <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                    Local de Votación Asignado <span style={{ color: '#ef4444' }}>*</span>
+                    Centro de Votación Asignado <span style={{ color: '#ef4444' }}>*</span>
                   </label>
                   <CustomSearchableSelect
                     id="field-local_asignado"
@@ -1339,7 +1339,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                       ? localesAsignados.filter(loc => !assignedLocalesAsignados.some(al => al.toLowerCase().trim() === loc.toLowerCase().trim()))
                       : localesAsignados
                     }
-                    placeholder={formData.distrito_asignado ? `Seleccione Local de Votación en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
+                    placeholder={formData.distrito_asignado ? `Seleccione Centro de Votación en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
                     icon={School}
                     required
                     disabled={!formData.distrito_asignado}

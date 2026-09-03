@@ -131,7 +131,7 @@ export function QuizModal({ onClose, onPassQuiz }) {
             }}>
               <Lightbulb className="w-5 h-5 text-amber-400 flex-shrink-0" style={{ marginTop: '2px' }} />
               <div>
-                <strong style={{ color: '#ffffff' }}>Instrucciones:</strong> Responde las 5 preguntas sobre la jornada electoral. Necesitas aprobar las <strong>5 de 5 respuestas correctas (100%)</strong> para obtener tu Certificado Oficial.
+                <strong style={{ color: '#ffffff' }}>Instrucciones:</strong> Responde las 5 preguntas sobre la jornada electoral. Necesitas aprobar las <strong>5 de 5 respuestas correctas (100%)</strong> para completar tu acreditación oficial.
               </div>
             </div>
           ) : score < 5 ? (

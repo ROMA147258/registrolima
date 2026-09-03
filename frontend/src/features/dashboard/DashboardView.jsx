@@ -2310,7 +2310,7 @@ export function DashboardView({ onGoToTraining }) {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                         <div style={{ background: '#10b981', color: '#fff', padding: '4px 8px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', fontWeight: 800 }}>
                           <School className="w-4 h-4" />
-                          <span>MI LOCAL DE VOTACIÓN ASIGNADO</span>
+                          <span>MI CENTRO DE VOTACIÓN ASIGNADO</span>
                         </div>
                         <h2 style={{ fontSize: isMobile ? '1.05rem' : '1.25rem', fontWeight: 900, color: textTitle, margin: 0 }}>
                           {coordinatorLocal || 'Local de Votación'}

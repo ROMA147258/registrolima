@@ -4,13 +4,11 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { VideoModal } from '../../components/modals/VideoModal.jsx';
 import { PdfModal } from '../../components/modals/PdfModal.jsx';
 import { QuizModal } from '../../components/modals/QuizModal.jsx';
-import { CredentialCard } from '../accreditation/CredentialCard.jsx';
 import { api } from '../../services/api.js';
 
 export function TrainingView({ onGoToDashboard }) {
   const { user, logout, updateUserTraining, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital } = useAuth();
   const [activeModal, setActiveModal] = useState(null);
-  const [viewingCertificate, setViewingCertificate] = useState(false);
 
   const rawVideo = parseInt(user?.Video ?? user?.video ?? user?.['Videos Completados'] ?? user?.videosCompletados ?? user?.videos_completados ?? 0, 10);
   const rawPdf = parseInt(user?.PDF ?? user?.pdf ?? user?.['PDFs Completados'] ?? user?.pdfsCompletados ?? user?.pdfs_completados ?? 0, 10);
@@ -47,14 +45,6 @@ export function TrainingView({ onGoToDashboard }) {
     const res = await api.updateProgress(dni, 'quiz', 0);
     updateUserTraining(res);
   };
-
-  if (viewingCertificate) {
-    return (
-      <div style={{ minHeight: '100vh', background: 'rgb(193, 229, 249)', padding: '24px 16px' }}>
-        <CredentialCard user={user} onBack={() => setViewingCertificate(false)} />
-      </div>
-    );
-  }
 
   const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || user?.nombres_y_apellidos || 'Personero';
   const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || user?.dni_numero || (user?.tokenVerificacion ? user.tokenVerificacion.split('-').pop() : '') || '--------';
@@ -93,7 +83,7 @@ export function TrainingView({ onGoToDashboard }) {
                 ? 'Evaluación y Acreditación de Coordinador Distrital'
                 : (isCoordinadorZonal
                   ? 'Evaluación y Acreditación de Coordinador Zonal'
-                  : (isCoordinadorLocal ? 'Evaluación y Acreditación de Personero de Local de Votación' : 'Ficha de Capacitación de Personeros'))}
+                  : (isCoordinadorLocal ? 'Evaluación y Acreditación de Personero de Centro de Votación' : 'Ficha de Capacitación de Personeros'))}
             </span>
           </div>
 
@@ -129,12 +119,12 @@ export function TrainingView({ onGoToDashboard }) {
             animation: 'fadeIn 0.2s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: isFullyAccredited ? '#047857' : '#0369a1', fontSize: '0.86rem', marginBottom: '4px' }}>
-              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador Distrital' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Personero de Local de Votación')}</span>
+              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador Distrital' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Personero de Centro de Votación')}</span>
             </div>
             <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#065f46' : '#334155', lineHeight: 1.45 }}>
               {isFullyAccredited ? (
                 <>
-                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu local de votación (${localAsig}) en ${distrito}`)}.
+                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu centro de votación (${localAsig}) en ${distrito}`)}.
                 </>
               ) : (
                 <>
@@ -194,12 +184,12 @@ export function TrainingView({ onGoToDashboard }) {
             </span>
             {isCoordinadorLocal && (
               <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Local de Votación: {localAsig}
+                Centro de Votación: {localAsig}
               </span>
             )}
             {isCoordinadorZonal && (
               <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Zona: {localAsig.split(',').filter(Boolean).length} locales de votación
+                Zona: {localAsig.split(',').filter(Boolean).length} centros de votación
               </span>
             )}
             {!isCoordinadorDistrital && !isCoordinadorLocal && !isCoordinadorZonal && (

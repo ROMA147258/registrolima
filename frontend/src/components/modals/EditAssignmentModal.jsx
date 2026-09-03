@@ -417,7 +417,7 @@ function SingleSchoolSearchSelect({
     <div className="form-group" style={{ position: 'relative', width: '100%' }}>
       <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}>
         <School className="w-4 h-4 text-sky-400" />
-        <span>Local de Votación Asignado</span>
+        <span>Centro de Votación Asignado</span>
       </label>
 
       <div ref={containerRef} style={{ position: 'relative' }}>
