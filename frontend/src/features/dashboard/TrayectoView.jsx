@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
-  Search, Navigation, Car, School,
-  CheckCircle2, AlertTriangle, X, Loader2
+  Search, Navigation, Car,
+  CheckCircle2, AlertTriangle, X, Loader2,
+  MapPin, ExternalLink, RefreshCw, UserCheck, Shield
 } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { LOCALES_OFICIALES } from '../../constants/localesCatalog.js';
 
 // Coordenadas GPS oficiales de los distritos de Lima Metropolitana
 export const UBIGEOS_LIMA = {
@@ -54,30 +56,122 @@ export const UBIGEOS_LIMA = {
   "VILLA MARIA DEL TRIUNFO": { lat: -12.162798, lng: -76.938896 }
 };
 
-// Generador de coordenadas deterministas y rápidas
-function getSchoolCoordinates(schoolName, districtName) {
-  const normDist = (districtName || 'SAN ISIDRO').trim().toUpperCase()
+// Normalizador de distritos
+export function normalizeDistrictName(dist) {
+  if (!dist) return 'SAN ISIDRO';
+  const clean = String(dist).trim().toUpperCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  const base = UBIGEOS_LIMA[normDist] || UBIGEOS_LIMA['SAN ISIDRO'] || { lat: -12.097798, lng: -77.035301 };
-
-  if (!schoolName) return { lat: base.lat, lng: base.lng };
-
-  let hash = 0;
-  for (let i = 0; i < schoolName.length; i++) {
-    hash = (hash << 5) - hash + schoolName.charCodeAt(i);
-    hash |= 0;
-  }
-  const offsetLat = ((Math.abs(hash) % 1000) / 1000 - 0.5) * 0.016;
-  const offsetLng = ((Math.abs(hash * 31) % 1000) / 1000 - 0.5) * 0.016;
-
-  return {
-    lat: base.lat + offsetLat,
-    lng: base.lng + offsetLng
-  };
+  if (clean.includes('VMT') || clean.includes('VILLA MARIA DEL TRIUNFO')) return 'VILLA MARIA DEL TRIUNFO';
+  if (clean.includes('VES') || clean.includes('VILLA EL SALVADOR')) return 'VILLA EL SALVADOR';
+  if (clean.includes('SJL') || clean.includes('SAN JUAN DE LURIGANCHO')) return 'SAN JUAN DE LURIGANCHO';
+  if (clean.includes('SJM') || clean.includes('SAN JUAN DE MIRAFLORES')) return 'SAN JUAN DE MIRAFLORES';
+  if (clean.includes('SMP') || clean.includes('SAN MARTIN DE PORRES')) return 'SAN MARTIN DE PORRES';
+  if (clean.includes('LURIGANCHO') || clean.includes('CHOSICA')) return 'LURIGANCHO-CHOSICA';
+  if (clean.includes('CERCADO') || clean === 'LIMA') return 'CERCADO DE LIMA';
+  if (clean.includes('SURCO') || clean === 'SANTIAGO DE SURCO') return 'SANTIAGO DE SURCO';
+  if (clean.includes('BRENA') || clean.includes('BREÑA')) return 'BREÑA';
+  if (clean.includes('LURIN') || clean.includes('LURÍN')) return 'LURIN';
+  if (clean.includes('RIMAC') || clean.includes('RÍMAC')) return 'RIMAC';
+  if (clean.includes('ANCON') || clean.includes('ANCÓN')) return 'ANCON';
+  if (clean.includes('JESUS MARIA') || clean.includes('JESÚS MARÍA')) return 'JESUS MARIA';
+  if (clean.includes('MAGDALENA')) return 'MAGDALENA DEL MAR';
+  if (clean.includes('PUEBLO LIBRE')) return 'PUEBLO LIBRE';
+  return clean;
 }
 
-// Distancia Haversine rápida
-function calculateHaversine(lat1, lon1, lat2, lon2) {
+export function normalizeSchoolName(name) {
+  if (!name) return '';
+  return String(name).trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Índice de locales oficiales de ONPE para resolución inmediata de direcciones
+const localesIndex = new Map();
+LOCALES_OFICIALES.forEach(loc => {
+  const normDist = normalizeDistrictName(loc.distrito);
+  const cleanName = normalizeSchoolName(loc.nombre);
+  localesIndex.set(`${cleanName}__${normDist}`, loc);
+  if (!localesIndex.has(cleanName)) {
+    localesIndex.set(cleanName, loc);
+  }
+});
+
+// Función para obtener información oficial del local
+export function getOfficialSchool(schoolName, districtName) {
+  const normDist = normalizeDistrictName(districtName);
+  const cleanName = normalizeSchoolName(schoolName);
+  
+  const direct = localesIndex.get(`${cleanName}__${normDist}`) || localesIndex.get(cleanName);
+  if (direct) return direct;
+
+  const found = LOCALES_OFICIALES.find(loc => {
+    const locDistNorm = normalizeDistrictName(loc.distrito);
+    if (locDistNorm !== normDist) return false;
+    const lClean = normalizeSchoolName(loc.nombre);
+    return lClean.includes(cleanName) || cleanName.includes(lClean);
+  });
+
+  return found || null;
+}
+
+// Caché de geolocalización
+const geocodeCache = new Map();
+
+// Geocodificación con dirección física oficial
+export async function geocodeSchool(schoolName, districtName) {
+  const normDist = normalizeDistrictName(districtName);
+  const cleanSchool = normalizeSchoolName(schoolName);
+  const official = getOfficialSchool(schoolName, districtName);
+  const addressText = official?.direccion ? `${official.direccion}, ${normDist}` : `${schoolName}, ${normDist}`;
+  const cacheKey = `${cleanSchool}__${normDist}`;
+
+  if (geocodeCache.has(cacheKey)) {
+    return geocodeCache.get(cacheKey);
+  }
+
+  const base = UBIGEOS_LIMA[normDist] || UBIGEOS_LIMA['SAN ISIDRO'] || { lat: -12.097798, lng: -77.035301 };
+
+  try {
+    const query = `${encodeURIComponent(addressText)}, Lima, Peru`;
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1&countrycodes=pe`, {
+      headers: { 'Accept-Language': 'es' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const point = {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon),
+          address: official?.direccion || data[0].display_name
+        };
+        geocodeCache.set(cacheKey, point);
+        return point;
+      }
+    }
+  } catch (e) {}
+
+  let hash = 0;
+  for (let i = 0; i < cleanSchool.length; i++) {
+    hash = (hash << 5) - hash + cleanSchool.charCodeAt(i);
+    hash |= 0;
+  }
+  const offsetLat = (((Math.abs(hash) % 1000) / 1000) - 0.5) * 0.022;
+  const offsetLng = (((Math.abs(hash * 37) % 1000) / 1000) - 0.5) * 0.022;
+
+  const fallback = {
+    lat: base.lat + offsetLat,
+    lng: base.lng + offsetLng,
+    address: official?.direccion || addressText
+  };
+  geocodeCache.set(cacheKey, fallback);
+  return fallback;
+}
+
+// Distancia Haversine
+export function calculateHaversine(lat1, lon1, lat2, lon2) {
   if (lat1 === lat2 && lon1 === lon2) return 0;
   const R = 6371;
   const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -90,40 +184,38 @@ function calculateHaversine(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// Memoria caché de rutas en caliente para 0ms de lag
+// Memoria caché de rutas
 const routeMemoryCache = new Map();
 
-// Consulta de ruta optimizada con timeout ultra rápido (1.2s) y fallback instantáneo
-async function fetchStreetRoute(pA, pB) {
+// Consulta de ruta OSRM con cálculo realista
+export async function fetchStreetRoute(pA, pB, isSame) {
+  if (isSame) {
+    return {
+      points: [[pA.lat, pA.lng]],
+      distanceKm: '0.0',
+      durationMin: 0,
+      durationWalkMin: 0
+    };
+  }
+
+  const directDist = calculateHaversine(pA.lat, pA.lng, pB.lat, pB.lng);
+  if (directDist < 0.04) {
+    return {
+      points: [[pA.lat, pA.lng]],
+      distanceKm: '0.0',
+      durationMin: 0,
+      durationWalkMin: 0
+    };
+  }
+
   const cacheKey = `${pA.lat.toFixed(5)},${pA.lng.toFixed(5)}->${pB.lat.toFixed(5)},${pB.lng.toFixed(5)}`;
   if (routeMemoryCache.has(cacheKey)) {
     return routeMemoryCache.get(cacheKey);
   }
 
-  const directDist = calculateHaversine(pA.lat, pA.lng, pB.lat, pB.lng);
-  const distKm = (directDist * 1.3).toFixed(1);
-  const durationMin = Math.max(3, Math.round((parseFloat(distKm) / 22) * 60 + 2));
-
-  // Generador de cuadrícula vial de alta velocidad
-  const buildFallback = () => {
-    const steps = [];
-    const numSteps = 24;
-    for (let i = 0; i <= numSteps; i++) {
-      const t = i / numSteps;
-      steps.push([pA.lat, pA.lng + (pB.lng - pA.lng) * t]);
-    }
-    for (let i = 0; i <= numSteps; i++) {
-      const t = i / numSteps;
-      steps.push([pA.lat + (pB.lat - pA.lat) * t, pB.lng]);
-    }
-    const result = { points: steps, distanceKm: distKm, durationMin };
-    routeMemoryCache.set(cacheKey, result);
-    return result;
-  };
-
   try {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 1200);
+    const timer = setTimeout(() => controller.abort(), 2000);
 
     const url = `https://router.project-osrm.org/route/v1/driving/${pA.lng},${pA.lat};${pB.lng},${pB.lat}?overview=full&geometries=geojson`;
     const res = await fetch(url, { signal: controller.signal });
@@ -135,38 +227,64 @@ async function fetchStreetRoute(pA, pB) {
         const route = json.routes[0];
         const coordinates = route.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
         const realDistKm = (route.distance / 1000).toFixed(1);
-        const realDurationMin = Math.max(3, Math.round(route.duration / 60));
+        const realNumDist = parseFloat(realDistKm);
+        
+        let realDurationMin = Math.round((route.duration / 60) * 1.35 + 2);
+        if (realNumDist < 2 && realDurationMin < 4) realDurationMin = 5;
+
         const result = {
           points: coordinates,
           distanceKm: realDistKm,
-          durationMin: realDurationMin
+          durationMin: Math.max(3, realDurationMin),
+          durationWalkMin: Math.max(4, Math.round((realNumDist / 4.2) * 60))
         };
         routeMemoryCache.set(cacheKey, result);
         return result;
       }
     }
-  } catch (e) {
-    // Timeout o error de red: retorna ruta calculada localmente al instante
+  } catch (e) {}
+
+  const distKmVal = directDist < 1.0 ? directDist * 1.2 : directDist * 1.36;
+  const distKmStr = Math.max(0.4, distKmVal).toFixed(1);
+  const numericDist = parseFloat(distKmStr);
+  let durationCar = Math.round(numericDist * 2.5 + 4);
+  const durationWalk = Math.max(4, Math.round((numericDist / 4.2) * 60));
+
+  const steps = [];
+  const numSteps = 24;
+  for (let i = 0; i <= numSteps; i++) {
+    const t = i / numSteps;
+    steps.push([pA.lat, pA.lng + (pB.lng - pA.lng) * t]);
+  }
+  for (let i = 0; i <= numSteps; i++) {
+    const t = i / numSteps;
+    steps.push([pA.lat + (pB.lat - pA.lat) * t, pB.lng]);
   }
 
-  return buildFallback();
+  const result = {
+    points: steps,
+    distanceKm: distKmStr,
+    durationMin: durationCar,
+    durationWalkMin: durationWalk
+  };
+  routeMemoryCache.set(cacheKey, result);
+  return result;
 }
 
-export function TrayectoView({ records = [], isDark = false }) {
+export function TrayectoView({ records = [], isDark = false, defaultDistrict = '' }) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
   const [searchTerm, setSearchTerm] = useState('');
-  const [distanceFilter, setDistanceFilter] = useState('all'); // 'all', 'far', 'medium', 'same'
+  const [distanceFilter, setDistanceFilter] = useState('all');
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [routeStats, setRouteStats] = useState(null);
   const [isLoadingRoute, setIsLoadingRoute] = useState(false);
-  const [showMobileList, setShowMobileList] = useState(false);
 
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const layerGroupRef = useRef(null);
   const animationTimerRef = useRef(null);
 
-  // Escuchar cambios de tamaño de pantalla sin bloquear UI
+  // Resize listener
   useEffect(() => {
     let resizeTimer = null;
     const handleResize = () => {
@@ -185,7 +303,7 @@ export function TrayectoView({ records = [], isDark = false }) {
     };
   }, []);
 
-  // Filtrado reactivo optimizado por texto y por distancia (lejos/cerca/mismo)
+  // Filtrado de personeros
   const filteredPeople = useMemo(() => {
     if (!records || records.length === 0) return [];
     const term = searchTerm.toLowerCase().trim();
@@ -195,7 +313,7 @@ export function TrayectoView({ records = [], isDark = false }) {
       const dni = String(r['D.N.I.'] || r.dni || '');
       const locVota = String(r['Local de Votación'] || r.localDeVotacion || '').toLowerCase();
       const locAsig = String(r['Local de Votación Asignado'] || r.localDeVotacionAsignado || '').toLowerCase();
-      const distVota = r['Distrito donde Vota'] || r.distritoDondeVota || 'San Isidro';
+      const distVota = r['Distrito donde Vota'] || r.distritoDondeVota || defaultDistrict || 'San Isidro';
       const distAsig = r['Distrito Asignado'] || r.distritoAsignado || distVota;
 
       const matchesSearch = !term || name.includes(term) || dni.includes(term) || locVota.includes(term) || locAsig.includes(term);
@@ -203,10 +321,12 @@ export function TrayectoView({ records = [], isDark = false }) {
 
       // Filtro de distancia
       if (distanceFilter !== 'all') {
-        const isSame = locVota.trim().toLowerCase() === locAsig.trim().toLowerCase();
-        const pA = getSchoolCoordinates(locVota, distVota);
-        const pB = getSchoolCoordinates(locAsig, distAsig);
-        const directKm = isSame ? 0 : calculateHaversine(pA.lat, pA.lng, pB.lat, pB.lng) * 1.3;
+        const isSame = normalizeSchoolName(locVota) === normalizeSchoolName(locAsig);
+        const normDistV = normalizeDistrictName(distVota);
+        const normDistA = normalizeDistrictName(distAsig);
+        const pA = UBIGEOS_LIMA[normDistV] || UBIGEOS_LIMA['SAN ISIDRO'];
+        const pB = UBIGEOS_LIMA[normDistA] || UBIGEOS_LIMA['SAN ISIDRO'];
+        const directKm = isSame ? 0 : calculateHaversine(pA.lat, pA.lng, pB.lat, pB.lng) * 1.36;
 
         if (distanceFilter === 'far' && directKm < 5) return false;
         if (distanceFilter === 'medium' && (directKm === 0 || directKm >= 5)) return false;
@@ -215,14 +335,9 @@ export function TrayectoView({ records = [], isDark = false }) {
 
       return true;
     });
-  }, [records, searchTerm, distanceFilter]);
+  }, [records, searchTerm, distanceFilter, defaultDistrict]);
 
-  // Limitar renderizado DOM en la barra lateral para evitar lag con miles de registros
-  const displayedPeople = useMemo(() => {
-    return filteredPeople.slice(0, 40);
-  }, [filteredPeople]);
-
-  // Seleccionar automáticamente al primer personero disponible
+  // Selección automática
   useEffect(() => {
     if (filteredPeople.length > 0) {
       const stillExists = selectedPerson && filteredPeople.some(p => (p.dni || p['D.N.I.']) === (selectedPerson.dni || selectedPerson['D.N.I.']));
@@ -234,11 +349,10 @@ export function TrayectoView({ records = [], isDark = false }) {
     }
   }, [filteredPeople]);
 
-  // Inicializar Mapa Leaflet con limpieza garantizada (previene fugas de memoria y lag)
+  // Inicializar Mapa
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    // Crear mapa una sola vez de forma ligera
     const map = L.map(mapContainerRef.current, {
       center: [-12.097798, -77.035301],
       zoom: 14,
@@ -250,7 +364,6 @@ export function TrayectoView({ records = [], isDark = false }) {
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    // Tiles rápidos y ligeros de OpenStreetMap
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
       tileSize: 256
@@ -277,14 +390,13 @@ export function TrayectoView({ records = [], isDark = false }) {
     };
   }, []);
 
-  // Trazar Ruta ultra fluida cuando cambia el personero seleccionado
+  // Trazar Ruta
   useEffect(() => {
     if (!mapInstanceRef.current || !layerGroupRef.current) return;
 
     const map = mapInstanceRef.current;
     const layerGroup = layerGroupRef.current;
 
-    // Detener animación previa
     if (animationTimerRef.current) {
       clearInterval(animationTimerRef.current);
       animationTimerRef.current = null;
@@ -296,129 +408,150 @@ export function TrayectoView({ records = [], isDark = false }) {
       return;
     }
 
-    const distVota = selectedPerson['Distrito donde Vota'] || selectedPerson.distritoDondeVota || 'San Isidro';
+    const distVota = selectedPerson['Distrito donde Vota'] || selectedPerson.distritoDondeVota || defaultDistrict || 'San Isidro';
     const locVota = selectedPerson['Local de Votación'] || selectedPerson.localDeVotacion || 'Local de Votación';
     const distAsig = selectedPerson['Distrito Asignado'] || selectedPerson.distritoAsignado || distVota;
     const locAsig = selectedPerson['Local de Votación Asignado'] || selectedPerson.localDeVotacionAsignado || locVota;
     const personName = selectedPerson['Nombres y Apellidos'] || selectedPerson.nombresApellidos || 'Personero';
     const mesaAsig = selectedPerson['Mesa Asignada'] || selectedPerson.mesaAsignada || '-';
 
-    const pA = getSchoolCoordinates(locVota, distVota);
-    const pB = getSchoolCoordinates(locAsig, distAsig);
+    const isSameSchool = normalizeSchoolName(locVota) === normalizeSchoolName(locAsig) && normalizeDistrictName(distVota) === normalizeDistrictName(distAsig);
 
-    const isSameSchool = locVota.trim().toLowerCase() === locAsig.trim().toLowerCase();
-
-    // Marcador Punto A (Donde Vota)
-    const iconA = L.divIcon({
-      className: 'custom-pin-a',
-      html: `
-        <div style="background: #0284c7; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2.5px solid white;">
-          🗳️
-        </div>
-      `,
-      iconSize: [32, 32],
-      iconAnchor: [16, 16]
-    });
-
-    const markerA = L.marker([pA.lat, pA.lng], { icon: iconA }).addTo(layerGroup);
-    markerA.bindPopup(`
-      <div style="font-family: sans-serif; padding: 4px;">
-        <strong style="color: #0284c7; font-size: 13px;">🗳️ Local donde Vota:</strong><br/>
-        <b style="font-size: 13px;">${locVota}</b><br/>
-        <span style="color: #64748b; font-size: 11px;">Distrito: ${distVota}</span>
-      </div>
-    `);
-
-    // Marcador Punto B (Donde Cuida Votos)
-    const iconB = L.divIcon({
-      className: 'custom-pin-b',
-      html: `
-        <div style="background: #10b981; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2.5px solid white;">
-          🛡️
-        </div>
-      `,
-      iconSize: [32, 32],
-      iconAnchor: [16, 16]
-    });
-
-    const markerB = L.marker([pB.lat, pB.lng], { icon: iconB }).addTo(layerGroup);
-    markerB.bindPopup(`
-      <div style="font-family: sans-serif; padding: 4px;">
-        <strong style="color: #10b981; font-size: 13px;">🛡️ Local Asignado (Donde Cuida):</strong><br/>
-        <b style="font-size: 13px;">${locAsig}</b><br/>
-        <span style="color: #64748b; font-size: 11px;">Mesa: ${mesaAsig} &bull; ${distAsig}</span>
-      </div>
-    `);
-
-    // Caso 1: Vota en el mismo colegio
-    if (isSameSchool) {
-      setRouteStats({
-        distanciaKm: '0.0',
-        tiempoCarroMin: 0,
-        isSameSchool: true,
-        personName,
-        locVota,
-        locAsig,
-        distVota,
-        distAsig
-      });
-      map.setView([pA.lat, pA.lng], 15);
-      return;
-    }
-
-    // Caso 2: Trazar ruta por pistas
     setIsLoadingRoute(true);
 
-    fetchStreetRoute(pA, pB).then(routeData => {
-      setIsLoadingRoute(false);
-      setRouteStats({
-        distanciaKm: routeData.distanceKm,
-        tiempoCarroMin: routeData.durationMin,
-        isSameSchool: false,
-        personName,
-        locVota,
-        locAsig,
-        distVota,
-        distAsig
-      });
+    Promise.all([
+      geocodeSchool(locVota, distVota),
+      geocodeSchool(locAsig, distAsig)
+    ]).then(([pA, pB]) => {
 
-      // Trazar línea de pista
-      const polyline = L.polyline(routeData.points, {
-        color: '#0284c7',
-        weight: 5,
-        opacity: 0.85,
-        lineJoin: 'round',
-        lineCap: 'round'
-      });
-      layerGroup.addLayer(polyline);
+      const offVota = getOfficialSchool(locVota, distVota);
+      const offAsig = getOfficialSchool(locAsig, distAsig);
 
-      // Enfocar bounds suavemente
-      const bounds = L.latLngBounds([[pA.lat, pA.lng], [pB.lat, pB.lng]]);
-      map.fitBounds(bounds, { padding: isMobile ? [25, 25] : [45, 45], maxZoom: 16 });
-
-      // Auto en movimiento optimizado (100ms para suavidad sin carga excesiva de CPU)
-      const carIcon = L.divIcon({
-        className: 'car-marker',
+      // Marcador A (Vota)
+      const iconA = L.divIcon({
+        className: 'custom-pin-a',
         html: `
-          <div style="background: #ffffff; border: 2px solid #0284c7; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 3px 8px rgba(0,0,0,0.3);">
-            🚗
+          <div style="background: #0284c7; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.35); border: 2.5px solid white;">
+            🗳️
           </div>
         `,
-        iconSize: [28, 28],
-        iconAnchor: [14, 14]
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
       });
 
-      const carMarker = L.marker(routeData.points[0], { icon: carIcon });
-      layerGroup.addLayer(carMarker);
+      const markerA = L.marker([pA.lat, pA.lng], { icon: iconA }).addTo(layerGroup);
+      markerA.bindPopup(`
+        <div style="font-family: sans-serif; padding: 4px;">
+          <strong style="color: #0284c7; font-size: 13px;">🗳️ Local donde Vota:</strong><br/>
+          <b style="font-size: 13px;">${locVota}</b><br/>
+          <span style="color: #64748b; font-size: 11px;">${offVota?.direccion ? `📍 ${offVota.direccion} &bull; ` : ''}${distVota}</span>
+        </div>
+      `);
 
-      let stepIndex = 0;
-      const totalPoints = routeData.points.length;
+      // Marcador B (Cuida)
+      const iconB = L.divIcon({
+        className: 'custom-pin-b',
+        html: `
+          <div style="background: #10b981; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.35); border: 2.5px solid white;">
+            🛡️
+          </div>
+        `,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
 
-      animationTimerRef.current = setInterval(() => {
-        if (!carMarker) return;
-        stepIndex = (stepIndex + 1) % totalPoints;
-        carMarker.setLatLng(routeData.points[stepIndex]);
-      }, 100);
+      const markerB = L.marker([pB.lat, pB.lng], { icon: iconB }).addTo(layerGroup);
+      markerB.bindPopup(`
+        <div style="font-family: sans-serif; padding: 4px;">
+          <strong style="color: #10b981; font-size: 13px;">🛡️ Local Asignado (Donde Cuida):</strong><br/>
+          <b style="font-size: 13px;">${locAsig}</b><br/>
+          <span style="color: #64748b; font-size: 11px;">${offAsig?.direccion ? `📍 ${offAsig.direccion} &bull; ` : ''}Mesa: ${mesaAsig} &bull; ${distAsig}</span>
+        </div>
+      `);
+
+      if (isSameSchool) {
+        setIsLoadingRoute(false);
+        setRouteStats({
+          distanciaKm: '0.0',
+          tiempoCarroMin: 0,
+          tiempoPieMin: 0,
+          isSameSchool: true,
+          personName,
+          locVota,
+          locAsig,
+          distVota,
+          distAsig,
+          dirVota: offVota?.direccion || locVota,
+          dirAsig: offAsig?.direccion || locAsig,
+          pA,
+          pB
+        });
+        map.setView([pA.lat, pA.lng], 15);
+        setTimeout(() => {
+          if (mapInstanceRef.current) mapInstanceRef.current.invalidateSize();
+        }, 150);
+        return;
+      }
+
+      fetchStreetRoute(pA, pB, isSameSchool).then(routeData => {
+        setIsLoadingRoute(false);
+        setRouteStats({
+          distanciaKm: routeData.distanceKm,
+          tiempoCarroMin: routeData.durationMin,
+          tiempoPieMin: routeData.durationWalkMin || Math.max(4, Math.round((parseFloat(routeData.distanceKm) / 4.2) * 60)),
+          isSameSchool: false,
+          personName,
+          locVota,
+          locAsig,
+          distVota,
+          distAsig,
+          dirVota: offVota?.direccion || locVota,
+          dirAsig: offAsig?.direccion || locAsig,
+          pA,
+          pB
+        });
+
+        const polyline = L.polyline(routeData.points, {
+          color: '#0284c7',
+          weight: 5.5,
+          opacity: 0.9,
+          lineJoin: 'round',
+          lineCap: 'round'
+        });
+        layerGroup.addLayer(polyline);
+
+        const bounds = L.latLngBounds([[pA.lat, pA.lng], [pB.lat, pB.lng]]);
+        map.fitBounds(bounds, { padding: isMobile ? [25, 25] : [45, 45], maxZoom: 16 });
+
+        setTimeout(() => {
+          if (mapInstanceRef.current) mapInstanceRef.current.invalidateSize();
+        }, 150);
+
+        // Auto animado
+        const carIcon = L.divIcon({
+          className: 'car-marker',
+          html: `
+            <div style="background: #ffffff; border: 2.5px solid #0284c7; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.35);">
+              🚗
+            </div>
+          `,
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+
+        const carMarker = L.marker(routeData.points[0], { icon: carIcon });
+        layerGroup.addLayer(carMarker);
+
+        let stepIndex = 0;
+        const totalPoints = routeData.points.length;
+
+        animationTimerRef.current = setInterval(() => {
+          if (!carMarker) return;
+          stepIndex = (stepIndex + 1) % totalPoints;
+          carMarker.setLatLng(routeData.points[stepIndex]);
+        }, 100);
+
+      });
 
     });
 
@@ -429,7 +562,7 @@ export function TrayectoView({ records = [], isDark = false }) {
       }
     };
 
-  }, [selectedPerson, isMobile]);
+  }, [selectedPerson, isMobile, defaultDistrict]);
 
   const bgCard = isDark ? '#1e293b' : '#ffffff';
   const borderCol = isDark ? '#334155' : '#e2e8f0';
@@ -437,43 +570,67 @@ export function TrayectoView({ records = [], isDark = false }) {
   const textSub = isDark ? '#94a3b8' : '#64748b';
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '10px' : '14px', paddingBottom: isMobile ? '70px' : '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingBottom: isMobile ? '80px' : '20px' }}>
       
-      {/* BARRA SUPERIOR */}
+      {/* BARRA SUPERIOR COMPACTA */}
       <div style={{
         background: bgCard,
         border: `1px solid ${borderCol}`,
         borderRadius: '12px',
-        padding: isMobile ? '12px 14px' : '14px 18px',
+        padding: isMobile ? '10px 12px' : '12px 18px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '8px'
+        gap: '8px',
+        boxShadow: isDark ? '0 4px 16px rgba(0,0,0,0.2)' : '0 2px 8px rgba(0,0,0,0.02)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Navigation className="w-5 h-5 text-sky-500" />
-          <h2 style={{ fontSize: isMobile ? '1rem' : '1.1rem', fontWeight: 900, color: textTitle, margin: 0 }}>
-            Trayecto de Personeros
-          </h2>
-          {!isMobile && (
-            <span style={{ fontSize: '0.8rem', color: textSub, marginLeft: '4px' }}>
-              — Ruta en carro desde su local de votación hasta su local asignado
+          <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(2, 132, 199, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Navigation className="w-4 h-4 text-sky-500" />
+          </div>
+          <div>
+            <h2 style={{ fontSize: isMobile ? '0.96rem' : '1.1rem', fontWeight: 900, color: textTitle, margin: 0 }}>
+              Trayecto y Desplazamiento de Personeros
+            </h2>
+            <span style={{ fontSize: '0.74rem', color: textSub }}>
+              Rutas exactas con direcciones oficiales ONPE y enlace GPS
             </span>
-          )}
+          </div>
         </div>
 
-        <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7' }}>
+        <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7', background: isDark ? 'rgba(2,132,199,0.15)' : '#e0f2fe', padding: '5px 12px', borderRadius: '8px', border: '1px solid rgba(2,132,199,0.3)' }}>
           {filteredPeople.length} Personeros
         </div>
       </div>
 
-      {/* EN MÓVIL: SELECTOR RÁPIDO SUPERIOR */}
-      {isMobile && (
-        <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {/* Input de Búsqueda Móvil */}
+      {/* CONTENEDOR SIMÉTRICO: LISTA COMPACTA A LA IZQUIERDA + MAPA CON INDICADOR A LA DERECHA */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '360px 1fr',
+        gap: isMobile ? '10px' : '14px',
+        alignItems: 'stretch'
+      }}>
+        
+        {/* PANEL IZQUIERDO: LISTA CON MAYOR LONGITUD */}
+        <div style={{
+          background: bgCard,
+          border: `1.5px solid ${borderCol}`,
+          borderRadius: '14px',
+          padding: '14px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          height: '100%',
+          minHeight: isMobile ? '380px' : '600px',
+          maxHeight: isMobile ? '450px' : '700px',
+          boxSizing: 'border-box',
+          boxShadow: isDark ? '0 4px 18px rgba(0,0,0,0.3)' : '0 2px 12px rgba(0,0,0,0.04)'
+        }}>
+          
+          {/* Buscador de Personero */}
           <div style={{ position: 'relative' }}>
-            <Search className="w-4 h-4" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: textSub }} />
+            <Search className="w-3.5 h-3.5" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: textSub }} />
             <input
               type="text"
               placeholder="Buscar por Nombre o DNI..."
@@ -481,111 +638,98 @@ export function TrayectoView({ records = [], isDark = false }) {
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
                 width: '100%',
-                padding: '9px 32px 9px 32px',
+                padding: '7px 10px 7px 30px',
                 borderRadius: '8px',
                 border: `1.5px solid #0284c7`,
                 background: isDark ? '#0f172a' : '#f0f9ff',
                 color: textTitle,
-                fontSize: '0.84rem',
+                fontSize: '0.8rem',
                 fontWeight: 600,
                 outline: 'none'
               }}
             />
             {searchTerm && (
-              <X className="w-4 h-4 cursor-pointer" style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: textSub }} onClick={() => setSearchTerm('')} />
+              <X className="w-3 h-3 cursor-pointer" style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', color: textSub }} onClick={() => setSearchTerm('')} />
             )}
           </div>
 
-          {/* Botones de Filtro de Distancia en Móvil */}
-          <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+          {/* Filtros de Distancia */}
+          <div style={{ display: 'flex', gap: '3px', flexWrap: 'wrap' }}>
             <button
               onClick={() => setDistanceFilter('all')}
               style={{
-                padding: '4px 8px',
-                borderRadius: '6px',
+                padding: '3px 7px',
+                borderRadius: '5px',
                 border: distanceFilter === 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`,
                 background: distanceFilter === 'all' ? (isDark ? '#0369a1' : '#e0f2fe') : 'transparent',
                 color: distanceFilter === 'all' ? (isDark ? '#ffffff' : '#0284c7') : textSub,
-                fontSize: '0.68rem',
-                fontWeight: 700,
+                fontSize: '0.66rem',
+                fontWeight: 800,
                 cursor: 'pointer'
               }}
             >
               Todos
             </button>
             <button
-              onClick={() => setDistanceFilter('far')}
-              style={{
-                padding: '4px 8px',
-                borderRadius: '6px',
-                border: distanceFilter === 'far' ? '1.5px solid #ef4444' : `1px solid ${borderCol}`,
-                background: distanceFilter === 'far' ? (isDark ? 'rgba(239, 68, 68, 0.25)' : '#fee2e2') : 'transparent',
-                color: distanceFilter === 'far' ? '#dc2626' : textSub,
-                fontSize: '0.68rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              🚨 Muy Lejos (&gt; 5 km)
-            </button>
-            <button
-              onClick={() => setDistanceFilter('medium')}
-              style={{
-                padding: '4px 8px',
-                borderRadius: '6px',
-                border: distanceFilter === 'medium' ? '1.5px solid #f59e0b' : `1px solid ${borderCol}`,
-                background: distanceFilter === 'medium' ? (isDark ? 'rgba(245, 158, 11, 0.25)' : '#fef3c7') : 'transparent',
-                color: distanceFilter === 'medium' ? '#d97706' : textSub,
-                fontSize: '0.68rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              🚗 Media Dist.
-            </button>
-            <button
               onClick={() => setDistanceFilter('same')}
               style={{
-                padding: '4px 8px',
-                borderRadius: '6px',
+                padding: '3px 7px',
+                borderRadius: '5px',
                 border: distanceFilter === 'same' ? '1.5px solid #10b981' : `1px solid ${borderCol}`,
                 background: distanceFilter === 'same' ? (isDark ? 'rgba(16, 185, 129, 0.25)' : '#dcfce7') : 'transparent',
                 color: distanceFilter === 'same' ? '#15803d' : textSub,
-                fontSize: '0.68rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              🎯 Mismo Local
-            </button>
-          </div>
-
-          {/* Botón para ver lista completa o colapsarla */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: textSub, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }}>
-              {selectedPerson ? `👤 ${selectedPerson['Nombres y Apellidos'] || selectedPerson.nombresApellidos}` : 'Seleccione un personero'}
-            </span>
-            <button
-              onClick={() => setShowMobileList(!showMobileList)}
-              style={{
-                padding: '4px 10px',
-                borderRadius: '6px',
-                border: 'none',
-                background: showMobileList ? '#0284c7' : (isDark ? '#334155' : '#e2e8f0'),
-                color: showMobileList ? '#ffffff' : textTitle,
-                fontSize: '0.72rem',
+                fontSize: '0.66rem',
                 fontWeight: 800,
                 cursor: 'pointer'
               }}
             >
-              {showMobileList ? 'Ocultar Lista ▲' : 'Cambiar Personero ▼'}
+              🎯 Mismo (0 km)
+            </button>
+            <button
+              onClick={() => setDistanceFilter('medium')}
+              style={{
+                padding: '3px 7px',
+                borderRadius: '5px',
+                border: distanceFilter === 'medium' ? '1.5px solid #f59e0b' : `1px solid ${borderCol}`,
+                background: distanceFilter === 'medium' ? (isDark ? 'rgba(245, 158, 11, 0.25)' : '#fef3c7') : 'transparent',
+                color: distanceFilter === 'medium' ? '#d97706' : textSub,
+                fontSize: '0.66rem',
+                fontWeight: 800,
+                cursor: 'pointer'
+              }}
+            >
+              🚗 &lt; 5 km
+            </button>
+            <button
+              onClick={() => setDistanceFilter('far')}
+              style={{
+                padding: '3px 7px',
+                borderRadius: '5px',
+                border: distanceFilter === 'far' ? '1.5px solid #ef4444' : `1px solid ${borderCol}`,
+                background: distanceFilter === 'far' ? (isDark ? 'rgba(239, 68, 68, 0.25)' : '#fee2e2') : 'transparent',
+                color: distanceFilter === 'far' ? '#dc2626' : textSub,
+                fontSize: '0.66rem',
+                fontWeight: 800,
+                cursor: 'pointer'
+              }}
+            >
+              🚨 &gt; 5 km
             </button>
           </div>
 
-          {/* Lista Móvil Colapsable */}
-          {showMobileList && (
-            <div style={{ maxHeight: '220px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '4px' }}>
-              {displayedPeople.map((p, idx) => {
+          <div style={{ fontSize: '0.68rem', fontWeight: 800, color: textSub, display: 'flex', justifyContent: 'space-between', borderBottom: `1px solid ${borderCol}`, paddingBottom: '3px' }}>
+            <span>PERSONEROS ({filteredPeople.length})</span>
+            <span>Selecciona para trazar</span>
+          </div>
+
+          {/* Listado con scroll compacto */}
+          <div style={{ overflowY: 'auto', flex: 1, height: 0, display: 'flex', flexDirection: 'column', gap: '6px', paddingRight: '2px' }}>
+            {filteredPeople.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '24px 8px', color: textSub, fontSize: '0.78rem' }}>
+                No se encontró ninguna persona con ese filtro.
+              </div>
+            ) : (
+              filteredPeople.map((p, idx) => {
                 const isSelected = selectedPerson && (
                   (p.id && p.id === selectedPerson.id) ||
                   (p['D.N.I.'] && p['D.N.I.'] === selectedPerson['D.N.I.']) ||
@@ -593,214 +737,61 @@ export function TrayectoView({ records = [], isDark = false }) {
                 );
                 const pName = p['Nombres y Apellidos'] || p.nombresApellidos || 'Personero';
                 const pDni = p['D.N.I.'] || p.dni || '--------';
+                const pRol = p['Rol a Desempeñar'] || p.rolADesempenar || 'Personero de Mesa';
+                const locV = p['Local de Votación'] || p.localDeVotacion || '-';
+                const locA = p['Local de Votación Asignado'] || p.localDeVotacionAsignado || locV;
+                const isSame = normalizeSchoolName(locV) === normalizeSchoolName(locA);
 
                 return (
                   <div
                     key={idx}
-                    onClick={() => {
-                      setSelectedPerson(p);
-                      setShowMobileList(false);
-                    }}
+                    onClick={() => setSelectedPerson(p)}
                     style={{
                       background: isSelected ? (isDark ? '#0369a1' : '#e0f2fe') : (isDark ? '#0f172a' : '#f8fafc'),
-                      border: isSelected ? '1.5px solid #0284c7' : `1px solid ${borderCol}`,
+                      border: isSelected ? '2px solid #0284c7' : `1px solid ${borderCol}`,
                       borderRadius: '8px',
-                      padding: '8px 10px',
+                      padding: '7px 9px',
                       cursor: 'pointer',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
+                      transition: 'all 0.12s ease'
                     }}
                   >
-                    <div>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 800, color: textTitle }}>{pName}</div>
-                      <div style={{ fontSize: '0.68rem', color: textSub }}>DNI: {pDni}</div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2px' }}>
+                      <strong style={{ fontSize: '0.78rem', color: isSelected ? (isDark ? '#ffffff' : '#0369a1') : textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }}>
+                        {pName}
+                      </strong>
+                      <span style={{ fontSize: '0.62rem', fontWeight: 800, padding: '1px 5px', borderRadius: '4px', background: isSame ? '#dcfce7' : '#fef3c7', color: isSame ? '#15803d' : '#b45309', flexShrink: 0 }}>
+                        {isSame ? '🎯 Mismo' : '🚗 Ruta'}
+                      </span>
                     </div>
-                    {isSelected && <span style={{ color: '#0284c7', fontWeight: 900, fontSize: '0.8rem' }}>✓</span>}
+
+                    <div style={{ fontSize: '0.68rem', color: textSub }}>
+                      DNI: <strong>{pDni}</strong> &bull; {pRol}
+                    </div>
+
+                    <div style={{ fontSize: '0.64rem', color: textSub, marginTop: '2px', borderTop: `1px dashed ${borderCol}`, paddingTop: '2px' }}>
+                      <div>🗳️ Vota: <span style={{ color: textTitle }}>{locV}</span></div>
+                      <div>🛡️ Cuida: <span style={{ color: '#0284c7', fontWeight: 700 }}>{locA}</span></div>
+                    </div>
                   </div>
                 );
-              })}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* CONTENEDOR PRINCIPAL */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '320px 1fr',
-        gap: isMobile ? '10px' : '14px',
-        minHeight: isMobile ? 'auto' : '560px'
-      }}>
-        
-        {/* Panel Izquierdo: Lista con Buscador (visible siempre en escritorio) */}
-        {!isMobile && (
-          <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px', height: '100%', maxHeight: '680px' }}>
-            
-            {/* Input de Búsqueda Escritorio */}
-            <div style={{ position: 'relative' }}>
-              <Search className="w-4 h-4" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: textSub }} />
-              <input
-                type="text"
-                placeholder="Buscar por Nombre o DNI..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '8px 12px 8px 32px',
-                  borderRadius: '8px',
-                  border: `1.5px solid #0284c7`,
-                  background: isDark ? '#0f172a' : '#f0f9ff',
-                  color: textTitle,
-                  fontSize: '0.84rem',
-                  fontWeight: 600,
-                  outline: 'none'
-                }}
-              />
-              {searchTerm && (
-                <X className="w-3.5 h-3.5 cursor-pointer" style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: textSub }} onClick={() => setSearchTerm('')} />
-              )}
-            </div>
-
-            {/* Filtros de Distancia en Escritorio */}
-            <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
-              <button
-                onClick={() => setDistanceFilter('all')}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  border: distanceFilter === 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`,
-                  background: distanceFilter === 'all' ? (isDark ? '#0369a1' : '#e0f2fe') : 'transparent',
-                  color: distanceFilter === 'all' ? (isDark ? '#ffffff' : '#0284c7') : textSub,
-                  fontSize: '0.68rem',
-                  fontWeight: 700,
-                  cursor: 'pointer'
-                }}
-              >
-                Todos
-              </button>
-              <button
-                onClick={() => setDistanceFilter('far')}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  border: distanceFilter === 'far' ? '1.5px solid #ef4444' : `1px solid ${borderCol}`,
-                  background: distanceFilter === 'far' ? (isDark ? 'rgba(239, 68, 68, 0.25)' : '#fee2e2') : 'transparent',
-                  color: distanceFilter === 'far' ? '#dc2626' : textSub,
-                  fontSize: '0.68rem',
-                  fontWeight: 700,
-                  cursor: 'pointer'
-                }}
-              >
-                🚨 Muy Lejos (&gt; 5 km)
-              </button>
-              <button
-                onClick={() => setDistanceFilter('medium')}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  border: distanceFilter === 'medium' ? '1.5px solid #f59e0b' : `1px solid ${borderCol}`,
-                  background: distanceFilter === 'medium' ? (isDark ? 'rgba(245, 158, 11, 0.25)' : '#fef3c7') : 'transparent',
-                  color: distanceFilter === 'medium' ? '#d97706' : textSub,
-                  fontSize: '0.68rem',
-                  fontWeight: 700,
-                  cursor: 'pointer'
-                }}
-              >
-                🚗 Media
-              </button>
-              <button
-                onClick={() => setDistanceFilter('same')}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '6px',
-                  border: distanceFilter === 'same' ? '1.5px solid #10b981' : `1px solid ${borderCol}`,
-                  background: distanceFilter === 'same' ? (isDark ? 'rgba(16, 185, 129, 0.25)' : '#dcfce7') : 'transparent',
-                  color: distanceFilter === 'same' ? '#15803d' : textSub,
-                  fontSize: '0.68rem',
-                  fontWeight: 700,
-                  cursor: 'pointer'
-                }}
-              >
-                🎯 Mismo Colegio
-              </button>
-            </div>
-
-            <div style={{ fontSize: '0.72rem', fontWeight: 800, color: textSub, display: 'flex', justifyContent: 'space-between' }}>
-              <span>LISTA DE PERSONEROS</span>
-              <span>{displayedPeople.length} mostrados</span>
-            </div>
-
-            {/* Listado Escritorio */}
-            <div style={{ overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', paddingRight: '4px' }}>
-              {displayedPeople.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '30px 10px', color: textSub, fontSize: '0.8rem' }}>
-                  No se encontró ninguna persona con ese nombre o DNI.
-                </div>
-              ) : (
-                displayedPeople.map((p, idx) => {
-                  const isSelected = selectedPerson && (
-                    (p.id && p.id === selectedPerson.id) ||
-                    (p['D.N.I.'] && p['D.N.I.'] === selectedPerson['D.N.I.']) ||
-                    (p.dni && p.dni === selectedPerson.dni)
-                  );
-                  const pName = p['Nombres y Apellidos'] || p.nombresApellidos || 'Personero';
-                  const pDni = p['D.N.I.'] || p.dni || '--------';
-                  const pRol = p['Rol a Desempeñar'] || p.rolADesempenar || 'Personero de Mesa';
-                  const locV = p['Local de Votación'] || p.localDeVotacion || '-';
-                  const locA = p['Local de Votación Asignado'] || p.localDeVotacionAsignado || locV;
-                  const isSame = locV.trim().toLowerCase() === locA.trim().toLowerCase();
-
-                  return (
-                    <div
-                      key={idx}
-                      onClick={() => setSelectedPerson(p)}
-                      style={{
-                        background: isSelected ? (isDark ? '#0369a1' : '#e0f2fe') : (isDark ? '#0f172a' : '#f8fafc'),
-                        border: isSelected ? '2px solid #0284c7' : `1px solid ${borderCol}`,
-                        borderRadius: '10px',
-                        padding: '10px 12px',
-                        cursor: 'pointer',
-                        transition: 'all 0.15s ease'
-                      }}
-                    >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3px' }}>
-                        <strong style={{ fontSize: '0.82rem', color: isSelected ? (isDark ? '#ffffff' : '#0369a1') : textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '190px' }}>
-                          {pName}
-                        </strong>
-                        <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '2px 6px', borderRadius: '6px', background: isSame ? '#dcfce7' : '#fef3c7', color: isSame ? '#15803d' : '#b45309' }}>
-                          {isSame ? '🎯 Mismo local' : '🚗 En Auto'}
-                        </span>
-                      </div>
-
-                      <div style={{ fontSize: '0.72rem', color: textSub }}>
-                        DNI: <strong>{pDni}</strong> &bull; {pRol}
-                      </div>
-
-                      <div style={{ fontSize: '0.68rem', color: textSub, marginTop: '4px', borderTop: `1px dashed ${borderCol}`, paddingTop: '4px' }}>
-                        <div>🗳️ Vota: <span style={{ color: textTitle }}>{locV}</span></div>
-                        <div>🛡️ Cuida: <span style={{ color: '#0284c7', fontWeight: 700 }}>{locA}</span></div>
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
+              })
+            )}
           </div>
-        )}
 
-        {/* Panel Derecho: Mapa y Card de Métricas */}
+        </div>
+
+        {/* PANEL DERECHO: MAPA + INDICADOR DE TRAYECTO SIMÉTRICO */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           
-          {/* Contenedor del Mapa */}
+          {/* MAPA PRINCIPAL */}
           <div style={{
             position: 'relative',
             width: '100%',
-            height: isMobile ? '320px' : '440px',
-            borderRadius: '12px',
+            height: isMobile ? '320px' : '390px',
+            borderRadius: '14px',
             border: `1.5px solid ${borderCol}`,
             overflow: 'hidden',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.06)'
+            boxShadow: isDark ? '0 6px 20px rgba(0,0,0,0.35)' : '0 3px 14px rgba(0,0,0,0.05)'
           }}>
             <div
               ref={mapContainerRef}
@@ -811,86 +802,171 @@ export function TrayectoView({ records = [], isDark = false }) {
             />
 
             {isLoadingRoute && (
-              <div style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(15, 23, 42, 0.85)', color: '#ffffff', padding: '6px 12px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px', zIndex: 10 }}>
+              <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(15, 23, 42, 0.88)', backdropFilter: 'blur(6px)', color: '#ffffff', padding: '6px 12px', borderRadius: '8px', fontSize: '0.72rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px', zIndex: 1000, boxShadow: '0 3px 10px rgba(0,0,0,0.3)' }}>
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-sky-400" />
-                <span>Trazando ruta...</span>
+                <span>Ubicando colegios...</span>
               </div>
             )}
           </div>
 
-          {/* Tarjeta Informativa del Trayecto Adaptada a Móvil */}
-          {routeStats && selectedPerson && (
+          {/* INDICADOR DEL MAPA (Tarjeta Inferior Simétrica) */}
+          {routeStats && selectedPerson ? (
             <div style={{
               background: bgCard,
-              border: `1px solid ${borderCol}`,
+              border: `1.5px solid ${isDark ? '#0284c7' : '#bae6fd'}`,
               borderLeft: '5px solid #0284c7',
-              borderRadius: '12px',
-              padding: isMobile ? '12px 14px' : '14px 18px',
+              borderRadius: '14px',
+              padding: isMobile ? '12px' : '14px 18px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '10px'
+              gap: '8px',
+              boxShadow: isDark ? '0 4px 18px rgba(0,0,0,0.25)' : '0 2px 12px rgba(2, 132, 199, 0.06)'
             }}>
               
-              {/* Fila 1: Nombre del Personero + DNI */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '6px' }}>
+              {/* Fila 1: Datos Personales y Estado */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px', borderBottom: `1px solid ${borderCol}`, paddingBottom: '6px' }}>
                 <div>
-                  <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub, textTransform: 'uppercase' }}>
-                    PERSONERO ASIGNADO
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: isMobile ? '0.94rem' : '1.05rem', fontWeight: 900, color: textTitle }}>
+                      {selectedPerson['Nombres y Apellidos'] || selectedPerson.nombresApellidos}
+                    </span>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', background: isDark ? '#1e293b' : '#f1f5f9', color: textSub, border: `1px solid ${borderCol}` }}>
+                      DNI: {selectedPerson['D.N.I.'] || selectedPerson.dni}
+                    </span>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', background: '#e0f2fe', color: '#0369a1' }}>
+                      {selectedPerson['Rol a Desempeñar'] || selectedPerson.rolADesempenar || 'Personero'}
+                    </span>
                   </div>
-                  <div style={{ fontSize: isMobile ? '0.92rem' : '1rem', fontWeight: 900, color: textTitle }}>
-                    {selectedPerson['Nombres y Apellidos'] || selectedPerson.nombresApellidos}
-                  </div>
-                  <div style={{ fontSize: '0.74rem', color: textSub }}>
-                    DNI: <strong>{selectedPerson['D.N.I.'] || selectedPerson.dni}</strong> &bull; {selectedPerson['Rol a Desempeñar'] || selectedPerson.rolADesempenar}
-                  </div>
+
+                  {(selectedPerson['Celular'] || selectedPerson.celular) && (
+                    <div style={{ fontSize: '0.72rem', color: '#16a34a', fontWeight: 700, marginTop: '2px' }}>
+                      📱 Celular: <strong>{selectedPerson['Celular'] || selectedPerson.celular}</strong>
+                    </div>
+                  )}
                 </div>
 
                 {/* Insignia de diagnóstico */}
                 <div>
                   {routeStats.isSameSchool ? (
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '4px 10px', borderRadius: '8px', background: '#dcfce7', color: '#15803d', fontSize: '0.74rem', fontWeight: 800 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '4px 10px', borderRadius: '6px', background: '#dcfce7', color: '#15803d', fontSize: '0.74rem', fontWeight: 900, border: '1px solid #86efac' }}>
                       <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>¡Mismo local!</span>
+                      <span>¡Mismo Local de Votación!</span>
                     </span>
                   ) : (
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '4px 10px', borderRadius: '8px', background: '#e0f2fe', color: '#0369a1', fontSize: '0.74rem', fontWeight: 800 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '4px 10px', borderRadius: '6px', background: '#e0f2fe', color: '#0369a1', fontSize: '0.74rem', fontWeight: 900, border: '1px solid #bae6fd' }}>
                       <Car className="w-3.5 h-3.5" />
-                      <span>~{routeStats.tiempoCarroMin} min de viaje</span>
+                      <span>Ruta en Auto: ~{routeStats.tiempoCarroMin} min</span>
                     </span>
                   )}
                 </div>
               </div>
 
-              {/* Fila 2: Origen y Destino */}
-              <div style={{ background: isDark ? '#0f172a' : '#f8fafc', borderRadius: '8px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.76rem' }}>
-                <div style={{ color: '#0284c7', fontWeight: 700 }}>
-                  🗳️ <strong>VOTA EN:</strong> {routeStats.locVota} ({routeStats.distVota})
+              {/* Fila 2: Comparativa de Origen vs Destino con Dirección Real */}
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '8px' }}>
+                {/* Origen */}
+                <div style={{
+                  background: isDark ? 'rgba(2, 132, 199, 0.1)' : '#f0f9ff',
+                  border: '1px solid #bae6fd',
+                  borderRadius: '8px',
+                  padding: '8px 10px'
+                }}>
+                  <div style={{ fontSize: '0.62rem', fontWeight: 900, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>
+                    🗳️ LUGAR DONDE VOTA (SUFRAGIO)
+                  </div>
+                  <strong style={{ fontSize: '0.82rem', color: textTitle, display: 'block', lineHeight: 1.2 }}>
+                    {routeStats.locVota}
+                  </strong>
+                  <div style={{ fontSize: '0.7rem', color: textSub, marginTop: '2px' }}>
+                    📍 <strong>{routeStats.dirVota}</strong> &bull; {routeStats.distVota}
+                  </div>
                 </div>
-                <div style={{ color: '#10b981', fontWeight: 700 }}>
-                  🛡️ <strong>CUIDA EN:</strong> {routeStats.locAsig} ({routeStats.distAsig})
+
+                {/* Destino */}
+                <div style={{
+                  background: isDark ? 'rgba(16, 185, 129, 0.1)' : '#ecfdf5',
+                  border: '1px solid #a7f3d0',
+                  borderRadius: '8px',
+                  padding: '8px 10px'
+                }}>
+                  <div style={{ fontSize: '0.62rem', fontWeight: 900, color: '#059669', textTransform: 'uppercase', letterSpacing: '0.3px', marginBottom: '2px' }}>
+                    🛡️ CENTRO ASIGNADO (CUIDA)
+                  </div>
+                  <strong style={{ fontSize: '0.82rem', color: textTitle, display: 'block', lineHeight: 1.2 }}>
+                    {routeStats.locAsig}
+                  </strong>
+                  <div style={{ fontSize: '0.7rem', color: textSub, marginTop: '2px' }}>
+                    📍 <strong>{routeStats.dirAsig}</strong> &bull; {routeStats.distAsig}
+                  </div>
                 </div>
               </div>
 
-              {/* Fila 3: Distancia y Tiempo en Carro */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                <div style={{ background: isDark ? '#0f172a' : '#f0f9ff', padding: '8px 10px', borderRadius: '8px', border: '1px solid #bae6fd', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.64rem', fontWeight: 800, color: '#0284c7' }}>DISTANCIA POR PISTA</div>
-                  <div style={{ fontSize: '1.15rem', fontWeight: 900, color: textTitle }}>
+              {/* Fila 3: Indicadores de Desplazamiento */}
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr 1fr 1fr', gap: '6px' }}>
+                
+                {/* Distancia */}
+                <div style={{ background: isDark ? '#0f172a' : '#f8fafc', padding: '6px 10px', borderRadius: '8px', border: `1px solid ${borderCol}`, textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.62rem', fontWeight: 800, color: textSub }}>DISTANCIA POR PISTA</div>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 900, color: '#0284c7', marginTop: '1px' }}>
                     {routeStats.distanciaKm} <span style={{ fontSize: '0.7rem' }}>km</span>
                   </div>
                 </div>
 
-                <div style={{ background: isDark ? '#0f172a' : '#ecfdf5', padding: '8px 10px', borderRadius: '8px', border: '1px solid #a7f3d0', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.64rem', fontWeight: 800, color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                    <Car className="w-3.5 h-3.5" />
-                    <span>TIEMPO EN CARRO</span>
+                {/* Tiempo Carro */}
+                <div style={{ background: isDark ? '#0f172a' : '#f8fafc', padding: '6px 10px', borderRadius: '8px', border: `1px solid ${borderCol}`, textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.62rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }}>
+                    <Car className="w-3 h-3 text-emerald-500" />
+                    <span>TIEMPO EN AUTO</span>
                   </div>
-                  <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#047857' }}>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 900, color: '#10b981', marginTop: '1px' }}>
                     {routeStats.isSameSchool ? '0' : `~${routeStats.tiempoCarroMin}`} <span style={{ fontSize: '0.7rem' }}>min</span>
                   </div>
                 </div>
+
+                {/* Tiempo Pie */}
+                <div style={{ background: isDark ? '#0f172a' : '#f8fafc', padding: '6px 10px', borderRadius: '8px', border: `1px solid ${borderCol}`, textAlign: 'center', gridColumn: isMobile ? 'span 2' : 'auto' }}>
+                  <div style={{ fontSize: '0.62rem', fontWeight: 800, color: textSub }}>TIEMPO A PIE</div>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 900, color: textTitle, marginTop: '1px' }}>
+                    {routeStats.isSameSchool ? '0' : `~${routeStats.tiempoPieMin}`} <span style={{ fontSize: '0.7rem' }}>min</span>
+                  </div>
+                </div>
+
               </div>
 
+              {/* Fila 4: Enlace Unificado a Google Maps con Coordenadas GPS Exactas */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '2px', flexWrap: 'wrap' }}>
+                <a
+                  href={routeStats.isSameSchool
+                    ? `https://www.google.com/maps/search/?api=1&query=${routeStats.pA?.lat || -12.097798},${routeStats.pA?.lng || -77.035301}`
+                    : `https://www.google.com/maps/dir/?api=1&origin=${routeStats.pA?.lat || -12.097798},${routeStats.pA?.lng || -77.035301}&destination=${routeStats.pB?.lat || -12.097798},${routeStats.pB?.lng || -77.035301}&travelmode=driving`
+                  }
+                  title="Abrir ruta exacta sincronizada con el mapa en Google Maps"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    background: '#0284c7',
+                    color: '#ffffff',
+                    fontSize: '0.78rem',
+                    fontWeight: 800,
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 8px rgba(2,132,199,0.3)',
+                    transition: 'all 0.12s ease'
+                  }}
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>Abrir Ruta en Google Maps (GPS Oficial)</span>
+                  <ExternalLink className="w-3.5 h-3.5 ml-0.5" />
+                </a>
+              </div>
+
+            </div>
+          ) : (
+            <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '14px', padding: '24px', textAlign: 'center', color: textSub, fontSize: '0.8rem' }}>
+              Seleccione un personero de la lista para ver el indicador de trayecto y estadísticas viales.
             </div>
           )}
 

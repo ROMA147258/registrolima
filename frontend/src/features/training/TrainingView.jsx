@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { VideoModal } from '../../components/modals/VideoModal.jsx';
 import { PdfModal } from '../../components/modals/PdfModal.jsx';
 import { QuizModal } from '../../components/modals/QuizModal.jsx';
+import { CertificateModal } from '../../components/modals/CertificateModal.jsx';
 import { api } from '../../services/api.js';
 
 export function TrainingView({ onGoToDashboard }) {
@@ -118,112 +119,119 @@ export function TrainingView({ onGoToDashboard }) {
             marginBottom: '16px',
             animation: 'fadeIn 0.2s ease-out'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: isFullyAccredited ? '#047857' : '#0369a1', fontSize: '0.86rem', marginBottom: '4px' }}>
-              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador Distrital' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Personero de Centro de Votación')}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span style={{ fontSize: '1.1rem' }}>🏛️</span>
+              <strong style={{ fontSize: '0.92rem', color: isFullyAccredited ? '#065f46' : '#0369a1' }}>
+                {isCoordinadorDistrital ? 'Panel de Coordinador Distrital' : (isCoordinadorZonal ? 'Panel de Coordinador Zonal' : 'Panel de Personero de Centro de Votación')}
+              </strong>
             </div>
-            <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#065f46' : '#334155', lineHeight: 1.45 }}>
+            <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#047857' : '#0284c7', lineHeight: 1.4, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <span>📍 Ámbito: <strong>{distrito}</strong> {localAsig !== 'Por Asignar' && !isCoordinadorDistrital ? `• ${localAsig}` : ''}</span>
+              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador Distrital' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Personero de Centro de Votación')}</span>
               {isFullyAccredited ? (
-                <>
+                <span style={{ marginTop: '4px', color: '#16a34a', fontWeight: 700 }}>
                   ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu centro de votación (${localAsig}) en ${distrito}`)}.
-                </>
+                </span>
               ) : (
-                <>
-                  📌 Para habilitar el acceso a tu <strong>Dashboard</strong> , debes completar la capacitación y <strong>aprobar la evaluación</strong>.
-                </>
+                <span style={{ marginTop: '4px', color: '#0369a1', fontWeight: 600 }}>
+                  ℹ️ Completa la revisión de los 2 videos, la cartilla y aprueba el cuestionario para habilitar el botón de ingreso al Dashboard y obtener tu Certificado Oficial.
+                </span>
               )}
             </div>
+          </div>
+        )}
 
-            {isFullyAccredited && onGoToDashboard && (
+        {/* Tarjeta de Datos del Personero */}
+        <div style={{
+          background: '#f8fafc',
+          borderRadius: '14px',
+          padding: '16px',
+          border: '1px solid #e2e8f0',
+          marginBottom: '20px'
+        }}>
+          <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
+            {personero}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.78rem', color: '#64748b' }}>
+            <div>DNI: <strong style={{ color: '#0f172a' }}>{dni}</strong></div>
+            <div>Distrito: <strong style={{ color: '#0f172a' }}>{distrito}</strong></div>
+            <div>Centro: <strong style={{ color: '#0f172a' }}>{localAsig}</strong></div>
+            <div>Mesa: <strong style={{ color: '#0f172a' }}>{mesa}</strong></div>
+          </div>
+        </div>
+
+        {/* Botón de Acceso al Dashboard para Coordinadores */}
+        {isAnyCoordinador && (
+          <div style={{ marginBottom: '20px' }}>
+            {isFullyAccredited ? (
               <button
-                type="button"
                 onClick={onGoToDashboard}
                 style={{
                   width: '100%',
-                  marginTop: '10px',
-                  padding: '10px 16px',
-                  borderRadius: '10px',
+                  padding: '14px 20px',
+                  borderRadius: '12px',
                   border: 'none',
-                  background: '#10b981',
+                  background: 'linear-gradient(90deg, #0284c7, #0369a1)',
                   color: '#ffffff',
+                  fontSize: '0.98rem',
                   fontWeight: 900,
-                  fontSize: '0.88rem',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.35)',
-                  transition: 'all 0.15s ease'
+                  gap: '10px',
+                  boxShadow: '0 4px 14px rgba(2, 132, 199, 0.4)',
+                  transition: 'all 0.2s ease'
                 }}
               >
-                <span>🚀 {isCoordinadorDistrital ? 'Ir a mi Dashboard Distrital' : 'Ir a mi Dashboard de Coordinador'}</span>
-                <ChevronRight className="w-4 h-4" />
+                <span>📊 Ingresar al Dashboard de Coordinación ({isCoordinadorDistrital ? 'Distrital' : (isCoordinadorZonal ? 'Zonal' : 'Centro')})</span>
+                <ChevronRight className="w-5 h-5" />
               </button>
+            ) : (
+              <div style={{
+                background: '#f1f5f9',
+                border: '1.5px dashed #cbd5e1',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                color: '#64748b'
+              }}>
+                <Lock className="w-5 h-5 flex-shrink-0 text-slate-400" />
+                <div style={{ fontSize: '0.78rem', lineHeight: 1.35 }}>
+                  <strong style={{ display: 'block', color: '#475569' }}>Dashboard de Coordinación Bloqueado</strong>
+                  Debes completar los 2 videos, la cartilla y aprobar la evaluación para acceder al panel distrital/local.
+                </div>
+              </div>
             )}
           </div>
         )}
 
-        {/* Tarjeta de Bienvenida y Badges */}
-        <div style={{
-          background: '#f0f9ff',
-          border: '1px solid #bae6fd',
-          borderRadius: '14px',
-          padding: '16px',
-          marginBottom: '16px'
-        }}>
-          <div style={{ fontSize: '0.98rem', fontWeight: 800, color: '#0f172a', marginBottom: '10px' }}>
-            ¡Bienvenido, <span style={{ color: 'rgb(14, 165, 233)' }}>{personero}</span>!
-          </div>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-              DNI: {dni}
-            </span>
-            <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-              Distrito: {distrito}
-            </span>
-            {isCoordinadorLocal && (
-              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Centro de Votación: {localAsig}
-              </span>
-            )}
-            {isCoordinadorZonal && (
-              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Zona: {localAsig.split(',').filter(Boolean).length} centros de votación
-              </span>
-            )}
-            {!isCoordinadorDistrital && !isCoordinadorLocal && !isCoordinadorZonal && (
-              <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Mesa: {mesa}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Bloques de Indicadores de Progreso */}
+        {/* Bloques de Indicadores de Progreso con Puntos Visuales */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
           
-          {/* Visualizaciones de Video */}
+          {/* Visualizaciones de Video con Puntos */}
           <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Visualizaciones de Video</div>
               <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'rgb(14, 165, 233)' }}>{videoCount}/2</div>
             </div>
             <div style={{ display: 'flex', gap: '6px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: videoCount >= 1 ? 'rgb(14, 165, 233)' : '#cbd5e1' }}></div>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: videoCount >= 2 ? 'rgb(14, 165, 233)' : '#cbd5e1' }}></div>
+              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: videoCount >= 1 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: videoCount >= 1 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
+              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: videoCount >= 2 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: videoCount >= 2 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
             </div>
           </div>
 
-          {/* Lecturas de PDF */}
+          {/* Lecturas de PDF con Puntos */}
           <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Lecturas de Cartilla PDF</div>
               <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'rgb(14, 165, 233)' }}>{pdfCount}/2</div>
             </div>
             <div style={{ display: 'flex', gap: '6px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: pdfCount >= 1 ? 'rgb(14, 165, 233)' : '#cbd5e1' }}></div>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: pdfCount >= 2 ? 'rgb(14, 165, 233)' : '#cbd5e1' }}></div>
+              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: pdfCount >= 1 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: pdfCount >= 1 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
+              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: pdfCount >= 2 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: pdfCount >= 2 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
             </div>
           </div>
 
@@ -239,7 +247,7 @@ export function TrainingView({ onGoToDashboard }) {
           </div>
         </div>
 
-        {/* Lista de Acciones */}
+        {/* Lista de Módulos de Capacitación */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           
           {/* 1. Ver Video Tutorial */}
@@ -320,6 +328,47 @@ export function TrainingView({ onGoToDashboard }) {
             {isQuizPassed && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
           </div>
 
+          {/* 4. Certificado Oficial de Acreditación (Desbloqueado al Aprobar 5/5) */}
+          <div
+            onClick={() => { if (isQuizPassed) setActiveModal('certificate'); }}
+            style={{
+              background: isQuizPassed ? 'linear-gradient(135deg, #f0fdf4, #ecfdf5)' : '#f1f5f9',
+              border: isQuizPassed ? '2px solid #10b981' : '1px solid #e2e8f0',
+              borderRadius: '14px',
+              padding: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '14px',
+              cursor: isQuizPassed ? 'pointer' : 'not-allowed',
+              opacity: isQuizPassed ? 1 : 0.85,
+              boxShadow: isQuizPassed ? '0 4px 15px rgba(16, 185, 129, 0.2)' : 'none',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '10px',
+              background: isQuizPassed ? '#10b981' : '#e2e8f0',
+              color: isQuizPassed ? '#ffffff' : '#94a3b8',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Award className="w-6 h-6" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: '0.95rem', fontWeight: 900, color: isQuizPassed ? '#065f46' : '#0f172a' }}>
+                Certificado Oficial de Acreditación
+              </div>
+              <div style={{ fontSize: '0.75rem', color: isQuizPassed ? '#047857' : '#64748b', fontWeight: isQuizPassed ? 700 : 500 }}>
+                {isQuizPassed ? '🎓 ¡Desbloqueado! Clic para ver e imprimir tu certificado oficial' : '🔒 Bloqueado (Se desbloquea al aprobar la evaluación con 5/5)'}
+              </div>
+            </div>
+            {isQuizPassed ? <ChevronRight className="w-5 h-5 text-emerald-600" /> : <Lock className="w-5 h-5 text-slate-400" />}
+          </div>
+
         </div>
 
       </div>
@@ -345,6 +394,16 @@ export function TrainingView({ onGoToDashboard }) {
         <QuizModal
           onClose={() => setActiveModal(null)}
           onPassQuiz={handleQuizComplete}
+          onViewCertificate={() => {
+            setActiveModal('certificate');
+          }}
+        />
+      )}
+
+      {activeModal === 'certificate' && (
+        <CertificateModal
+          user={user}
+          onClose={() => setActiveModal(null)}
         />
       )}
     </div>

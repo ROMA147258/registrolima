@@ -538,14 +538,23 @@ function SingleSchoolSearchSelect({
   );
 }
 
+import { useAuth } from '../../context/AuthContext.jsx';
+
 export function EditAssignmentModal({ personero, onClose, onSaved }) {
+  const { isSuperAdmin, isCoordinadorDistrital, user: authUser } = useAuth();
+  
+  // El Coordinador Distrital solo puede editar Mesa y Centro de Votación dentro de su distrito
+  const isLimitedCoordinator = !isSuperAdmin && isCoordinadorDistrital;
+
   const rawMesa = personero?.['Mesa Asignada'] ?? personero?.mesaAsignada ?? '';
   const initialMesa = (rawMesa === '-' || String(rawMesa).trim().toLowerCase() === 'no aplica') ? '' : String(rawMesa);
+
+  const initialDistrito = personero['Distrito Asignado'] || personero['Distrito donde Vota'] || personero.distritoAsignado || (isLimitedCoordinator ? (authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || '') : '');
 
   const [formData, setFormData] = useState({
     nombresApellidos: personero['Nombres y Apellidos'] || personero.nombresApellidos || '',
     celular: personero['Celular'] || personero.celular || '',
-    distritoAsignado: personero['Distrito Asignado'] || personero['Distrito donde Vota'] || personero.distritoAsignado || '',
+    distritoAsignado: initialDistrito,
     localAsignado: personero['Local de Votación Asignado'] || personero['Local de Votación'] || personero.localDeVotacionAsignado || '',
     mesaAsignada: initialMesa,
     rolADesempenar: personero['Rol a Desempeñar'] || personero.rolADesempenar || 'Personero de Mesa',
@@ -558,8 +567,8 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const dni = personero['D.N.I.'] || personero['DNI'] || personero.dni;
-  const isZonal = (formData.rolADesempenar || '').toLowerCase().includes('zonal') || (formData.rolADesempenar || '').toLowerCase().includes('zona');
-  const isMesa = (formData.rolADesempenar || '').toLowerCase().includes('personero');
+  const isZonal = !isLimitedCoordinator && ((formData.rolADesempenar || '').toLowerCase().includes('zonal') || (formData.rolADesempenar || '').toLowerCase().includes('zona'));
+  const isMesa = (formData.rolADesempenar || '').toLowerCase().includes('personero') || isLimitedCoordinator;
 
   useEffect(() => {
     if (formData.distritoAsignado) {
@@ -591,7 +600,14 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
     setSaving(true);
     setErrorMsg(null);
     try {
-      await api.updatePersonero(dni, formData);
+      // Si es coordinador distrital, enviamos solo los campos que tiene permiso de modificar
+      const payload = isLimitedCoordinator ? {
+        localAsignado: formData.localAsignado,
+        mesaAsignada: formData.mesaAsignada,
+        distritoAsignado: formData.distritoAsignado
+      } : formData;
+
+      await api.updatePersonero(dni, payload);
       onSaved();
       onClose();
     } catch (err) {
@@ -602,7 +618,12 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(`¿Está seguro de eliminar definitivamente a "${formData.nombresApellidos}" (DNI: ${dni}) del sistema? Esta acción no se puede deshacer.`);
+    if (!isSuperAdmin) {
+      alert('Solo el Superadministrador tiene permisos para eliminar personeros del sistema.');
+      return;
+    }
+
+    const confirmDelete = window.confirm(`⚠️ ACCIÓN DE SUPERADMINISTRADOR:\n\n¿Está seguro de eliminar definitivamente a "${formData.nombresApellidos}" (DNI: ${dni}) de la base de datos?\n\nEsta acción no se puede deshacer.`);
     if (!confirmDelete) return;
 
     setDeleting(true);
@@ -626,10 +647,10 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           <div>
             <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0284c7', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Sparkles className="w-5 h-5 text-sky-500" />
-              <span>Modificar Datos y Asignación</span>
+              <span>{isSuperAdmin ? 'Modificar Registro y Asignación (Superadmin)' : 'Asignar Centro de Votación y Mesa'}</span>
             </h3>
             <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>
-              DNI: {dni}
+              {isSuperAdmin ? 'Control total y eliminación de registros' : 'Panel de Coordinación Distrital'} &bull; DNI: <strong>{dni}</strong>
             </span>
           </div>
           <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}>
@@ -637,8 +658,30 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           </button>
         </div>
 
+        {/* Banner Informativo para Coordinador Distrital */}
+        {isLimitedCoordinator && (
+          <div style={{
+            marginTop: '12px',
+            background: '#f0f9ff',
+            border: '1px solid #bae6fd',
+            borderRadius: '10px',
+            padding: '10px 14px',
+            fontSize: '0.78rem',
+            color: '#0369a1',
+            lineHeight: 1.4,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <Shield className="w-4 h-4 text-sky-600 flex-shrink-0" />
+            <span>
+              <strong>Modo Coordinador Distrital:</strong> Puedes reasignar el <strong>Centro de Votación</strong> y el <strong>Número de Mesa</strong> de los personeros de tu distrito ({formData.distritoAsignado}). Los datos personales permanecen protegidos.
+            </span>
+          </div>
+        )}
+
         {/* Body */}
-        <form onSubmit={handleSave} className="modal-body" style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <form onSubmit={handleSave} className="modal-body" style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {errorMsg && (
             <div style={{ padding: '10px 14px', borderRadius: '8px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', fontSize: '0.82rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
               <AlertTriangle className="w-4 h-4 flex-shrink-0" />
@@ -647,79 +690,109 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           )}
 
           {/* Nombres y Celular */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
-            <InputField
-              label="Nombres y Apellidos"
-              icon={User}
-              name="nombresApellidos"
-              value={formData.nombresApellidos}
-              onChange={handleChange}
-              placeholder="Nombres completos"
-              required
-            />
-            <InputField
-              label="Celular"
-              icon={Phone}
-              name="celular"
-              value={formData.celular}
-              onChange={handleChange}
-              placeholder="9 dígitos"
-              maxLength={9}
-              required
-            />
-          </div>
+          {isSuperAdmin ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
+              <InputField
+                label="Nombres y Apellidos"
+                icon={User}
+                name="nombresApellidos"
+                value={formData.nombresApellidos}
+                onChange={handleChange}
+                placeholder="Nombres completos"
+                required
+              />
+              <InputField
+                label="Celular"
+                icon={Phone}
+                name="celular"
+                value={formData.celular}
+                onChange={handleChange}
+                placeholder="9 dígitos"
+                maxLength={9}
+                required
+              />
+            </div>
+          ) : (
+            <div style={{
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              borderRadius: '10px',
+              padding: '12px 14px',
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '10px',
+              fontSize: '0.8rem'
+            }}>
+              <div>
+                <span style={{ color: '#64748b', fontSize: '0.72rem', display: 'block' }}>NOMBRES Y APELLIDOS</span>
+                <strong style={{ color: '#0f172a', fontSize: '0.9rem' }}>{formData.nombresApellidos}</strong>
+              </div>
+              <div>
+                <span style={{ color: '#64748b', fontSize: '0.72rem', display: 'block' }}>CELULAR</span>
+                <strong style={{ color: '#16a34a', fontSize: '0.9rem' }}>{formData.celular || 'Sin registrar'}</strong>
+              </div>
+            </div>
+          )}
 
           {/* Rol y Credencial */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
-            <SelectField
-              label="Rol a Desempeñar"
-              icon={Award}
-              name="rolADesempenar"
-              value={formData.rolADesempenar}
-              onChange={handleChange}
-              options={ROLES}
-              required
-            />
-            <SelectField
-              label="Estado de Credencial"
-              icon={Shield}
-              name="credenciales"
-              value={formData.credenciales}
-              onChange={handleChange}
-              options={['Bloqueado', 'Confirmado']}
-            />
-          </div>
-
-          {/* Distrito y Mesa Asignada */}
-          <div style={{ display: 'grid', gridTemplateColumns: isMesa ? 'repeat(auto-fit, minmax(220px, 1fr))' : '1fr', gap: '12px' }}>
-            <SelectField
-              label="Distrito Asignado"
-              icon={MapPin}
-              name="distritoAsignado"
-              value={formData.distritoAsignado}
-              onChange={handleChange}
-              options={DISTRITOS_LIMA}
-              required
-            />
-            {isMesa && (
+          {isSuperAdmin ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
+              <SelectField
+                label="Rol a Desempeñar"
+                icon={Award}
+                name="rolADesempenar"
+                value={formData.rolADesempenar}
+                onChange={handleChange}
+                options={ROLES}
+                required
+              />
+              <SelectField
+                label="Estado de Credencial"
+                icon={Shield}
+                name="credenciales"
+                value={formData.credenciales}
+                onChange={handleChange}
+                options={['Bloqueado', 'Confirmado']}
+              />
+            </div>
+          ) : (
+            <div style={{
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              borderRadius: '10px',
+              padding: '10px 14px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              fontSize: '0.78rem'
+            }}>
               <div>
-                <InputField
-                  label="Mesa Asignada"
-                  icon={Table}
-                  name="mesaAsignada"
-                  value={formData.mesaAsignada}
-                  onChange={handleChange}
-                  placeholder="Ej. 064321 (Mesa asignada)"
-                  maxLength={6}
-                />
-                <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '2px' }}>
-                  💡 Ingrese el número de mesa para asignársela
-                </span>
+                <span style={{ color: '#64748b', fontSize: '0.72rem', display: 'block' }}>ROL ASIGNADO</span>
+                <strong style={{ color: '#0284c7' }}>{formData.rolADesempenar}</strong>
               </div>
-            )}
-          </div>
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ color: '#64748b', fontSize: '0.72rem', display: 'block' }}>DISTRITO</span>
+                <strong style={{ color: '#0f172a' }}>{formData.distritoAsignado}</strong>
+              </div>
+            </div>
+          )}
 
-          {/* Colegios Asignados: Selección múltiple con filtro para Zonal, o Selección simple para otros */}
+          {/* Distrito para Superadmin */}
+          {isSuperAdmin && (
+            <div style={{ display: 'grid', gridTemplateColumns: isMesa ? 'repeat(auto-fit, minmax(220px, 1fr))' : '1fr', gap: '12px' }}>
+              <SelectField
+                label="Distrito Asignado"
+                icon={MapPin}
+                name="distritoAsignado"
+                value={formData.distritoAsignado}
+                onChange={handleChange}
+                options={DISTRITOS_LIMA}
+                required
+              />
+            </div>
+          )}
+
+          {/* Centro de Votación Asignado (Editable tanto para Superadmin como para Coordinador Distrital) */}
           {isZonal ? (
             <MultiSchoolSearchSelect
               value={formData.localAsignado}
@@ -736,32 +809,50 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
             />
           )}
 
-          {/* Footer con Guardar y Eliminar */}
-          <div className="modal-footer" style={{ marginTop: '20px', padding: '14px 0 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', borderTop: '1px solid #334155' }}>
-            <button
-              type="button"
-              onClick={handleDelete}
-              disabled={deleting || saving}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                padding: '10px 16px',
-                borderRadius: '8px',
-                border: '1px solid #ef4444',
-                background: '#fef2f2',
-                color: '#dc2626',
-                fontWeight: 700,
-                fontSize: '0.82rem',
-                cursor: (deleting || saving) ? 'not-allowed' : 'pointer',
-                transition: 'all 0.15s ease',
-                flex: '1 1 160px'
-              }}
-            >
-              <Trash2 className="w-4 h-4" />
-              <span>{deleting ? 'Eliminando...' : 'Eliminar Personero'}</span>
-            </button>
+          {/* Mesa Asignada (Editable tanto para Superadmin como para Coordinador Distrital) */}
+          <div>
+            <InputField
+              label="Mesa Asignada"
+              icon={Table}
+              name="mesaAsignada"
+              value={formData.mesaAsignada}
+              onChange={handleChange}
+              placeholder="Ej. 064321 (6 dígitos de la mesa)"
+              maxLength={6}
+            />
+            <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '2px' }}>
+              💡 Ingrese el número de mesa de 6 dígitos asignada al personero en este centro de votación.
+            </span>
+          </div>
+
+          {/* Footer: Guardar y Eliminar (Solo Superadmin puede eliminar) */}
+          <div className="modal-footer" style={{ marginTop: '16px', padding: '14px 0 0 0', display: 'flex', justifyContent: isSuperAdmin ? 'space-between' : 'flex-end', alignItems: 'center', flexWrap: 'wrap', gap: '10px', borderTop: '1px solid #334155' }}>
+            {isSuperAdmin && (
+              <button
+                type="button"
+                onClick={handleDelete}
+                disabled={deleting || saving}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '10px 16px',
+                  borderRadius: '8px',
+                  border: '1px solid #ef4444',
+                  background: '#fef2f2',
+                  color: '#dc2626',
+                  fontWeight: 700,
+                  fontSize: '0.82rem',
+                  cursor: (deleting || saving) ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.15s ease',
+                  flex: '1 1 160px'
+                }}
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>{deleting ? 'Eliminando de la BD...' : 'Eliminar Personero'}</span>
+              </button>
+            )}
 
             <button
               type="submit"
@@ -771,7 +862,7 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '6px',
-                padding: '10px 20px',
+                padding: '10px 24px',
                 borderRadius: '8px',
                 background: 'rgb(14, 165, 233)',
                 color: '#ffffff',
@@ -780,11 +871,11 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
                 border: 'none',
                 cursor: (saving || deleting) ? 'not-allowed' : 'pointer',
                 boxShadow: '0 2px 8px rgba(14, 165, 233, 0.35)',
-                flex: '1 1 160px'
+                flex: isSuperAdmin ? '1 1 160px' : '0 0 auto'
               }}
             >
               <Save className="w-4 h-4" />
-              <span>{saving ? 'Guardando...' : 'Guardar Cambios'}</span>
+              <span>{saving ? 'Actualizando...' : (isSuperAdmin ? 'Guardar Cambios' : 'Actualizar Asignación')}</span>
             </button>
           </div>
         </form>

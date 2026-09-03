@@ -1,13 +1,13 @@
 /**
  * Banco oficial de 100 preguntas de capacitación electoral para Personeros y Coordinadores 
  * Elecciones Regionales y Municipales 2026.
- * Basado estrictamente en el "GUION PARA VIDEO DE CAPACITACIÓN DE PERSONEROS - ERM 2026".
+ * Basado estrictamente en la "CARTILLA DEL PERSONERO ERM 2026 - TIPO 1 - MUNICIPAL PROVINCIAL DISTRITAL".
  * Alternativas balanceadas y rigurosas.
  */
 export const QUESTION_BANK = [
   {
     "id": 1,
-    "question": "¿Cuáles son los tres momentos principales de la jornada electoral en los que el personero ejerce sus derechos y funciones según el curso virtual?",
+    "question": "¿Cuáles son los tres momentos principales de la jornada electoral en los que el personero ejerce sus derechos y funciones según la Cartilla del Personero ERM 2026?",
     "options": [
       "La instalación de la mesa de sufragio, el sufragio y el escrutinio.",
       "La convocatoria oficial, la campaña electoral y el sufragio.",
@@ -15,7 +15,7 @@ export const QUESTION_BANK = [
       "La capacitación obligatoria, el simulacro electoral y la entrega de actas."
     ],
     "answer": 0,
-    "explanation": "El guion oficial establece que el curso y la función del personero se estructuran en los tres momentos clave: instalación de la mesa, sufragio y escrutinio."
+    "explanation": "La Cartilla oficial establece que la labor del personero se estructura en los tres momentos clave: instalación de la mesa, sufragio y escrutinio."
   },
   {
     "id": 2,
@@ -35,35 +35,35 @@ export const QUESTION_BANK = [
     "options": [
       "Con responsabilidad, respeto y estricto cumplimiento de las normas electorales vigentes.",
       "Con discrecionalidad absoluta y atribuciones para anular votos de oficio.",
-      "Con autoridad jerárquica sobre los coordinadores de local y miembros de mesa.",
+      "Con autoridad jerárquica sobre los coordinadores de centro y miembros de mesa.",
       "Con facultad para modificar las decisiones del presidente de mesa sin presentar reclamos formales."
     ],
     "answer": 0,
-    "explanation": "El curso enfatiza que el personero debe actuar con responsabilidad, respeto y estricto apego a la normativa electoral."
+    "explanation": "La Cartilla enfatiza que el personero debe actuar con responsabilidad, respeto y estricto apego a la normativa electoral."
   },
   {
     "id": 4,
-    "question": "¿Qué documento complementario se recomienda revisar para ampliar la información del curso de capacitación?",
+    "question": "¿Qué documento oficial es la guía obligatoria de consulta para el personero durante el proceso electoral?",
     "options": [
-      "El Manual de instrucciones para personeros.",
+      "La Cartilla del Personero ERM 2026.",
       "El reglamento interno del Jurado Electoral Especial.",
       "El manual operativo de las Fuerzas Armadas y Policía Nacional.",
       "La ley orgánica del Poder Judicial."
     ],
     "answer": 0,
-    "explanation": "En el cierre del curso se invita expresamente a revisar el 'Manual de instrucciones para personeros' para profundizar los contenidos."
+    "explanation": "La Cartilla del Personero ERM 2026 es el documento oficial expedido para guiar el desempeño de los personeros."
   },
   {
     "id": 5,
-    "question": "¿Qué requisito es indispensable completar al finalizar el curso virtual para obtener el certificado oficial?",
+    "question": "¿Qué requisito es indispensable completar al finalizar la capacitación para completar la acreditación oficial?",
     "options": [
-      "Completar y aprobar la evaluación de capacitación.",
+      "Completar y aprobar la evaluación de capacitación con 5 de 5 respuestas correctas.",
       "Firmar una declaración jurada ante la ODPE correspondiente.",
       "Entregar una constancia de votación previa al coordinador de mesa.",
       "Asistir a un taller presencial de 8 horas pedagógicas."
     ],
     "answer": 0,
-    "explanation": "El curso concluye invitando a completar la evaluación de capacitación para obtener el certificado oficial."
+    "explanation": "La acreditación requiere rendir y aprobar la evaluación con 5 de 5 respuestas correctas (100%)."
   },
   {
     "id": 6,

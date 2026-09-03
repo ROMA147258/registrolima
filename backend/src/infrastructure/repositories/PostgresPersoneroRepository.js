@@ -755,29 +755,52 @@ export class PostgresPersoneroRepository {
       return updated;
     }
 
+    const fields = [];
+    const values = [];
+    let idx = 1;
+
+    if (nombres !== undefined) {
+      fields.push(`nombres_y_apellidos = $${idx++}`);
+      values.push(nombres);
+    }
+    if (cel !== undefined) {
+      fields.push(`celular = $${idx++}`);
+      values.push(cel);
+    }
+    if (dist !== undefined) {
+      fields.push(`distrito_asignado = $${idx++}`);
+      values.push(dist);
+    }
+    if (loc !== undefined) {
+      fields.push(`local_de_votacion_asignado = $${idx++}`);
+      values.push(loc);
+    }
+    if (mes !== undefined) {
+      fields.push(`mesa_asignada = $${idx++}`);
+      values.push(mes);
+    }
+    if (rol !== undefined) {
+      fields.push(`rol_a_desempenar = $${idx++}`);
+      values.push(rol);
+    }
+    if (cred !== undefined) {
+      fields.push(`credenciales = $${idx++}`);
+      values.push(cred);
+    }
+
+    if (fields.length === 0) {
+      return { entity: existing.entity, tableName };
+    }
+
+    values.push(cleanDni);
     const query = `
       UPDATE ${tableName}
-      SET nombres_y_apellidos = COALESCE($1, nombres_y_apellidos),
-          celular = COALESCE($2, celular),
-          distrito_asignado = COALESCE($3, distrito_asignado),
-          local_de_votacion_asignado = COALESCE($4, local_de_votacion_asignado),
-          mesa_asignada = COALESCE($5, mesa_asignada),
-          rol_a_desempenar = COALESCE($6, rol_a_desempenar),
-          credenciales = COALESCE($7, credenciales)
-      WHERE dni = $8
+      SET ${fields.join(', ')}
+      WHERE dni = $${idx}
       RETURNING *;
     `;
 
-    const res = await pool.query(query, [
-      nombres || null,
-      cel || null,
-      dist || null,
-      loc || null,
-      mes !== undefined ? mes : null,
-      rol || null,
-      cred || null,
-      cleanDni
-    ]);
+    const res = await pool.query(query, values);
     return {
       entity: this.mapRowToEntity(res.rows[0], tableName !== 'rpersoneros'),
       tableName

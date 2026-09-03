@@ -54,7 +54,7 @@ function matchesLocal(recordLocal, filterLocal) {
   return normRec === normFilt || normRec.includes(normFilt) || normFilt.includes(normRec);
 }
 
-// Helper de roles (Personero de Mesa, Coordinador de Local, Coordinador Zonal y Coordinador de Distritos)
+// Helper de roles (Personero de Mesa, Personero de Centro de Votación / Local, Coordinador Zonal y Coordinador Distrital)
 function matchesRole(recordRole, filterRole) {
   if (!filterRole || filterRole === 'all') return true;
   if (!recordRole) return false;
@@ -67,11 +67,11 @@ function matchesRole(recordRole, filterRole) {
   if (f.includes('zonal') || f.includes('zona')) {
     return r.includes('zonal') || r.includes('zona');
   }
-  if (f.includes('local')) {
-    return (r.includes('local') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal') && !r.includes('zona'))) && !r.includes('zonal');
+  if (f.includes('local') || f.includes('centro') || f.includes('pcv') || f.includes('plv')) {
+    return (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal') && !r.includes('zona'))) && !r.includes('zonal');
   }
   if (f.includes('mesa') || f.includes('personero')) {
-    return r.includes('mesa') || (!r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal'));
+    return r.includes('mesa') || (!r.includes('local') && !r.includes('centro') && !r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal'));
   }
   return r === f || r.includes(f);
 }
@@ -311,7 +311,7 @@ function ZonalOverviewCard({ zonal, isDark, borderCol, onEdit }) {
             justifyContent: 'space-between',
             gap: '4px'
           }}>
-            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#15803d' }}>🏫 Con PLV:</span>
+            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#15803d' }}>🏫 Con PCV:</span>
             <span style={{ fontSize: '0.85rem', fontWeight: 900, color: '#16a34a' }}>{zonal.plvsEnZona}/{zonal.totalColegios}</span>
           </div>
         </div>
@@ -1796,7 +1796,7 @@ export function DashboardView({ onGoToTraining }) {
                       </div>
                       <p style={{ fontSize: '0.8rem', color: textSub, margin: 0 }}>
                         {coordinatorDistrict || dist1 !== 'all' ? (
-                          <>Estructura de <strong>{coordinatorDistrict || dist1}</strong> &bull; <strong>{districtDistritalOverview.length} Coordinador Distrital</strong> &bull; <strong>{districtZonalesOverview.length} Zonales</strong> &bull; <strong>{countLocalesConPLV} Locales con PLV</strong></>
+                          <>Estructura de <strong>{coordinatorDistrict || dist1}</strong> &bull; <strong>{districtDistritalOverview.length} Coordinador Distrital</strong> &bull; <strong>{countLocalesConPLV} Centros con Personero (PCV)</strong>{districtZonalesOverview.length > 0 ? <> &bull; <span style={{ color: textSub }}>({districtZonalesOverview.length} Zonales registrados)</span></> : null}</>
                         ) : (
                           <>Monitoreo general de Lima Metropolitana &bull; Selecciona un distrito para ver su equipo completo.</>
                         )}
@@ -2285,7 +2285,7 @@ export function DashboardView({ onGoToTraining }) {
                               gap: '6px'
                             }}>
                               <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                              <span>Aún no hay Personero de Local de Votación registrado para este local de votación</span>
+                              <span>Aún no hay Personero de Centro de Votación registrado para este centro de votación</span>
                             </div>
                           )}
                         </div>
@@ -2295,7 +2295,7 @@ export function DashboardView({ onGoToTraining }) {
                 </div>
               )}
 
-              {/* SECCIÓN EXCLUSIVA DE MONITOREO LOCAL (PLV): MI LOCAL DE VOTACIÓN Y PERSONEROS DE MESA */}
+              {/* SECCIÓN EXCLUSIVA DE MONITOREO LOCAL (PCV): MI CENTRO DE VOTACIÓN Y PERSONEROS DE MESA */}
               {isCoordinadorLocal && (
                 <div style={{
                   background: bgCard,
@@ -2313,11 +2313,11 @@ export function DashboardView({ onGoToTraining }) {
                           <span>MI CENTRO DE VOTACIÓN ASIGNADO</span>
                         </div>
                         <h2 style={{ fontSize: isMobile ? '1.05rem' : '1.25rem', fontWeight: 900, color: textTitle, margin: 0 }}>
-                          {coordinatorLocal || 'Local de Votación'}
+                          {coordinatorLocal || 'Centro de Votación'}
                         </h2>
                       </div>
                       <p style={{ fontSize: '0.82rem', color: textSub, margin: 0 }}>
-                        Distrito de <strong>{coordinatorDistrict}</strong> &bull; Personero de Local: <strong>{user?.nombresApellidos || user?.['Nombres y Apellidos'] || 'Tú'}</strong>
+                        Distrito de <strong>{coordinatorDistrict}</strong> &bull; Personero de Centro: <strong>{user?.nombresApellidos || user?.['Nombres y Apellidos'] || 'Tú'}</strong>
                       </p>
                     </div>
 
@@ -2459,10 +2459,10 @@ export function DashboardView({ onGoToTraining }) {
                     style={{ padding: '8px 10px', borderRadius: '8px', border: role1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: role1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: role1 !== 'all' ? 700 : 500, flex: isMobile ? '1 1 calc(50% - 4px)' : 'none', minWidth: 0 }}
                   >
                     <option value="all">🛡️ Todos los Roles</option>
-                    <option value="Personero de Mesa">Personero Mesa</option>
-                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero Local (PLV)</option>}
-                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coord. Zonal</option>}
-                    {isSuperAdmin && <option value="Coordinador Distrital">Coord. Distrital</option>}
+                    <option value="Personero de Mesa">Personero de Mesa</option>
+                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro (PCV)</option>}
+                    {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
+                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coord. Zonal (Histórico)</option>}
                   </select>
 
                   {/* Filtro Experiencia */}
@@ -2595,59 +2595,47 @@ export function DashboardView({ onGoToTraining }) {
                   style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(140px, 1fr))', gap: isMobile ? '8px' : '12px' }}
                 >
                   
-                  {/* KPI 1 - Personeros Registrados */}
+                  {/* KPI 1 - Personeros de Mesa Registrados */}
                   <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>PERSONEROS REGISTRADOS</div>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>PERSONEROS DE MESA</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
                       <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Users className="w-3.5 h-3.5" /></div>
                       <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1Personeros.toLocaleString()}</span>
                     </div>
                     <div style={{ fontSize: '0.65rem', color: textSub }}>
-                      {isCoordinadorLocal ? 'En tu local de votación' : (isCoordinadorZonal ? 'En tu zona' : `En ${scopeLabel}`)}
+                      {isCoordinadorLocal ? 'En tu centro de votación' : `En ${scopeLabel}`}
                     </div>
                   </div>
 
-                  {/* KPI 2 - Locales de Votación (No relevante para Coord Local) */}
+                  {/* KPI 2 - Centros de Votación (No relevante para Coord Local) */}
                   {!isCoordinadorLocal && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
                       <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>
-                        {isCoordinadorZonal ? 'LOCALES EN TU ZONA' : 'LOCALES REGISTRADOS'}
+                        CENTROS DE VOTACIÓN
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
                         <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{districtSchools.length.toLocaleString()}</span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: textSub }}>
-                        {isCoordinadorZonal ? `${coordinatorZonalLocales.length} colegios asignados` : 'Centros de Votación'}
+                        Centros en {scopeLabel}
                       </div>
                     </div>
                   )}
 
-                  {/* KPI 3 - Personeros de Local (PLV) (No relevante para Coord Local) */}
+                  {/* KPI 3 - Personeros de Centro de Votación (PCV) */}
                   {!isCoordinadorLocal && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>LOCALES CON PLV</div>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>CENTROS CON PCV</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
                         <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserCheck className="w-3.5 h-3.5" /></div>
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{countLocalesConPLV}</span>
                       </div>
-                      <div style={{ fontSize: '0.65rem', color: textSub }}>Personeros de Local Asignados</div>
+                      <div style={{ fontSize: '0.65rem', color: textSub }}>Personeros de Centro Asignados</div>
                     </div>
                   )}
 
-                  {/* KPI 4 - Coordinadores Zonales (Visible para Superadmin y Coordinador Distrital) */}
-                  {(isSuperAdmin || isCoordinadorDistrital) && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COORD. ZONALES</div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><MapPin className="w-3.5 h-3.5" /></div>
-                        <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsZonal}</span>
-                      </div>
-                      <div style={{ fontSize: '0.65rem', color: textSub }}>Zonales en {scopeLabel}</div>
-                    </div>
-                  )}
-
-                  {/* KPI 5 - Coordinadores Distritales (Visible para Superadmin y Coordinador Distrital) */}
+                  {/* KPI 4 - Coordinadores Distritales (Visible para Superadmin y Coordinador Distrital) */}
                   {(isSuperAdmin || isCoordinadorDistrital) && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
                       <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COORD. DISTRITALES</div>
@@ -2656,6 +2644,18 @@ export function DashboardView({ onGoToTraining }) {
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsDistrital}</span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: textSub }}>Distritales Activos</div>
+                    </div>
+                  )}
+
+                  {/* KPI 5 - Zonales Históricos / Registrados (Solo si existen registros zonales en el ámbito) */}
+                  {(isSuperAdmin || isCoordinadorDistrital) && tab1CoordsZonal > 0 && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>ZONALES (HISTÓRICO)</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><MapPin className="w-3.5 h-3.5" /></div>
+                        <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsZonal}</span>
+                      </div>
+                      <div style={{ fontSize: '0.65rem', color: textSub }}>Zonales registrados</div>
                     </div>
                   )}
 
@@ -3170,37 +3170,22 @@ export function DashboardView({ onGoToTraining }) {
                                       fontSize: '0.71rem',
                                       fontWeight: 900
                                     }}>
-                                      🏫 Tu Colegio Asignado
+                                      🏫 Tu Centro Asignado
                                     </span>
-                                  ) : isMulti ? (
+                                  ) : school.plvPersonero ? (
                                     <span style={{
                                       display: 'inline-flex',
                                       alignItems: 'center',
                                       gap: '4px',
-                                      background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe',
-                                      color: '#6d28d9',
-                                      border: '1px solid #c4b5fd',
+                                      background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                                      color: '#0284c7',
+                                      border: '1px solid #bae6fd',
                                       padding: '2px 8px',
                                       borderRadius: '6px',
                                       fontSize: '0.71rem',
                                       fontWeight: 900
                                     }}>
-                                      🗺️ Zona Multi-Colegio ({school.zonalTotalColegios} col.)
-                                    </span>
-                                  ) : isSingle ? (
-                                    <span style={{
-                                      display: 'inline-flex',
-                                      alignItems: 'center',
-                                      gap: '4px',
-                                      background: isDark ? 'rgba(16, 185, 129, 0.15)' : '#dcfce7',
-                                      color: '#15803d',
-                                      border: '1px solid #86efac',
-                                      padding: '2px 8px',
-                                      borderRadius: '6px',
-                                      fontSize: '0.71rem',
-                                      fontWeight: 900
-                                    }}>
-                                      🏫 Colegio Único
+                                      ✅ Con Personero de Centro
                                     </span>
                                   ) : (
                                     <span style={{
@@ -3215,12 +3200,12 @@ export function DashboardView({ onGoToTraining }) {
                                       fontSize: '0.71rem',
                                       fontWeight: 900
                                     }}>
-                                      ⚠️ Sin Coord. Zonal
+                                      ⚠️ Sin Personero de Centro
                                     </span>
                                   )}
                                 </div>
 
-                                {/* Cabecera del Card: Nombre del Colegio */}
+                                {/* Cabecera del Card: Nombre del Centro de Votación */}
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
                                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', minWidth: 0 }}>
                                     <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>🏫</span>
@@ -3242,7 +3227,7 @@ export function DashboardView({ onGoToTraining }) {
                                     alignItems: 'center',
                                     gap: '4px'
                                   }}>
-                                    <span>👥 {school.asignadas} {school.asignadas === 1 ? 'Reg.' : 'Reg.'}</span>
+                                    <span>👥 {school.asignadas} {school.asignadas === 1 ? 'Mesa' : 'Mesas'}</span>
                                   </div>
                                 </div>
 
@@ -3254,7 +3239,7 @@ export function DashboardView({ onGoToTraining }) {
                                   </span>
                                 </div>
 
-                                {/* Mando del Colegio: Para Coord Local muestra su resumen; para los demás muestra Zonal + PLV */}
+                                {/* Mando del Centro de Votación: Personero de Centro (PCV) + Cobertura de Mesas */}
                                 <div style={{
                                   background: isDark ? 'rgba(255,255,255,0.03)' : '#f1f5f9',
                                   borderRadius: '8px',
@@ -3267,7 +3252,7 @@ export function DashboardView({ onGoToTraining }) {
                                   {isCoordinadorLocal ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.74rem' }}>
                                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
-                                        <span style={{ color: textSub, fontWeight: 700 }}>Personero de Local (Tú):</span>
+                                        <span style={{ color: textSub, fontWeight: 700 }}>Personero de Centro (Tú):</span>
                                         <strong style={{ color: '#0284c7' }}>{user?.nombresApellidos || user?.['Nombres y Apellidos'] || 'Asignado'}</strong>
                                       </div>
                                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
@@ -3279,52 +3264,7 @@ export function DashboardView({ onGoToTraining }) {
                                     </div>
                                   ) : (
                                     <>
-                                      {/* 1. Coordinador Zonal */}
-                                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.74rem' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden', minWidth: 0 }}>
-                                          <span style={{
-                                            background: isMulti ? '#ede9fe' : (isDark ? 'rgba(255,255,255,0.06)' : '#e2e8f0'),
-                                            color: isMulti ? '#6d28d9' : (isDark ? '#cbd5e1' : '#334155'),
-                                            border: isMulti ? '1px solid #c4b5fd' : '1px solid #cbd5e1',
-                                            padding: '2px 6px',
-                                            borderRadius: '4px',
-                                            fontWeight: 800,
-                                            fontSize: '0.66rem',
-                                            flexShrink: 0
-                                          }}>
-                                            🗺️ Zonal {isMulti ? `(${school.zonalTotalColegios} col.)` : ''}
-                                          </span>
-                                          <span style={{ fontWeight: 700, color: school.zonalPersonero ? textTitle : '#f59e0b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                            {school.zonalPersonero ? (school.zonalPersonero['Nombres y Apellidos'] || school.zonalPersonero.nombresApellidos) : 'Sin Coord. Zonal'}
-                                          </span>
-                                        </div>
-                                        {school.zonalPersonero && (school.zonalPersonero['Celular'] || school.zonalPersonero.celular) && (
-                                          <a
-                                            href={`https://wa.me/51${String(school.zonalPersonero['Celular'] || school.zonalPersonero.celular).replace(/\D/g, '')}`}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            onClick={(e) => e.stopPropagation()}
-                                            style={{
-                                              color: '#16a34a',
-                                              fontWeight: 800,
-                                              fontSize: '0.7rem',
-                                              flexShrink: 0,
-                                              textDecoration: 'none',
-                                              display: 'inline-flex',
-                                              alignItems: 'center',
-                                              gap: '2px',
-                                              background: isDark ? 'rgba(22, 163, 74, 0.15)' : '#dcfce7',
-                                              padding: '1px 5px',
-                                              borderRadius: '4px'
-                                            }}
-                                          >
-                                            <Phone className="w-2.5 h-2.5" />
-                                            <span>{school.zonalPersonero['Celular'] || school.zonalPersonero.celular}</span>
-                                          </a>
-                                        )}
-                                      </div>
-
-                                      {/* 2. Personero de Local de Votación (PLV) */}
+                                      {/* 1. Personero de Centro de Votación (PCV) */}
                                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.74rem' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden', minWidth: 0 }}>
                                           <span style={{
@@ -3337,10 +3277,10 @@ export function DashboardView({ onGoToTraining }) {
                                             fontSize: '0.66rem',
                                             flexShrink: 0
                                           }}>
-                                            🏫 PLV
+                                            🏫 PCV
                                           </span>
                                           <span style={{ fontWeight: 700, color: school.plvPersonero ? textTitle : '#b45309', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                            {school.plvPersonero ? (school.plvPersonero['Nombres y Apellidos'] || school.plvPersonero.nombresApellidos) : '⚠️ Sin Personero de Local'}
+                                            {school.plvPersonero ? (school.plvPersonero['Nombres y Apellidos'] || school.plvPersonero.nombresApellidos) : '⚠️ Sin Personero de Centro'}
                                           </span>
                                         </div>
                                         {school.plvPersonero && (school.plvPersonero['Celular'] || school.plvPersonero.celular) && (
@@ -3368,6 +3308,55 @@ export function DashboardView({ onGoToTraining }) {
                                           </a>
                                         )}
                                       </div>
+
+                                      {/* 2. Cobertura de Mesas y Personeros */}
+                                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.72rem' }}>
+                                        <span style={{ color: textSub, fontWeight: 700 }}>Cobertura de Mesas:</span>
+                                        <strong style={{ color: school.asignadas >= (school.totalMesas || 1) ? '#16a34a' : '#f59e0b' }}>
+                                          {school.asignadas} de {school.totalMesas || 1} mesas ({school.cobertura}%)
+                                        </strong>
+                                      </div>
+
+                                      {/* 3. Coordinador Zonal (Histórico / Respaldo si existe) */}
+                                      {school.zonalPersonero && (
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.7rem', paddingTop: '3px', borderTop: `1px dashed ${borderCol}` }}>
+                                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden', minWidth: 0 }}>
+                                            <span style={{
+                                              background: isDark ? 'rgba(139, 92, 246, 0.15)' : '#ede9fe',
+                                              color: '#7c3aed',
+                                              padding: '1px 5px',
+                                              borderRadius: '4px',
+                                              fontWeight: 700,
+                                              fontSize: '0.64rem',
+                                              flexShrink: 0
+                                            }}>
+                                              🗺️ Zonal
+                                            </span>
+                                            <span style={{ color: textSub, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                              {school.zonalPersonero['Nombres y Apellidos'] || school.zonalPersonero.nombresApellidos}
+                                            </span>
+                                          </div>
+                                          {(school.zonalPersonero['Celular'] || school.zonalPersonero.celular) && (
+                                            <a
+                                              href={`https://wa.me/51${String(school.zonalPersonero['Celular'] || school.zonalPersonero.celular).replace(/\D/g, '')}`}
+                                              target="_blank"
+                                              rel="noreferrer"
+                                              onClick={(e) => e.stopPropagation()}
+                                              style={{
+                                                color: '#16a34a',
+                                                fontSize: '0.68rem',
+                                                textDecoration: 'none',
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                gap: '2px'
+                                              }}
+                                            >
+                                              <Phone className="w-2.5 h-2.5" />
+                                              <span>{school.zonalPersonero['Celular'] || school.zonalPersonero.celular}</span>
+                                            </a>
+                                          )}
+                                        </div>
+                                      )}
                                     </>
                                   )}
                                 </div>
@@ -3441,8 +3430,8 @@ export function DashboardView({ onGoToTraining }) {
                             hierarchyBadge = { label: 'Coordinador Distrital', icon: '🏛️', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
                           } else if (rolLower.includes('zonal') || rolLower.includes('zona')) {
                             hierarchyBadge = { label: 'Coordinador Zonal', icon: '🗺️', bg: '#ede9fe', color: '#6d28d9', border: '#ddd6fe' };
-                          } else if (rolLower.includes('local') || rolLower.includes('plv')) {
-                            hierarchyBadge = { label: 'Personero de Local de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
+                          } else if (rolLower.includes('local') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('centro')) {
+                            hierarchyBadge = { label: 'Personero de Centro (PCV)', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
                           }
 
                           return (
@@ -3613,8 +3602,8 @@ export function DashboardView({ onGoToTraining }) {
                                 hierarchyBadge = { label: 'Coordinador Distrital', icon: '🏛️', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
                               } else if (rolLower.includes('zonal') || rolLower.includes('zona')) {
                                 hierarchyBadge = { label: 'Coordinador Zonal', icon: '🗺️', bg: '#ede9fe', color: '#6d28d9', border: '#ddd6fe' };
-                              } else if (rolLower.includes('local') || rolLower.includes('plv')) {
-                                hierarchyBadge = { label: 'Personero de Local de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
+                              } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('plv') || rolLower.includes('pcv')) {
+                                hierarchyBadge = { label: 'Personero de Centro de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
                               }
 
                               return (
@@ -3945,9 +3934,9 @@ export function DashboardView({ onGoToTraining }) {
                   >
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
-                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Local de Votación</option>}
-                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coordinador Zonal</option>}
+                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro (PCV)</option>}
                     {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
+                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coord. Zonal (Histórico)</option>}
                   </select>
 
                   {isFiltered2 && (
@@ -4617,9 +4606,83 @@ export function DashboardView({ onGoToTraining }) {
             {/* TAB 1: Lista Real de Personeros del Colegio Seleccionado */}
             {(isCoordinadorLocal || schoolDetailTab === 'personeros') && (
               <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {/* Tarjeta Destacada del Personero de Centro de Votación (PCV) */}
+                <div style={{
+                  background: selectedSchoolDetail.plvPersonero ? (isDark ? 'rgba(2, 132, 199, 0.12)' : '#f0f9ff') : (isDark ? 'rgba(245, 158, 11, 0.12)' : '#fefce8'),
+                  border: `1.5px solid ${selectedSchoolDetail.plvPersonero ? '#38bdf8' : '#fde047'}`,
+                  borderRadius: '12px',
+                  padding: '12px 14px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{
+                      fontSize: '0.74rem',
+                      fontWeight: 900,
+                      color: selectedSchoolDetail.plvPersonero ? '#0284c7' : '#b45309',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px'
+                    }}>
+                      <School className="w-3.5 h-3.5" />
+                      <span>PERSONERO DE CENTRO DE VOTACIÓN (PCV)</span>
+                    </span>
+                    {selectedSchoolDetail.plvPersonero && (
+                      <span style={{ fontSize: '0.68rem', fontWeight: 800, background: '#10b981', color: '#fff', padding: '1px 8px', borderRadius: '10px' }}>
+                        ASIGNADO
+                      </span>
+                    )}
+                  </div>
+
+                  {selectedSchoolDetail.plvPersonero ? (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                      <div>
+                        <strong style={{ fontSize: '0.92rem', color: textTitle, display: 'block' }}>
+                          {selectedSchoolDetail.plvPersonero['Nombres y Apellidos'] || selectedSchoolDetail.plvPersonero.nombresApellidos}
+                        </strong>
+                        <div style={{ fontSize: '0.74rem', color: textSub, marginTop: '2px' }}>
+                          DNI: <strong>{selectedSchoolDetail.plvPersonero['D.N.I.'] || selectedSchoolDetail.plvPersonero.dni}</strong>
+                        </div>
+                      </div>
+
+                      {(selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular) && (
+                        <a
+                          href={`https://wa.me/51${String(selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular).replace(/\D/g, '')}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            background: '#16a34a',
+                            color: '#ffffff',
+                            padding: '5px 12px',
+                            borderRadius: '8px',
+                            fontSize: '0.74rem',
+                            fontWeight: 800,
+                            textDecoration: 'none'
+                          }}
+                        >
+                          <Phone className="w-3 h-3" />
+                          <span>WhatsApp ({selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular})</span>
+                        </a>
+                      )}
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: '0.78rem', color: '#b45309', fontWeight: 700 }}>
+                      ⚠️ Este centro de votación aún no tiene un Personero de Centro de Votación asignado.
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ fontSize: '0.76rem', fontWeight: 800, color: textSub, textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '4px' }}>
+                  Personeros de Mesa Asignados ({selectedSchoolDetail.allPersoneros.length}):
+                </div>
+
                 {selectedSchoolDetail.allPersoneros.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '30px', color: textSub, fontSize: '0.85rem' }}>
-                    No hay personeros registrados en este local aún.
+                  <div style={{ textAlign: 'center', padding: '24px', color: textSub, fontSize: '0.85rem' }}>
+                    No hay personeros de mesa registrados en este centro de votación aún.
                   </div>
                 ) : (
                   selectedSchoolDetail.allPersoneros.map((assignedPerson, mIdx) => {
@@ -4689,12 +4752,41 @@ export function DashboardView({ onGoToTraining }) {
                             borderTop: `1px dashed ${borderCol}`,
                             fontSize: '0.75rem',
                             color: textSub,
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr',
+                            display: 'flex',
+                            flexDirection: 'column',
                             gap: '6px'
                           }}>
-                            <div>📱 <strong>Celular:</strong> {pCel}</div>
-                            <div>✉️ <strong>Email:</strong> {pEmail}</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                              <div>📱 <strong>Celular:</strong> {pCel}</div>
+                              <div>✉️ <strong>Email:</strong> {pEmail}</div>
+                            </div>
+
+                            {(isSuperAdmin || isCoordinadorDistrital) && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedPersonero(assignedPerson);
+                                }}
+                                style={{
+                                  marginTop: '4px',
+                                  padding: '6px 12px',
+                                  borderRadius: '6px',
+                                  border: '1px solid #0284c7',
+                                  background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                                  color: '#0284c7',
+                                  fontWeight: 800,
+                                  fontSize: '0.74rem',
+                                  cursor: 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: '5px'
+                                }}
+                              >
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>{isSuperAdmin ? 'Modificar Registro Completo' : 'Reasignar Centro / Mesa'}</span>
+                              </button>
+                            )}
                           </div>
                         )}
                       </div>
@@ -4868,10 +4960,10 @@ export function DashboardView({ onGoToTraining }) {
                                 fontSize: '0.65rem',
                                 fontWeight: 800
                               }}>
-                                🏫 PLV
+                                🏫 PCV
                               </span>
                               <span style={{ fontWeight: 700, color: plv ? textTitle : '#b45309' }}>
-                                {plv ? (plv['Nombres y Apellidos'] || plv.nombresApellidos) : '⚠️ Sin Personero de Local asignado'}
+                                {plv ? (plv['Nombres y Apellidos'] || plv.nombresApellidos) : '⚠️ Sin Personero de Centro (PCV) asignado'}
                               </span>
                             </div>
 

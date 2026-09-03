@@ -3,7 +3,7 @@ import { X, FileText, Lightbulb, Lock, CheckCircle2, XCircle, AlertCircle, Refre
 import { getRandomQuestions } from '../../constants/quizData.js';
 import confetti from 'canvas-confetti';
 
-export function QuizModal({ onClose, onPassQuiz }) {
+export function QuizModal({ onClose, onPassQuiz, onViewCertificate }) {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -481,30 +481,61 @@ export function QuizModal({ onClose, onPassQuiz }) {
                 Has obtenido un puntaje perfecto de 5/5 (100%). Tu capacitación y evaluación electoral han sido aprobadas exitosamente.
               </p>
 
-              {/* Botón de Acción */}
-              <button
-                onClick={onClose}
-                style={{
-                  width: '100%',
-                  padding: '14px',
-                  borderRadius: '10px',
-                  border: 'none',
-                  background: '#10b981',
-                  color: '#ffffff',
-                  fontSize: '1rem',
-                  fontWeight: 900,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <CheckCircle2 className="w-5 h-5" />
-                <span>Finalizar y Continuar</span>
-              </button>
+              {/* Botones de Acción */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {onViewCertificate && (
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onViewCertificate();
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '13px',
+                      borderRadius: '10px',
+                      border: 'none',
+                      background: 'linear-gradient(90deg, #0284c7, #0369a1)',
+                      color: '#ffffff',
+                      fontSize: '0.98rem',
+                      fontWeight: 900,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      boxShadow: '0 4px 15px rgba(2, 132, 199, 0.4)',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <Award className="w-5 h-5 text-amber-300" />
+                    <span>🎓 Ver Mi Certificado Oficial</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={onClose}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: '#10b981',
+                    color: '#ffffff',
+                    fontSize: '0.92rem',
+                    fontWeight: 900,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.35)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span>Finalizar y Continuar</span>
+                </button>
+              </div>
 
             </div>
           </div>
