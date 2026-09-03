@@ -185,7 +185,7 @@ function MultiSearchableSelect({
   onChange,
   options = [],
   assignedOptions = [],
-  placeholder = "Buscar y seleccionar colegios...",
+  placeholder = "Buscar y seleccionar locales de votación...",
   icon: Icon = School,
   name,
   required = false,
@@ -385,7 +385,7 @@ function MultiSearchableSelect({
           animation: 'fadeIn 0.15s ease-out'
         }}>
           <div style={{ padding: '6px 12px', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', fontSize: '0.73rem', fontWeight: 700, color: '#64748b', display: 'flex', justifyContent: 'space-between' }}>
-            <span>{filtered.length} colegios disponibles</span>
+            <span>{filtered.length} locales de votación disponibles</span>
             {selectedList.length > 0 && <span style={{ color: '#0284c7' }}>{selectedList.length} seleccionados</span>}
           </div>
 
@@ -437,7 +437,7 @@ function MultiSearchableSelect({
             })
           ) : (
             <div style={{ padding: '14px', textAlign: 'center', color: '#64748b', fontSize: '0.82rem' }}>
-              {searchTerm ? 'No se encontraron colegios con esa búsqueda' : 'No hay colegios disponibles en este distrito'}
+              {searchTerm ? 'No se encontraron locales de votación con esa búsqueda' : 'No hay locales de votación disponibles en este distrito'}
             </div>
           )}
         </div>
@@ -821,10 +821,8 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.distrito_asignado = 'Seleccione el distrito donde será asignado.';
     }
 
-    if (formData.rol_electoral !== 'Coordinador Distrital' && formData.rol_electoral !== 'Coordinador de Distritos' && (!formData.local_asignado || formData.local_asignado.trim() === '' || formData.local_asignado === 'No aplica')) {
-      errors.local_asignado = formData.rol_electoral === 'Coordinador Zonal'
-        ? 'Debe seleccionar al menos un colegio o local de votación asignado.'
-        : 'Seleccione el local de votación asignado.';
+    if (!formData.local_asignado && !isCoordinadorDistrital) {
+      errors.local_asignado = 'Seleccione el local de votación asignado.';
     }
 
     // 4. Compromiso y Logística
@@ -1132,7 +1130,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
               {/* Local de Votación */}
               <div>
                 <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                  Local / Colegio de Votación <span style={{ color: '#ef4444' }}>*</span>
+                  Local de Votación <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <CustomSearchableSelect
                   id="field-local_vota"
@@ -1140,7 +1138,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   value={formData.local_vota}
                   onChange={handleChange}
                   options={localesVota}
-                  placeholder={formData.distrito_vota ? `Seleccione Colegio en ${formData.distrito_vota}` : "Primero seleccione un distrito"}
+                  placeholder={formData.distrito_vota ? `Seleccione Local de Votación en ${formData.distrito_vota}` : "Primero seleccione un distrito"}
                   icon={School}
                   required
                   disabled={!formData.distrito_vota}
@@ -1158,8 +1156,8 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
               <span>ROL Y ASIGNACIÓN ELECTORAL</span>
             </div>
 
-            {/* Selector de Roles: 4 Botones Simétricos en cuadrícula 2x2 */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
+            {/* Selector de Roles: 3 Botones Simétricos y Adaptativos */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', marginBottom: '14px' }}>
               <button
                 type="button"
                 onClick={() => handleRoleChange('Personero de Mesa')}
@@ -1210,32 +1208,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
               >
                 <School className="w-4 h-4 flex-shrink-0" />
                 <span>Personero de Local de Votación</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleRoleChange('Coordinador Zonal')}
-                style={{
-                  minHeight: '44px',
-                  padding: '10px 8px',
-                  borderRadius: '10px',
-                  border: isCoordinadorZonal ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1',
-                  background: isCoordinadorZonal ? 'rgb(14, 165, 233)' : '#ffffff',
-                  color: isCoordinadorZonal ? '#ffffff' : '#334155',
-                  fontWeight: 800,
-                  fontSize: '0.78rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px',
-                  transform: isCoordinadorZonal ? 'scale(0.99)' : 'scale(1)',
-                  boxShadow: isCoordinadorZonal ? '0 4px 14px rgba(14, 165, 233, 0.35)' : 'none',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
-                }}
-              >
-                <Layers className="w-4 h-4 flex-shrink-0" />
-                <span>Coordinador Zonal</span>
               </button>
 
               <button
@@ -1367,7 +1339,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                       ? localesAsignados.filter(loc => !assignedLocalesAsignados.some(al => al.toLowerCase().trim() === loc.toLowerCase().trim()))
                       : localesAsignados
                     }
-                    placeholder={formData.distrito_asignado ? `Seleccione Colegio en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
+                    placeholder={formData.distrito_asignado ? `Seleccione Local de Votación en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
                     icon={School}
                     required
                     disabled={!formData.distrito_asignado}
@@ -1642,7 +1614,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                     <strong style={{ color: '#0f172a' }}>{formData.distrito_vota}</strong>
                   </div>
                   <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local / Colegio de Votación</span>
+                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Local de Votación</span>
                     <strong style={{ color: '#0f172a' }}>{formData.local_vota}</strong>
                   </div>
                 </div>
@@ -1674,7 +1646,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   </div>
                   {isCoordinadorZonal ? (
                     <div style={{ gridColumn: 'span 2' }}>
-                      <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Colegios Asignados ({formData.local_asignado ? formData.local_asignado.split(',').length : 0})</span>
+                      <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Locales de Votación Asignados ({formData.local_asignado ? formData.local_asignado.split(',').length : 0})</span>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '4px' }}>
                         {(formData.local_asignado || '').split(',').map((sch, i) => (
                           <span key={i} style={{ background: '#0284c7', color: '#fff', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>

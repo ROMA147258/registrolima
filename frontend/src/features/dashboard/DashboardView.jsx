@@ -109,7 +109,7 @@ function AssignedSchoolsPillList({ schools = '', isDark = false, borderCol = '#c
           gap: '4px',
           border: '1px solid rgba(139, 92, 246, 0.3)'
         }}>
-          <span>🗺️ Zona: {list.length} colegios asignados</span>
+          <span>🗺️ Zona: {list.length} locales de votación asignados</span>
         </span>
 
         <button
@@ -327,7 +327,7 @@ function ZonalOverviewCard({ zonal, isDark, borderCol, onEdit }) {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
             <div style={{ fontSize: '0.71rem', fontWeight: 800, color: isDark ? '#cbd5e1' : '#1e293b', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span>🏫 Colegios ({total}):</span>
+              <span>🏫 Locales de Votación ({total}):</span>
             </div>
             {total > 2 && (
               <button
@@ -468,7 +468,7 @@ function ZonalOverviewCard({ zonal, isDark, borderCol, onEdit }) {
                   </strong>
                 </div>
                 <div style={{ fontSize: '0.75rem', color: isDark ? '#94a3b8' : '#64748b' }}>
-                  Total: <strong>{total} colegios asignados</strong> &bull; DNI: {zonal.dni}
+                  Total: <strong>{total} locales de votación asignados</strong> &bull; DNI: {zonal.dni}
                 </div>
               </div>
 
@@ -1331,7 +1331,7 @@ export function DashboardView({ onGoToTraining }) {
     targetLocales = filteredDistrictSchools.length;
     targetMesas = filteredDistrictSchools.reduce((acc, s) => acc + (s.totalMesas || 0), 0) || 1;
     targetElectores = filteredDistrictSchools.reduce((acc, s) => acc + (s.totalElectores || 0), 0) || (targetMesas * 300);
-    scopeLabel = filteredDistrictSchools.length === 1 ? filteredDistrictSchools[0].nombre : `${filteredDistrictSchools.length} Colegios`;
+    scopeLabel = filteredDistrictSchools.length === 1 ? filteredDistrictSchools[0].nombre : `${filteredDistrictSchools.length} Locales de Votación`;
   }
 
   // Coberturas dinámicas en Porcentaje
@@ -2134,11 +2134,11 @@ export function DashboardView({ onGoToTraining }) {
                           <span>ZONA ASIGNADA</span>
                         </div>
                         <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: textTitle, margin: 0 }}>
-                          Colegios y Coordinadores Locales de mi Zona
+                          Locales de Votación y Coordinadores Locales de mi Zona
                         </h2>
                       </div>
                       <p style={{ fontSize: '0.82rem', color: textSub, margin: 0 }}>
-                        Distrito de <strong>{coordinatorDistrict}</strong> &bull; Monitoreo de <strong>{coordinatorZonalLocales.length} colegios asignados</strong>
+                        Distrito de <strong>{coordinatorDistrict}</strong> &bull; Monitoreo de <strong>{coordinatorZonalLocales.length} locales de votación asignados</strong>
                       </p>
                     </div>
                   </div>
@@ -2220,7 +2220,7 @@ export function DashboardView({ onGoToTraining }) {
                         {/* Coordinadores Locales de este Colegio */}
                         <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '8px' }}>
                           <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '6px' }}>
-                            Personero(s) de Local de este colegio:
+                            Personero(s) de este local de votación:
                           </span>
 
                           {item.coordinadoresLocales.length > 0 ? (
@@ -2285,7 +2285,7 @@ export function DashboardView({ onGoToTraining }) {
                               gap: '6px'
                             }}>
                               <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                              <span>Aún no hay Personero de Local de Votación registrado para este colegio</span>
+                              <span>Aún no hay Personero de Local de Votación registrado para este local de votación</span>
                             </div>
                           )}
                         </div>
@@ -2310,7 +2310,7 @@ export function DashboardView({ onGoToTraining }) {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                         <div style={{ background: '#10b981', color: '#fff', padding: '4px 8px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', fontWeight: 800 }}>
                           <School className="w-4 h-4" />
-                          <span>MI COLEGIO ASIGNADO</span>
+                          <span>MI LOCAL DE VOTACIÓN ASIGNADO</span>
                         </div>
                         <h2 style={{ fontSize: isMobile ? '1.05rem' : '1.25rem', fontWeight: 900, color: textTitle, margin: 0 }}>
                           {coordinatorLocal || 'Local de Votación'}
@@ -2424,7 +2424,7 @@ export function DashboardView({ onGoToTraining }) {
                       onChange={(e) => setLocalZonal1(e.target.value)}
                       style={{ padding: '8px 10px', borderRadius: '8px', border: localZonal1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: localZonal1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: localZonal1 !== 'all' ? 700 : 500, flex: isMobile ? '1 1 calc(50% - 4px)' : 'none', minWidth: 0 }}
                     >
-                      <option value="all">🏫 Mis Colegios ({coordinatorZonalLocales.length})</option>
+                      <option value="all">🏫 Mis Locales de Votación ({coordinatorZonalLocales.length})</option>
                       {coordinatorZonalLocales.map((school, sIdx) => (
                         <option key={sIdx} value={school}>{school}</option>
                       ))}
@@ -2573,7 +2573,7 @@ export function DashboardView({ onGoToTraining }) {
                   </div>
 
                   <span style={{ fontSize: '0.74rem' }}>
-                    Total {isCoordinadorLocal ? 'en colegio' : (coordinatorDistrict ? 'en distrito' : 'padrón')}: <strong>{records.length}</strong>
+                    Total {isCoordinadorLocal ? 'en local de votación' : (coordinatorDistrict ? 'en distrito' : 'padrón')}: <strong>{records.length}</strong>
                   </span>
                 </div>
               </div>
@@ -2603,7 +2603,7 @@ export function DashboardView({ onGoToTraining }) {
                       <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1Personeros.toLocaleString()}</span>
                     </div>
                     <div style={{ fontSize: '0.65rem', color: textSub }}>
-                      {isCoordinadorLocal ? 'En tu colegio' : (isCoordinadorZonal ? 'En tu zona' : `En ${scopeLabel}`)}
+                      {isCoordinadorLocal ? 'En tu local de votación' : (isCoordinadorZonal ? 'En tu zona' : `En ${scopeLabel}`)}
                     </div>
                   </div>
 
@@ -2611,7 +2611,7 @@ export function DashboardView({ onGoToTraining }) {
                   {!isCoordinadorLocal && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
                       <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>
-                        {isCoordinadorZonal ? 'COLEGIOS EN TU ZONA' : 'LOCALES REGISTRADOS'}
+                        {isCoordinadorZonal ? 'LOCALES EN TU ZONA' : 'LOCALES REGISTRADOS'}
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
                         <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
@@ -2908,8 +2908,8 @@ export function DashboardView({ onGoToTraining }) {
                               <option value="zonal_group">🗺️ Agrupados por Zona / Coordinador (Juntos)</option>
                               <option value="personeros_desc">👥 Mayor cantidad de Personeros</option>
                               <option value="personeros_asc">👥 Menor cantidad de Personeros</option>
-                              <option value="alfabetico_asc">🔤 Nombre Colegio (A - Z)</option>
-                              <option value="alfabetico_desc">🔤 Nombre Colegio (Z - A)</option>
+                              <option value="alfabetico_asc">🔤 Nombre Local de Votación (A - Z)</option>
+                              <option value="alfabetico_desc">🔤 Nombre Local de Votación (Z - A)</option>
                               <option value="mesas_desc">🗳️ Mayor cantidad de Mesas</option>
                               <option value="cobertura_desc">📈 Mayor Cobertura (%)</option>
                               <option value="cobertura_asc">📉 Menor Cobertura (%)</option>
@@ -3912,7 +3912,7 @@ export function DashboardView({ onGoToTraining }) {
                       onChange={(e) => setLocalZonal2(e.target.value)}
                       style={{ padding: '8px 12px', borderRadius: '8px', border: localZonal2 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: localZonal2 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: localZonal2 !== 'all' ? 700 : 500 }}
                     >
-                      <option value="all">🏫 Todos los Colegios de mi Zona ({coordinatorZonalLocales.length})</option>
+                      <option value="all">🏫 Todos los Locales de mi Zona ({coordinatorZonalLocales.length})</option>
                       {coordinatorZonalLocales.map((school, sIdx) => (
                         <option key={sIdx} value={school}>{school}</option>
                       ))}
@@ -4609,7 +4609,7 @@ export function DashboardView({ onGoToTraining }) {
                   }}
                 >
                   <Layers className="w-3 h-3" />
-                  <span>Zona ({selectedSchoolDetail.zonalTotalColegios || 1} col.)</span>
+                  <span>Zona ({selectedSchoolDetail.zonalTotalColegios || 1} loc.)</span>
                 </button>
               </div>
             )}
@@ -4733,7 +4733,7 @@ export function DashboardView({ onGoToTraining }) {
                       <div style={{ fontSize: '0.72rem', color: textSub, display: 'flex', gap: '8px', alignItems: 'center', marginTop: '1px' }}>
                         {selectedSchoolDetail.zonalPersonero && <span>DNI: <strong>{selectedSchoolDetail.zonalPersonero['D.N.I.'] || selectedSchoolDetail.zonalPersonero.dni || '-'}</strong></span>}
                         <span>&bull;</span>
-                        <span><strong>{selectedSchoolDetail.zonalTotalColegios || 1}</strong> colegios en su zona</span>
+                        <span><strong>{selectedSchoolDetail.zonalTotalColegios || 1}</strong> locales de votación en su zona</span>
                       </div>
                     </div>
                   </div>

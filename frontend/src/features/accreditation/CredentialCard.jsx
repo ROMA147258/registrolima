@@ -1,42 +1,45 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Download, Printer, Shield, ArrowLeft } from 'lucide-react';
-import QRCode from 'qrcode';
+import React, { useRef } from 'react';
+import { Download, Printer, ArrowLeft, Users, FileCheck, Handshake, Megaphone } from 'lucide-react';
 
 export function CredentialCard({ user, onBack }) {
-  const [qrUrl, setQrUrl] = useState('');
   const certRef = useRef(null);
 
   const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || user?.dni_numero || (user?.tokenVerificacion ? user.tokenVerificacion.split('-').pop() : '') || '--------';
-  const personero = user?.['Nombres y Apellidos'] || user?.nombresApellidos || 'PERSONERO OFICIAL';
-  const rol = (user?.['Rol a Desempeñar'] || user?.rolADesempenar || 'PERSONERO DE MESA').toUpperCase();
-  const distrito = (user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || 'LIMA METROPOLITANA').toUpperCase();
-  const rawLocal = user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.['Local de Votación'] || user?.localDeVotacion || 'LOCAL DE VOTACIÓN CENTRAL';
-  const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || '000000';
-  const folio = user?.Token || `SP-LM2026-${dni}`;
-  const validationCode = `SP-${dni}-${mesa}-2026`;
+  const personero = (user?.['Nombres y Apellidos'] || user?.nombresApellidos || 'PERSONERO OFICIAL').toUpperCase();
+  const rawRol = (user?.['Rol a Desempeñar'] || user?.rolADesempenar || user?.rol_electoral || 'PERSONERO DE MESA').toUpperCase();
+  const distrito = (user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || user?.distrito_asignado || 'LIMA METROPOLITANA').toUpperCase();
+  
+  // Normalización del rol para la píldora central
+  let displayRol = 'PERSONERO DE MESA';
+  if (rawRol.includes('DISTRIT')) {
+    displayRol = 'COORDINADOR DE DISTRITOS';
+  } else if (rawRol.includes('LOCAL') || rawRol.includes('COLEGIO')) {
+    displayRol = 'PERSONERO DE LOCAL DE VOTACIÓN';
+  } else if (rawRol.includes('ZONA')) {
+    displayRol = 'COORDINADOR ZONAL';
+  } else {
+    displayRol = rawRol;
+  }
 
-  const isZonal = rol.includes('ZONAL') || rol.includes('ZONA');
-  const isDistrital = rol.includes('DISTRITO') || rol.includes('DISTRITAL');
-  const schoolsList = isZonal ? rawLocal.split(',').map(s => s.trim()).filter(Boolean) : [];
-
-  const publicVerifyUrl = `${window.location.origin}/#verificar?dni=${dni}&mesa=${encodeURIComponent(mesa)}&distrito=${encodeURIComponent(distrito)}&personero=${encodeURIComponent(personero)}&local=${encodeURIComponent(rawLocal)}&rol=${encodeURIComponent(rol)}&folio=${encodeURIComponent(folio)}`;
-
-  useEffect(() => {
-    QRCode.toDataURL(publicVerifyUrl, {
-      margin: 1,
-      width: 200,
-      color: { dark: '#002B66', light: '#ffffff' }
-    }).then(url => setQrUrl(url)).catch(() => {});
-  }, [publicVerifyUrl]);
+  // Fecha actual formateada DD / MM / AAAA
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear() || 2026;
+  const formattedDate = `${day} / ${month} / ${year}`;
 
   const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div style={{ width: '100%', maxWidth: '1080px', margin: '0 auto' }}>
+    <div style={{ width: '100%', maxWidth: '1020px', margin: '0 auto', fontFamily: "'Outfit', 'Montserrat', sans-serif" }}>
       <style>{`
         @media print {
+          @page {
+            size: landscape;
+            margin: 6mm;
+          }
           .no-print, nav, header, button {
             display: none !important;
           }
@@ -45,17 +48,20 @@ export function CredentialCard({ user, onBack }) {
             padding: 0 !important;
             margin: 0 !important;
           }
-          #printable-certificate {
+          #cert-container {
             box-shadow: none !important;
-            border: 8px solid #002B66 !important;
+            border: 4px solid #002B66 !important;
             margin: 0 auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
             page-break-inside: avoid !important;
+            page-break-after: avoid !important;
           }
         }
       `}</style>
 
-      {/* Botones Superiores de Control con Alto Contraste y Colores Institucionales */}
-      <div className="no-print" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+      {/* Botones de Control Superiores */}
+      <div className="no-print" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
         {onBack && (
           <button
             onClick={onBack}
@@ -63,46 +69,42 @@ export function CredentialCard({ user, onBack }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '10px 20px',
+              padding: '10px 18px',
               borderRadius: '10px',
               border: '2px solid #0284c7',
               background: '#ffffff',
               color: '#0284c7',
-              fontSize: '0.9rem',
+              fontSize: '0.88rem',
               fontWeight: 800,
               cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.15)',
+              boxShadow: '0 2px 8px rgba(2, 132, 199, 0.15)',
               transition: 'all 0.2s ease'
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#e0f2fe'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#ffffff'; }}
           >
-            <ArrowLeft className="w-5 h-5 text-sky-600" />
+            <ArrowLeft className="w-4 h-4 text-sky-600" />
             <span>Volver a la Capacitación</span>
           </button>
         )}
-        <div style={{ display: 'flex', gap: '12px', marginLeft: 'auto' }}>
+        <div style={{ display: 'flex', gap: '10px', marginLeft: 'auto' }}>
           <button
             onClick={handlePrint}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '10px 22px',
+              padding: '10px 20px',
               borderRadius: '10px',
               border: 'none',
-              background: '#20488e',
+              background: '#002B66',
               color: '#ffffff',
-              fontSize: '0.9rem',
+              fontSize: '0.88rem',
               fontWeight: 800,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(32, 72, 142, 0.35)',
+              boxShadow: '0 4px 12px rgba(0, 43, 102, 0.35)',
               transition: 'all 0.2s ease'
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#16366e'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#20488e'; }}
           >
-            <Printer className="w-5 h-5 text-white" />
+            <Printer className="w-4 h-4 text-white" />
             <span>Imprimir Certificado</span>
           </button>
           <button
@@ -111,286 +113,456 @@ export function CredentialCard({ user, onBack }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '10px 22px',
+              padding: '10px 20px',
               borderRadius: '10px',
               border: 'none',
-              background: 'rgb(14, 165, 233)',
+              background: '#e30613',
               color: '#ffffff',
-              fontSize: '0.9rem',
+              fontSize: '0.88rem',
               fontWeight: 800,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(14, 165, 233, 0.35)',
+              boxShadow: '0 4px 12px rgba(227, 6, 19, 0.35)',
               transition: 'all 0.2s ease'
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#0284c7'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgb(14, 165, 233)'; }}
           >
-            <Download className="w-5 h-5 text-white" />
+            <Download className="w-4 h-4 text-white" />
             <span>Descargar PDF</span>
           </button>
         </div>
       </div>
 
-      {/* Certificado Oficial (Fiel a Captura 8.png) */}
+      {/* CONSTANCIA OFICIAL: RÉPLICA EXACTA DE CERTIMODELO.JPEG */}
       <div
         ref={certRef}
-        id="printable-certificate"
+        id="cert-container"
         style={{
           background: '#ffffff',
-          color: '#0f172a',
-          padding: '28px 36px',
-          border: '10px solid #002B66',
-          borderRadius: '4px',
+          borderRadius: '24px',
+          border: '4px solid #002B66',
+          boxShadow: '0 20px 50px rgba(0, 43, 102, 0.15)',
           position: 'relative',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
-          fontFamily: "'Montserrat', 'Outfit', sans-serif"
+          overflow: 'hidden',
+          padding: '24px 28px 0 28px',
+          color: '#0f172a',
+          minHeight: '620px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between'
         }}
       >
-        {/* Marco Dorado Interior Decorativo */}
+        {/* Cinta Diagonal Superior Derecha Institucional */}
         <div style={{
-          border: '2px dashed #e30613',
-          padding: '24px 28px',
-          position: 'relative',
-          background: 'radial-gradient(circle at center, #ffffff 60%, #fafbfc 100%)'
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '260px',
+          height: '190px',
+          pointerEvents: 'none',
+          zIndex: 10
+        }}>
+          {/* Triángulo/Polígono Rojo de Acento */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '260px',
+            height: '190px',
+            background: '#e30613',
+            clipPath: 'polygon(100% 0, 0 0, 100% 100%)'
+          }}></div>
+          {/* Polígono Azul Marino Principal */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '240px',
+            height: '180px',
+            background: '#002B66',
+            clipPath: 'polygon(100% 0, 15% 0, 100% 90%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-start',
+            paddingTop: '16px',
+            paddingRight: '16px',
+            textAlign: 'right',
+            color: '#ffffff'
+          }}>
+            <div style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '1px', lineHeight: 1.15, textTransform: 'uppercase' }}>
+              ELECCIONES
+            </div>
+            <div style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '1px', lineHeight: 1.15, textTransform: 'uppercase' }}>
+              REGIONALES Y
+            </div>
+            <div style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '1px', lineHeight: 1.15, textTransform: 'uppercase' }}>
+              MUNICIPALES
+            </div>
+            <div style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '1.5px', marginTop: '4px' }}>
+              2026
+            </div>
+          </div>
+        </div>
+
+        {/* Rayas decorativas en la esquina inferior izquierda */}
+        <div style={{
+          position: 'absolute',
+          bottom: '70px',
+          left: 0,
+          width: '24px',
+          height: '120px',
+          pointerEvents: 'none',
+          opacity: 0.65,
+          background: 'repeating-linear-gradient(45deg, #002B66, #002B66 2px, transparent 2px, transparent 6px)'
+        }}></div>
+
+        {/* PARTE SUPERIOR: LOGO IZQUIERDO Y CABECERA INSTITUCIONAL PERFECTAMENTE CENTRADA */}
+        <div style={{ position: 'relative', width: '100%', marginBottom: '6px', minHeight: '88px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          
+          {/* Logo Somos Perú (Esquina Superior Izquierda) */}
+          <div style={{ position: 'absolute', top: '2px', left: 0, width: '120px', zIndex: 5 }}>
+            <img 
+              src="/images/logo_somos_peru.svg" 
+              alt="Somos Perú" 
+              style={{ width: '105px', height: 'auto', display: 'block' }} 
+            />
+          </div>
+
+          {/* Encabezado Institucional (100% al Medio) */}
+          <div style={{ textAlign: 'center', width: '100%', paddingLeft: '80px', paddingRight: '80px' }}>
+            <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a', letterSpacing: '0.5px' }}>
+              PARTIDO DEMOCRÁTICO
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#002B66', letterSpacing: '1px', margin: '-2px 0 2px 0' }}>
+              SOMOS PERÚ
+            </div>
+            <div style={{ fontSize: '0.76rem', fontWeight: 800, color: '#002B66', letterSpacing: '0.8px', lineHeight: 1.25 }}>
+              SISTEMA NACIONAL DE CONTROL
+            </div>
+            <div style={{ fontSize: '0.76rem', fontWeight: 800, color: '#002B66', letterSpacing: '0.8px', lineHeight: 1.25 }}>
+              ELECTORAL Y DEFENSA DEL VOTO
+            </div>
+          </div>
+        </div>
+
+        {/* CUERPO PRINCIPAL: ESTRUCTURA SIMÉTRICA DE 3 COLUMNAS (IZQUIERDA - CENTRO 100% AL MEDIO - DERECHA BALANCEADA) */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '210px 1fr 210px',
+          gap: '12px',
+          alignItems: 'center',
+          margin: '2px 0 10px 0',
+          width: '100%'
         }}>
           
-          {/* Esquinas Doradas */}
-          <div style={{ position: 'absolute', top: '4px', left: '4px', width: '16px', height: '16px', borderTop: '3px solid #c59b27', borderLeft: '3px solid #c59b27' }}></div>
-          <div style={{ position: 'absolute', top: '4px', right: '4px', width: '16px', height: '16px', borderTop: '3px solid #c59b27', borderRight: '3px solid #c59b27' }}></div>
-          <div style={{ position: 'absolute', bottom: '4px', left: '4px', width: '16px', height: '16px', borderBottom: '3px solid #c59b27', borderLeft: '3px solid #c59b27' }}></div>
-          <div style={{ position: 'absolute', bottom: '4px', right: '4px', width: '16px', height: '16px', borderBottom: '3px solid #c59b27', borderRight: '3px solid #c59b27' }}></div>
-
-          {/* Cabecera: Logo Izq, Título Centro, QR Der */}
-          <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr 120px', alignItems: 'center', marginBottom: '18px' }}>
+          {/* Columna Izquierda: 4 Iconos Redondos con Textos */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingLeft: '4px' }}>
             
-            {/* Logo Corazón Somos Perú */}
-            <div>
-              <img src="/images/logo_somos_peru.svg" alt="Somos Perú" style={{ width: '90px', height: 'auto', display: 'block' }} />
-            </div>
-
-            {/* Texto Central */}
-            <div style={{ textAlign: 'center' }}>
-              <h1 style={{ fontFamily: 'Cinzel, serif', color: '#002B66', fontSize: '1.45rem', fontWeight: 800, margin: '0 0 2px 0', letterSpacing: '1px' }}>
-                PARTIDO DEMOCRÁTICO SOMOS PERÚ
-              </h1>
-              <div style={{ color: '#e30613', fontSize: '0.78rem', fontWeight: 800, letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-                SISTEMA NACIONAL DE CONTROL ELECTORAL Y DEFENSA DEL VOTO
-              </div>
-              <div style={{ display: 'flex', height: '3px', width: '160px', margin: '8px auto 0', borderRadius: '2px', overflow: 'hidden' }}>
-                <div style={{ flex: 1, background: '#e30613' }}></div>
-                <div style={{ flex: 1, background: '#ffffff' }}></div>
-                <div style={{ flex: 1, background: '#002B66' }}></div>
-              </div>
-            </div>
-
-            {/* QR Code */}
-            <div style={{ textAlign: 'center' }}>
-              {qrUrl ? (
-                <img src={qrUrl} alt="QR" style={{ width: '84px', height: '84px', border: '1px solid #cbd5e1', padding: '2px', background: '#fff' }} />
-              ) : (
-                <div style={{ width: '84px', height: '84px', background: '#f1f5f9' }}></div>
-              )}
-              <div style={{ fontSize: '0.58rem', fontWeight: 800, color: '#002B66', marginTop: '2px' }}>
-                {folio}
-              </div>
-            </div>
-          </div>
-
-          {/* Título del Certificado */}
-          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-            <h2 style={{ fontFamily: 'Cinzel, serif', color: '#002B66', fontSize: '1.55rem', fontWeight: 800, margin: '0 0 2px 0', letterSpacing: '1px' }}>
-              CERTIFICADO OFICIAL DE ACREDITACIÓN
-            </h2>
-            <div style={{ color: '#c59b27', fontStyle: 'italic', fontSize: '0.85rem', fontWeight: 700 }}>
-              "Por la Democracia, la Descentralización y la Transparencia • Elecciones 2026"
-            </div>
-          </div>
-
-          {/* Otorgamiento */}
-          <p style={{ textAlign: 'center', fontSize: '0.82rem', color: '#475569', fontStyle: 'italic', margin: '0 0 10px 0' }}>
-            El Comité Ejecutivo Nacional y la Secretaría Nacional Electoral del Partido Democrático Somos Perú otorgan la presente acreditación a:
-          </p>
-
-          {/* Nombre del Personero */}
-          <div style={{ textAlign: 'center', margin: '8px 0 12px 0' }}>
-            <div style={{ fontFamily: 'Playfair Display, Georgia, serif', fontSize: '1.9rem', fontWeight: 800, color: '#002B66', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              {personero}
-            </div>
-            <div style={{ height: '1.5px', width: '380px', background: 'linear-gradient(90deg, transparent, #c59b27, transparent)', margin: '6px auto' }}></div>
-            <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#0f172a', letterSpacing: '0.5px' }}>
-              DOCUMENTO NACIONAL DE IDENTIDAD (D.N.I.): {dni}
-            </div>
-          </div>
-
-          {/* Texto de Habilitación */}
-          <p style={{ textAlign: 'center', fontSize: '0.78rem', color: '#334155', maxWidth: '780px', margin: '0 auto 12px', lineHeight: 1.45 }}>
-            Por haber culminado y aprobado satisfactoriamente el Programa de Capacitación Técnica en Defensa del Voto, Conteo Rápido y Fiscalización de Mesas para las Elecciones Generales 2026, acreditándosele en calidad de:
-          </p>
-
-          {/* Badge del Cargo */}
-          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-            <span style={{
-              display: 'inline-block',
-              background: '#002B66',
-              color: '#ffffff',
-              padding: '6px 28px',
-              borderRadius: '24px',
-              border: '2px solid #c59b27',
-              fontSize: '0.92rem',
-              fontWeight: 800,
-              letterSpacing: '1px',
-              boxShadow: '0 4px 12px rgba(0, 43, 102, 0.25)'
-            }}>
-              {rol}
-            </span>
-          </div>
-
-          {/* Tabla de Asignación Simétrica y Adaptativa */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isZonal ? '1fr 1.1fr 0.8fr 2.1fr' : (isDistrital ? '1fr 1.5fr 1.5fr' : 'repeat(4, 1fr)'),
-            background: '#f8fafc',
-            border: '1px solid #cbd5e1',
-            borderRadius: '8px',
-            padding: '12px 14px',
-            textAlign: 'center',
-            marginBottom: '20px',
-            gap: '8px',
-            alignItems: 'center'
-          }}>
-            <div style={{ borderRight: '1px solid #e2e8f0' }}>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>DEPARTAMENTO / REGIÓN</span>
-              <strong style={{ fontSize: '0.82rem', color: '#0f172a' }}>LIMA METROPOLITANA</strong>
-            </div>
-            <div style={{ borderRight: '1px solid #e2e8f0' }}>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>DISTRITO ELECTORAL</span>
-              <strong style={{ fontSize: '0.82rem', color: '#0f172a' }}>{distrito}</strong>
-            </div>
-            {!isDistrital && (
-              <div style={{ borderRight: '1px solid #e2e8f0' }}>
-                <span style={{ fontSize: '0.62rem', color: isZonal ? '#64748b' : '#ef4444', fontWeight: 800, display: 'block', textTransform: 'uppercase' }}>MESA DE SUFRAGIO N°</span>
-                <strong style={{ fontSize: isZonal ? '0.82rem' : '1rem', color: isZonal ? '#64748b' : '#e30613', fontWeight: 900 }}>
-                  {isZonal ? 'No aplica' : mesa}
-                </strong>
-              </div>
-            )}
-            <div>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 800, display: 'block', textTransform: 'uppercase', marginBottom: '2px' }}>
-                {isZonal ? `LOCALES DE VOTACIÓN DE LA ZONA (${schoolsList.length})` : (isDistrital ? 'ÁMBITO TERRITORIAL' : 'LOCAL DE VOTACIÓN')}
-              </span>
-              {isZonal ? (
-                /* Lista visual simétrica y prolija para los colegios de la zona */
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '3px',
-                  maxHeight: '80px',
-                  overflowY: 'auto',
-                  padding: '2px 4px',
-                  textAlign: 'left'
-                }}>
-                  {schoolsList.map((sch, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        fontSize: '0.69rem',
-                        color: '#0f172a',
-                        fontWeight: 700,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        lineHeight: 1.25,
-                        background: '#ffffff',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '4px',
-                        padding: '2px 6px'
-                      }}
-                    >
-                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#0284c7', flexShrink: 0 }}></span>
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sch}</span>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <strong style={{ fontSize: '0.78rem', color: '#0f172a', display: 'block', whiteSpace: isDistrital ? 'normal' : 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {isDistrital ? `TODO EL DISTRITO DE ${distrito}` : rawLocal.toUpperCase()}
-                </strong>
-              )}
-            </div>
-          </div>
-
-          {/* Firmas y Medalla Dorada Central */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 140px 1fr', alignItems: 'flex-end', textAlign: 'center', marginTop: '10px', marginBottom: '14px' }}>
-            
-            {/* Firma Izquierda */}
-            <div>
-              <div style={{ width: '160px', height: '35px', margin: '0 auto 4px', borderBottom: '1.5px solid #002B66' }}>
-                <svg viewBox="0 0 100 20" style={{ width: '100%', height: '100%', stroke: '#002B66', fill: 'none', strokeWidth: 1.5 }}>
-                  <path d="M5,15 Q30,2 50,12 T90,8" />
-                </svg>
-              </div>
-              <strong style={{ fontSize: '0.75rem', color: '#002B66', display: 'block' }}>PATRICIA LI SOTELO</strong>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', display: 'block' }}>Presidenta y Personera Legal Titular</span>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', display: 'block' }}>Partido Democrático Somos Perú</span>
-            </div>
-
-            {/* Medalla Dorada Central */}
-            <div style={{ textAlign: 'center' }}>
+            {/* 1. Vigilamos (Rojo) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div style={{
-                width: '74px',
-                height: '74px',
+                width: '36px',
+                height: '36px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, #fde047 0%, #ca8a04 100%)',
-                border: '2px dashed #854d0e',
-                margin: '0 auto',
+                background: '#e30613',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                boxShadow: '0 2px 6px rgba(227, 6, 19, 0.3)'
+              }}>
+                <Users className="w-4 h-4" />
+              </div>
+              <div style={{ fontSize: '0.67rem', lineHeight: 1.2, color: '#0f172a' }}>
+                <strong style={{ display: 'block', color: '#0f172a', fontWeight: 900 }}>VIGILAMOS</strong>
+                el desarrollo de la jornada electoral.
+              </div>
+            </div>
+
+            {/* 2. Actuamos (Azul) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: '#002B66',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                boxShadow: '0 2px 6px rgba(0, 43, 102, 0.3)'
+              }}>
+                <FileCheck className="w-4 h-4" />
+              </div>
+              <div style={{ fontSize: '0.67rem', lineHeight: 1.2, color: '#0f172a' }}>
+                <strong style={{ display: 'block', color: '#0f172a', fontWeight: 900 }}>ACTUAMOS</strong>
+                conforme a la normativa electoral.
+              </div>
+            </div>
+
+            {/* 3. Mantenemos (Rojo) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: '#e30613',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                boxShadow: '0 2px 6px rgba(227, 6, 19, 0.3)'
+              }}>
+                <Handshake className="w-4 h-4" />
+              </div>
+              <div style={{ fontSize: '0.67rem', lineHeight: 1.2, color: '#0f172a' }}>
+                <strong style={{ display: 'block', color: '#0f172a', fontWeight: 900 }}>MANTENEMOS</strong>
+                una conducta respetuosa y ética.
+              </div>
+            </div>
+
+            {/* 4. Comunicamos (Azul) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: '#002B66',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                boxShadow: '0 2px 6px rgba(0, 43, 102, 0.3)'
+              }}>
+                <Megaphone className="w-4 h-4" />
+              </div>
+              <div style={{ fontSize: '0.67rem', lineHeight: 1.2, color: '#0f172a' }}>
+                <strong style={{ display: 'block', color: '#0f172a', fontWeight: 900 }}>COMUNICAMOS</strong>
+                oportunamente acciones e incidentes.
+              </div>
+            </div>
+
+          </div>
+
+          {/* Contenido Central del Certificado (100% Simétrico y Centrado) */}
+          <div style={{ textAlign: 'center', width: '100%' }}>
+            
+            {/* Título: CONSTANCIA DE PARTICIPACIÓN con líneas rojas simétricas */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '6px' }}>
+              <div style={{ height: '2px', width: '45px', background: '#e30613' }}></div>
+              <div>
+                <h1 style={{ fontSize: '2.3rem', fontWeight: 900, color: '#002B66', margin: 0, letterSpacing: '2px', lineHeight: 1 }}>
+                  CONSTANCIA
+                </h1>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#002B66', margin: '2px 0 0 0', letterSpacing: '1px' }}>
+                  DE PARTICIPACIÓN
+                </h2>
+              </div>
+              <div style={{ height: '2px', width: '45px', background: '#e30613' }}></div>
+            </div>
+
+            {/* Subtítulo */}
+            <div style={{ fontSize: '0.86rem', color: '#334155', fontWeight: 600, margin: '6px 0 4px 0' }}>
+              Se otorga la presente constancia a:
+            </div>
+
+            {/* Nombre del Usuario y DNI con Subrayado Simétrico */}
+            <div style={{ margin: '6px auto 10px', maxWidth: '520px' }}>
+              <div style={{
+                fontSize: '1.4rem',
+                fontWeight: 900,
+                color: '#002B66',
+                letterSpacing: '0.5px',
+                paddingBottom: '3px',
+                borderBottom: '2px solid #002B66',
+                textAlign: 'center'
+              }}>
+                {personero}
+              </div>
+              <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#64748b', marginTop: '3px', textAlign: 'center' }}>
+                D.N.I. N° {dni}
+              </div>
+            </div>
+
+            {/* Texto de Reconocimiento */}
+            <p style={{
+              fontSize: '0.82rem',
+              color: '#0f172a',
+              lineHeight: 1.4,
+              maxWidth: '520px',
+              margin: '0 auto 6px',
+              fontWeight: 500,
+              textAlign: 'center'
+            }}>
+              Por su participación en el Programa de Capacitación de Personeros <strong style={{ fontWeight: 800 }}>en Defensa del Voto, Conteo Rápido y Fiscalización de Mesas</strong> realizado con miras a las <strong style={{ fontWeight: 800 }}>Elecciones Regionales y Municipales 2026</strong>.
+            </p>
+
+            <p style={{
+              fontSize: '0.78rem',
+              color: '#334155',
+              lineHeight: 1.35,
+              maxWidth: '480px',
+              margin: '0 auto 10px',
+              fontWeight: 500,
+              textAlign: 'center'
+            }}>
+              Agradecemos su compromiso con la democracia, la <strong style={{ fontWeight: 800, color: '#002B66' }}>descentralización</strong> y la <strong style={{ fontWeight: 800, color: '#002B66' }}>transparencia</strong>.
+            </p>
+
+            {/* Píldora / Insignia de Rol Asignado Centrada */}
+            <div style={{ margin: '0 auto 4px', textAlign: 'center' }}>
+              <span style={{
+                display: 'inline-block',
+                padding: '5px 26px',
+                borderRadius: '24px',
+                border: '1.5px solid #002B66',
+                background: '#ffffff',
+                color: '#002B66',
+                fontWeight: 900,
+                fontSize: '0.86rem',
+                letterSpacing: '0.8px',
+                boxShadow: '0 2px 6px rgba(0, 43, 102, 0.08)'
+              }}>
+                {displayRol}
+              </span>
+            </div>
+
+          </div>
+
+          {/* Columna Derecha de Balance Simétrico */}
+          <div style={{ width: '210px' }}></div>
+
+        </div>
+
+        {/* SECCIÓN DE FIRMAS Y CORAZÓN DEFENSORES DEL VOTO */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 140px 1fr',
+          alignItems: 'flex-end',
+          textAlign: 'center',
+          marginTop: '6px',
+          marginBottom: '16px'
+        }}>
+          {/* Firma Izquierda */}
+          <div>
+            <div style={{ width: '180px', margin: '0 auto 4px', borderBottom: '1.5px solid #002B66' }}></div>
+            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: '#002B66', textTransform: 'uppercase' }}>
+              EQUIPO DE CAPACITACIÓN
+            </div>
+          </div>
+
+          {/* Corazón Defensores del Voto (Centro) */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{
+              width: '95px',
+              position: 'relative',
+              textAlign: 'center'
+            }}>
+              <svg viewBox="0 0 120 100" style={{ width: '100%', height: 'auto', display: 'block' }}>
+                {/* Contorno Corazón Rojo */}
+                <path 
+                  d="M60 90 C20 60 5 40 5 22 C5 10 15 2 28 2 C42 2 54 12 60 20 C66 12 78 2 92 2 C105 2 115 10 115 22 C115 40 100 60 60 90 Z" 
+                  fill="none" 
+                  stroke="#e30613" 
+                  strokeWidth="4" 
+                />
+              </svg>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
-                position: 'relative'
+                paddingTop: '6px'
               }}>
-                <span style={{ fontSize: '0.52rem', fontWeight: 800, color: '#451a03' }}>SOMOS PERÚ</span>
-                <span style={{ fontSize: '0.75rem', fontWeight: 900, color: '#713f12' }}>2026</span>
-                <span style={{ fontSize: '0.45rem', fontWeight: 800, color: '#451a03' }}>ACREDITACIÓN</span>
-                
-                {/* Listón Rojo/Azul */}
-                <div style={{ position: 'absolute', bottom: '-10px', display: 'flex', gap: '3px' }}>
-                  <div style={{ width: '7px', height: '14px', background: '#e30613', clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%)' }}></div>
-                  <div style={{ width: '7px', height: '14px', background: '#002B66', clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%)' }}></div>
-                </div>
+                <span style={{ fontSize: '0.52rem', fontWeight: 900, color: '#002B66', letterSpacing: '0.5px' }}>DEFENSORES</span>
+                <span style={{ fontSize: '0.42rem', fontWeight: 800, color: '#e30613', margin: '-1px 0' }}>— DEL VOTO —</span>
+                <span style={{ fontSize: '0.52rem', fontWeight: 900, color: '#002B66' }}>SOMOS</span>
+                <span style={{ fontSize: '0.56rem', fontWeight: 900, color: '#e30613' }}>PERÚ</span>
               </div>
             </div>
+          </div>
 
-            {/* Firma Derecha */}
-            <div>
-              <div style={{ width: '160px', height: '35px', margin: '0 auto 4px', borderBottom: '1.5px solid #002B66' }}>
-                <svg viewBox="0 0 100 20" style={{ width: '100%', height: '100%', stroke: '#002B66', fill: 'none', strokeWidth: 1.5 }}>
-                  <path d="M10,12 Q35,18 60,6 T95,14" />
-                </svg>
-              </div>
-              <strong style={{ fontSize: '0.75rem', color: '#002B66', display: 'block' }}>SECRETARÍA NACIONAL ELECTORAL</strong>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', display: 'block' }}>Comisión de Control y Conteo Rápido</span>
-              <span style={{ fontSize: '0.62rem', color: '#64748b', display: 'block' }}>Elecciones Generales 2026</span>
+          {/* Firma Derecha */}
+          <div>
+            <div style={{ width: '180px', margin: '0 auto 4px', borderBottom: '1.5px solid #002B66' }}></div>
+            <div style={{ fontSize: '0.68rem', fontWeight: 800, color: '#002B66', textTransform: 'uppercase' }}>
+              COORDINADOR DISTRITAL DE PERSONEROS
             </div>
-
           </div>
-
-          {/* Pie de Certificado con Folio y Fecha */}
-          <div style={{
-            borderTop: '1px solid #e2e8f0',
-            paddingTop: '8px',
-            marginTop: '12px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            fontSize: '0.62rem',
-            color: '#64748b'
-          }}>
-            <span>CÓDIGO DE VALIDACIÓN: {validationCode} • FOLIO: {folio} • HABILITACIÓN OFICIAL JNE/ONPE 2026</span>
-            <span>EMISIÓN: 10 DE AGOSTO DE 2026</span>
-          </div>
-
         </div>
+
+        {/* FRANJA INFERIOR TRICOLOR (AZUL / ROJO / BLANCO) */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1.2fr 1.3fr 1fr',
+          marginLeft: '-28px',
+          marginRight: '-28px',
+          height: '56px',
+          alignItems: 'stretch',
+          position: 'relative'
+        }}>
+          {/* Bloque Azul: Región */}
+          <div style={{
+            background: '#002B66',
+            color: '#ffffff',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingLeft: '28px',
+            borderBottomLeftRadius: '20px'
+          }}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              DEPARTAMENTO / REGIÓN
+            </div>
+            <div style={{ fontSize: '0.88rem', fontWeight: 900, letterSpacing: '0.5px' }}>
+              LIMA METROPOLITANA
+            </div>
+          </div>
+
+          {/* Bloque Rojo con Corte Angular: Distrito */}
+          <div style={{
+            background: '#e30613',
+            color: '#ffffff',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingLeft: '24px',
+            clipPath: 'polygon(0 0, 100% 0, 92% 100%, 0 100%)',
+            marginLeft: '-1px'
+          }}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 700, color: '#fecaca', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              DISTRITO ELECTORAL
+            </div>
+            <div style={{ fontSize: '0.92rem', fontWeight: 900, letterSpacing: '0.5px' }}>
+              {distrito}
+            </div>
+          </div>
+
+          {/* Bloque Blanco: Fecha */}
+          <div style={{
+            background: '#ffffff',
+            color: '#0f172a',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderTop: '1px solid #e2e8f0',
+            borderBottomRightRadius: '20px'
+          }}>
+            <div style={{ fontSize: '0.62rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              FECHA
+            </div>
+            <div style={{ fontSize: '0.92rem', fontWeight: 900, color: '#002B66' }}>
+              {formattedDate}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

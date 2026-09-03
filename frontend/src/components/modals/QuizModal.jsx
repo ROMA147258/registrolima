@@ -498,11 +498,12 @@ export function QuizModal({ onClose, onPassQuiz }) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)'
+                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)',
+                  transition: 'all 0.2s ease'
                 }}
               >
-                <span>Finalizar y Continuar</span>
                 <CheckCircle2 className="w-5 h-5" />
+                <span>Finalizar y Continuar</span>
               </button>
 
             </div>

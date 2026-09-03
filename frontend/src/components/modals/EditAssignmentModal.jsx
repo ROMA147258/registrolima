@@ -109,7 +109,7 @@ function MultiSchoolSearchSelect({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
         <label className="form-label" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#0284c7', fontSize: '0.85rem' }}>
           <School className="w-4 h-4 text-sky-400" />
-          <span>Colegios / Locales Asignados a la Zona</span>
+          <span>Locales de Votación Asignados a la Zona</span>
           <span style={{ color: '#ef4444' }}>*</span>
         </label>
         <span style={{ 
@@ -120,7 +120,7 @@ function MultiSchoolSearchSelect({
           background: selectedList.length > 0 ? 'rgba(2, 132, 199, 0.15)' : '#f1f5f9',
           color: selectedList.length > 0 ? '#0284c7' : '#64748b'
         }}>
-          {selectedList.length} {selectedList.length === 1 ? 'colegio seleccionado' : 'colegios seleccionados'}
+          {selectedList.length} {selectedList.length === 1 ? 'local seleccionado' : 'locales seleccionados'}
         </span>
       </div>
 
@@ -149,7 +149,7 @@ function MultiSchoolSearchSelect({
             transition: 'all 0.15s ease'
           }}
         >
-          {/* Chips de colegios seleccionados */}
+          {/* Chips de locales seleccionados */}
           {selectedList.map((item, idx) => (
             <span
               key={idx}
@@ -174,13 +174,13 @@ function MultiSchoolSearchSelect({
                   className="w-3.5 h-3.5"
                   style={{ cursor: 'pointer', flexShrink: 0, opacity: 0.85 }}
                   onClick={(e) => removeTag(item, e)}
-                  title="Quitar colegio"
+                  title="Quitar local"
                 />
               )}
             </span>
           ))}
 
-          {/* Input de filtro para buscar colegios en vivo */}
+          {/* Input de filtro para buscar locales en vivo */}
           <div style={{ display: 'flex', alignItems: 'center', flex: '1 1 150px', minWidth: '150px', position: 'relative' }}>
             <Search className="w-3.5 h-3.5" style={{ color: '#94a3b8', marginRight: '6px', flexShrink: 0 }} />
             <input
@@ -197,7 +197,7 @@ function MultiSchoolSearchSelect({
               placeholder={
                 !distrito 
                   ? "Seleccione primero el distrito..." 
-                  : (selectedList.length === 0 ? "Buscar y escoger colegios del distrito..." : "Buscar para agregar otro...")
+                  : (selectedList.length === 0 ? "Buscar y escoger locales del distrito..." : "Buscar para agregar otro...")
               }
               disabled={disabled || !distrito}
               autoComplete="off"
@@ -232,7 +232,7 @@ function MultiSchoolSearchSelect({
           />
         </div>
 
-        {/* Panel Desplegable con Filtro y Lista de Colegios */}
+        {/* Panel Desplegable con Filtro y Lista de Locales */}
         {isOpen && !disabled && distrito && (
           <div style={{
             position: 'absolute',
@@ -264,7 +264,7 @@ function MultiSchoolSearchSelect({
               zIndex: 2
             }}>
               <span>
-                {filteredLocales.length} {filteredLocales.length === 1 ? 'colegio disponible' : 'colegios disponibles'} en {distrito}
+                {filteredLocales.length} {filteredLocales.length === 1 ? 'local disponible' : 'locales disponibles'} en {distrito}
               </span>
               <div style={{ display: 'flex', gap: '8px' }}>
                 {filteredLocales.length > 0 && (
@@ -478,7 +478,7 @@ function SingleSchoolSearchSelect({
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Escriba para filtrar colegio..."
+                  placeholder="Escriba para filtrar local de votación..."
                   autoFocus
                   style={{ border: 'none', outline: 'none', fontSize: '0.82rem', width: '100%', color: '#0f172a' }}
                 />
@@ -528,7 +528,7 @@ function SingleSchoolSearchSelect({
               })
             ) : (
               <div style={{ padding: '14px', textAlign: 'center', color: '#64748b', fontSize: '0.82rem' }}>
-                No se encontraron colegios con esa búsqueda
+                No se encontraron locales de votación con esa búsqueda
               </div>
             )}
           </div>

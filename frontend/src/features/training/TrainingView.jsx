@@ -134,7 +134,7 @@ export function TrainingView({ onGoToDashboard }) {
             <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#065f46' : '#334155', lineHeight: 1.45 }}>
               {isFullyAccredited ? (
                 <>
-                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu colegio (${localAsig}) en ${distrito}`)}.
+                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu local de votación (${localAsig}) en ${distrito}`)}.
                 </>
               ) : (
                 <>
@@ -194,12 +194,12 @@ export function TrainingView({ onGoToDashboard }) {
             </span>
             {isCoordinadorLocal && (
               <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Colegio: {localAsig}
+                Local de Votación: {localAsig}
               </span>
             )}
             {isCoordinadorZonal && (
               <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 12px', borderRadius: '16px', fontSize: '0.78rem', fontWeight: 800 }}>
-                Zona: {localAsig.split(',').filter(Boolean).length} colegios
+                Zona: {localAsig.split(',').filter(Boolean).length} locales de votación
               </span>
             )}
             {!isCoordinadorDistrital && !isCoordinadorLocal && !isCoordinadorZonal && (
@@ -228,7 +228,7 @@ export function TrainingView({ onGoToDashboard }) {
           {/* Lecturas de PDF */}
           <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Lecturas de PDF</div>
+              <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Lecturas de Cartilla PDF</div>
               <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'rgb(14, 165, 233)' }}>{pdfCount}/2</div>
             </div>
             <div style={{ display: 'flex', gap: '6px' }}>
@@ -277,7 +277,7 @@ export function TrainingView({ onGoToDashboard }) {
             {isVideoDone ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
           </div>
 
-          {/* 2. Leer PDF Instructivo */}
+          {/* 2. Leer Cartilla del Personero ERM 2026 */}
           <div
             onClick={() => setActiveModal('pdf')}
             style={{
@@ -296,8 +296,8 @@ export function TrainingView({ onGoToDashboard }) {
               <FileText className="w-6 h-6" />
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Leer Guion Oficial / Manual</div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Leer el guion y manual electoral (15 secciones)</div>
+              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Leer Cartilla del Personero ERM 2026</div>
+              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Leer la cartilla instructiva oficial (15 secciones y guía completa)</div>
             </div>
             {isPdfDone ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
           </div>
@@ -327,6 +327,7 @@ export function TrainingView({ onGoToDashboard }) {
                 {canTakeQuiz ? (isQuizPassed ? 'Aprobado con 5/5' : 'Desbloqueado (Rendir 5 preguntas)') : 'Bloqueado (Ver 2 videos y 2 PDFs)'}
               </div>
             </div>
+            {isQuizPassed && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
           </div>
 
         </div>

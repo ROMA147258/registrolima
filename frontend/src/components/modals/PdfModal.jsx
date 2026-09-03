@@ -460,7 +460,7 @@ export function PdfModal({ currentPdfCount = 0, onClose, onComplete }) {
             <div style={{ overflow: 'hidden' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <h3 style={{ fontSize: isMobile ? '0.88rem' : '1.05rem', fontWeight: 900, margin: 0, color: '#ffffff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  Guion Oficial de Capacitación ERM 2026
+                  Cartilla del Personero ERM 2026
                 </h3>
                 {!isMobile && (
                   <span style={{ padding: '2px 8px', fontSize: '0.68rem', background: '#0284c7', color: '#ffffff', borderRadius: '20px', fontWeight: 800 }}>
@@ -476,8 +476,8 @@ export function PdfModal({ currentPdfCount = 0, onClose, onComplete }) {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
             <a
-              href="/manuals/Guion_Capacitacion_Personeros_ERM_2026.pdf"
-              download
+              href="/manuals/Cartilla_del_Personero_ERM_2026.pdf"
+              download="Cartilla_del_Personero_ERM_2026.pdf"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -491,7 +491,7 @@ export function PdfModal({ currentPdfCount = 0, onClose, onComplete }) {
                 textDecoration: 'none',
                 boxShadow: '0 2px 6px rgba(220, 38, 38, 0.4)'
               }}
-              title="Descargar Guion Oficial en PDF"
+              title="Descargar Cartilla del Personero en PDF"
             >
               <Download className="w-3.5 h-3.5" />
               <span>{isMobile ? 'PDF' : 'Descargar PDF'}</span>
@@ -644,7 +644,7 @@ export function PdfModal({ currentPdfCount = 0, onClose, onComplete }) {
               flexShrink: 0
             }}>
               <div style={{ padding: '4px 8px', fontSize: '0.7rem', fontWeight: 900, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Índice del Guion (15 Secciones)
+                Índice de la Cartilla (15 Secciones)
               </div>
               {filteredSections.map(sec => {
                 const isActive = selectedSection === sec.id;
@@ -731,7 +731,7 @@ export function PdfModal({ currentPdfCount = 0, onClose, onComplete }) {
                   <span>Texto Oficial de Capacitación</span>
                 </div>
                 <h1 style={{ fontSize: isMobile ? '1.1rem' : '1.35rem', fontWeight: 900, margin: '0 0 4px 0', color: '#ffffff', lineHeight: 1.25 }}>
-                  GUION PARA VIDEO DE CAPACITACIÓN DE PERSONEROS
+                  CARTILLA DEL PERSONERO - CAPACITACIÓN ELECTORAL
                 </h1>
                 <p style={{ fontSize: isMobile ? '0.78rem' : '0.88rem', color: '#93c5fd', margin: 0, fontWeight: 700 }}>
                   Elecciones Regionales y Municipales 2026 • Somos Perú
@@ -853,7 +853,7 @@ export function PdfModal({ currentPdfCount = 0, onClose, onComplete }) {
             }}
           >
             {canConfirm ? <CheckCircle2 className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-            <span>{submitting ? 'Registrando...' : (canConfirm ? 'Confirmar Lectura del Guion' : `Esperar ${formatTime(timeLeft)}`)}</span>
+            <span>{submitting ? 'Registrando...' : (canConfirm ? 'Confirmar Lectura de la Cartilla' : `Esperar ${formatTime(timeLeft)}`)}</span>
           </button>
         </div>
 
