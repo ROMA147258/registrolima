@@ -15,10 +15,18 @@ export class LoginUseCase {
     const cleanPass = String(password || '').trim();
     const cleanDni = String(dni || (/^\d{7,9}$/.test(cleanPass) ? cleanPass : (/^\d{7,9}$/.test(cleanUser) ? cleanUser : ''))).trim();
 
-    // 1. Verificación Inmediata de Superadministradores (eric, paola, pola, susana, admin)
+    // 1. Verificación Inmediata de Superadministradores (supera, admin, eric, paola, pola, susana)
     const superadmins = {
+      supera: {
+        passwords: ['abcde12345', 'admin123', config.admin.password].filter(Boolean),
+        displayName: 'Superadministrador Principal'
+      },
+      admin: {
+        passwords: ['abcde12345', 'admin123', config.admin.password].filter(Boolean),
+        displayName: 'Superadministrador Principal'
+      },
       eric: {
-        passwords: ['eric123', 'admin123', config.admin.ericPassword, config.admin.password].filter(Boolean),
+        passwords: ['eric123', 'admin123', config.admin.ericPassword].filter(Boolean),
         displayName: 'Eric - Coordinador Central'
       },
       paola: {
@@ -26,16 +34,12 @@ export class LoginUseCase {
         displayName: 'Paola - Superadministradora'
       },
       pola: {
-        passwords: ['pao123*', 'pao123$', 'pola123', 'admin123', config.admin.paolaPassword].filter(Boolean),
+        passwords: ['pao123*', 'pao123$', 'pola123', config.admin.paolaPassword].filter(Boolean),
         displayName: 'Pola - Superadministradora'
       },
       susana: {
-        passwords: ['susan456&', 'susana123', 'admin123', config.admin.susanaPassword].filter(Boolean),
+        passwords: ['susan456&', 'susana123', config.admin.susanaPassword].filter(Boolean),
         displayName: 'Susana - Superadministradora'
-      },
-      admin: {
-        passwords: ['admin123', 'eric123', config.admin.password].filter(Boolean),
-        displayName: 'Administrador General'
       }
     };
 

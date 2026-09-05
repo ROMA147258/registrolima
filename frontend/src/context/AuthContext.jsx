@@ -43,13 +43,14 @@ export function AuthProvider({ children }) {
       }
       throw new Error(res?.message || 'Error de autenticación');
     } catch (err) {
-      // Acceso directo garantizado para administradores predeterminados (eric, paola, pola, susana, admin)
+      // Acceso directo garantizado para administradores predeterminados (supera, admin, eric, paola, pola, susana)
       const SUPERADMIN_CREDENTIALS = {
+        supera: { pass: ['abcde12345', 'admin123'], name: 'Superadministrador Principal' },
+        admin: { pass: ['abcde12345', 'admin123'], name: 'Superadministrador Principal' },
         eric: { pass: ['eric123', 'admin123'], name: 'Eric - Coordinador Central' },
         paola: { pass: ['pao123*', 'pao123$', 'pola123', 'admin123'], name: 'Paola - Superadministradora' },
         pola: { pass: ['pao123*', 'pao123$', 'pola123', 'admin123'], name: 'Pola - Superadministradora' },
-        susana: { pass: ['susan456&', 'susana123', 'admin123'], name: 'Susana - Superadministradora' },
-        admin: { pass: ['admin123', 'eric123'], name: 'Administrador General' }
+        susana: { pass: ['susan456&', 'susana123', 'admin123'], name: 'Susana - Superadministradora' }
       };
 
       if (SUPERADMIN_CREDENTIALS[cleanUser] && SUPERADMIN_CREDENTIALS[cleanUser].pass.includes(cleanPass)) {
@@ -111,7 +112,12 @@ export function AuthProvider({ children }) {
 
   const rolName = String(user?.['Rol a Desempeñar'] || user?.role || '').toLowerCase();
   const cleanUsername = String(user?.username || '').toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['eric', 'admin', 'paola', 'susana'].includes(cleanUsername) || rolName === 'superadministrador';
+  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['supera', 'admin', 'eric', 'paola', 'susana'].includes(cleanUsername) || rolName === 'superadministrador';
+  
+  // Exclusivo para el usuario master (supera / admin): eric, paola y susana NO pueden ver la pestaña de Historial de Auditoría
+  const isMasterSuperAdmin = (cleanUsername === 'supera' || cleanUsername === 'admin' || (!['eric', 'paola', 'pola', 'susana'].includes(cleanUsername) && (role === 'superadmin' || role === 'admin')));
+  const canViewAudit = isMasterSuperAdmin;
+
   const isCoordinadorDistrital = !isSuperAdmin && (
     Boolean(user?.isCoordinadorDistrital) ||
     rolName.includes('distrito') ||
@@ -141,6 +147,8 @@ export function AuthProvider({ children }) {
       token,
       isLoggedIn: Boolean(user),
       isSuperAdmin,
+      isMasterSuperAdmin,
+      canViewAudit,
       isCoordinador,
       isCoordinadorDistrital,
       isCoordinadorZonal,

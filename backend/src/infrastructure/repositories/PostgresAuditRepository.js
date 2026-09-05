@@ -36,4 +36,52 @@ export class PostgresAuditRepository {
       console.warn('Error registrando auditoría en PostgreSQL:', err.message);
     }
   }
+
+  async findAll({ action, limit = 200, offset = 0 } = {}) {
+    try {
+      await this.ensureTableExists();
+      const pool = await dbPool.getPool();
+
+      let query = 'SELECT * FROM auditoria';
+      const params = [];
+      const conditions = [];
+
+      if (action) {
+        params.push(action);
+        conditions.push(`action = $${params.length}`);
+      }
+
+      if (conditions.length > 0) {
+        query += ` WHERE ${conditions.join(' AND ')}`;
+      }
+
+      query += ` ORDER BY created_at DESC, id DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+      params.push(Math.min(parseInt(limit, 10) || 200, 500));
+      params.push(parseInt(offset, 10) || 0);
+
+      const res = await pool.query(query, params);
+      return res.rows.map(row => {
+        let parsedDetails = {};
+        try {
+          parsedDetails = typeof row.details === 'string' ? JSON.parse(row.details) : (row.details || {});
+        } catch {
+          parsedDetails = { raw: row.details };
+        }
+        return {
+          id: row.id,
+          action: row.action,
+          userIdentifier: row.user_identifier,
+          role: row.role,
+          details: parsedDetails,
+          ipAddress: row.ip_address,
+          userAgent: row.user_agent,
+          createdAt: row.created_at
+        };
+      });
+    } catch (err) {
+      console.error('Error consultando registros de auditoría:', err.message);
+      return [];
+    }
+  }
 }
+

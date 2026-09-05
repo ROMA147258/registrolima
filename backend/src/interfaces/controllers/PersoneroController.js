@@ -168,7 +168,44 @@ export class PersoneroController {
   async update(req, res, next) {
     try {
       const { dni } = req.params;
+      const before = await this.personeroRepo.findByDni(dni);
       const result = await this.personeroRepo.updatePersonero(dni, req.body);
+
+      // Calcular diferencias para auditoría
+      const changes = {};
+      if (before && before.entity) {
+        const b = before.entity;
+        const a = result.entity;
+        if (req.body.nombresApellidos && b.nombresApellidos !== a.nombresApellidos) changes.nombres = { antes: b.nombresApellidos, despues: a.nombresApellidos };
+        if (req.body.celular && b.celular !== a.celular) changes.celular = { antes: b.celular, despues: a.celular };
+        if (req.body.distritoAsignado && b.distritoAsignado !== a.distritoAsignado) changes.distrito = { antes: b.distritoAsignado, despues: a.distritoAsignado };
+        if (req.body.localAsignado && b.localDeVotacionAsignado !== a.localDeVotacionAsignado) changes.local = { antes: b.localDeVotacionAsignado, despues: a.localDeVotacionAsignado };
+        if (req.body.mesaAsignada && b.mesaAsignada !== a.mesaAsignada) changes.mesa = { antes: b.mesaAsignada, despues: a.mesaAsignada };
+        if (req.body.rolADesempenar && b.rolADesempenar !== a.rolADesempenar) changes.rol = { antes: b.rolADesempenar, despues: a.rolADesempenar };
+        if (req.body.credenciales && b.credenciales !== a.credenciales) changes.credenciales = { antes: b.credenciales, despues: a.credenciales };
+      }
+
+      const author = req.body?.author || req.headers['x-author-name'] || req.user?.name || 'Administrador';
+      const authorRole = req.body?.authorRole || req.headers['x-author-role'] || req.user?.role || 'Superadministrador';
+
+      try {
+        await this.auditRepo?.log({
+          action: 'UPDATE_PERSONERO',
+          userIdentifier: author,
+          role: authorRole,
+          details: {
+            dni,
+            nombres: result.entity?.nombresApellidos || before?.entity?.nombresApellidos,
+            distrito: result.entity?.distritoAsignado || before?.entity?.distritoAsignado,
+            changes,
+            author,
+            authorRole
+          },
+          ipAddress: req.ip,
+          userAgent: req.headers['user-agent']
+        });
+      } catch (e) {}
+
       res.json({ status: 'success', message: 'Datos del personero actualizados correctamente', data: result.entity });
     } catch (err) {
       next(err);
@@ -176,22 +213,42 @@ export class PersoneroController {
   }
 
   async updateAssignment(req, res, next) {
-    try {
-      const { dni } = req.params;
-      const result = await this.personeroRepo.updatePersonero(dni, req.body);
-      res.json({ status: 'success', message: 'Asignación actualizada correctamente', data: result.entity });
-    } catch (err) {
-      next(err);
-    }
+    return this.update(req, res, next);
   }
 
   async delete(req, res, next) {
     try {
       const { dni } = req.params;
+      const before = await this.personeroRepo.findByDni(dni);
       const result = await this.personeroRepo.deleteByDni(dni);
+
       if (!result.success) {
         return res.status(404).json({ status: 'error', message: 'No se encontró el personero para eliminar.' });
       }
+
+      const author = req.body?.author || req.query?.author || req.headers['x-author-name'] || req.user?.name || 'Administrador';
+      const authorRole = req.body?.authorRole || req.query?.authorRole || req.headers['x-author-role'] || req.user?.role || 'Superadministrador';
+
+      try {
+        await this.auditRepo?.log({
+          action: 'DELETE_PERSONERO',
+          userIdentifier: author,
+          role: authorRole,
+          details: {
+            dni,
+            nombres: before?.entity?.nombresApellidos || 'Personero',
+            distrito: before?.entity?.distritoAsignado || before?.entity?.distritoDondeVota || '-',
+            local: before?.entity?.localDeVotacionAsignado || before?.entity?.localDeVotacion || '-',
+            mesa: before?.entity?.mesaAsignada || '-',
+            rol: before?.entity?.rolADesempenar || 'Personero',
+            author,
+            authorRole
+          },
+          ipAddress: req.ip,
+          userAgent: req.headers['user-agent']
+        });
+      } catch (e) {}
+
       res.json({ status: 'success', message: 'Personero eliminado exitosamente de la base de datos.' });
     } catch (err) {
       next(err);

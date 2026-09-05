@@ -60,8 +60,13 @@ export const api = {
   // Dashboard y Gestión de Personeros
   getDashboardSummary: () => request('/dashboard/summary'),
   getDashboardRecords: () => request('/dashboard/records'),
+  getAuditLogs: (params = {}) => {
+    const qs = new URLSearchParams(params).toString();
+    return request(`/dashboard/audit${qs ? `?${qs}` : ''}`);
+  },
   updatePersonero: (dni, data) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'PUT', body: JSON.stringify(data) }),
   updateAssignment: (dni, data) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'PUT', body: JSON.stringify(data) }),
-  deletePersonero: (dni) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'DELETE' }),
+  deletePersonero: (dni, data = {}) => request(`/personeros/${encodeURIComponent(dni)}`, { method: 'DELETE', body: JSON.stringify(data) }),
   getExportUrl: (format = 'xlsx', district = '') => `${BASE_URL}/dashboard/export?format=${format}${district ? `&district=${encodeURIComponent(district)}` : ''}`
 };
+

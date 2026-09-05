@@ -42,7 +42,7 @@ export function createApiRouter() {
   const authCtrl = new AuthController(loginUseCase);
   const personeroCtrl = new PersoneroController(registerUseCase, personeroRepo, auditRepo);
   const trainingCtrl = new TrainingController(updateProgressUseCase);
-  const dashboardCtrl = new DashboardController(getDashboardUseCase, exportUseCase);
+  const dashboardCtrl = new DashboardController(getDashboardUseCase, exportUseCase, auditRepo);
   const verifyCtrl = new VerifyController(verifyUseCase);
   const catalogCtrl = new CatalogController(personeroRepo);
 
@@ -90,6 +90,7 @@ export function createApiRouter() {
   router.get('/dashboard/summary', (req, res, next) => dashboardCtrl.getSummary(req, res, next));
   router.get('/dashboard/records', (req, res, next) => dashboardCtrl.readAll(req, res, next));
   router.get('/dashboard/export', (req, res, next) => dashboardCtrl.export(req, res, next));
+  router.get('/dashboard/audit', (req, res, next) => dashboardCtrl.getAuditLogs(req, res, next));
 
   // Actualización y Eliminación de personeros
   router.put('/personeros/:dni', (req, res, next) => personeroCtrl.update(req, res, next));

@@ -1,7 +1,8 @@
 export class DashboardController {
-  constructor(getDashboardDataUseCase, exportRecordsUseCase) {
+  constructor(getDashboardDataUseCase, exportRecordsUseCase, auditRepository) {
     this.getDashboardUseCase = getDashboardDataUseCase;
     this.exportUseCase = exportRecordsUseCase;
+    this.auditRepo = auditRepository;
   }
 
   async getSummary(req, res, next) {
@@ -35,4 +36,15 @@ export class DashboardController {
       next(err);
     }
   }
+
+  async getAuditLogs(req, res, next) {
+    try {
+      const { action, limit, offset } = req.query;
+      const logs = await this.auditRepo?.findAll({ action, limit, offset });
+      res.json({ status: 'success', data: logs || [] });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
+
