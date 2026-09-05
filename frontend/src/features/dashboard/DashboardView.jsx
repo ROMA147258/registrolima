@@ -4,7 +4,7 @@ import {
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
   FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
   AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School, Layers, Building2,
-  Navigation, MapPin, ArrowUpDown, History, Trash2, Clock, Activity, Shield
+  Navigation, MapPin, ArrowUpDown, History, Trash2, Clock, Activity, Shield, Bell, Eye, CheckCheck
 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -720,30 +720,87 @@ export function DashboardView({ onGoToTraining }) {
   const [savedUrlMsg, setSavedUrlMsg] = useState(null);
   const [lastSync, setLastSync] = useState(null);
 
-  // Estados Tab 4 (Historial de Auditoría - Exclusivo Superadmin)
+  // Estados Tab 4 y Notificaciones en Tiempo Real (Exclusivo Superadmin Master)
   const [auditLogs, setAuditLogs] = useState([]);
   const [auditLoading, setAuditLoading] = useState(false);
   const [auditFilterAction, setAuditFilterAction] = useState('all');
   const [auditSearch, setAuditSearch] = useState('');
-
-  const fetchAuditLogs = async () => {
-    if (!canViewAudit) return;
-    setAuditLoading(true);
+  const [showNotifMenu, setShowNotifMenu] = useState(false);
+  const [latestToast, setLatestToast] = useState(null);
+  const [lastSeenAuditId, setLastSeenAuditId] = useState(() => {
     try {
-      const res = await api.getAuditLogs({ limit: 300 });
-      setAuditLogs(res?.data || []);
+      const saved = localStorage.getItem('supera_last_seen_audit_id');
+      return saved ? parseInt(saved, 10) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const fetchAuditLogs = async (isBackground = false) => {
+    if (!canViewAudit) return;
+    if (!isBackground) setAuditLoading(true);
+    try {
+      const res = await api.getAuditLogs({ limit: 200 });
+      const logs = res?.data || [];
+      setAuditLogs(logs);
+
+      // Si es la primera vez que se ingresa, se fija el último ID visto para que empiece vacío
+      // a partir de este instante (0 notificaciones hasta que ocurra un cambio nuevo).
+      setLastSeenAuditId(prev => {
+        if (prev === null && logs.length > 0) {
+          const maxId = Math.max(...logs.map(l => l.id || 0));
+          try { localStorage.setItem('supera_last_seen_audit_id', String(maxId)); } catch {}
+          return maxId;
+        } else if (prev !== null && logs.length > 0 && isBackground) {
+          // Detectar si llegaron modificaciones o eliminaciones nuevas
+          const freshChanges = logs.filter(l => (l.id > prev) && (l.action === 'UPDATE_PERSONERO' || l.action === 'DELETE_PERSONERO'));
+          if (freshChanges.length > 0) {
+            setLatestToast(freshChanges[0]);
+          }
+        }
+        return prev;
+      });
     } catch (err) {
       console.error('Error cargando registros de auditoría:', err);
     } finally {
-      setAuditLoading(false);
+      if (!isBackground) setAuditLoading(false);
     }
   };
 
   useEffect(() => {
-    if (activeTab === 'auditoria' && canViewAudit) {
-      fetchAuditLogs();
+    if (canViewAudit) {
+      fetchAuditLogs(false);
+      // Polling de auditoría en tiempo real cada 10 segundos
+      const notifInterval = setInterval(() => {
+        fetchAuditLogs(true);
+      }, 10000);
+      return () => clearInterval(notifInterval);
     }
-  }, [activeTab, canViewAudit]);
+  }, [canViewAudit]);
+
+  // Auto-cerrar toast emergente después de 8 segundos
+  useEffect(() => {
+    if (!latestToast) return;
+    const timer = setTimeout(() => {
+      setLatestToast(null);
+    }, 8000);
+    return () => clearTimeout(timer);
+  }, [latestToast]);
+
+  // Lista de modificaciones y eliminaciones no vistas
+  const unreadAuditLogs = useMemo(() => {
+    if (lastSeenAuditId === null) return [];
+    return auditLogs.filter(l => (l.id > lastSeenAuditId) && (l.action === 'UPDATE_PERSONERO' || l.action === 'DELETE_PERSONERO'));
+  }, [auditLogs, lastSeenAuditId]);
+
+  const markAllAuditAsSeen = () => {
+    if (auditLogs.length > 0) {
+      const maxId = Math.max(...auditLogs.map(l => l.id || 0));
+      setLastSeenAuditId(maxId);
+      try { localStorage.setItem('supera_last_seen_audit_id', String(maxId)); } catch {}
+    }
+    setShowNotifMenu(false);
+  };
 
   const fetchData = async (isBackground = false) => {
     if (!isBackground) setLoading(true);
@@ -1633,8 +1690,11 @@ export function DashboardView({ onGoToTraining }) {
             {/* Tab 4: Historial de Cambios / Auditoría (Exclusivo Superadmin Master) */}
             {canViewAudit && (
               <button
-                onClick={() => setActiveTab('auditoria')}
-                title={isSidebarCollapsed ? 'Historial de Cambios y Auditoría' : undefined}
+                onClick={() => {
+                  setActiveTab('auditoria');
+                  markAllAuditAsSeen();
+                }}
+                title={isSidebarCollapsed ? `Historial de Cambios y Auditoría${unreadAuditLogs.length > 0 ? ` (${unreadAuditLogs.length} nuevos)` : ''}` : undefined}
                 style={{
                   padding: isSidebarCollapsed ? '10px' : '10px 12px',
                   borderRadius: '8px',
@@ -1646,16 +1706,34 @@ export function DashboardView({ onGoToTraining }) {
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                  gap: '10px',
+                  justifyContent: isSidebarCollapsed ? 'center' : 'space-between',
+                  gap: '8px',
                   textAlign: 'left',
-                  transition: 'all 0.15s ease'
+                  transition: 'all 0.15s ease',
+                  position: 'relative'
                 }}
               >
-                <History className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                {!isSidebarCollapsed && (
-                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    Historial de Cambios
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+                  <History className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                  {!isSidebarCollapsed && (
+                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      Historial de Cambios
+                    </span>
+                  )}
+                </div>
+
+                {unreadAuditLogs.length > 0 && (
+                  <span style={{
+                    background: '#ef4444',
+                    color: '#fff',
+                    fontSize: '0.66rem',
+                    fontWeight: 900,
+                    padding: '2px 6px',
+                    borderRadius: '10px',
+                    boxShadow: '0 0 8px rgba(239, 68, 68, 0.6)',
+                    animation: 'pulse 1.5s infinite'
+                  }}>
+                    {unreadAuditLogs.length}
                   </span>
                 )}
               </button>
@@ -1774,6 +1852,243 @@ export function DashboardView({ onGoToTraining }) {
             )}
 
 
+
+            {/* Campana de Notificaciones en Tiempo Real (Exclusivo Superadmin Master) */}
+            {canViewAudit && (
+              <div style={{ position: 'relative' }}>
+                <button
+                  onClick={() => setShowNotifMenu(prev => !prev)}
+                  title="Notificaciones de Cambios en Vivo"
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    border: `1.5px solid ${unreadAuditLogs.length > 0 ? '#ef4444' : borderCol}`,
+                    background: unreadAuditLogs.length > 0 ? (isDark ? 'rgba(239, 68, 68, 0.2)' : '#fef2f2') : bgCard,
+                    color: unreadAuditLogs.length > 0 ? '#ef4444' : textTitle,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    transition: 'all 0.15s ease',
+                    boxShadow: unreadAuditLogs.length > 0 ? '0 0 10px rgba(239, 68, 68, 0.4)' : 'none'
+                  }}
+                >
+                  <Bell className={`w-4 h-4 ${unreadAuditLogs.length > 0 ? 'animate-bounce' : ''}`} />
+                  {unreadAuditLogs.length > 0 && (
+                    <span style={{
+                      position: 'absolute',
+                      top: '-6px',
+                      right: '-6px',
+                      background: '#ef4444',
+                      color: '#ffffff',
+                      fontSize: '0.62rem',
+                      fontWeight: 900,
+                      minWidth: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0 3px',
+                      boxShadow: '0 0 6px rgba(239, 68, 68, 0.9)'
+                    }}>
+                      {unreadAuditLogs.length}
+                    </span>
+                  )}
+                </button>
+
+                {/* Popover / Menú Desplegable de Notificaciones */}
+                {showNotifMenu && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: '40px',
+                      width: isMobile ? '310px' : '400px',
+                      maxWidth: '92vw',
+                      background: bgCard,
+                      border: `1.5px solid ${isDark ? '#334155' : '#bae6fd'}`,
+                      borderRadius: '16px',
+                      boxShadow: '0 20px 40px rgba(0,0,0,0.35)',
+                      zIndex: 1000,
+                      overflow: 'hidden',
+                      animation: 'fadeIn 0.15s ease-out'
+                    }}
+                  >
+                    {/* Header del Popover */}
+                    <div style={{
+                      padding: '12px 16px',
+                      borderBottom: `1px solid ${borderCol}`,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      background: isDark ? '#0f172a' : '#f8fafc'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ fontSize: '1.1rem' }}>🔔</span>
+                        <strong style={{ fontSize: '0.86rem', color: textTitle }}>
+                          Nuevas Modificaciones ({unreadAuditLogs.length})
+                        </strong>
+                      </div>
+
+                      {unreadAuditLogs.length > 0 && (
+                        <button
+                          onClick={markAllAuditAsSeen}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: '#0284c7',
+                            fontSize: '0.74rem',
+                            fontWeight: 800,
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          <CheckCheck className="w-3.5 h-3.5" />
+                          <span>Marcar leídas</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Lista de Notificaciones */}
+                    <div style={{ maxHeight: '350px', overflowY: 'auto', padding: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {unreadAuditLogs.length === 0 ? (
+                        <div style={{ padding: '24px 12px', textAlign: 'center' }}>
+                          <div style={{ fontSize: '2rem', marginBottom: '8px' }}>✨</div>
+                          <div style={{ fontSize: '0.86rem', fontWeight: 800, color: textTitle }}>Sin modificaciones recientes</div>
+                          <p style={{ fontSize: '0.74rem', color: textSub, margin: '4px 0 0 0', lineHeight: 1.4 }}>
+                            Apenas un usuario o coordinador distrital modifique o elimine un personero, te avisará aquí en vivo con el <strong>Antes</strong> y <strong>Ahora</strong>.
+                          </p>
+                        </div>
+                      ) : (
+                        unreadAuditLogs.map((item, idx) => {
+                          const d = item.details || {};
+                          const isDelete = item.action === 'DELETE_PERSONERO';
+                          const author = d.author || item.userIdentifier || 'Usuario';
+                          const authorRole = d.authorRole || item.role || 'Superadmin';
+                          const pName = d.nombres || d.fullName || 'Personero';
+                          const pDni = d.dni || '—';
+                          const dateObj = item.createdAt ? new Date(item.createdAt) : null;
+                          const timeStr = dateObj ? dateObj.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
+
+                          return (
+                            <div
+                              key={item.id || idx}
+                              style={{
+                                background: isDark ? '#1e293b' : '#f8fafc',
+                                border: `1.5px solid ${isDelete ? '#fca5a5' : '#bfdbfe'}`,
+                                borderRadius: '12px',
+                                padding: '12px',
+                                fontSize: '0.76rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '6px'
+                              }}
+                            >
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <span style={{
+                                  background: isDelete ? '#fee2e2' : '#e0f2fe',
+                                  color: isDelete ? '#b91c1c' : '#0369a1',
+                                  fontWeight: 800,
+                                  fontSize: '0.68rem',
+                                  padding: '2px 8px',
+                                  borderRadius: '6px'
+                                }}>
+                                  {isDelete ? '🗑️ ELIMINACIÓN' : '✏️ MODIFICACIÓN'}
+                                </span>
+                                <span style={{ fontSize: '0.7rem', color: textSub, fontWeight: 700 }}>⏰ {timeStr}</span>
+                              </div>
+
+                              <div>
+                                <div style={{ fontWeight: 800, color: textTitle }}>
+                                  👤 {author} <span style={{ color: textSub, fontWeight: 600, fontSize: '0.7rem' }}>({authorRole})</span>
+                                </div>
+                                <div style={{ color: isDelete ? '#dc2626' : textTitle, fontWeight: 700, marginTop: '2px' }}>
+                                  {isDelete ? '❌ Eliminó a: ' : '🎯 Modificó a: '}<strong>{pName}</strong> (DNI: {pDni})
+                                </div>
+                              </div>
+
+                              {/* Comparación Antes vs Ahora */}
+                              {d.changes && Object.keys(d.changes).length > 0 && (
+                                <div style={{
+                                  background: isDark ? '#0f172a' : '#ffffff',
+                                  border: `1px solid ${borderCol}`,
+                                  borderRadius: '8px',
+                                  padding: '8px 10px',
+                                  marginTop: '2px',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '4px'
+                                }}>
+                                  {Object.entries(d.changes).map(([fKey, fVal], fIdx) => (
+                                    <div key={fIdx} style={{ fontSize: '0.73rem', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                                      <strong style={{ color: '#0284c7', textTransform: 'capitalize' }}>{fKey}:</strong>
+                                      <span style={{ color: '#dc2626', background: '#fee2e2', padding: '1px 5px', borderRadius: '4px', textDecoration: 'line-through' }}>
+                                        {String(fVal?.antes ?? '—')}
+                                      </span>
+                                      <strong style={{ color: '#0284c7' }}>➔</strong>
+                                      <span style={{ color: '#16a34a', background: '#dcfce7', padding: '1px 5px', borderRadius: '4px', fontWeight: 800 }}>
+                                        {String(fVal?.despues ?? '—')}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {isDelete && (
+                                <div style={{ fontSize: '0.72rem', color: '#b91c1c', background: '#fef2f2', padding: '6px 8px', borderRadius: '6px' }}>
+                                  ⚠️ <strong>Antes:</strong> Activo en el padrón ➔ <strong>Ahora:</strong> Borrado de la base de datos.
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+
+                    {/* Footer del Popover */}
+                    <div style={{
+                      padding: '10px 14px',
+                      borderTop: `1px solid ${borderCol}`,
+                      background: isDark ? '#0f172a' : '#f8fafc',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <button
+                        onClick={() => {
+                          setActiveTab('auditoria');
+                          markAllAuditAsSeen();
+                        }}
+                        style={{
+                          background: '#0284c7',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '8px',
+                          padding: '8px 14px',
+                          fontSize: '0.78rem',
+                          fontWeight: 800,
+                          cursor: 'pointer',
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          boxShadow: '0 2px 6px rgba(2, 132, 199, 0.3)'
+                        }}
+                      >
+                        <History className="w-4 h-4" />
+                        <span>Ver Historial Completo</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Toggle Modo Oscuro / Claro */}
             <button
@@ -5428,6 +5743,112 @@ export function DashboardView({ onGoToTraining }) {
           onClose={() => setSelectedPersonero(null)}
           onSaved={fetchData}
         />
+      )}
+
+      {/* Toast Flotante en Tiempo Real para Supera */}
+      {canViewAudit && latestToast && (
+        <div style={{
+          position: 'fixed',
+          bottom: isMobile ? '70px' : '24px',
+          right: isMobile ? '12px' : '24px',
+          left: isMobile ? '12px' : 'auto',
+          maxWidth: isMobile ? 'none' : '420px',
+          width: isMobile ? 'auto' : '420px',
+          background: isDark ? '#0f172a' : '#ffffff',
+          border: `2px solid ${latestToast.action === 'DELETE_PERSONERO' ? '#ef4444' : '#0284c7'}`,
+          borderRadius: '16px',
+          padding: '14px 16px',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.35)',
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          animation: 'fadeIn 0.25s ease-out'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '1.3rem' }}>{latestToast.action === 'DELETE_PERSONERO' ? '🗑️' : '🔔'}</span>
+              <div>
+                <strong style={{ fontSize: '0.84rem', color: textTitle, display: 'block' }}>
+                  {latestToast.action === 'DELETE_PERSONERO' ? 'Eliminación en Vivo' : 'Modificación en Vivo'}
+                </strong>
+                <span style={{ fontSize: '0.7rem', color: textSub }}>
+                  Por: <strong>{latestToast.details?.author || latestToast.userIdentifier || 'Usuario'}</strong> ({latestToast.details?.authorRole || latestToast.role || 'Rol'})
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={() => setLatestToast(null)}
+              style={{ background: 'none', border: 'none', color: textSub, cursor: 'pointer', padding: '2px' }}
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div style={{ fontSize: '0.76rem', color: textTitle, fontWeight: 600 }}>
+            {latestToast.action === 'DELETE_PERSONERO' ? '❌ Se eliminó a: ' : '🎯 Se editó a: '}
+            <strong>{latestToast.details?.nombres || latestToast.details?.fullName || 'Personero'}</strong> (DNI: {latestToast.details?.dni || '—'})
+          </div>
+
+          {/* Comparación Antes vs Ahora en el Toast */}
+          {latestToast.details?.changes && Object.keys(latestToast.details.changes).length > 0 && (
+            <div style={{
+              background: isDark ? '#1e293b' : '#f8fafc',
+              border: `1px solid ${borderCol}`,
+              borderRadius: '8px',
+              padding: '6px 8px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px',
+              maxHeight: '120px',
+              overflowY: 'auto'
+            }}>
+              {Object.entries(latestToast.details.changes).map(([fKey, fVal], fIdx) => (
+                <div key={fIdx} style={{ fontSize: '0.71rem', display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+                  <strong style={{ color: '#0284c7', textTransform: 'capitalize' }}>{fKey}:</strong>
+                  <span style={{ color: '#dc2626', background: '#fee2e2', padding: '1px 4px', borderRadius: '3px', textDecoration: 'line-through' }}>
+                    {String(fVal?.antes ?? '—')}
+                  </span>
+                  <strong style={{ color: '#0284c7' }}>➔</strong>
+                  <span style={{ color: '#16a34a', background: '#dcfce7', padding: '1px 4px', borderRadius: '3px', fontWeight: 800 }}>
+                    {String(fVal?.despues ?? '—')}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {latestToast.action === 'DELETE_PERSONERO' && (
+            <div style={{ fontSize: '0.72rem', color: '#b91c1c', background: '#fef2f2', padding: '4px 8px', borderRadius: '6px' }}>
+              ⚠️ <strong>Antes:</strong> Registrado en Padrón ➔ <strong>Ahora:</strong> Eliminado definitivamente.
+            </div>
+          )}
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '4px' }}>
+            <button
+              onClick={() => {
+                setActiveTab('auditoria');
+                setLatestToast(null);
+              }}
+              style={{
+                background: '#0284c7',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '6px 12px',
+                fontSize: '0.72rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Ver en Historial Completo</span>
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
