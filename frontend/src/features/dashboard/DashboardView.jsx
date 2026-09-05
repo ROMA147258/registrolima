@@ -723,7 +723,7 @@ export function DashboardView({ onGoToTraining }) {
   // Estados Tab 4 y Notificaciones en Tiempo Real (Exclusivo Superadmin Master)
   const [auditLogs, setAuditLogs] = useState([]);
   const [auditLoading, setAuditLoading] = useState(false);
-  const [auditFilterAction, setAuditFilterAction] = useState('all');
+  const [auditFilterAction, setAuditFilterAction] = useState('modificaciones');
   const [auditSearch, setAuditSearch] = useState('');
   const [showNotifMenu, setShowNotifMenu] = useState(false);
   const [latestToast, setLatestToast] = useState(null);
@@ -4828,30 +4828,25 @@ export function DashboardView({ onGoToTraining }) {
                 </button>
               </div>
 
-              {/* Tarjetas KPI de Auditoría */}
+              {/* Tarjetas KPI de Auditoría (Enfocadas en Modificaciones) */}
               {(() => {
-                const totalLogs = auditLogs.length;
                 const totalUpdates = auditLogs.filter(l => l.action === 'UPDATE_PERSONERO').length;
                 const totalDeletes = auditLogs.filter(l => l.action === 'DELETE_PERSONERO').length;
-                const totalRegisters = auditLogs.filter(l => l.action === 'REGISTER_PERSONERO' || l.action === 'REGISTER_COORDINADOR').length;
+                const totalChanges = totalUpdates + totalDeletes;
 
                 return (
-                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '12px' }}>
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: textSub, fontWeight: 700, textTransform: 'uppercase' }}>TOTAL REGISTROS</span>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: textTitle, marginTop: '2px' }}>{totalLogs}</div>
-                    </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: '12px' }}>
                     <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#0284c7' : '#93c5fd'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase' }}>✏️ MODIFICACIONES</span>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0284c7', marginTop: '2px' }}>{totalUpdates}</div>
+                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase' }}>⚡ TOTAL MODIFICACIONES</span>
+                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0284c7', marginTop: '2px' }}>{totalChanges}</div>
+                    </div>
+                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#0284c7' : '#bae6fd'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase' }}>✏️ DATOS EDITADOS</span>
+                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: textTitle, marginTop: '2px' }}>{totalUpdates}</div>
                     </div>
                     <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#dc2626' : '#fca5a5'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#dc2626', fontWeight: 800, textTransform: 'uppercase' }}>🗑️ ELIMINACIONES</span>
+                      <span style={{ fontSize: '0.72rem', color: '#dc2626', fontWeight: 800, textTransform: 'uppercase' }}>🗑️ PERSONEROS ELIMINADOS</span>
                       <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#dc2626', marginTop: '2px' }}>{totalDeletes}</div>
-                    </div>
-                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#16a34a' : '#86efac'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#16a34a', fontWeight: 800, textTransform: 'uppercase' }}>➕ NUEVOS INSCRITOS</span>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#16a34a', marginTop: '2px' }}>{totalRegisters}</div>
                     </div>
                   </div>
                 );
@@ -4897,7 +4892,7 @@ export function DashboardView({ onGoToTraining }) {
                   )}
                 </div>
 
-                <div style={{ minWidth: '200px' }}>
+                <div style={{ minWidth: '220px' }}>
                   <select
                     value={auditFilterAction}
                     onChange={(e) => setAuditFilterAction(e.target.value)}
@@ -4913,11 +4908,10 @@ export function DashboardView({ onGoToTraining }) {
                       fontWeight: 700
                     }}
                   >
-                    <option value="all">⚡ Todas las Acciones</option>
-                    <option value="UPDATE_PERSONERO">✏️ Solo Modificaciones</option>
-                    <option value="DELETE_PERSONERO">🗑️ Solo Eliminaciones</option>
-                    <option value="REGISTER_PERSONERO">➕ Solo Nuevos Registros</option>
-                    <option value="LOGINS">🔑 Inicios de Sesión</option>
+                    <option value="modificaciones">⚡ Solo Modificaciones y Eliminaciones</option>
+                    <option value="UPDATE_PERSONERO">✏️ Solo Datos Modificados</option>
+                    <option value="DELETE_PERSONERO">🗑️ Solo Personeros Eliminados</option>
+                    <option value="all">📁 Ver Todo el Historial</option>
                   </select>
                 </div>
               </div>
@@ -4926,12 +4920,10 @@ export function DashboardView({ onGoToTraining }) {
               {(() => {
                 const searchClean = auditSearch.trim().toLowerCase();
                 const filtered = auditLogs.filter(log => {
-                  if (auditFilterAction !== 'all') {
-                    if (auditFilterAction === 'LOGINS') {
-                      if (!log.action.startsWith('LOGIN')) return false;
-                    } else if (log.action !== auditFilterAction) {
-                      return false;
-                    }
+                  if (auditFilterAction === 'modificaciones') {
+                    if (log.action !== 'UPDATE_PERSONERO' && log.action !== 'DELETE_PERSONERO') return false;
+                  } else if (auditFilterAction !== 'all') {
+                    if (log.action !== auditFilterAction) return false;
                   }
 
                   if (!searchClean) return true;
@@ -4955,11 +4947,15 @@ export function DashboardView({ onGoToTraining }) {
 
                 if (filtered.length === 0) {
                   return (
-                    <div style={{ padding: '40px', textAlign: 'center', background: bgCard, borderRadius: '12px', border: `1.5px dashed ${borderCol}` }}>
-                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🔍</div>
-                      <h4 style={{ fontWeight: 800, color: textTitle, margin: '0 0 6px 0' }}>No se encontraron registros de auditoría</h4>
-                      <p style={{ color: textSub, fontSize: '0.82rem', margin: 0 }}>
-                        {auditSearch ? 'Pruebe con otro término de búsqueda o seleccione otra acción.' : 'Aún no se han registrado acciones recientes.'}
+                    <div style={{ padding: '48px 20px', textAlign: 'center', background: bgCard, borderRadius: '16px', border: `1.5px dashed ${borderCol}` }}>
+                      <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>✨</div>
+                      <h4 style={{ fontWeight: 800, color: textTitle, margin: '0 0 6px 0', fontSize: '1.02rem' }}>
+                        No se han realizado modificaciones ni eliminaciones
+                      </h4>
+                      <p style={{ color: textSub, fontSize: '0.82rem', margin: 0, maxWidth: '460px', marginInline: 'auto', lineHeight: 1.5 }}>
+                        {auditSearch
+                          ? 'No hay resultados que coincidan con la búsqueda.'
+                          : 'El historial está completamente limpio. En cuanto alguien realice una modificación o eliminación, se mostrará aquí con el detalle exacto de Antes y Ahora.'}
                       </p>
                     </div>
                   );
