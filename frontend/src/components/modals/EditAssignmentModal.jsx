@@ -540,25 +540,51 @@ function SingleSchoolSearchSelect({
 
 import { useAuth } from '../../context/AuthContext.jsx';
 
+function normalizePersoneroRole(rawRole) {
+  if (!rawRole) return 'Personero de Mesa';
+  const r = String(rawRole).trim().toLowerCase();
+  if (r.includes('distrito') || r.includes('distrital')) {
+    return 'Coordinador Distrital';
+  }
+  if (r.includes('zonal') || r.includes('zona')) {
+    return 'Coordinador Zonal';
+  }
+  if (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('central'))) {
+    return 'Personero de Local de Votación';
+  }
+  return 'Personero de Mesa';
+}
+
 export function EditAssignmentModal({ personero, onClose, onSaved }) {
   const { isSuperAdmin, isCoordinadorDistrital, user: authUser } = useAuth();
   
   // El Coordinador Distrital puede editar y eliminar registros dentro de su distrito
   const isLimitedCoordinator = !isSuperAdmin && isCoordinadorDistrital;
 
-  const rawMesa = personero?.['Mesa Asignada'] ?? personero?.mesaAsignada ?? '';
+  const rawMesa = personero?.['Mesa Asignada'] ?? personero?.mesaAsignada ?? personero?.mesaDeSufragio ?? personero?.['Mesa de Sufragio'] ?? '';
   const initialMesa = (rawMesa === '-' || String(rawMesa).trim().toLowerCase() === 'no aplica') ? '' : String(rawMesa);
 
-  const initialDistrito = personero['Distrito Asignado'] || personero['Distrito donde Vota'] || personero.distritoAsignado || (isLimitedCoordinator ? (authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || '') : '');
+  const initialDistrito = personero?.['Distrito Asignado'] || personero?.['Distrito donde Vota'] || personero?.distritoAsignado || personero?.distritoDondeVota || (isLimitedCoordinator ? (authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || '') : '');
+
+  const rawRole = personero?.['Rol a Desempeñar'] || 
+                  personero?.['Rol a desempenar'] || 
+                  personero?.rolADesempenar || 
+                  personero?.rol_a_desempenar || 
+                  personero?.rol || 
+                  personero?.Rol || 
+                  personero?.cargo || 
+                  personero?.Cargo || '';
+
+  const initialRole = normalizePersoneroRole(rawRole);
 
   const [formData, setFormData] = useState({
-    nombresApellidos: personero['Nombres y Apellidos'] || personero.nombresApellidos || '',
-    celular: personero['Celular'] || personero.celular || '',
+    nombresApellidos: personero?.['Nombres y Apellidos'] || personero?.nombresApellidos || personero?.nombres_y_apellidos || '',
+    celular: personero?.['Celular'] || personero?.celular || personero?.telefono || '',
     distritoAsignado: initialDistrito,
-    localAsignado: personero['Local de Votación Asignado'] || personero['Local de Votación'] || personero.localDeVotacionAsignado || '',
+    localAsignado: personero?.['Local de Votación Asignado'] || personero?.['Local de Votación'] || personero?.localDeVotacionAsignado || personero?.localDeVotacion || '',
     mesaAsignada: initialMesa,
-    rolADesempenar: personero['Rol a Desempeñar'] || personero.rolADesempenar || 'Personero de Mesa',
-    credenciales: personero['Credenciales'] || personero.credenciales || 'Bloqueado'
+    rolADesempenar: initialRole,
+    credenciales: String(personero?.['Credenciales'] || personero?.credenciales || personero?.estadoCredencial || 'Bloqueado').toLowerCase() === 'confirmado' ? 'Confirmado' : 'Bloqueado'
   });
 
   const [locales, setLocales] = useState([]);
@@ -566,14 +592,14 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
   const [deleting, setDeleting] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const dni = personero['D.N.I.'] || personero['DNI'] || personero.dni;
+  const dni = personero?.['D.N.I.'] || personero?.['DNI'] || personero?.dni || personero?.dni_numero;
   const isZonal = !isLimitedCoordinator && ((formData.rolADesempenar || '').toLowerCase().includes('zonal') || (formData.rolADesempenar || '').toLowerCase().includes('zona'));
   const isMesa = (formData.rolADesempenar || '').toLowerCase().includes('personero') || isLimitedCoordinator;
 
   // Roles permitidos según nivel de usuario
   const availableRoles = isSuperAdmin
     ? ROLES
-    : ['Personero de Mesa', 'Personero de Local de Votación', 'Coordinador de Local de Votación'];
+    : Array.from(new Set([...['Personero de Mesa', 'Personero de Local de Votación'], initialRole]));
 
   useEffect(() => {
     if (formData.distritoAsignado) {
@@ -604,13 +630,13 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
     e.preventDefault();
 
     // Comprobar si hubo cambios reales en la ficha
-    const origNom = (personero['Nombres y Apellidos'] || personero.nombresApellidos || '').trim();
-    const origCel = (personero['Celular'] || personero.celular || '').trim();
-    const origDist = (personero['Distrito Asignado'] || personero['Distrito donde Vota'] || personero.distritoAsignado || '').trim();
-    const origLoc = (personero['Local de Votación Asignado'] || personero['Local de Votación'] || personero.localDeVotacionAsignado || '').trim();
+    const origNom = (personero?.['Nombres y Apellidos'] || personero?.nombresApellidos || '').trim();
+    const origCel = (personero?.['Celular'] || personero?.celular || '').trim();
+    const origDist = (initialDistrito || '').trim();
+    const origLoc = (personero?.['Local de Votación Asignado'] || personero?.['Local de Votación'] || personero?.localDeVotacionAsignado || '').trim();
     const origMesa = initialMesa.trim();
-    const origRol = (personero['Rol a Desempeñar'] || personero.rolADesempenar || 'Personero de Mesa').trim();
-    const origCred = (personero['Credenciales'] || personero.credenciales || 'Bloqueado').trim();
+    const origRol = initialRole.trim();
+    const origCred = (String(personero?.['Credenciales'] || personero?.credenciales || 'Bloqueado').toLowerCase() === 'confirmado' ? 'Confirmado' : 'Bloqueado').trim();
 
     const hasAnyChange = (
       formData.nombresApellidos.trim() !== origNom ||

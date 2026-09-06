@@ -1,49 +1,132 @@
 import { ExcelExportService } from '../../infrastructure/external/ExcelExportService.js';
+import { LOCALES_OFICIALES } from '../../constants/localesCatalog.js';
+
+function normalizeDistrictName(name) {
+  if (!name) return '';
+  let clean = String(name).trim().toUpperCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (clean.includes('LURIGANCHO') || clean.includes('CHOSICA')) return 'LURIGANCHO-CHOSICA';
+  if (clean.includes('CERCADO') || clean === 'LIMA' || clean === 'LIMA CERCADO') return 'CERCADO DE LIMA';
+  if (clean === 'MAGDALENA') return 'MAGDALENA DEL MAR';
+  if (clean === 'SAN JUAN DE LURIGANCHO' || clean === 'SJL') return 'SAN JUAN DE LURIGANCHO';
+  if (clean === 'SAN JUAN DE MIRAFLORES' || clean === 'SJM') return 'SAN JUAN DE MIRAFLORES';
+  if (clean === 'VILLA EL SALVADOR' || clean === 'VES') return 'VILLA EL SALVADOR';
+  if (clean === 'VILLA MARIA DEL TRIUNFO' || clean === 'VMT') return 'VILLA MARIA DEL TRIUNFO';
+  if (clean === 'SAN MARTIN DE PORRES' || clean === 'SMP') return 'SAN MARTIN DE PORRES';
+  return clean;
+}
+
+function normalizeLocalName(name) {
+  if (!name) return '';
+  return String(name).trim().toUpperCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Z0-9]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 export class ExportRecordsUseCase {
   constructor(personeroRepository) {
     this.personeroRepo = personeroRepository;
   }
 
-  formatRecordForExport(r, index) {
+  // Hoja 1: Únicamente los datos más relevantes solicitados
+  formatRecordForSheet1(r, index) {
     const data = r.toJSON ? r.toJSON() : r;
-    const rawDate = data.fechaRegistro || data['Fecha de Registro'] || data.fecha_de_registro;
-    let fechaFormatted = '';
-    if (rawDate) {
-      const d = new Date(rawDate);
-      if (!isNaN(d.getTime())) {
-        fechaFormatted = d.toLocaleString('es-PE', { timeZone: 'America/Lima' });
-      } else {
-        fechaFormatted = String(rawDate);
-      }
-    }
 
     return {
       'Nº': index + 1,
-      'Fecha de Registro': fechaFormatted,
       'Nombres y Apellidos': String(data.nombresApellidos || data['Nombres y Apellidos'] || data.nombres_y_apellidos || '').trim(),
       'DNI': String(data.dni || data['D.N.I.'] || data.DNI || '').trim(),
-      'Clave de Acceso': String(data.claveAcceso || data['Clave de Acceso'] || data.clave_acceso || (String(data.rolADesempenar || '').toLowerCase().includes('distrito') ? '-' : 'Ingreso con DNI')).trim(),
-      'Celular': String(data.celular || data.Celular || '').trim(),
-      'Correo Electrónico': String(data.correoElectronico || data['Correo Electrónico'] || data.correo_electronico || '').trim(),
-      'Usa WhatsApp en Celular': String(data.usaWhatsApp || data['Usa WhatsApp en su Celular'] || 'Sí').trim(),
-      'Número WhatsApp Alterno': String(data.numeroWhatsAppAlterno || data['Número WhatsApp Alterno'] || data.numero_whatsapp_alterno || '-').trim(),
-      'Distrito donde Vota': String(data.distritoDondeVota || data['Distrito donde Vota'] || data.distrito_donde_vota || '').trim(),
-      'Mesa de Sufragio': String(data.mesaDeSufragio || data['Mesa de Sufragio'] || data.mesa_de_sufragio || '-').trim(),
-      'Local de Votación': String(data.localDeVotacion || data['Local de Votación'] || data.local_de_votacion || '-').trim(),
-      'Rol a Desempeñar': String(data.rolADesempenar || data['Rol a Desempeñar'] || data.rol_a_desempenar || '').trim(),
-      'Distrito Asignado': String(data.distritoAsignado || data['Distrito Asignado'] || data.distrito_asignado || '').trim(),
-      'Mesa Asignada': String(data.mesaAsignada || data['Mesa Asignada'] || data.mesa_asignada || '-').trim(),
-      'Local de Votación Asignado': String(data.localDeVotacionAsignado || data['Local de Votación Asignado'] || data.local_de_votacion_asignado || '-').trim(),
-      '¿Tiene Experiencia?': String(data.tieneExperiencia || data['Tiene Experiencia como Personero'] || data.tiene_experiencia_como_personero || 'No').trim(),
-      '¿Movilidad Propia?': String(data.cuentaConMovilidad || data['Cuenta con Movilidad Propia'] || data.cuenta_con_movilidad_propia || 'No').trim(),
-      'Compromiso 4 Octubre 2026': String(data.seCompromete || data['Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones'] || data.se_compromete_a_colaborar_el_4_de_octubre_del_2026_en_las_elecciones || 'Sí').trim(),
-      'Videos Vistos (de 2)': parseInt(data.video || data.Video || 0, 10),
-      'PDFs Leídos (de 2)': parseInt(data.pdf || data.PDF || 0, 10),
-      'Evaluación': String(data.preguntas || data.Preguntas || 'Pendiente').trim(),
-      'Estado Credencial': String(data.credenciales || data.Credenciales || 'Bloqueado').trim(),
-      'Código Verificación': String(data.tokenVerificacion || data.Token || data.token_verificacion || '').trim()
+      'Teléfono': String(data.celular || data.Celular || data.telefono || '').trim(),
+      'Rol a Desempeñar': String(data.rolADesempenar || data['Rol a Desempeñar'] || data.rol_a_desempenar || 'Personero de Mesa').trim(),
+      'Local de Votación Asignado': String(data.localDeVotacionAsignado || data['Local de Votación Asignado'] || data.local_de_votacion_asignado || data.localDeVotacion || data['Local de Votación'] || '-').trim(),
+      'Mesa Asignada': String(data.mesaAsignada || data['Mesa Asignada'] || data.mesa_asignada || data.mesaDeSufragio || data['Mesa de Sufragio'] || '-').trim()
     };
+  }
+
+  // Hoja 2: Cantidad de roles a desempeñar (KPI)
+  generateSheet2Roles(records) {
+    let countDistrital = 0;
+    let countZonal = 0;
+    let countPCV = 0;
+    let countMesa = 0;
+
+    records.forEach(r => {
+      const d = r.toJSON ? r.toJSON() : r;
+      const rol = String(d.rolADesempenar || d['Rol a Desempeñar'] || d.rol_a_desempenar || '').toLowerCase();
+
+      if (rol.includes('distrito') || rol.includes('distrital')) {
+        countDistrital++;
+      } else if (rol.includes('zonal') || rol.includes('zona')) {
+        countZonal++;
+      } else if (rol.includes('local') || rol.includes('centro') || rol.includes('pcv') || rol.includes('plv')) {
+        countPCV++;
+      } else {
+        countMesa++;
+      }
+    });
+
+    const total = records.length;
+
+    return [
+      { 'Rol a Desempeñar': 'Coordinador Distrital', 'Cantidad': countDistrital },
+      { 'Rol a Desempeñar': 'Coordinador Zonal', 'Cantidad': countZonal },
+      { 'Rol a Desempeñar': 'Personero de Centro de Votación (PCV)', 'Cantidad': countPCV },
+      { 'Rol a Desempeñar': 'Personero de Mesa', 'Cantidad': countMesa },
+      { 'Rol a Desempeñar': 'TOTAL GENERAL', 'Cantidad': total }
+    ];
+  }
+
+  // Hoja 3: Cuántos faltan por completar por cada colegio con su total (KPI)
+  generateSheet3SchoolCoverage(records, districtName = null) {
+    let officialSchools = LOCALES_OFICIALES || [];
+    if (districtName && districtName !== 'all') {
+      const normDist = normalizeDistrictName(districtName);
+      officialSchools = officialSchools.filter(s => normalizeDistrictName(s.distrito) === normDist);
+    }
+
+    const schoolStats = officialSchools.map((sch, idx) => {
+      const normSchName = normalizeLocalName(sch.nombre);
+
+      let personerosAsignados = 0;
+
+      records.forEach(r => {
+        const d = r.toJSON ? r.toJSON() : r;
+        const local = normalizeLocalName(d.localDeVotacionAsignado || d['Local de Votación Asignado'] || d.local_de_votacion_asignado || d.localDeVotacion || d['Local de Votación'] || '');
+        if (!local) return;
+
+        if (local === normSchName || local.includes(normSchName) || normSchName.includes(local)) {
+          personerosAsignados++;
+        }
+      });
+
+      const totalMesas = sch.mesas || 1;
+      const faltanCompletar = Math.max(0, totalMesas - personerosAsignados);
+
+      return {
+        'Nº': idx + 1,
+        'Local de Votación (Colegio)': sch.nombre,
+        'Total Mesas': totalMesas,
+        'Personeros Asignados': personerosAsignados,
+        'Faltan por Completar': faltanCompletar
+      };
+    });
+
+    // Fila de Total Consolidado
+    const sumaMesas = schoolStats.reduce((acc, s) => acc + (s['Total Mesas'] || 0), 0);
+    const sumaAsignados = schoolStats.reduce((acc, s) => acc + (s['Personeros Asignados'] || 0), 0);
+    const sumaFaltantes = Math.max(0, sumaMesas - sumaAsignados);
+
+    schoolStats.push({
+      'Nº': 'TOTAL',
+      'Local de Votación (Colegio)': `${schoolStats.length} Colegios`,
+      'Total Mesas': sumaMesas,
+      'Personeros Asignados': sumaAsignados,
+      'Faltan por Completar': sumaFaltantes
+    });
+
+    return schoolStats;
   }
 
   async execute(format = 'xlsx', filterDistrict = null) {
@@ -60,41 +143,60 @@ export class ExportRecordsUseCase {
     });
     let records = Array.from(uniqueMap.values());
 
-    // 2. Filtro por distrito si se especifica
-    if (filterDistrict && filterDistrict !== 'all') {
+    // 2. Filtro estricto por distrito (SOLO el distrito correspondiente)
+    const activeDistrict = filterDistrict && filterDistrict !== 'all' ? filterDistrict.trim() : null;
+    if (activeDistrict) {
+      const normFilter = normalizeDistrictName(activeDistrict);
       records = records.filter(r => {
         const d = r.toJSON ? r.toJSON() : r;
-        const dist = String(d.distritoAsignado || d['Distrito Asignado'] || d.distritoDondeVota || d['Distrito donde Vota'] || '').toLowerCase().trim();
-        return dist === filterDistrict.toLowerCase().trim();
+        const distAsig = normalizeDistrictName(d.distritoAsignado || d['Distrito Asignado'] || d.distrito_asignado);
+        const distVota = normalizeDistrictName(d.distritoDondeVota || d['Distrito donde Vota'] || d.distrito_donde_vota);
+        return distAsig === normFilter || (!distAsig && distVota === normFilter);
       });
     }
 
-    // 3. Orden cronológico consistente: por Fecha de Registro (más recientes primero)
+    // 3. Orden por Apellidos / Nombres
     records.sort((a, b) => {
       const da = a.toJSON ? a.toJSON() : a;
       const db = b.toJSON ? b.toJSON() : b;
-      const dateA = new Date(da.fechaRegistro || da['Fecha de Registro'] || da.fecha_de_registro || 0).getTime();
-      const dateB = new Date(db.fechaRegistro || db['Fecha de Registro'] || db.fecha_de_registro || 0).getTime();
-      if (dateB !== dateA) return dateB - dateA;
-      return (Number(db.id || db.ID || 0)) - (Number(da.id || da.ID || 0));
+      const nameA = String(da.nombresApellidos || da['Nombres y Apellidos'] || '').toLowerCase();
+      const nameB = String(db.nombresApellidos || db['Nombres y Apellidos'] || '').toLowerCase();
+      return nameA.localeCompare(nameB);
     });
 
-    const formattedRecords = records.map((r, i) => this.formatRecordForExport(r, i));
+    // 4. Hojas solicitadas
+    // Hoja 1: Padrón con solo Nombre, DNI, Teléfono, Rol, Local y Mesa
+    const sheet1Data = records.map((r, i) => this.formatRecordForSheet1(r, i));
 
     if (format === 'csv') {
-      const csv = ExcelExportService.generateCsvBuffer(formattedRecords);
+      const csv = ExcelExportService.generateCsvBuffer(sheet1Data);
+      const safeDistName = activeDistrict ? activeDistrict.replace(/\s+/g, '_') : 'Lima';
       return {
         buffer: Buffer.from(csv, 'utf8'),
         contentType: 'text/csv; charset=utf-8',
-        filename: `Padron_SomosPeru_2026_${Date.now()}.csv`
+        filename: `Padron_SomosPeru_${safeDistName}_2026.csv`
       };
     }
 
-    const buffer = ExcelExportService.generateExcelBuffer(formattedRecords);
+    // Hoja 2: Cantidad de roles a desempeñar
+    const sheet2Data = this.generateSheet2Roles(records);
+
+    // Hoja 3: Cuántos faltan por completar por cada colegio con su total
+    const sheet3Data = this.generateSheet3SchoolCoverage(records, activeDistrict);
+
+    const sheets = [
+      { sheetName: 'Padrón de Personeros', data: sheet1Data },
+      { sheetName: 'Cantidad de Roles', data: sheet2Data },
+      { sheetName: 'Faltantes por Colegio', data: sheet3Data }
+    ];
+
+    const buffer = ExcelExportService.generateMultiSheetExcelBuffer(sheets);
+    const safeDistName = activeDistrict ? activeDistrict.replace(/\s+/g, '_') : 'Lima_Metropolitana';
+
     return {
       buffer,
       contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      filename: `Padron_SomosPeru_2026_${Date.now()}.xlsx`
+      filename: `Padron_SomosPeru_${safeDistName}_2026.xlsx`
     };
   }
 }
