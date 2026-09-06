@@ -4,13 +4,14 @@ import {
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
   FileSpreadsheet, Phone, Search, X, Check, Lock, Video, FileText,
   AlertCircle, ChevronRight, ChevronLeft, Menu, Edit3, Heart, Filter, RotateCcw, School, Layers, Building2,
-  Navigation, MapPin, ArrowUpDown, History, Trash2, Clock, Activity, Shield, Bell, Eye, CheckCheck
+  Navigation, MapPin, ArrowUpDown, History, Trash2, Clock, Activity, Shield, Bell, Eye, CheckCheck, Award
 } from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { EditAssignmentModal } from '../../components/modals/EditAssignmentModal.jsx';
+import { CertificateModal } from '../../components/modals/CertificateModal.jsx';
 import { TrayectoView } from './TrayectoView.jsx';
 import {
   DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA,
@@ -653,6 +654,15 @@ export function DashboardView({ onGoToTraining }) {
   }, [isCoordinadorZonal, user]);
 
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'capacitacion', 'sql'
+  const [showCertificate, setShowCertificate] = useState(false);
+
+  // Estado de aprobación de evaluación / credenciales del usuario coordinador
+  const isCoordinatorApproved = useMemo(() => {
+    const preg = String(user?.Preguntas ?? user?.preguntas ?? user?.['Evaluación Estado'] ?? user?.evaluacionEstado ?? user?.evaluacion ?? '').toLowerCase();
+    const cred = String(user?.Credenciales ?? user?.credenciales ?? user?.['Estado Credencial'] ?? user?.estadoCredencial ?? user?.estado ?? '').toLowerCase();
+    return cred === 'confirmado' || preg.includes('aprob') || preg.includes('pasad');
+  }, [user]);
+
   const [data, setData] = useState(() => {
     try {
       const cached = localStorage.getItem('dashboard_cache');
@@ -724,6 +734,8 @@ export function DashboardView({ onGoToTraining }) {
   const [auditLogs, setAuditLogs] = useState([]);
   const [auditLoading, setAuditLoading] = useState(false);
   const [auditFilterAction, setAuditFilterAction] = useState('modificaciones');
+  const [auditDateFilter, setAuditDateFilter] = useState('all'); // 'all', 'today', 'yesterday', 'last7', 'custom'
+  const [auditCustomDate, setAuditCustomDate] = useState('');
   const [auditSearch, setAuditSearch] = useState('');
   const [showNotifMenu, setShowNotifMenu] = useState(false);
   const [latestToast, setLatestToast] = useState(null);
@@ -1739,6 +1751,37 @@ export function DashboardView({ onGoToTraining }) {
               </button>
             )}
 
+            {/* Opción para Coordinadores Aprobados: Ver Certificado Oficial */}
+            {isCoordinatorApproved && (
+              <button
+                onClick={() => setShowCertificate(true)}
+                title={isSidebarCollapsed ? "Ver mi Certificado Oficial de Acreditación" : undefined}
+                style={{
+                  padding: isSidebarCollapsed ? '10px' : '10px 12px',
+                  borderRadius: '8px',
+                  border: '1.5px solid rgba(16, 185, 129, 0.4)',
+                  background: isDark ? 'rgba(16, 185, 129, 0.15)' : '#ecfdf5',
+                  color: isDark ? '#34d399' : '#047857',
+                  fontWeight: 800,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
+                  gap: '10px',
+                  textAlign: 'left',
+                  transition: 'all 0.15s ease',
+                  boxShadow: '0 2px 6px rgba(16, 185, 129, 0.15)'
+                }}
+              >
+                <Award className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                {!isSidebarCollapsed && (
+                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    Mi Certificado Oficial
+                  </span>
+                )}
+              </button>
+            )}
 
           </div>
 
@@ -1850,8 +1893,6 @@ export function DashboardView({ onGoToTraining }) {
                 <span>{lastSync ? lastSync.toLocaleTimeString() : 'En vivo'}</span>
               </div>
             )}
-
-
 
             {/* Campana de Notificaciones en Tiempo Real (Exclusivo Superadmin Master) */}
             {canViewAudit && (
@@ -2013,7 +2054,7 @@ export function DashboardView({ onGoToTraining }) {
                               </div>
 
                               {/* Comparación Antes vs Ahora */}
-                              {d.changes && Object.keys(d.changes).length > 0 && (
+                              {d.changes && Object.keys(d.changes).length > 0 ? (
                                 <div style={{
                                   background: isDark ? '#0f172a' : '#ffffff',
                                   border: `1px solid ${borderCol}`,
@@ -2037,7 +2078,19 @@ export function DashboardView({ onGoToTraining }) {
                                     </div>
                                   ))}
                                 </div>
-                              )}
+                              ) : (!isDelete && (
+                                <div style={{
+                                  background: isDark ? '#0f172a' : '#ffffff',
+                                  border: `1px solid ${borderCol}`,
+                                  borderRadius: '8px',
+                                  padding: '6px 8px',
+                                  marginTop: '2px',
+                                  fontSize: '0.72rem',
+                                  color: textSub
+                                }}>
+                                  💾 <strong>Revalidación de Ficha:</strong> Guardado y confirmación de datos del personero.
+                                </div>
+                              ))}
 
                               {isDelete && (
                                 <div style={{ fontSize: '0.72rem', color: '#b91c1c', background: '#fef2f2', padding: '6px 8px', borderRadius: '6px' }}>
@@ -2306,8 +2359,8 @@ export function DashboardView({ onGoToTraining }) {
                         </div>
                       )}
 
-                      {/* 2. Coordinadores Zonales de este Distrito */}
-                      {districtZonalesOverview.length > 0 ? (
+                      {/* 2. Coordinadores Zonales de este Distrito (Solo si existen registrados) */}
+                      {districtZonalesOverview.length > 0 && (
                         <div>
                           <div style={{ fontSize: '0.84rem', fontWeight: 800, color: textTitle, marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -2351,11 +2404,6 @@ export function DashboardView({ onGoToTraining }) {
                               </div>
                             ))}
                           </div>
-                        </div>
-                      ) : (
-                        <div style={{ padding: '12px 14px', background: isDark ? 'rgba(234, 179, 8, 0.1)' : '#fefce8', border: '1px solid #fde047', borderRadius: '10px', color: isDark ? '#facc15' : '#a16207', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                          <span>Aún no hay Coordinadores Zonales registrados para el distrito de {coordinatorDistrict || dist1}.</span>
                         </div>
                       )}
                     </div>
@@ -2966,11 +3014,11 @@ export function DashboardView({ onGoToTraining }) {
                   style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(140px, 1fr))', gap: isMobile ? '8px' : '12px' }}
                 >
                   
-                  {/* KPI 1 - Personeros de Mesa Registrados */}
-                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0284c7', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>PERSONEROS DE MESA</div>
+                  {/* KPI 1 - Personeros de Mesa Registrados (Azul Marino Somos Perú) */}
+                  <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #002B66', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease', boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.2)' : '0 1px 4px rgba(0, 43, 102, 0.08)' }}>
+                    <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#002B66' }}>PERSONEROS DE MESA</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Users className="w-3.5 h-3.5" /></div>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(0, 43, 102, 0.35)' : '#e0e7ff', color: '#002B66', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Users className="w-3.5 h-3.5" /></div>
                       <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1Personeros.toLocaleString()}</span>
                     </div>
                     <div style={{ fontSize: '0.65rem', color: textSub }}>
@@ -2978,14 +3026,14 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   </div>
 
-                  {/* KPI 2 - Centros de Votación (No relevante para Coord Local) */}
+                  {/* KPI 2 - Centros de Votación (Azul Rey Somos Perú) */}
                   {!isCoordinadorLocal && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #0ea5e9', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #1e40af', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#1e40af' }}>
                         CENTROS DE VOTACIÓN
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(14, 165, 233, 0.2)' : '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(30, 64, 175, 0.25)' : '#eff6ff', color: '#1e40af', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><School className="w-3.5 h-3.5" /></div>
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{districtSchools.length.toLocaleString()}</span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: textSub }}>
@@ -2994,36 +3042,36 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* KPI 3 - Personeros de Centro de Votación (PCV) */}
+                  {/* KPI 3 - Personeros de Centro de Votación (Rojo Corazón Somos Perú) */}
                   {!isCoordinadorLocal && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #f59e0b', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>CENTROS CON PCV</div>
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #dc2626', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#dc2626' }}>CENTROS CON PCV (LOCAL)</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserCheck className="w-3.5 h-3.5" /></div>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(220, 38, 38, 0.2)' : '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserCheck className="w-3.5 h-3.5" /></div>
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{countLocalesConPLV}</span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: textSub }}>Personeros de Centro Asignados</div>
                     </div>
                   )}
 
-                  {/* KPI 4 - Coordinadores Distritales (Visible para Superadmin y Coordinador Distrital) */}
+                  {/* KPI 4 - Coordinadores Distritales (Dorado Institucional Somos Perú) */}
                   {(isSuperAdmin || isCoordinadorDistrital) && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #10b981', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>COORD. DISTRITALES</div>
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #c59b27', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#b45309' }}>COORD. DISTRITALES</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><ShieldCheck className="w-3.5 h-3.5" /></div>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(197, 155, 39, 0.25)' : '#fef3c7', color: '#b45309', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><ShieldCheck className="w-3.5 h-3.5" /></div>
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsDistrital}</span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: textSub }}>Distritales Activos</div>
                     </div>
                   )}
 
-                  {/* KPI 5 - Zonales Históricos / Registrados (Solo si existen registros zonales en el ámbito) */}
+                  {/* KPI 5 - Zonales Históricos (Azul Noche Somos Perú) */}
                   {(isSuperAdmin || isCoordinadorDistrital) && tab1CoordsZonal > 0 && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: textSub }}>ZONALES (HISTÓRICO)</div>
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #1e3a8a', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#1e3a8a' }}>ZONALES (HISTÓRICO)</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.2)' : '#ede9fe', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><MapPin className="w-3.5 h-3.5" /></div>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(30, 58, 138, 0.25)' : '#ede9fe', color: '#1e3a8a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><MapPin className="w-3.5 h-3.5" /></div>
                         <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsZonal}</span>
                       </div>
                       <div style={{ fontSize: '0.65rem', color: textSub }}>Zonales registrados</div>
@@ -4773,34 +4821,29 @@ export function DashboardView({ onGoToTraining }) {
               TAB 4: HISTORIAL DE CAMBIOS Y AUDITORÍA (EXCLUSIVO SUPERADMIN MASTER)
               ========================================================================= */}
           {activeTab === 'auditoria' && canViewAudit && (
-            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               
-              {/* Header Tab Auditoría */}
+              {/* Header Tab Auditoría Compacto */}
               <div style={{
                 background: bgCard,
                 border: `1.5px solid ${isDark ? '#334155' : '#bae6fd'}`,
-                borderRadius: '16px',
-                padding: isMobile ? '16px' : '20px 24px',
+                borderRadius: '12px',
+                padding: isMobile ? '12px 14px' : '12px 18px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 flexWrap: 'wrap',
-                gap: '14px',
-                boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.3)' : '0 4px 20px rgba(2, 132, 199, 0.08)'
+                gap: '10px',
+                boxShadow: isDark ? '0 4px 16px rgba(0,0,0,0.2)' : '0 2px 12px rgba(2, 132, 199, 0.06)'
               }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <div style={{ background: '#0284c7', color: '#fff', padding: '4px 8px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.76rem', fontWeight: 800 }}>
-                      <History className="w-4 h-4" />
-                      <span>AUDITORÍA Y SUPERVISIÓN</span>
-                    </div>
-                    <h2 style={{ fontSize: isMobile ? '1.1rem' : '1.3rem', fontWeight: 900, color: textTitle, margin: 0 }}>
-                      Historial Oficial de Cambios
-                    </h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ background: '#0284c7', color: '#fff', padding: '3px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.74rem', fontWeight: 800 }}>
+                    <History className="w-3.5 h-3.5" />
+                    <span>AUDITORÍA</span>
                   </div>
-                  <p style={{ fontSize: '0.82rem', color: textSub, margin: 0 }}>
-                    Registro inmutable de todas las <strong>ediciones</strong>, <strong>reasignaciones</strong> y <strong>eliminaciones</strong> de personeros en Lima Metropolitana.
-                  </p>
+                  <h2 style={{ fontSize: isMobile ? '0.98rem' : '1.15rem', fontWeight: 900, color: textTitle, margin: 0 }}>
+                    Historial de Modificaciones y Eliminaciones
+                  </h2>
                 </div>
 
                 <button
@@ -4810,120 +4853,214 @@ export function DashboardView({ onGoToTraining }) {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '6px',
-                    padding: '9px 16px',
-                    borderRadius: '8px',
+                    gap: '5px',
+                    padding: '6px 12px',
+                    borderRadius: '6px',
                     border: `1px solid ${borderCol}`,
                     background: isDark ? '#1e293b' : '#f0f9ff',
                     color: '#0284c7',
                     fontWeight: 800,
-                    fontSize: '0.82rem',
+                    fontSize: '0.76rem',
                     cursor: auditLoading ? 'not-allowed' : 'pointer',
-                    boxShadow: '0 2px 8px rgba(2, 132, 199, 0.15)',
                     transition: 'all 0.15s ease'
                   }}
                 >
-                  <RefreshCw className={`w-4 h-4 ${auditLoading ? 'animate-spin' : ''}`} />
-                  <span>{auditLoading ? 'Actualizando...' : 'Recargar Historial'}</span>
+                  <RefreshCw className={`w-3.5 h-3.5 ${auditLoading ? 'animate-spin' : ''}`} />
+                  <span>{auditLoading ? 'Actualizando...' : 'Recargar'}</span>
                 </button>
               </div>
 
-              {/* Tarjetas KPI de Auditoría (Enfocadas en Modificaciones) */}
+              {/* Barra KPI Compacta */}
+              {/* Barra KPI Compacta (Colores Oficiales Somos Perú) */}
               {(() => {
                 const totalUpdates = auditLogs.filter(l => l.action === 'UPDATE_PERSONERO').length;
                 const totalDeletes = auditLogs.filter(l => l.action === 'DELETE_PERSONERO').length;
                 const totalChanges = totalUpdates + totalDeletes;
 
                 return (
-                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: '12px' }}>
-                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#0284c7' : '#93c5fd'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase' }}>⚡ TOTAL MODIFICACIONES</span>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0284c7', marginTop: '2px' }}>{totalChanges}</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: '8px' }}>
+                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#002B66' : '#93c5fd'}`, borderLeft: '4px solid #002B66', borderRadius: '8px', padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.2)' : '0 1px 4px rgba(0, 43, 102, 0.08)' }}>
+                      <span style={{ fontSize: '0.72rem', color: isDark ? '#93c5fd' : '#002B66', fontWeight: 800 }}>⚡ TOTAL MODIFICACIONES:</span>
+                      <strong style={{ fontSize: '1.15rem', fontWeight: 900, color: isDark ? '#60a5fa' : '#002B66' }}>{totalChanges}</strong>
                     </div>
-                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#0284c7' : '#bae6fd'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 800, textTransform: 'uppercase' }}>✏️ DATOS EDITADOS</span>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: textTitle, marginTop: '2px' }}>{totalUpdates}</div>
+                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#c59b27' : '#fde68a'}`, borderLeft: '4px solid #c59b27', borderRadius: '8px', padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.2)' : '0 1px 4px rgba(197, 155, 39, 0.08)' }}>
+                      <span style={{ fontSize: '0.72rem', color: isDark ? '#fde68a' : '#b45309', fontWeight: 800 }}>✏️ DATOS EDITADOS:</span>
+                      <strong style={{ fontSize: '1.15rem', fontWeight: 900, color: isDark ? '#facc15' : '#b45309' }}>{totalUpdates}</strong>
                     </div>
-                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#dc2626' : '#fca5a5'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#dc2626', fontWeight: 800, textTransform: 'uppercase' }}>🗑️ PERSONEROS ELIMINADOS</span>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#dc2626', marginTop: '2px' }}>{totalDeletes}</div>
+                    <div style={{ background: bgCard, border: `1.5px solid ${isDark ? '#dc2626' : '#fca5a5'}`, borderLeft: '4px solid #dc2626', borderRadius: '8px', padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.2)' : '0 1px 4px rgba(220, 38, 38, 0.08)' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#dc2626', fontWeight: 800 }}>🗑️ PERSONEROS ELIMINADOS:</span>
+                      <strong style={{ fontSize: '1.15rem', fontWeight: 900, color: '#dc2626' }}>{totalDeletes}</strong>
                     </div>
                   </div>
                 );
               })()}
 
-              {/* Filtros de Auditoría */}
+              {/* Filtros de Auditoría Compactos con Selector de Fecha */}
               <div style={{
                 background: bgCard,
                 border: `1px solid ${borderCol}`,
-                borderRadius: '12px',
-                padding: '14px 18px',
+                borderRadius: '10px',
+                padding: '10px 14px',
                 display: 'flex',
-                flexWrap: 'wrap',
-                gap: '12px',
-                alignItems: 'center'
+                flexDirection: 'column',
+                gap: '8px'
               }}>
-                <div style={{ position: 'relative', flex: '1 1 240px' }}>
-                  <Search className="w-4 h-4 text-sky-500" style={{ position: 'absolute', left: '12px', top: '10px' }} />
-                  <input
-                    type="text"
-                    placeholder="Buscar por DNI, Nombre de personero, Autor o Distrito..."
-                    value={auditSearch}
-                    onChange={(e) => setAuditSearch(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px 8px 34px',
-                      borderRadius: '8px',
-                      border: `1px solid ${borderCol}`,
-                      background: bgInput,
-                      color: textTitle,
-                      fontSize: '0.82rem',
-                      outline: 'none'
-                    }}
-                  />
-                  {auditSearch && (
-                    <button
-                      type="button"
-                      onClick={() => setAuditSearch('')}
-                      style={{ position: 'absolute', right: '10px', top: '8px', background: 'none', border: 'none', color: textSub, cursor: 'pointer' }}
+                {/* Fila 1: Buscador + Tipo de Acción */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+                  <div style={{ position: 'relative', flex: '1 1 200px' }}>
+                    <Search className="w-3.5 h-3.5 text-sky-500" style={{ position: 'absolute', left: '10px', top: '9px' }} />
+                    <input
+                      type="text"
+                      placeholder="Buscar por DNI, Nombre de personero, Autor..."
+                      value={auditSearch}
+                      onChange={(e) => setAuditSearch(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '6px 10px 6px 30px',
+                        borderRadius: '6px',
+                        border: `1px solid ${borderCol}`,
+                        background: bgInput,
+                        color: textTitle,
+                        fontSize: '0.78rem',
+                        outline: 'none'
+                      }}
+                    />
+                    {auditSearch && (
+                      <button
+                        type="button"
+                        onClick={() => setAuditSearch('')}
+                        style={{ position: 'absolute', right: '8px', top: '7px', background: 'none', border: 'none', color: textSub, cursor: 'pointer' }}
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  <div style={{ minWidth: '180px' }}>
+                    <select
+                      value={auditFilterAction}
+                      onChange={(e) => setAuditFilterAction(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '6px 10px',
+                        borderRadius: '6px',
+                        border: `1px solid ${borderCol}`,
+                        background: bgInput,
+                        color: textTitle,
+                        fontSize: '0.78rem',
+                        outline: 'none',
+                        fontWeight: 700
+                      }}
                     >
-                      <X className="w-4 h-4" />
-                    </button>
-                  )}
+                      <option value="modificaciones">⚡ Solo Modificaciones y Eliminaciones</option>
+                      <option value="UPDATE_PERSONERO">✏️ Solo Datos Modificados</option>
+                      <option value="DELETE_PERSONERO">🗑️ Solo Eliminaciones</option>
+                      <option value="all">📁 Ver Todo el Historial</option>
+                    </select>
+                  </div>
                 </div>
 
-                <div style={{ minWidth: '220px' }}>
-                  <select
-                    value={auditFilterAction}
-                    onChange={(e) => setAuditFilterAction(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      borderRadius: '8px',
-                      border: `1px solid ${borderCol}`,
-                      background: bgInput,
-                      color: textTitle,
-                      fontSize: '0.82rem',
-                      outline: 'none',
-                      fontWeight: 700
-                    }}
-                  >
-                    <option value="modificaciones">⚡ Solo Modificaciones y Eliminaciones</option>
-                    <option value="UPDATE_PERSONERO">✏️ Solo Datos Modificados</option>
-                    <option value="DELETE_PERSONERO">🗑️ Solo Personeros Eliminados</option>
-                    <option value="all">📁 Ver Todo el Historial</option>
-                  </select>
+                {/* Fila 2: Filtro por Fechas */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center', fontSize: '0.74rem' }}>
+                  <span style={{ color: textSub, fontWeight: 800, marginRight: '2px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Calendar className="w-3.5 h-3.5 text-sky-500" />
+                    <span>Fecha:</span>
+                  </span>
+
+                  {[
+                    { key: 'all', label: 'Todas' },
+                    { key: 'today', label: 'Hoy' },
+                    { key: 'yesterday', label: 'Ayer' },
+                    { key: 'last7', label: 'Últimos 7 días' }
+                  ].map(tab => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      onClick={() => {
+                        setAuditDateFilter(tab.key);
+                        if (tab.key !== 'custom') setAuditCustomDate('');
+                      }}
+                      style={{
+                        padding: '3px 9px',
+                        borderRadius: '6px',
+                        fontSize: '0.72rem',
+                        fontWeight: auditDateFilter === tab.key ? 800 : 600,
+                        border: auditDateFilter === tab.key ? '1px solid #0284c7' : `1px solid ${borderCol}`,
+                        background: auditDateFilter === tab.key ? (isDark ? 'rgba(2, 132, 199, 0.25)' : '#e0f2fe') : (isDark ? '#1e293b' : '#f8fafc'),
+                        color: auditDateFilter === tab.key ? '#0284c7' : textSub,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+
+                  {/* Selector de fecha específica */}
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginLeft: 'auto' }}>
+                    <span style={{ color: textSub, fontSize: '0.7rem' }}>O elegir día:</span>
+                    <input
+                      type="date"
+                      value={auditCustomDate}
+                      onChange={(e) => {
+                        setAuditCustomDate(e.target.value);
+                        if (e.target.value) setAuditDateFilter('custom');
+                        else setAuditDateFilter('all');
+                      }}
+                      style={{
+                        padding: '3px 6px',
+                        borderRadius: '6px',
+                        border: `1px solid ${auditDateFilter === 'custom' ? '#0284c7' : borderCol}`,
+                        background: bgInput,
+                        color: textTitle,
+                        fontSize: '0.72rem',
+                        fontWeight: 600,
+                        outline: 'none'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Lista / Timeline de Auditoría */}
+              {/* Lista / Timeline de Auditoría Compacta */}
               {(() => {
                 const searchClean = auditSearch.trim().toLowerCase();
+
+                const isSameDay = (d1, d2) =>
+                  d1.getFullYear() === d2.getFullYear() &&
+                  d1.getMonth() === d2.getMonth() &&
+                  d1.getDate() === d2.getDate();
+
                 const filtered = auditLogs.filter(log => {
+                  // Filtro por acción
                   if (auditFilterAction === 'modificaciones') {
                     if (log.action !== 'UPDATE_PERSONERO' && log.action !== 'DELETE_PERSONERO') return false;
                   } else if (auditFilterAction !== 'all') {
                     if (log.action !== auditFilterAction) return false;
+                  }
+
+                  // Filtro por fecha
+                  if (log.createdAt && auditDateFilter !== 'all') {
+                    const logDate = new Date(log.createdAt);
+                    const now = new Date();
+
+                    if (auditDateFilter === 'today') {
+                      if (!isSameDay(logDate, now)) return false;
+                    } else if (auditDateFilter === 'yesterday') {
+                      const yest = new Date(now);
+                      yest.setDate(now.getDate() - 1);
+                      if (!isSameDay(logDate, yest)) return false;
+                    } else if (auditDateFilter === 'last7') {
+                      const sevenDaysAgo = new Date(now);
+                      sevenDaysAgo.setDate(now.getDate() - 7);
+                      if (logDate < sevenDaysAgo) return false;
+                    } else if (auditDateFilter === 'custom' && auditCustomDate) {
+                      const parts = auditCustomDate.split('-');
+                      if (parts.length === 3) {
+                        const customD = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                        if (!isSameDay(logDate, customD)) return false;
+                      }
+                    }
                   }
 
                   if (!searchClean) return true;
@@ -4938,31 +5075,31 @@ export function DashboardView({ onGoToTraining }) {
 
                 if (auditLoading && auditLogs.length === 0) {
                   return (
-                    <div style={{ padding: '40px', textAlign: 'center', background: bgCard, borderRadius: '12px', border: `1px solid ${borderCol}` }}>
-                      <RefreshCw className="w-8 h-8 text-sky-500 animate-spin" style={{ margin: '0 auto 10px auto' }} />
-                      <p style={{ color: textSub, fontSize: '0.88rem', fontWeight: 700 }}>Cargando historial de cambios...</p>
+                    <div style={{ padding: '30px', textAlign: 'center', background: bgCard, borderRadius: '10px', border: `1px solid ${borderCol}` }}>
+                      <RefreshCw className="w-6 h-6 text-sky-500 animate-spin" style={{ margin: '0 auto 8px auto' }} />
+                      <p style={{ color: textSub, fontSize: '0.82rem', fontWeight: 700, margin: 0 }}>Cargando historial...</p>
                     </div>
                   );
                 }
 
                 if (filtered.length === 0) {
                   return (
-                    <div style={{ padding: '48px 20px', textAlign: 'center', background: bgCard, borderRadius: '16px', border: `1.5px dashed ${borderCol}` }}>
-                      <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>✨</div>
-                      <h4 style={{ fontWeight: 800, color: textTitle, margin: '0 0 6px 0', fontSize: '1.02rem' }}>
-                        No se han realizado modificaciones ni eliminaciones
+                    <div style={{ padding: '36px 20px', textAlign: 'center', background: bgCard, borderRadius: '12px', border: `1.5px dashed ${borderCol}` }}>
+                      <div style={{ fontSize: '2rem', marginBottom: '6px' }}>✨</div>
+                      <h4 style={{ fontWeight: 800, color: textTitle, margin: '0 0 4px 0', fontSize: '0.94rem' }}>
+                        No se encontraron modificaciones para este filtro
                       </h4>
-                      <p style={{ color: textSub, fontSize: '0.82rem', margin: 0, maxWidth: '460px', marginInline: 'auto', lineHeight: 1.5 }}>
-                        {auditSearch
-                          ? 'No hay resultados que coincidan con la búsqueda.'
-                          : 'El historial está completamente limpio. En cuanto alguien realice una modificación o eliminación, se mostrará aquí con el detalle exacto de Antes y Ahora.'}
+                      <p style={{ color: textSub, fontSize: '0.78rem', margin: 0 }}>
+                        {auditSearch || auditDateFilter !== 'all'
+                          ? 'Pruebe seleccionando otra fecha o limpiando la búsqueda.'
+                          : 'El historial está completamente limpio.'}
                       </p>
                     </div>
                   );
                 }
 
                 return (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     {filtered.map((log, idx) => {
                       const dateObj = log.createdAt ? new Date(log.createdAt) : null;
                       const dateFormatted = dateObj ? dateObj.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '—';
@@ -4971,14 +5108,20 @@ export function DashboardView({ onGoToTraining }) {
                       const d = log.details || {};
                       const isDelete = log.action === 'DELETE_PERSONERO';
                       const isUpdate = log.action === 'UPDATE_PERSONERO';
-                      const isRegister = log.action === 'REGISTER_PERSONERO' || log.action === 'REGISTER_COORDINADOR';
-                      const isLogin = log.action.startsWith('LOGIN');
 
-                      let badge = { label: log.action, bg: '#f1f5f9', color: '#475569', border: '#cbd5e1', icon: '📝' };
-                      if (isDelete) badge = { label: 'ELIMINACIÓN DE REGISTRO', bg: isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2', color: '#dc2626', border: '#fca5a5', icon: '🗑️' };
-                      else if (isUpdate) badge = { label: 'MODIFICACIÓN DE DATOS', bg: isDark ? 'rgba(2, 132, 199, 0.15)' : '#eff6ff', color: '#0284c7', border: '#93c5fd', icon: '✏️' };
-                      else if (isRegister) badge = { label: 'NUEVO REGISTRO', bg: isDark ? 'rgba(22, 163, 74, 0.15)' : '#f0fdf4', color: '#16a34a', border: '#86efac', icon: '➕' };
-                      else if (isLogin) badge = { label: 'ACCESO AL SISTEMA', bg: isDark ? 'rgba(147, 51, 234, 0.15)' : '#faf5ff', color: '#7e22ce', border: '#d8b4fe', icon: '🔑' };
+                      let badgeBg = isDark ? '#1e293b' : '#f0f9ff';
+                      let badgeColor = '#0284c7';
+                      let badgeBorder = isDark ? '#334155' : '#bae6fd';
+                      let badgeIcon = '✏️';
+                      let badgeText = 'MODIFICACIÓN';
+
+                      if (isDelete) {
+                        badgeBg = isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2';
+                        badgeColor = '#dc2626';
+                        badgeBorder = '#fca5a5';
+                        badgeIcon = '🗑️';
+                        badgeText = 'ELIMINACIÓN';
+                      }
 
                       const author = d.author || log.userIdentifier || 'Usuario';
                       const authorRole = d.authorRole || log.role || 'Superadministrador';
@@ -4991,112 +5134,115 @@ export function DashboardView({ onGoToTraining }) {
                           key={log.id || idx}
                           style={{
                             background: bgCard,
-                            border: `1.5px solid ${badge.border}`,
-                            borderRadius: '12px',
-                            padding: '14px 18px',
+                            border: `1px solid ${isDelete ? '#fca5a5' : borderCol}`,
+                            borderRadius: '8px',
+                            padding: '8px 12px',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '8px',
-                            boxShadow: isDark ? '0 4px 14px rgba(0,0,0,0.2)' : '0 2px 8px rgba(0,0,0,0.04)',
-                            transition: 'all 0.15s ease'
+                            gap: '4px',
+                            fontSize: '0.76rem',
+                            transition: 'all 0.12s ease'
                           }}
                         >
-                          {/* Fila Superior: Badge + Fecha/Hora */}
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          {/* Fila 1: Identificador + Fecha/Hora + Autor + Personero */}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                               <span style={{
-                                background: badge.bg,
-                                color: badge.color,
-                                border: `1px solid ${badge.border}`,
-                                padding: '3px 10px',
-                                borderRadius: '6px',
-                                fontSize: '0.74rem',
+                                background: badgeBg,
+                                color: badgeColor,
+                                border: `1px solid ${badgeBorder}`,
+                                padding: '1px 6px',
+                                borderRadius: '4px',
+                                fontSize: '0.68rem',
                                 fontWeight: 800,
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '5px'
+                                gap: '3px'
                               }}>
-                                <span>{badge.icon}</span>
-                                <span>{badge.label}</span>
+                                <span>{badgeIcon} #{log.id}</span>
                               </span>
 
-                              <span style={{ fontSize: '0.78rem', color: textSub, fontWeight: 700 }}>
-                                #{log.id}
+                              <span style={{ fontSize: '0.72rem', color: textSub, fontWeight: 700 }}>
+                                📅 {dateFormatted} {timeFormatted}
+                              </span>
+
+                              <span style={{ color: textSub }}>&bull;</span>
+
+                              <span>
+                                👤 <strong>{author}</strong> <span style={{ color: '#0284c7', fontSize: '0.7rem' }}>({authorRole})</span>
                               </span>
                             </div>
 
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.76rem', color: textSub }}>
-                              <Clock className="w-3.5 h-3.5 text-sky-500" />
-                              <span>📅 <strong>{dateFormatted}</strong> a las <strong>{timeFormatted}</strong></span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span style={{ color: isDelete ? '#dc2626' : textTitle, fontWeight: 800 }}>
+                                {isDelete ? '❌ Eliminó: ' : '🎯 Afectado: '}<strong>{personName}</strong>
+                              </span>
+                              <span style={{ color: textSub, fontSize: '0.7rem' }}>
+                                (DNI: {personDni} {district && district !== '—' ? `• ${district}` : ''})
+                              </span>
                             </div>
                           </div>
 
-                          {/* Fila Media: Quién lo hizo vs A quién afectó */}
-                          <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: isMobile ? '1fr' : '1.2fr 1.2fr',
-                            gap: '10px',
-                            background: isDark ? '#0f172a' : '#f8fafc',
-                            border: `1px solid ${borderCol}`,
-                            borderRadius: '8px',
-                            padding: '10px 12px',
-                            fontSize: '0.8rem'
-                          }}>
-                            <div>
-                              <span style={{ color: textSub, fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>EJECUTADO POR</span>
-                              <strong style={{ color: textTitle, fontSize: '0.86rem' }}>👤 {author}</strong>
-                              <div style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 700, marginTop: '1px' }}>
-                                🛡️ {authorRole}
-                              </div>
+                          {/* Fila 2: Comparativa Antes vs Ahora Compacta */}
+                          {isUpdate && d.changes && Object.keys(d.changes).length > 0 ? (
+                            <div style={{
+                              display: 'flex',
+                              flexWrap: 'wrap',
+                              gap: '6px',
+                              alignItems: 'center',
+                              background: isDark ? '#0f172a' : '#f8fafc',
+                              border: `1px solid ${borderCol}`,
+                              borderRadius: '6px',
+                              padding: '4px 8px',
+                              marginTop: '2px'
+                            }}>
+                              <span style={{ fontWeight: 800, color: '#0284c7', fontSize: '0.7rem' }}>🔍 Detalle:</span>
+                              {Object.entries(d.changes).map(([field, val], cIdx) => (
+                                <div key={cIdx} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem' }}>
+                                  <strong style={{ color: textTitle, textTransform: 'capitalize' }}>{field}:</strong>
+                                  <span style={{ color: '#dc2626', background: '#fee2e2', padding: '0 4px', borderRadius: '3px', textDecoration: 'line-through' }}>
+                                    {String(val?.antes ?? '—')}
+                                  </span>
+                                  <strong style={{ color: '#0284c7' }}>➔</strong>
+                                  <span style={{ color: '#16a34a', background: '#dcfce7', padding: '0 4px', borderRadius: '3px', fontWeight: 800 }}>
+                                    {String(val?.despues ?? '—')}
+                                  </span>
+                                </div>
+                              ))}
                             </div>
-
-                            <div>
-                              <span style={{ color: textSub, fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>PERSONERO AFECTADO</span>
-                              <strong style={{ color: isDelete ? '#dc2626' : textTitle, fontSize: '0.86rem' }}>
-                                {isDelete ? '❌ ' : ''}{personName}
-                              </strong>
-                              <div style={{ fontSize: '0.72rem', color: textSub, marginTop: '1px' }}>
-                                DNI: <strong>{personDni}</strong> &bull; Distrito: <strong>{district}</strong>
-                              </div>
+                          ) : (isUpdate && (
+                            <div style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              background: isDark ? '#0f172a' : '#f8fafc',
+                              border: `1px solid ${borderCol}`,
+                              borderRadius: '6px',
+                              padding: '4px 8px',
+                              fontSize: '0.71rem',
+                              color: textSub,
+                              marginTop: '2px'
+                            }}>
+                              <span>💾 <strong>Revalidación de Ficha:</strong> Guardado y confirmación de asignación sin cambios.</span>
+                              {d.local && <span>&bull; Local: <strong>{d.local}</strong></span>}
+                              {d.mesa && <span>&bull; Mesa: <strong>{d.mesa}</strong></span>}
+                              {d.rol && <span>&bull; Rol: <strong>{d.rol}</strong></span>}
                             </div>
-                          </div>
-
-                          {/* Detalle de Cambios Específicos */}
-                          {isUpdate && d.changes && Object.keys(d.changes).length > 0 && (
-                            <div style={{ marginTop: '4px' }}>
-                              <span style={{ fontSize: '0.72rem', color: textSub, fontWeight: 800, textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
-                                🔍 DETALLE DE CAMPOS MODIFICADOS:
-                              </span>
-                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                                {Object.entries(d.changes).map(([field, val], cIdx) => (
-                                  <div
-                                    key={cIdx}
-                                    style={{
-                                      background: isDark ? '#1e293b' : '#eff6ff',
-                                      border: '1px solid #bfdbfe',
-                                      borderRadius: '6px',
-                                      padding: '4px 8px',
-                                      fontSize: '0.74rem'
-                                    }}
-                                  >
-                                    <strong style={{ color: '#0369a1', textTransform: 'capitalize' }}>{field}:</strong>{' '}
-                                    <span style={{ color: '#dc2626', textDecoration: 'line-through' }}>{String(val?.antes ?? '—')}</span>{' '}
-                                    <span style={{ color: '#0284c7', fontWeight: 800 }}>➔</span>{' '}
-                                    <span style={{ color: '#16a34a', fontWeight: 800 }}>{String(val?.despues ?? '—')}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+                          ))}
 
                           {isDelete && (
-                            <div style={{ background: isDark ? 'rgba(239, 68, 68, 0.1)' : '#fef2f2', border: '1px solid #fecaca', borderRadius: '6px', padding: '6px 10px', fontSize: '0.74rem', color: '#b91c1c' }}>
-                              ⚠️ <strong>Registro purgado:</strong> El personero fue eliminado definitivamente de la base de datos por <strong>{author}</strong> ({authorRole}).
-                              {d.local && <span> &bull; Local: {d.local}</span>}
-                              {d.mesa && <span> &bull; Mesa: {d.mesa}</span>}
+                            <div style={{
+                              background: isDark ? 'rgba(239, 68, 68, 0.1)' : '#fef2f2',
+                              border: '1px solid #fecaca',
+                              borderRadius: '6px',
+                              padding: '4px 8px',
+                              fontSize: '0.71rem',
+                              color: '#b91c1c',
+                              marginTop: '2px'
+                            }}>
+                              ⚠️ <strong>Eliminado definitivamente:</strong> El personero fue retirado del padrón.
                             </div>
                           )}
-
                         </div>
                       );
                     })}
@@ -5738,6 +5884,14 @@ export function DashboardView({ onGoToTraining }) {
           personero={selectedPersonero}
           onClose={() => setSelectedPersonero(null)}
           onSaved={fetchData}
+        />
+      )}
+
+      {/* Modal Certificado Oficial */}
+      {showCertificate && (
+        <CertificateModal
+          user={user}
+          onClose={() => setShowCertificate(false)}
         />
       )}
 

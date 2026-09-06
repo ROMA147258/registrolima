@@ -268,15 +268,18 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
               background: 'none',
               border: 'none',
               color: '#0284c7',
-              fontSize: '0.82rem',
+              fontSize: '0.88rem',
               fontWeight: 700,
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '6px',
+              transition: 'color 0.15s ease'
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#0369a1'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = '#0284c7'; }}
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 flex-shrink-0" />
             <span>¿Aún no estás inscrito? Regístrate aquí</span>
           </button>
         </div>

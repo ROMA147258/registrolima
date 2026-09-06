@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogOut, Film, FileText, Lock, CheckCircle2, ChevronRight, Award, MapPin } from 'lucide-react';
+import { LogOut, Film, FileText, Lock, CheckCircle2, ChevronRight, Award, MapPin, Shield, Check } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { VideoModal } from '../../components/modals/VideoModal.jsx';
 import { PdfModal } from '../../components/modals/PdfModal.jsx';
@@ -51,40 +51,42 @@ export function TrainingView({ onGoToDashboard }) {
   const dni = user?.['D.N.I.'] || user?.DNI || user?.dni || user?.dni_numero || (user?.tokenVerificacion ? user.tokenVerificacion.split('-').pop() : '') || '--------';
   const distrito = user?.['Distrito Asignado'] || user?.distritoAsignado || user?.['Distrito donde Vota'] || user?.distritoDondeVota || user?.distrito_asignado || 'Lima';
   const localAsig = user?.['Local de Votación Asignado'] || user?.localDeVotacionAsignado || user?.['Local de Votación'] || user?.localDeVotacion || user?.local_de_votacion_asignado || 'Por Asignar';
-  const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || user?.mesaDeSufragio || user?.mesa_asignada || 'No Asignada';
+  const mesa = user?.['Mesa Asignada'] || user?.mesaAsignada || user?.['Mesa de Sufragio'] || user?.mesaDeSufragio || user?.mesa_asignada || (isAnyCoordinador ? 'No aplica (Coordinador)' : 'No Asignada');
+
+  const rolTitle = isCoordinadorDistrital
+    ? 'Coordinador Distrital'
+    : (isCoordinadorZonal
+      ? 'Coordinador Zonal'
+      : (isCoordinadorLocal ? 'Personero de Centro de Votación' : 'Personero de Mesa'));
 
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'rgb(193, 229, 249)',
+      background: '#c1e5f9',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: '24px 16px',
+      padding: '16px 12px',
       fontFamily: "'Outfit', 'Montserrat', sans-serif"
     }}>
       <div style={{
         background: '#ffffff',
-        borderRadius: '20px',
+        borderRadius: '16px',
         width: '100%',
-        maxWidth: '560px',
-        padding: '28px 24px',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+        maxWidth: '520px',
+        padding: '20px 18px',
+        boxShadow: '0 16px 36px rgba(0, 0, 0, 0.08)',
         border: '1px solid #cbd5e1'
       }}>
         
-        {/* Cabecera */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+        {/* Cabecera Compacta */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
           <div>
-            <h1 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
+            <h1 style={{ fontSize: '1.45rem', fontWeight: 900, color: '#0f172a', margin: 0, lineHeight: 1.1 }}>
               Capacítate
             </h1>
-            <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
-              {isCoordinadorDistrital
-                ? 'Evaluación y Acreditación de Coordinador Distrital'
-                : (isCoordinadorZonal
-                  ? 'Evaluación y Acreditación de Coordinador Zonal'
-                  : (isCoordinadorLocal ? 'Evaluación y Acreditación de Personero de Centro de Votación' : 'Ficha de Capacitación de Personeros'))}
+            <span style={{ fontSize: '0.76rem', color: '#64748b', fontWeight: 600 }}>
+              {isAnyCoordinador ? `Acreditación de ${rolTitle}` : 'Ficha de Capacitación Electoral'}
             </span>
           </div>
 
@@ -94,12 +96,12 @@ export function TrainingView({ onGoToDashboard }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '4px',
-              padding: '6px 14px',
-              borderRadius: '20px',
+              padding: '5px 12px',
+              borderRadius: '16px',
               border: '1px solid #fecaca',
               background: '#fef2f2',
               color: '#ef4444',
-              fontSize: '0.82rem',
+              fontSize: '0.78rem',
               fontWeight: 700,
               cursor: 'pointer'
             }}
@@ -109,170 +111,205 @@ export function TrainingView({ onGoToDashboard }) {
           </button>
         </div>
 
-        {/* Banner Informativo Exclusivo para Coordinadores */}
-        {isAnyCoordinador && (
-          <div style={{
-            background: isFullyAccredited ? '#ecfdf5' : '#eff6ff',
-            border: isFullyAccredited ? '1.5px solid #10b981' : '1.5px solid #38bdf8',
-            borderRadius: '14px',
-            padding: '14px 16px',
-            marginBottom: '16px',
-            animation: 'fadeIn 0.2s ease-out'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <span style={{ fontSize: '1.1rem' }}>🏛️</span>
-              <strong style={{ fontSize: '0.92rem', color: isFullyAccredited ? '#065f46' : '#0369a1' }}>
-                {isCoordinadorDistrital ? 'Panel de Coordinador Distrital' : (isCoordinadorZonal ? 'Panel de Coordinador Zonal' : 'Panel de Personero de Centro de Votación')}
-              </strong>
-            </div>
-            <div style={{ fontSize: '0.78rem', color: isFullyAccredited ? '#047857' : '#0284c7', lineHeight: 1.4, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span>📍 Ámbito: <strong>{distrito}</strong> {localAsig !== 'Por Asignar' && !isCoordinadorDistrital ? `• ${localAsig}` : ''}</span>
-              <span>🛡️ Rol: {isCoordinadorDistrital ? 'Coordinador Distrital' : (isCoordinadorZonal ? 'Coordinador Zonal' : 'Personero de Centro de Votación')}</span>
-              {isFullyAccredited ? (
-                <span style={{ marginTop: '4px', color: '#16a34a', fontWeight: 700 }}>
-                  ✅ <strong>¡Evaluación Aprobada!</strong> Ya tienes habilitado el acceso a tu Panel de Control (Dashboard) para monitorear {isCoordinadorDistrital ? `tu distrito asignado (${distrito})` : (isCoordinadorZonal ? `tu zona (${localAsig}) en ${distrito}` : `tu centro de votación (${localAsig}) en ${distrito}`)}.
-                </span>
-              ) : (
-                <span style={{ marginTop: '4px', color: '#0369a1', fontWeight: 600 }}>
-                  ℹ️ Completa la revisión de los 2 videos, la cartilla y aprueba el cuestionario para habilitar el botón de ingreso al Dashboard y obtener tu Certificado Oficial.
-                </span>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Tarjeta de Datos del Personero */}
+        {/* Tarjeta Unificada y Compacta de Identidad y Ámbito */}
         <div style={{
           background: '#f8fafc',
-          borderRadius: '14px',
-          padding: '16px',
-          border: '1px solid #e2e8f0',
-          marginBottom: '20px'
+          borderRadius: '12px',
+          padding: '12px 14px',
+          border: isAnyCoordinador ? (isFullyAccredited ? '1.5px solid #86efac' : '1.5px solid #bae6fd') : '1px solid #e2e8f0',
+          marginBottom: '14px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px'
         }}>
-          <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#0f172a', marginBottom: '8px' }}>
-            {personero}
+          {/* Fila Superior: Nombre + Badge Rol */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            <div style={{ fontSize: '0.98rem', fontWeight: 900, color: '#0f172a' }}>
+              {personero}
+            </div>
+            <span style={{
+              background: isAnyCoordinador ? (isFullyAccredited ? '#dcfce7' : '#e0f2fe') : '#f1f5f9',
+              color: isAnyCoordinador ? (isFullyAccredited ? '#15803d' : '#0369a1') : '#475569',
+              fontSize: '0.7rem',
+              fontWeight: 800,
+              padding: '2px 8px',
+              borderRadius: '6px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              <span>{isAnyCoordinador ? '🛡️' : '👤'}</span>
+              <span>{rolTitle}</span>
+            </span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.78rem', color: '#64748b' }}>
+
+          {/* Grid de 4 Datos en 2 Columnas Compacto */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 10px', fontSize: '0.75rem', color: '#64748b' }}>
             <div>DNI: <strong style={{ color: '#0f172a' }}>{dni}</strong></div>
             <div>Distrito: <strong style={{ color: '#0f172a' }}>{distrito}</strong></div>
-            <div>Centro: <strong style={{ color: '#0f172a' }}>{localAsig}</strong></div>
-            <div>Mesa: <strong style={{ color: '#0f172a' }}>{mesa}</strong></div>
-          </div>
-        </div>
-
-        {/* Botón de Acceso al Dashboard para Coordinadores */}
-        {isAnyCoordinador && (
-          <div style={{ marginBottom: '20px' }}>
-            {isFullyAccredited ? (
-              <button
-                onClick={onGoToDashboard}
-                style={{
-                  width: '100%',
-                  padding: '14px 20px',
-                  borderRadius: '12px',
-                  border: 'none',
-                  background: 'linear-gradient(90deg, #0284c7, #0369a1)',
-                  color: '#ffffff',
-                  fontSize: '0.98rem',
-                  fontWeight: 900,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px',
-                  boxShadow: '0 4px 14px rgba(2, 132, 199, 0.4)',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <span>📊 Ingresar al Dashboard de Coordinación ({isCoordinadorDistrital ? 'Distrital' : (isCoordinadorZonal ? 'Zonal' : 'Centro')})</span>
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            ) : (
-              <div style={{
-                background: '#f1f5f9',
-                border: '1.5px dashed #cbd5e1',
-                borderRadius: '12px',
-                padding: '12px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                color: '#64748b'
-              }}>
-                <Lock className="w-5 h-5 flex-shrink-0 text-slate-400" />
-                <div style={{ fontSize: '0.78rem', lineHeight: 1.35 }}>
-                  <strong style={{ display: 'block', color: '#475569' }}>Dashboard de Coordinación Bloqueado</strong>
-                  Debes completar los 2 videos, la cartilla y aprobar la evaluación para acceder al panel distrital/local.
-                </div>
-              </div>
+            <div style={{ gridColumn: 'span 2', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={localAsig}>
+              Centro: <strong style={{ color: '#0f172a' }}>{localAsig}</strong>
+            </div>
+            {!isAnyCoordinador && (
+              <div>Mesa: <strong style={{ color: '#0f172a' }}>{mesa}</strong></div>
             )}
           </div>
-        )}
 
-        {/* Bloques de Indicadores de Progreso con Puntos Visuales */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
-          
-          {/* Visualizaciones de Video con Puntos */}
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Visualizaciones de Video</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'rgb(14, 165, 233)' }}>{videoCount}/2</div>
+          {/* Estado de Acceso para Coordinadores (Compacto) */}
+          {isAnyCoordinador && (
+            <div style={{ marginTop: '2px' }}>
+              {isFullyAccredited ? (
+                <button
+                  onClick={onGoToDashboard}
+                  style={{
+                    width: '100%',
+                    padding: '9px 14px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: 'linear-gradient(90deg, #0284c7, #0369a1)',
+                    color: '#ffffff',
+                    fontSize: '0.86rem',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    boxShadow: '0 2px 8px rgba(2, 132, 199, 0.35)',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <span>📊 Ingresar al Dashboard de Coordinación</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              ) : (
+                <div style={{
+                  background: '#f1f5f9',
+                  border: '1px dashed #cbd5e1',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '0.71rem',
+                  color: '#64748b'
+                }}>
+                  <Lock className="w-3.5 h-3.5 flex-shrink-0 text-amber-600" />
+                  <span>
+                    <strong style={{ color: '#475569' }}>Dashboard Bloqueado:</strong> Aprueba los 2 videos, la cartilla y la evaluación para habilitar el panel.
+                  </span>
+                </div>
+              )}
             </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: videoCount >= 1 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: videoCount >= 1 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: videoCount >= 2 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: videoCount >= 2 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
-            </div>
-          </div>
+          )}
+        </div>
 
-          {/* Lecturas de PDF con Puntos */}
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Lecturas de Cartilla PDF</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'rgb(14, 165, 233)' }}>{pdfCount}/2</div>
-            </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: pdfCount >= 1 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: pdfCount >= 1 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: pdfCount >= 2 ? 'rgb(14, 165, 233)' : '#cbd5e1', boxShadow: pdfCount >= 2 ? '0 2px 6px rgba(14, 165, 233, 0.4)' : 'none', transition: 'all 0.2s ease' }}></div>
-            </div>
-          </div>
-
-          {/* Evaluación de Preguntas */}
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>Evaluación de Preguntas</div>
-              <div style={{ fontSize: '1.05rem', fontWeight: 900, color: isQuizPassed ? '#10b981' : '#f59e0b' }}>
-                {isQuizPassed ? 'Aprobado (5/5)' : 'Pendiente'}
+        {/* Indicadores de Progreso en 3 Columnas Horizontales (Súper Compacto) */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gap: '8px',
+          marginBottom: '14px'
+        }}>
+          {/* 1. Videos */}
+          <div style={{
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '10px',
+            padding: '8px 10px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '4px'
+          }}>
+            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 700 }}>🎬 Videos</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <strong style={{ fontSize: '1rem', color: '#0284c7', fontWeight: 900 }}>{videoCount}/2</strong>
+              <div style={{ display: 'flex', gap: '3px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: videoCount >= 1 ? '#0284c7' : '#cbd5e1' }}></div>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: videoCount >= 2 ? '#0284c7' : '#cbd5e1' }}></div>
               </div>
             </div>
-            <div style={{ color: '#94a3b8' }}>|</div>
+          </div>
+
+          {/* 2. Cartilla PDF */}
+          <div style={{
+            background: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '10px',
+            padding: '8px 10px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '4px'
+          }}>
+            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 700 }}>📄 Cartilla</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <strong style={{ fontSize: '1rem', color: '#0284c7', fontWeight: 900 }}>{pdfCount}/2</strong>
+              <div style={{ display: 'flex', gap: '3px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: pdfCount >= 1 ? '#0284c7' : '#cbd5e1' }}></div>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: pdfCount >= 2 ? '#0284c7' : '#cbd5e1' }}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Evaluación */}
+          <div style={{
+            background: isQuizPassed ? '#f0fdf4' : '#f8fafc',
+            border: isQuizPassed ? '1px solid #bbf7d0' : '1px solid #e2e8f0',
+            borderRadius: '10px',
+            padding: '8px 10px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '4px'
+          }}>
+            <span style={{ fontSize: '0.7rem', color: isQuizPassed ? '#15803d' : '#64748b', fontWeight: 700 }}>📝 Evaluación</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <strong style={{ fontSize: '0.84rem', color: isQuizPassed ? '#16a34a' : '#d97706', fontWeight: 900 }}>
+                {isQuizPassed ? 'Aprobado' : 'Pendiente'}
+              </strong>
+              {isQuizPassed && <Check className="w-3.5 h-3.5 text-emerald-600" />}
+            </div>
           </div>
         </div>
 
-        {/* Lista de Módulos de Capacitación */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* Lista de Módulos de Capacitación Compacta */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           
           {/* 1. Ver Video Tutorial */}
           <div
             onClick={() => setActiveModal('video')}
             style={{
               background: '#f8fafc',
-              border: isVideoDone ? '1.5px solid #10b981' : '1px solid #e2e8f0',
-              borderRadius: '14px',
-              padding: '16px',
+              border: isVideoDone ? '1px solid #86efac' : '1px solid #e2e8f0',
+              borderRadius: '10px',
+              padding: '10px 12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '14px',
+              gap: '10px',
               cursor: 'pointer',
               transition: 'all 0.15s ease'
             }}
           >
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: isVideoDone ? '#dcfce7' : '#e0f2fe', color: isVideoDone ? '#16a34a' : 'rgb(14, 165, 233)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Film className="w-6 h-6" />
+            <div style={{
+              width: '34px',
+              height: '34px',
+              borderRadius: '8px',
+              background: isVideoDone ? '#dcfce7' : '#e0f2fe',
+              color: isVideoDone ? '#16a34a' : '#0284c7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Film className="w-4 h-4" />
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Ver Video Tutorial</div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Ver el video instructivo (Conteo)</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#0f172a' }}>Ver Video Tutorial</div>
+              <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Video instructivo de conteo y actas</div>
             </div>
-            {isVideoDone ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+            {isVideoDone ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
           </div>
 
           {/* 2. Leer Cartilla del Personero ERM 2026 */}
@@ -280,75 +317,95 @@ export function TrainingView({ onGoToDashboard }) {
             onClick={() => setActiveModal('pdf')}
             style={{
               background: '#f8fafc',
-              border: isPdfDone ? '1.5px solid #10b981' : '1px solid #e2e8f0',
-              borderRadius: '14px',
-              padding: '16px',
+              border: isPdfDone ? '1px solid #86efac' : '1px solid #e2e8f0',
+              borderRadius: '10px',
+              padding: '10px 12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '14px',
+              gap: '10px',
               cursor: 'pointer',
               transition: 'all 0.15s ease'
             }}
           >
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: isPdfDone ? '#dcfce7' : '#f1f5f9', color: isPdfDone ? '#16a34a' : '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <FileText className="w-6 h-6" />
+            <div style={{
+              width: '34px',
+              height: '34px',
+              borderRadius: '8px',
+              background: isPdfDone ? '#dcfce7' : '#f1f5f9',
+              color: isPdfDone ? '#16a34a' : '#64748b',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <FileText className="w-4 h-4" />
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Leer Cartilla del Personero ERM 2026</div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Leer la cartilla instructiva oficial (15 secciones y guía completa)</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#0f172a' }}>Leer Cartilla del Personero ERM 2026</div>
+              <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Cartilla instructiva oficial (15 secciones)</div>
             </div>
-            {isPdfDone ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+            {isPdfDone ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
           </div>
 
-          {/* 3. Cuestionario de Preguntas (Siempre Visible) */}
+          {/* 3. Cuestionario de Preguntas */}
           <div
             onClick={() => { if (canTakeQuiz) setActiveModal('quiz'); }}
             style={{
               background: canTakeQuiz ? '#f8fafc' : '#f1f5f9',
-              border: isQuizPassed ? '1.5px solid #10b981' : '1px solid #e2e8f0',
-              borderRadius: '14px',
-              padding: '16px',
+              border: isQuizPassed ? '1px solid #86efac' : '1px solid #e2e8f0',
+              borderRadius: '10px',
+              padding: '10px 12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '14px',
+              gap: '10px',
               cursor: canTakeQuiz ? 'pointer' : 'not-allowed',
-              opacity: canTakeQuiz ? 1 : 0.85,
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: isQuizPassed ? '#dcfce7' : (canTakeQuiz ? '#fef3c7' : '#e2e8f0'), color: isQuizPassed ? '#16a34a' : (canTakeQuiz ? '#d97706' : '#94a3b8'), display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              {isQuizPassed ? <CheckCircle2 className="w-6 h-6" /> : (canTakeQuiz ? <Award className="w-6 h-6" /> : <Lock className="w-5 h-5" />)}
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>Cuestionario de Preguntas</div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                {canTakeQuiz ? (isQuizPassed ? 'Aprobado con 5/5' : 'Desbloqueado (Rendir 5 preguntas)') : 'Bloqueado (Ver 2 videos y 2 PDFs)'}
-              </div>
-            </div>
-            {isQuizPassed && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
-          </div>
-
-          {/* 4. Certificado Oficial de Acreditación (Desbloqueado al Aprobar 5/5) */}
-          <div
-            onClick={() => { if (isQuizPassed) setActiveModal('certificate'); }}
-            style={{
-              background: isQuizPassed ? 'linear-gradient(135deg, #f0fdf4, #ecfdf5)' : '#f1f5f9',
-              border: isQuizPassed ? '2px solid #10b981' : '1px solid #e2e8f0',
-              borderRadius: '14px',
-              padding: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-              cursor: isQuizPassed ? 'pointer' : 'not-allowed',
-              opacity: isQuizPassed ? 1 : 0.85,
-              boxShadow: isQuizPassed ? '0 4px 15px rgba(16, 185, 129, 0.2)' : 'none',
+              opacity: canTakeQuiz ? 1 : 0.8,
               transition: 'all 0.15s ease'
             }}
           >
             <div style={{
-              width: '42px',
-              height: '42px',
+              width: '34px',
+              height: '34px',
+              borderRadius: '8px',
+              background: isQuizPassed ? '#dcfce7' : (canTakeQuiz ? '#fef3c7' : '#e2e8f0'),
+              color: isQuizPassed ? '#16a34a' : (canTakeQuiz ? '#d97706' : '#94a3b8'),
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              {isQuizPassed ? <CheckCircle2 className="w-4 h-4" /> : (canTakeQuiz ? <Award className="w-4 h-4" /> : <Lock className="w-4 h-4" />)}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#0f172a' }}>Cuestionario de Preguntas</div>
+              <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
+                {canTakeQuiz ? (isQuizPassed ? 'Aprobado con 5/5' : 'Desbloqueado (Rendir 5 preguntas)') : 'Bloqueado (Ver 2 videos y 2 PDFs)'}
+              </div>
+            </div>
+            {isQuizPassed && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+          </div>
+
+          {/* 4. Certificado Oficial de Acreditación */}
+          <div
+            onClick={() => { if (isQuizPassed) setActiveModal('certificate'); }}
+            style={{
+              background: isQuizPassed ? 'linear-gradient(135deg, #f0fdf4, #ecfdf5)' : '#f1f5f9',
+              border: isQuizPassed ? '1.5px solid #10b981' : '1px solid #e2e8f0',
               borderRadius: '10px',
+              padding: '10px 12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              cursor: isQuizPassed ? 'pointer' : 'not-allowed',
+              opacity: isQuizPassed ? 1 : 0.8,
+              boxShadow: isQuizPassed ? '0 2px 10px rgba(16, 185, 129, 0.2)' : 'none',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{
+              width: '34px',
+              height: '34px',
+              borderRadius: '8px',
               background: isQuizPassed ? '#10b981' : '#e2e8f0',
               color: isQuizPassed ? '#ffffff' : '#94a3b8',
               display: 'flex',
@@ -356,17 +413,17 @@ export function TrainingView({ onGoToDashboard }) {
               justifyContent: 'center',
               flexShrink: 0
             }}>
-              <Award className="w-6 h-6" />
+              <Award className="w-4 h-4" />
             </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 900, color: isQuizPassed ? '#065f46' : '#0f172a' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '0.86rem', fontWeight: 900, color: isQuizPassed ? '#065f46' : '#0f172a' }}>
                 Certificado Oficial de Acreditación
               </div>
-              <div style={{ fontSize: '0.75rem', color: isQuizPassed ? '#047857' : '#64748b', fontWeight: isQuizPassed ? 700 : 500 }}>
-                {isQuizPassed ? '🎓 ¡Desbloqueado! Clic para ver e imprimir tu certificado oficial' : '🔒 Bloqueado (Se desbloquea al aprobar la evaluación con 5/5)'}
+              <div style={{ fontSize: '0.7rem', color: isQuizPassed ? '#047857' : '#64748b', fontWeight: isQuizPassed ? 700 : 500 }}>
+                {isQuizPassed ? '🎓 ¡Desbloqueado! Clic para ver e imprimir' : '🔒 Se desbloquea al aprobar la evaluación'}
               </div>
             </div>
-            {isQuizPassed ? <ChevronRight className="w-5 h-5 text-emerald-600" /> : <Lock className="w-5 h-5 text-slate-400" />}
+            {isQuizPassed ? <ChevronRight className="w-4 h-4 text-emerald-600" /> : <Lock className="w-4 h-4 text-slate-400" />}
           </div>
 
         </div>

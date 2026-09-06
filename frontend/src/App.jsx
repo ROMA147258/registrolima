@@ -19,7 +19,7 @@ export function App() {
     isPersonero
   } = useAuth();
   
-  const [viewMode, setViewMode] = useState('register'); // 'register', 'login'
+  const [viewMode, setViewMode] = useState('login'); // 'login' por defecto, 'register'
   const [coordLocalTab, setCoordLocalTab] = useState('dashboard');
   const [isVerificationMode, setIsVerificationMode] = useState(
     window.location.hash.startsWith('#verificar')

@@ -602,6 +602,32 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
 
   const handleSave = async (e) => {
     e.preventDefault();
+
+    // Comprobar si hubo cambios reales en la ficha
+    const origNom = (personero['Nombres y Apellidos'] || personero.nombresApellidos || '').trim();
+    const origCel = (personero['Celular'] || personero.celular || '').trim();
+    const origDist = (personero['Distrito Asignado'] || personero['Distrito donde Vota'] || personero.distritoAsignado || '').trim();
+    const origLoc = (personero['Local de Votación Asignado'] || personero['Local de Votación'] || personero.localDeVotacionAsignado || '').trim();
+    const origMesa = initialMesa.trim();
+    const origRol = (personero['Rol a Desempeñar'] || personero.rolADesempenar || 'Personero de Mesa').trim();
+    const origCred = (personero['Credenciales'] || personero.credenciales || 'Bloqueado').trim();
+
+    const hasAnyChange = (
+      formData.nombresApellidos.trim() !== origNom ||
+      formData.celular.trim() !== origCel ||
+      formData.distritoAsignado.trim() !== origDist ||
+      formData.localAsignado.trim() !== origLoc ||
+      formData.mesaAsignada.trim() !== origMesa ||
+      formData.rolADesempenar.trim() !== origRol ||
+      formData.credenciales.trim() !== origCred
+    );
+
+    if (!hasAnyChange) {
+      // Si no hubo cambios, cerrar limpiamente sin saturar la auditoría
+      onClose();
+      return;
+    }
+
     setSaving(true);
     setErrorMsg(null);
 

@@ -171,18 +171,56 @@ export class PersoneroController {
       const before = await this.personeroRepo.findByDni(dni);
       const result = await this.personeroRepo.updatePersonero(dni, req.body);
 
-      // Calcular diferencias para auditoría
+      // Calcular diferencias exhaustivas para auditoría
       const changes = {};
+      const getVal = (val) => val === null || val === undefined ? '' : String(val).trim();
+
       if (before && before.entity) {
         const b = before.entity;
-        const a = result.entity;
-        if (req.body.nombresApellidos && b.nombresApellidos !== a.nombresApellidos) changes.nombres = { antes: b.nombresApellidos, despues: a.nombresApellidos };
-        if (req.body.celular && b.celular !== a.celular) changes.celular = { antes: b.celular, despues: a.celular };
-        if (req.body.distritoAsignado && b.distritoAsignado !== a.distritoAsignado) changes.distrito = { antes: b.distritoAsignado, despues: a.distritoAsignado };
-        if (req.body.localAsignado && b.localDeVotacionAsignado !== a.localDeVotacionAsignado) changes.local = { antes: b.localDeVotacionAsignado, despues: a.localDeVotacionAsignado };
-        if (req.body.mesaAsignada && b.mesaAsignada !== a.mesaAsignada) changes.mesa = { antes: b.mesaAsignada, despues: a.mesaAsignada };
-        if (req.body.rolADesempenar && b.rolADesempenar !== a.rolADesempenar) changes.rol = { antes: b.rolADesempenar, despues: a.rolADesempenar };
-        if (req.body.credenciales && b.credenciales !== a.credenciales) changes.credenciales = { antes: b.credenciales, despues: a.credenciales };
+        const a = result.entity || {};
+
+        // 1. Nombres
+        const bNom = getVal(b.nombresApellidos);
+        const aNom = getVal(a.nombresApellidos || req.body.nombresApellidos);
+        if (aNom && bNom !== aNom) changes.nombres = { antes: bNom, despues: aNom };
+
+        // 2. Celular
+        const bCel = getVal(b.celular);
+        const aCel = getVal(a.celular || req.body.celular);
+        if (aCel && bCel !== aCel) changes.celular = { antes: bCel, despues: aCel };
+
+        // 3. Distrito
+        const bDist = getVal(b.distritoAsignado || b.distritoDondeVota);
+        const aDist = getVal(a.distritoAsignado || req.body.distritoAsignado || req.body.distrito);
+        if (aDist && bDist !== aDist) changes.distrito = { antes: bDist, despues: aDist };
+
+        // 4. Local de Votación
+        const bLoc = getVal(b.localDeVotacionAsignado || b.localAsignado);
+        const aLoc = getVal(a.localDeVotacionAsignado || req.body.localAsignado || req.body.local);
+        if (aLoc && bLoc !== aLoc) changes.local = { antes: bLoc || 'Sin asignar', despues: aLoc };
+
+        // 5. Mesa Asignada
+        const bMesa = getVal(b.mesaAsignada);
+        const aMesa = getVal(a.mesaAsignada || req.body.mesaAsignada || req.body.mesa);
+        if (aMesa !== undefined && bMesa !== aMesa) changes.mesa = { antes: bMesa || 'Sin asignar', despues: aMesa || 'Sin asignar' };
+
+        // 6. Rol a Desempeñar
+        const bRol = getVal(b.rolADesempenar);
+        const aRol = getVal(a.rolADesempenar || req.body.rolADesempenar || req.body.rol);
+        if (aRol && bRol !== aRol) changes.rol = { antes: bRol, despues: aRol };
+
+        // 7. Credenciales
+        const bCred = getVal(b.credenciales);
+        const aCred = getVal(a.credenciales || req.body.credenciales);
+        if (aCred && bCred !== aCred) changes.credenciales = { antes: bCred, despues: aCred };
+
+        // Si no hubo diferencias en campos pero se guardó la ficha
+        if (Object.keys(changes).length === 0) {
+          changes.revalidacion = {
+            antes: 'Ficha actual',
+            despues: 'Datos guardados y confirmados'
+          };
+        }
       }
 
       const author = req.body?.author || req.headers['x-author-name'] || req.user?.name || 'Administrador';
@@ -197,6 +235,9 @@ export class PersoneroController {
             dni,
             nombres: result.entity?.nombresApellidos || before?.entity?.nombresApellidos,
             distrito: result.entity?.distritoAsignado || before?.entity?.distritoAsignado,
+            local: result.entity?.localDeVotacionAsignado || before?.entity?.localDeVotacionAsignado,
+            mesa: result.entity?.mesaAsignada || before?.entity?.mesaAsignada,
+            rol: result.entity?.rolADesempenar || before?.entity?.rolADesempenar,
             changes,
             author,
             authorRole
