@@ -55,7 +55,7 @@ function matchesLocal(recordLocal, filterLocal) {
   return normRec === normFilt || normRec.includes(normFilt) || normFilt.includes(normRec);
 }
 
-// Helper de roles (Personero de Mesa, Personero de Centro de Votación / Local y Coordinador Distrital)
+// Helper de roles (Personero de Mesa, Personero de Centro de Votación / Local, Coordinador Zonal y Coordinador Distrital)
 function matchesRole(recordRole, filterRole) {
   if (!filterRole || filterRole === 'all') return true;
   if (!recordRole) return false;
@@ -65,11 +65,14 @@ function matchesRole(recordRole, filterRole) {
   if (f.includes('distrito') || f.includes('distrital')) {
     return r.includes('distrito') || r.includes('distrital');
   }
+  if (f.includes('zonal') || f.includes('zona')) {
+    return r.includes('zonal') || r.includes('zona');
+  }
   if (f.includes('local') || f.includes('centro') || f.includes('pcv') || f.includes('plv')) {
-    return r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
+    return (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal') && !r.includes('zona')));
   }
   if (f.includes('mesa') || f.includes('personero')) {
-    return r.includes('mesa') || (!r.includes('local') && !r.includes('centro') && !r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
+    return (r.includes('mesa') || (!r.includes('local') && !r.includes('centro') && !r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal') && !r.includes('zona')));
   }
   return r === f || r.includes(f);
 }
@@ -1020,8 +1023,60 @@ export function DashboardView({ onGoToTraining }) {
   }, [allRecords, coordinatorDistrict, dist1]);
 
   // =========================================================================
-  // MONITOREO DISTRITAL: ESTRUCTURA DE COORDINADORES ZONALES DEL DISTRITO
+  // MONITOREO ZONAL: ESTRUCTURA DE COORDINADORES ZONALES (VILLA MARÍA DEL TRIUNFO Y DISTRITAL)
   // =========================================================================
+  const vmtZonalesOverview = useMemo(() => {
+    const zonalesInVMT = (allRecords || []).filter(r => {
+      const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota || '';
+      const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+      return matchesDistrict(d, 'VILLA MARIA DEL TRIUNFO') && (rol.includes('zonal') || rol.includes('zona'));
+    });
+
+    return zonalesInVMT.map(z => {
+      const zName = z['Nombres y Apellidos'] || z.nombresApellidos || 'Coordinador Zonal';
+      const zDni = z['D.N.I.'] || z['DNI'] || z.dni || '';
+      const zCel = z['Celular'] || z.celular || '';
+      const zCred = String(z['Credenciales'] || z.credenciales || '').toLowerCase();
+      const rawLocales = z['Local de Votación Asignado'] || z.localDeVotacionAsignado || z['Local de Votación'] || '';
+      const zSchools = rawLocales.split(',').map(s => s.trim()).filter(Boolean);
+
+      let totalMesasZona = 0;
+      let personerosEnZona = 0;
+      let plvsEnZona = 0;
+
+      zSchools.forEach(sch => {
+        totalMesasZona += getMesasForLocal(sch) || 1;
+
+        (allRecords || []).forEach(r => {
+          const rDist = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || '';
+          const rLoc = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || '';
+          const rRol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+          if (!matchesDistrict(rDist, 'VILLA MARIA DEL TRIUNFO') || !matchesLocal(rLoc, sch)) return;
+
+          if (rRol.includes('local') || rRol.includes('plv') || rRol.includes('pcv')) {
+            plvsEnZona++;
+          } else if (rRol.includes('mesa') || (!rRol.includes('coordinador') && !rRol.includes('distrit') && !rRol.includes('zonal') && !rRol.includes('zona'))) {
+            personerosEnZona++;
+          }
+        });
+      });
+
+      return {
+        raw: z,
+        nombre: zName,
+        dni: zDni,
+        celular: zCel,
+        credencial: zCred === 'confirmado' ? 'Confirmado' : 'Bloqueado',
+        colegios: zSchools,
+        totalColegios: zSchools.length,
+        totalMesas: totalMesasZona,
+        personerosEnZona,
+        plvsEnZona
+      };
+    });
+  }, [allRecords]);
+
+  // districtZonalesOverview: entrega los coordinadores zonales al Coordinador Distrital o al distrito seleccionado
   const districtZonalesOverview = useMemo(() => {
     const targetDist = coordinatorDistrict || (dist1 !== 'all' ? dist1 : null);
     if (!targetDist) return [];
@@ -1055,7 +1110,7 @@ export function DashboardView({ onGoToTraining }) {
 
           if (rRol.includes('local') || rRol.includes('plv') || rRol.includes('pcv')) {
             plvsEnZona++;
-          } else if (rRol.includes('mesa') || (!rRol.includes('coordinador') && !rRol.includes('distrit') && !rRol.includes('zonal'))) {
+          } else if (rRol.includes('mesa') || (!rRol.includes('coordinador') && !rRol.includes('distrit') && !rRol.includes('zonal') && !rRol.includes('zona'))) {
             personerosEnZona++;
           }
         });
@@ -2356,6 +2411,66 @@ export function DashboardView({ onGoToTraining }) {
                         </div>
                       )}
 
+                      {/* 2. Sección de Coordinadores Zonales para Coordinador Distrital y Vista de Distrito */}
+                      {districtZonalesOverview.length > 0 && (
+                        <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: `1px dashed ${borderCol}` }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <span style={{
+                                background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
+                                color: '#ffffff',
+                                padding: '4px 10px',
+                                borderRadius: '8px',
+                                fontSize: '0.75rem',
+                                fontWeight: 900,
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                boxShadow: '0 2px 6px rgba(139, 92, 246, 0.3)'
+                              }}>
+                                🗺️ COORDINADORES ZONALES ({districtZonalesOverview.length})
+                              </span>
+                              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: textSub }}>
+                                {coordinatorDistrict || dist1}
+                              </span>
+                            </div>
+                            <span style={{ fontSize: '0.74rem', color: textSub, fontWeight: 600 }}>
+                              Desliza horizontalmente para ver todos ({districtZonalesOverview.length}) &rarr;
+                            </span>
+                          </div>
+
+                          <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'stretch',
+                            gap: '14px',
+                            overflowX: 'auto',
+                            overflowY: 'hidden',
+                            paddingBottom: '8px',
+                            scrollbarWidth: 'thin',
+                            WebkitOverflowScrolling: 'touch'
+                          }}>
+                            {districtZonalesOverview.map((zonal, zIdx) => (
+                              <div
+                                key={zIdx}
+                                style={{
+                                  flex: '0 0 auto',
+                                  width: isMobile ? '280px' : '340px',
+                                  display: 'flex'
+                                }}
+                              >
+                                <ZonalOverviewCard
+                                  zonal={zonal}
+                                  isDark={isDark}
+                                  borderCol={borderCol}
+                                  onEdit={setSelectedPersonero}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                     </div>
                   ) : (
                     /* CASO B: SUPERADMIN EN VISTA GENERAL (TODOS LOS DISTRITOS) */
@@ -2478,6 +2593,87 @@ export function DashboardView({ onGoToTraining }) {
                         <div style={{ padding: '12px 14px', background: isDark ? 'rgba(234, 179, 8, 0.1)' : '#fefce8', border: '1px solid #fde047', borderRadius: '10px', color: isDark ? '#facc15' : '#a16207', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <AlertCircle className="w-4 h-4 flex-shrink-0" />
                           <span>Aún no hay Coordinadores Distritales registrados en la base de datos.</span>
+                        </div>
+                      )}
+
+                      {/* Coordinadores Zonales de Villa María del Triunfo para Superadmin (supera, eric, paola, susana) */}
+                      {isSuperAdmin && vmtZonalesOverview.length > 0 && (
+                        <div style={{ marginTop: '18px', paddingTop: '16px', borderTop: `1px dashed ${borderCol}` }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <span style={{
+                                background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
+                                color: '#ffffff',
+                                padding: '4px 10px',
+                                borderRadius: '8px',
+                                fontSize: '0.75rem',
+                                fontWeight: 900,
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                boxShadow: '0 2px 6px rgba(139, 92, 246, 0.3)'
+                              }}>
+                                🗺️ COORDINADORES ZONALES • VILLA MARÍA DEL TRIUNFO ({vmtZonalesOverview.length})
+                              </span>
+                              <span style={{ fontSize: '0.76rem', color: textSub, fontWeight: 600 }}>
+                                (Zonas electorales territoriales de V.M.T.)
+                              </span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <span style={{ fontSize: '0.74rem', color: textSub, fontWeight: 600 }}>
+                                Desliza horizontalmente &rarr;
+                              </span>
+                              <button
+                                onClick={() => setDist1('VILLA MARIA DEL TRIUNFO')}
+                                style={{
+                                  padding: '4px 12px',
+                                  borderRadius: '6px',
+                                  border: '1px solid #8b5cf6',
+                                  background: isDark ? 'rgba(139, 92, 246, 0.15)' : '#ede9fe',
+                                  color: '#7c3aed',
+                                  fontSize: '0.72rem',
+                                  fontWeight: 800,
+                                  cursor: 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px'
+                                }}
+                              >
+                                <span>Filtrar solo V.M.T.</span>
+                                <span>&rarr;</span>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'stretch',
+                            gap: '14px',
+                            overflowX: 'auto',
+                            overflowY: 'hidden',
+                            paddingBottom: '8px',
+                            scrollbarWidth: 'thin',
+                            WebkitOverflowScrolling: 'touch'
+                          }}>
+                            {vmtZonalesOverview.map((zonal, zIdx) => (
+                              <div
+                                key={zIdx}
+                                style={{
+                                  flex: '0 0 auto',
+                                  width: isMobile ? '280px' : '340px',
+                                  display: 'flex'
+                                }}
+                              >
+                                <ZonalOverviewCard
+                                  zonal={zonal}
+                                  isDark={isDark}
+                                  borderCol={borderCol}
+                                  onEdit={setSelectedPersonero}
+                                />
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -2639,6 +2835,7 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro (PCV)</option>}
+                    {(isSuperAdmin || normalizeDistrictName(coordinatorDistrict || dist1) === 'VILLA MARIA DEL TRIUNFO') && <option value="Coordinador Zonal">Coordinador Zonal (VMT)</option>}
                     {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
                   </select>
 
@@ -2812,7 +3009,19 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* KPI 4 - Coordinadores Distritales (Dorado Institucional Somos Perú) */}
+                  {/* KPI 4 - Coordinadores Zonales (Púrpura Somos Perú - Exclusivo Villa María del Triunfo) */}
+                  {(isSuperAdmin || normalizeDistrictName(coordinatorDistrict || dist1) === 'VILLA MARIA DEL TRIUNFO') && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #8b5cf6', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease', boxShadow: isDark ? '0 2px 8px rgba(0,0,0,0.2)' : '0 1px 4px rgba(139, 92, 246, 0.08)' }}>
+                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#7c3aed' }}>COORD. ZONALES (VMT)</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(139, 92, 246, 0.25)' : '#ede9fe', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Navigation className="w-3.5 h-3.5" /></div>
+                        <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{vmtZonalesOverview.length}</span>
+                      </div>
+                      <div style={{ fontSize: '0.65rem', color: textSub }}>Coordinadores en V.M.T.</div>
+                    </div>
+                  )}
+
+                  {/* KPI 5 - Coordinadores Distritales (Dorado Institucional Somos Perú) */}
                   {(isSuperAdmin || isCoordinadorDistrital) && (
                     <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #c59b27', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
                       <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#b45309' }}>COORD. DISTRITALES</div>
@@ -3389,7 +3598,9 @@ export function DashboardView({ onGoToTraining }) {
                           const rolLower = rol.toLowerCase();
                           if (rolLower.includes('distrital') || rolLower.includes('distrito')) {
                             hierarchyBadge = { label: 'Coordinador Distrital', icon: '🏛️', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
-                          } else if (rolLower.includes('local') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('centro') || rolLower.includes('zonal') || rolLower.includes('zona')) {
+                          } else if (rolLower.includes('zonal') || rolLower.includes('zona')) {
+                            hierarchyBadge = { label: 'Coordinador Zonal', icon: '🗺️', bg: '#ede9fe', color: '#7c3aed', border: '#ddd6fe' };
+                          } else if (rolLower.includes('local') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('centro')) {
                             hierarchyBadge = { label: 'Personero de Centro de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
                           }
 
@@ -3559,7 +3770,9 @@ export function DashboardView({ onGoToTraining }) {
                               const rolLower = rol.toLowerCase();
                               if (rolLower.includes('distrital') || rolLower.includes('distrito')) {
                                 hierarchyBadge = { label: 'Coordinador Distrital', icon: '🏛️', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
-                              } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('zonal') || rolLower.includes('zona')) {
+                              } else if (rolLower.includes('zonal') || rolLower.includes('zona')) {
+                                hierarchyBadge = { label: 'Coordinador Zonal', icon: '🗺️', bg: '#ede9fe', color: '#7c3aed', border: '#ddd6fe' };
+                              } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('plv') || rolLower.includes('pcv')) {
                                 hierarchyBadge = { label: 'Personero de Centro de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
                               }
 
@@ -3878,6 +4091,7 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro de Votación (PCV)</option>}
+                    {(isSuperAdmin || normalizeDistrictName(coordinatorDistrict || dist2) === 'VILLA MARIA DEL TRIUNFO') && <option value="Coordinador Zonal">Coordinador Zonal (VMT)</option>}
                     {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
                   </select>
 
