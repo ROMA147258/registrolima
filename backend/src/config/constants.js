@@ -73,7 +73,7 @@ export const DISTRITO_METAS = {
   "Miraflores": 478,
   "Pachacámac": 319,
   "Pucusana": 44,
-  "Pueblo Libre": 337,
+  "Pueblo Libre": 344,
   "Puente Piedra": 891,
   "Punta Hermosa": 33,
   "Punta Negra": 25,

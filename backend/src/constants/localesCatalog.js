@@ -17166,10 +17166,10 @@ export const LOCALES_OFICIALES = [
     "departamento": "LIMA",
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
-    "nombre": "IEI 012 AUGUSTO PEREZ ARANIBAR",
-    "direccion": "JR GENERAL LUNA IGLESIAS 196",
-    "mesas": 6,
-    "electores": 1800
+    "nombre": "IE 1076 RABINDRANATH TAGORE",
+    "direccion": "JR MARTIN OVIEDO SN CUADRA 2",
+    "mesas": 4,
+    "electores": 1200
   },
   {
     "id": 6994,
@@ -17177,10 +17177,32 @@ export const LOCALES_OFICIALES = [
     "departamento": "LIMA",
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
+    "nombre": "IEI 012 AUGUSTO PEREZ ARANIBAR",
+    "direccion": "JR GENERAL LUNA IGLESIAS 196",
+    "mesas": 6,
+    "electores": 1800
+  },
+  {
+    "id": 6995,
+    "ubigeo": "140117",
+    "departamento": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "PUEBLO LIBRE",
     "nombre": "COMPLEJO DEPORTIVO MAMA OCLLO",
-    "direccion": "AV COLOMBIA 300",
+    "direccion": "JR GENERAL LUNA IGLESIAS 196",
     "mesas": 24,
     "electores": 7200
+  },
+  {
+    "id": 6996,
+    "ubigeo": "140117",
+    "departamento": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "PUEBLO LIBRE",
+    "nombre": "CETPRO FRANCISCO GARCIA CALDERON",
+    "direccion": "AV SAN MARTIN 1377",
+    "mesas": 3,
+    "electores": 900
   },
   {
     "id": 6995,
@@ -17189,7 +17211,7 @@ export const LOCALES_OFICIALES = [
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
     "nombre": "IEP CRISTO REY",
-    "direccion": "CALLE PARACAS 425",
+    "direccion": "AV COLOMBIA 300",
     "mesas": 9,
     "electores": 2700
   },
@@ -17200,7 +17222,7 @@ export const LOCALES_OFICIALES = [
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
     "nombre": "IESTP NACIONES UNIDAS",
-    "direccion": "AV LA MARINA SN CUADRA 11",
+    "direccion": "CALLE PARACAS 425",
     "mesas": 6,
     "electores": 1800
   },
@@ -17244,7 +17266,7 @@ export const LOCALES_OFICIALES = [
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
     "nombre": "IE JOSE SANTOS CHOCANO",
-    "direccion": "JR GALLESE 246",
+    "direccion": "JR GALVEZ 246",
     "mesas": 14,
     "electores": 4200
   },
@@ -17299,7 +17321,7 @@ export const LOCALES_OFICIALES = [
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
     "nombre": "UNIVERSIDAD POLITECNICA DEL PERU",
-    "direccion": "JR PEDRO RUIZ GALLO 251",
+    "direccion": "JR PEDRO RUIZ GALLO 9",
     "mesas": 21,
     "electores": 6300
   },
@@ -17309,7 +17331,7 @@ export const LOCALES_OFICIALES = [
     "departamento": "LIMA",
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
-    "nombre": "ISET JUAN XIII",
+    "nombre": "ISET JUAN XXIII",
     "direccion": "JR ALFREDO CADENAS 290",
     "mesas": 9,
     "electores": 2700
@@ -17321,7 +17343,7 @@ export const LOCALES_OFICIALES = [
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
     "nombre": "IE 0013 BERNARDO O HIGGINS",
-    "direccion": "CALLE SAN MARCOS 380",
+    "direccion": "CALLE SAN MARCOS",
     "mesas": 5,
     "electores": 1500
   },
@@ -17342,7 +17364,7 @@ export const LOCALES_OFICIALES = [
     "departamento": "LIMA",
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
-    "nombre": "IE 04 NIÑO JESUS DE PRAGA",
+    "nombre": "IE 04 NIÑO POLAR DE PRAGA",
     "direccion": "JR PARQUE ORQUIDEAS 163",
     "mesas": 6,
     "electores": 1800
@@ -17365,7 +17387,7 @@ export const LOCALES_OFICIALES = [
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
     "nombre": "COMPLEJO DEPORTIVO DANIEL PEREDO",
-    "direccion": "JR JOSE MANUEL UGARTECHE CUADRA 1",
+    "direccion": "JR JOSE MANUEL UGARTECHE CDRA.",
     "mesas": 24,
     "electores": 7200
   },
@@ -17386,7 +17408,7 @@ export const LOCALES_OFICIALES = [
     "departamento": "LIMA",
     "provincia": "LIMA",
     "distrito": "PUEBLO LIBRE",
-    "nombre": "ESCUELA NACIONAL DE ARCHIVISTICA",
+    "nombre": "ESCUELA NACIONAL DE ARCHIVISTAS",
     "direccion": "JR RODRIGUEZ DE MENDOZA 153",
     "mesas": 2,
     "electores": 600

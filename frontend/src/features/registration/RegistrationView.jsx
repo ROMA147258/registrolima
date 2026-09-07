@@ -39,12 +39,25 @@ function CustomSearchableSelect({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const normalizedOptions = options.map(opt => typeof opt === 'string' ? opt : (opt.nombre || opt.local || ''));
-  const filtered = normalizedOptions.filter(opt =>
-    opt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(
-      searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    )
-  );
+  const cleanStr = (str) =>
+    (str || '')
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\bi\.?e\.?p?\b/g, "ie")
+      .replace(/\binstitucion\s+educativa\b/g, "ie")
+      .replace(/\bcolegio\b/g, "ie");
+
+  const normalizedOptions = options.map(opt => typeof opt === 'string' ? opt : (opt.nombre || opt.colegio || opt.local || ''));
+  const searchKeywords = cleanStr(searchTerm)
+    .split(/\s+/)
+    .filter(k => k.length > 0);
+
+  const filtered = normalizedOptions.filter(opt => {
+    if (searchKeywords.length === 0) return true;
+    const cleanOpt = cleanStr(opt);
+    return searchKeywords.every(kw => cleanOpt.includes(kw));
+  });
 
   const handleInputChange = (e) => {
     const val = e.target.value;
@@ -223,11 +236,24 @@ function MultiSearchableSelect({
     return isAlreadySelectedByMe || !assignedNormalized.includes(cleanOpt);
   });
 
-  const filtered = availableOptions.filter(opt =>
-    opt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(
-      searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    )
-  );
+  const cleanStr = (str) =>
+    (str || '')
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\bi\.?e\.?p?\b/g, "ie")
+      .replace(/\binstitucion\s+educativa\b/g, "ie")
+      .replace(/\bcolegio\b/g, "ie");
+
+  const searchKeywords = cleanStr(searchTerm)
+    .split(/\s+/)
+    .filter(k => k.length > 0);
+
+  const filtered = availableOptions.filter(opt => {
+    if (searchKeywords.length === 0) return true;
+    const cleanOpt = cleanStr(opt);
+    return searchKeywords.every(kw => cleanOpt.includes(kw));
+  });
 
   const toggleSelect = (item) => {
     const exists = selectedList.some(s => s.toLowerCase() === item.toLowerCase());

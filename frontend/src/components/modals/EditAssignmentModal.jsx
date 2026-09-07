@@ -55,17 +55,29 @@ function MultiSchoolSearchSelect({
     .map(s => s.trim())
     .filter(Boolean);
 
+  const cleanStr = (str) =>
+    (str || '')
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\bi\.?e\.?p?\b/g, "ie")
+      .replace(/\binstitucion\s+educativa\b/g, "ie")
+      .replace(/\bcolegio\b/g, "ie");
+
   // Normalizar opciones de locales
   const normalizedLocales = locales.map(loc => 
     typeof loc === 'string' ? loc : (loc.colegio || loc.nombre || loc.local || '')
   ).filter(Boolean);
 
+  const searchKeywords = cleanStr(searchTerm)
+    .split(/\s+/)
+    .filter(k => k.length > 0);
+
   // Filtrar según el término de búsqueda (insensible a mayúsculas y acentos)
   const filteredLocales = normalizedLocales.filter(loc => {
-    if (!searchTerm.trim()) return true;
-    const cleanSearch = searchTerm.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const cleanLoc = loc.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return cleanLoc.includes(cleanSearch);
+    if (searchKeywords.length === 0) return true;
+    const cleanLoc = cleanStr(loc);
+    return searchKeywords.every(kw => cleanLoc.includes(kw));
   });
 
   const toggleSchool = (schoolName) => {
