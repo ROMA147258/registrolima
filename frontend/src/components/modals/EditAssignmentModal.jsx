@@ -16,7 +16,9 @@ import {
   ChevronDown, 
   CheckSquare, 
   Square,
-  Sparkles
+  Sparkles,
+  Video,
+  FileText
 } from 'lucide-react';
 import { SelectField } from '../forms/SelectField.jsx';
 import { InputField } from '../forms/InputField.jsx';
@@ -546,20 +548,22 @@ function normalizePersoneroRole(rawRole) {
   if (r.includes('distrito') || r.includes('distrital')) {
     return 'Coordinador Distrital';
   }
-  if (r.includes('zonal') || r.includes('zona')) {
-    return 'Coordinador Zonal';
-  }
-  if (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('central'))) {
+  if (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || r.includes('zonal') || r.includes('zona') || (r.includes('coordinador') && !r.includes('central'))) {
     return 'Personero de Local de Votación';
   }
   return 'Personero de Mesa';
 }
 
-export function EditAssignmentModal({ personero, onClose, onSaved }) {
+export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved }) {
   const { isSuperAdmin, isCoordinadorDistrital, user: authUser } = useAuth();
+  const isTrainingMode = mode === 'capacitacion';
   
   // El Coordinador Distrital puede editar y eliminar registros dentro de su distrito
   const isLimitedCoordinator = !isSuperAdmin && isCoordinadorDistrital;
+
+  // Verificación estricta: Únicamente el usuario 'supera' (o 'admin') tiene facultad para editar progreso y credenciales
+  const cleanUsername = String(authUser?.username || '').toLowerCase().trim();
+  const isSuperaUser = cleanUsername === 'supera' || cleanUsername === 'admin';
 
   const rawMesa = personero?.['Mesa Asignada'] ?? personero?.mesaAsignada ?? personero?.mesaDeSufragio ?? personero?.['Mesa de Sufragio'] ?? '';
   const initialMesa = (rawMesa === '-' || String(rawMesa).trim().toLowerCase() === 'no aplica') ? '' : String(rawMesa);
@@ -576,6 +580,9 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
                   personero?.Cargo || '';
 
   const initialRole = normalizePersoneroRole(rawRole);
+  const initialVideo = parseInt(personero?.Video ?? personero?.video ?? 0, 10) || 0;
+  const initialPdf = parseInt(personero?.PDF ?? personero?.pdf ?? 0, 10) || 0;
+  const initialCred = String(personero?.Credenciales ?? personero?.credenciales ?? personero?.['Estado Credencial'] ?? personero?.estadoCredencial ?? 'Bloqueado').toLowerCase() === 'confirmado' ? 'Confirmado' : 'Bloqueado';
 
   const [formData, setFormData] = useState({
     nombresApellidos: personero?.['Nombres y Apellidos'] || personero?.nombresApellidos || personero?.nombres_y_apellidos || '',
@@ -584,7 +591,9 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
     localAsignado: personero?.['Local de Votación Asignado'] || personero?.['Local de Votación'] || personero?.localDeVotacionAsignado || personero?.localDeVotacion || '',
     mesaAsignada: initialMesa,
     rolADesempenar: initialRole,
-    credenciales: String(personero?.['Credenciales'] || personero?.credenciales || personero?.estadoCredencial || 'Bloqueado').toLowerCase() === 'confirmado' ? 'Confirmado' : 'Bloqueado'
+    video: initialVideo,
+    pdf: initialPdf,
+    credenciales: initialCred
   });
 
   const [locales, setLocales] = useState([]);
@@ -593,13 +602,14 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const dni = personero?.['D.N.I.'] || personero?.['DNI'] || personero?.dni || personero?.dni_numero;
-  const isZonal = !isLimitedCoordinator && ((formData.rolADesempenar || '').toLowerCase().includes('zonal') || (formData.rolADesempenar || '').toLowerCase().includes('zona'));
+  const isZonal = false;
   const isMesa = (formData.rolADesempenar || '').toLowerCase().includes('personero') || isLimitedCoordinator;
 
-  // Roles permitidos según nivel de usuario
-  const availableRoles = isSuperAdmin
+  // Roles permitidos según nivel de usuario (excluyendo cualquier opción de zonal)
+  const availableRoles = (isSuperAdmin
     ? ROLES
-    : Array.from(new Set([...['Personero de Mesa', 'Personero de Local de Votación'], initialRole]));
+    : Array.from(new Set([...['Personero de Mesa', 'Personero de Local de Votación'], initialRole]))
+  ).filter(r => !r.toLowerCase().includes('zonal') && !r.toLowerCase().includes('zona'));
 
   useEffect(() => {
     if (formData.distritoAsignado) {
@@ -636,7 +646,9 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
     const origLoc = (personero?.['Local de Votación Asignado'] || personero?.['Local de Votación'] || personero?.localDeVotacionAsignado || '').trim();
     const origMesa = initialMesa.trim();
     const origRol = initialRole.trim();
-    const origCred = (String(personero?.['Credenciales'] || personero?.credenciales || 'Bloqueado').toLowerCase() === 'confirmado' ? 'Confirmado' : 'Bloqueado').trim();
+    const origCred = initialCred.trim();
+    const origVid = initialVideo;
+    const origPdf = initialPdf;
 
     const hasAnyChange = (
       formData.nombresApellidos.trim() !== origNom ||
@@ -645,7 +657,11 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
       formData.localAsignado.trim() !== origLoc ||
       formData.mesaAsignada.trim() !== origMesa ||
       formData.rolADesempenar.trim() !== origRol ||
-      formData.credenciales.trim() !== origCred
+      (isSuperaUser && (
+        formData.credenciales.trim() !== origCred ||
+        formData.video !== origVid ||
+        formData.pdf !== origPdf
+      ))
     );
 
     if (!hasAnyChange) {
@@ -662,10 +678,25 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
 
     try {
       const payload = {
-        ...formData,
+        nombresApellidos: formData.nombresApellidos,
+        celular: formData.celular,
+        distritoAsignado: formData.distritoAsignado,
+        localAsignado: formData.localAsignado,
+        mesaAsignada: formData.mesaAsignada,
+        rolADesempenar: formData.rolADesempenar,
         author: authorName,
         authorRole: authorRoleName
       };
+
+      // ÚNICAMENTE el usuario supera (o admin) puede modificar video, pdf y credenciales
+      if (isSuperaUser) {
+        payload.video = parseInt(formData.video, 10) || 0;
+        payload.pdf = parseInt(formData.pdf, 10) || 0;
+        payload.credenciales = formData.credenciales;
+        if (formData.credenciales === 'Confirmado') {
+          payload.preguntas = 'Aprobado (5/5)';
+        }
+      }
 
       await api.updatePersonero(dni, payload);
       onSaved();
@@ -709,10 +740,14 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
           <div>
             <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0284c7', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Sparkles className="w-5 h-5 text-sky-500" />
-              <span>{isSuperAdmin ? 'Gestión y Modificación de Registro (Superadmin)' : `Gestión de Personero - ${formData.distritoAsignado}`}</span>
+              <span>
+                {isTrainingMode 
+                  ? 'Gestión de Capacitación y Credencial' 
+                  : (isSuperAdmin ? 'Gestión y Modificación de Registro (Superadmin)' : `Gestión de Personero - ${formData.distritoAsignado}`)}
+              </span>
             </h3>
             <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>
-              {isSuperAdmin ? 'Facultades globales (43 distritos de Lima)' : `Facultades distritales autorizadas`} &bull; DNI: <strong>{dni}</strong>
+              {isTrainingMode ? 'Módulo de Capacitación y Acreditación' : (isSuperAdmin ? 'Facultades globales (43 distritos de Lima)' : `Facultades distritales autorizadas`)} &bull; DNI: <strong>{dni}</strong>
             </span>
           </div>
           <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}>
@@ -751,8 +786,8 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
             </div>
           )}
 
-          {/* Nombres y Celular (Editables para Superadmin y Coordinador Distrital) */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
+          {/* Nombres (y Celular si no es modo capacitación) */}
+          <div style={{ display: 'grid', gridTemplateColumns: isTrainingMode ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
             <InputField
               label="Nombres y Apellidos"
               icon={User}
@@ -762,20 +797,22 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
               placeholder="Nombres completos"
               required
             />
-            <InputField
-              label="Celular"
-              icon={Phone}
-              name="celular"
-              value={formData.celular}
-              onChange={handleChange}
-              placeholder="9 dígitos"
-              maxLength={9}
-              required
-            />
+            {!isTrainingMode && (
+              <InputField
+                label="Celular"
+                icon={Phone}
+                name="celular"
+                value={formData.celular}
+                onChange={handleChange}
+                placeholder="9 dígitos"
+                maxLength={9}
+                required
+              />
+            )}
           </div>
 
-          {/* Rol y Credencial */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
+          {/* Rol a Desempeñar */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '12px' }}>
             <SelectField
               label="Rol a Desempeñar"
               icon={Award}
@@ -785,15 +822,145 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
               options={availableRoles}
               required
             />
-            <SelectField
-              label="Estado de Credencial"
-              icon={Shield}
-              name="credenciales"
-              value={formData.credenciales}
-              onChange={handleChange}
-              options={['Bloqueado', 'Confirmado']}
-            />
           </div>
+
+          {/* Panel Exclusivo para Supera: Edición de Progreso Video, PDF y Credenciales */}
+          {isSuperaUser ? (
+            <div style={{
+              background: '#f0f9ff',
+              border: '1.5px solid #0284c7',
+              borderRadius: '12px',
+              padding: '14px 16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', fontWeight: 800, color: '#0369a1' }}>
+                  <Sparkles className="w-4 h-4 text-sky-600" />
+                  <span>Control de Capacitación y Credenciales (Exclusivo Supera)</span>
+                </div>
+                <span style={{ fontSize: '0.7rem', fontWeight: 800, background: '#0284c7', color: '#fff', padding: '2px 8px', borderRadius: '6px' }}>
+                  Master Superadmin
+                </span>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
+                {/* Progreso Video */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                    🎬 Progreso Videos
+                  </label>
+                  <select
+                    name="video"
+                    value={formData.video}
+                    onChange={(e) => setFormData(prev => ({ ...prev, video: parseInt(e.target.value, 10) }))}
+                    style={{
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: '8px',
+                      border: '1px solid #bae6fd',
+                      background: '#ffffff',
+                      color: '#0f172a',
+                      fontSize: '0.82rem',
+                      fontWeight: 700
+                    }}
+                  >
+                    <option value={0}>0 / 2 (Sin avance)</option>
+                    <option value={1}>1 / 2 (1 video visto)</option>
+                    <option value={2}>2 / 2 (Videos completos)</option>
+                  </select>
+                </div>
+
+                {/* Progreso PDF */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                    📄 Progreso Manuales PDF
+                  </label>
+                  <select
+                    name="pdf"
+                    value={formData.pdf}
+                    onChange={(e) => setFormData(prev => ({ ...prev, pdf: parseInt(e.target.value, 10) }))}
+                    style={{
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: '8px',
+                      border: '1px solid #bae6fd',
+                      background: '#ffffff',
+                      color: '#0f172a',
+                      fontSize: '0.82rem',
+                      fontWeight: 700
+                    }}
+                  >
+                    <option value={0}>0 / 2 (Sin avance)</option>
+                    <option value={1}>1 / 2 (1 PDF leído)</option>
+                    <option value={2}>2 / 2 (Manuales completos)</option>
+                  </select>
+                </div>
+
+                {/* Estado Credencial */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                    🛡️ Estado Credencial
+                  </label>
+                  <select
+                    name="credenciales"
+                    value={formData.credenciales}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: '8px',
+                      border: `1.5px solid ${formData.credenciales === 'Confirmado' ? '#10b981' : '#f87171'}`,
+                      background: formData.credenciales === 'Confirmado' ? '#ecfdf5' : '#fef2f2',
+                      color: formData.credenciales === 'Confirmado' ? '#047857' : '#b91c1c',
+                      fontSize: '0.82rem',
+                      fontWeight: 800
+                    }}
+                  >
+                    <option value="Bloqueado">Bloqueado</option>
+                    <option value="Confirmado">Confirmado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Para Eric, Paola, Susana y Coordinadores: Solo lectura informativa del progreso */
+            <div style={{
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              borderRadius: '10px',
+              padding: '10px 14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '8px',
+              fontSize: '0.76rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#64748b', fontWeight: 700 }}>
+                <Shield className="w-3.5 h-3.5 text-sky-600" />
+                <span>ESTADO DE CAPACITACIÓN:</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '3px 8px', borderRadius: '6px', fontWeight: 800 }}>
+                  🎬 Videos: {initialVideo}/2
+                </span>
+                <span style={{ background: '#f3e8ff', color: '#7e22ce', padding: '3px 8px', borderRadius: '6px', fontWeight: 800 }}>
+                  📄 PDFs: {initialPdf}/2
+                </span>
+                <span style={{
+                  background: initialCred === 'Confirmado' ? '#dcfce7' : '#fee2e2',
+                  color: initialCred === 'Confirmado' ? '#15803d' : '#b91c1c',
+                  padding: '3px 8px',
+                  borderRadius: '6px',
+                  fontWeight: 800
+                }}>
+                  {initialCred === 'Confirmado' ? '✅ Credencial Confirmada' : '🔒 Credencial Bloqueada'}
+                </span>
+              </div>
+            </div>
+          )}
 
           {/* Distrito (Editable únicamente por Superadmin; Coordinador Distrital tiene fijado su distrito) */}
           {isSuperAdmin ? (
@@ -826,38 +993,42 @@ export function EditAssignmentModal({ personero, onClose, onSaved }) {
             </div>
           )}
 
-          {/* Centro de Votación Asignado */}
-          {isZonal ? (
-            <MultiSchoolSearchSelect
-              value={formData.localAsignado}
-              onChange={(newVal) => setFormData(prev => ({ ...prev, localAsignado: newVal }))}
-              locales={locales}
-              distrito={formData.distritoAsignado}
-            />
-          ) : (
-            <SingleSchoolSearchSelect
-              value={formData.localAsignado}
-              onChange={(newVal) => setFormData(prev => ({ ...prev, localAsignado: newVal }))}
-              locales={locales}
-              distrito={formData.distritoAsignado}
-            />
-          )}
+          {/* Centro de Votación Asignado y Mesa (Solo en modo gestión completa) */}
+          {!isTrainingMode && (
+            <>
+              {isZonal ? (
+                <MultiSchoolSearchSelect
+                  value={formData.localAsignado}
+                  onChange={(newVal) => setFormData(prev => ({ ...prev, localAsignado: newVal }))}
+                  locales={locales}
+                  distrito={formData.distritoAsignado}
+                />
+              ) : (
+                <SingleSchoolSearchSelect
+                  value={formData.localAsignado}
+                  onChange={(newVal) => setFormData(prev => ({ ...prev, localAsignado: newVal }))}
+                  locales={locales}
+                  distrito={formData.distritoAsignado}
+                />
+              )}
 
-          {/* Mesa Asignada */}
-          <div>
-            <InputField
-              label="Mesa Asignada"
-              icon={Table}
-              name="mesaAsignada"
-              value={formData.mesaAsignada}
-              onChange={handleChange}
-              placeholder="Ej. 064321 (6 dígitos de la mesa)"
-              maxLength={6}
-            />
-            <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '2px' }}>
-              💡 Ingrese el número de mesa de 6 dígitos asignada al personero en este centro de votación.
-            </span>
-          </div>
+              {/* Mesa Asignada */}
+              <div>
+                <InputField
+                  label="Mesa Asignada"
+                  icon={Table}
+                  name="mesaAsignada"
+                  value={formData.mesaAsignada}
+                  onChange={handleChange}
+                  placeholder="Ej. 064321 (6 dígitos de la mesa)"
+                  maxLength={6}
+                />
+                <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '2px' }}>
+                  💡 Ingrese el número de mesa de 6 dígitos asignada al personero en este centro de votación.
+                </span>
+              </div>
+            </>
+          )}
 
           {/* Footer: Guardar y Eliminar (Habilitado para Superadmin y Coord. Distrital) */}
           <div className="modal-footer" style={{ marginTop: '16px', padding: '14px 0 0 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', borderTop: '1px solid #334155' }}>

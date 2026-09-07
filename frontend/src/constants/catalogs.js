@@ -1,7 +1,6 @@
 export const ROLES = [
   'Personero de Mesa',
   'Personero de Local de Votación',
-  'Coordinador Zonal',
   'Coordinador Distrital'
 ];
 

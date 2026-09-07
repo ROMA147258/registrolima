@@ -14,10 +14,8 @@ export function CertificateModal({ user, onClose }) {
   const rolLower = String(rawRol).toLowerCase();
   if (rolLower.includes('distrital') || rolLower.includes('distrito')) {
     displayRol = 'COORDINADOR DE DISTRITOS';
-  } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('pcv') || rolLower.includes('plv')) {
+  } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('pcv') || rolLower.includes('plv') || rolLower.includes('zonal') || rolLower.includes('zona')) {
     displayRol = 'PERSONERO DE CENTRO DE VOTACIÓN';
-  } else if (rolLower.includes('zonal')) {
-    displayRol = 'COORDINADOR ZONAL';
   }
 
   // Fecha en formato dd / mm / 2026

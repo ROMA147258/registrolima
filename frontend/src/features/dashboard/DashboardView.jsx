@@ -55,7 +55,7 @@ function matchesLocal(recordLocal, filterLocal) {
   return normRec === normFilt || normRec.includes(normFilt) || normFilt.includes(normRec);
 }
 
-// Helper de roles (Personero de Mesa, Personero de Centro de Votación / Local, Coordinador Zonal y Coordinador Distrital)
+// Helper de roles (Personero de Mesa, Personero de Centro de Votación / Local y Coordinador Distrital)
 function matchesRole(recordRole, filterRole) {
   if (!filterRole || filterRole === 'all') return true;
   if (!recordRole) return false;
@@ -65,14 +65,11 @@ function matchesRole(recordRole, filterRole) {
   if (f.includes('distrito') || f.includes('distrital')) {
     return r.includes('distrito') || r.includes('distrital');
   }
-  if (f.includes('zonal') || f.includes('zona')) {
-    return r.includes('zonal') || r.includes('zona');
-  }
   if (f.includes('local') || f.includes('centro') || f.includes('pcv') || f.includes('plv')) {
-    return (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal') && !r.includes('zona'))) && !r.includes('zonal');
+    return r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
   }
   if (f.includes('mesa') || f.includes('personero')) {
-    return r.includes('mesa') || (!r.includes('local') && !r.includes('centro') && !r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital') && !r.includes('zonal'));
+    return r.includes('mesa') || (!r.includes('local') && !r.includes('centro') && !r.includes('coordinador') && !r.includes('distrito') && !r.includes('distrital'));
   }
   return r === f || r.includes(f);
 }
@@ -2359,53 +2356,6 @@ export function DashboardView({ onGoToTraining }) {
                         </div>
                       )}
 
-                      {/* 2. Coordinadores Zonales de este Distrito (Solo si existen registrados) */}
-                      {districtZonalesOverview.length > 0 && (
-                        <div>
-                          <div style={{ fontSize: '0.84rem', fontWeight: 800, color: textTitle, marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                              <MapPin className="w-4 h-4 text-purple-500" />
-                              <span>Coordinadores Zonales del Distrito ({districtZonalesOverview.length})</span>
-                            </div>
-                            <span style={{ fontSize: '0.72rem', color: textSub, fontWeight: 600 }}>
-                              ↔ Desliza para ver todos
-                            </span>
-                          </div>
-
-                          <div style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'stretch',
-                            gap: '14px',
-                            overflowX: 'auto',
-                            overflowY: 'hidden',
-                            paddingBottom: '8px',
-                            scrollbarWidth: 'thin',
-                            WebkitOverflowScrolling: 'touch'
-                          }}>
-                            {districtZonalesOverview.map((zonal, zIdx) => (
-                              <div
-                                key={zIdx}
-                                style={{
-                                  flex: '0 0 auto',
-                                  width: isMobile ? '290px' : '340px',
-                                  maxWidth: '360px',
-                                  display: 'flex'
-                                }}
-                              >
-                                <div style={{ width: '100%' }}>
-                                  <ZonalOverviewCard
-                                    zonal={zonal}
-                                    isDark={isDark}
-                                    borderCol={borderCol}
-                                    onEdit={setSelectedPersonero}
-                                  />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   ) : (
                     /* CASO B: SUPERADMIN EN VISTA GENERAL (TODOS LOS DISTRITOS) */
@@ -2535,184 +2485,7 @@ export function DashboardView({ onGoToTraining }) {
                 </div>
               )}
 
-              {/* SECCIÓN EXCLUSIVA DE MONITOREO ZONAL: COLEGIOS Y COORDINADORES LOCALES DE SU ZONA */}
-              {isCoordinadorZonal && (
-                <div style={{
-                  background: bgCard,
-                  border: `1.5px solid ${isDark ? '#0369a1' : '#bae6fd'}`,
-                  borderRadius: '16px',
-                  padding: '20px',
-                  marginBottom: '20px',
-                  boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.3)' : '0 4px 20px rgba(2, 132, 199, 0.08)'
-                }}>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                        <div style={{ background: '#0284c7', color: '#fff', padding: '4px 8px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.76rem', fontWeight: 800 }}>
-                          <Layers className="w-4 h-4" />
-                          <span>ZONA ASIGNADA</span>
-                        </div>
-                        <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: textTitle, margin: 0 }}>
-                          Locales de Votación y Coordinadores Locales de mi Zona
-                        </h2>
-                      </div>
-                      <p style={{ fontSize: '0.82rem', color: textSub, margin: 0 }}>
-                        Distrito de <strong>{coordinatorDistrict}</strong> &bull; Monitoreo de <strong>{coordinatorZonalLocales.length} locales de votación asignados</strong>
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Tarjetas de Colegios de la Zona con sus Coordinadores Locales (Uno al lado del otro en carrusel horizontal) */}
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'stretch',
-                    gap: '14px',
-                    overflowX: 'auto',
-                    overflowY: 'hidden',
-                    paddingBottom: '8px',
-                    scrollbarWidth: 'thin',
-                    WebkitOverflowScrolling: 'touch'
-                  }}>
-                    {zonalSchoolsOverview.map((item, idx) => (
-                      <div
-                        key={idx}
-                        style={{
-                          flex: '0 0 auto',
-                          width: isMobile ? '290px' : '340px',
-                          maxWidth: '360px',
-                          background: isDark ? '#1e293b' : '#f8fafc',
-                          border: `1px solid ${borderCol}`,
-                          borderRadius: '12px',
-                          padding: '14px 16px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '10px'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.82rem', flexShrink: 0 }}>
-                              {idx + 1}
-                            </div>
-                            <div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '2px' }}>
-                                <strong style={{ fontSize: '0.9rem', color: textTitle, lineHeight: 1.25 }}>
-                                  {item.schoolName}
-                                </strong>
-                                {item.coordinadoresLocales.length > 0 ? (
-                                  <span style={{
-                                    background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
-                                    color: '#0284c7',
-                                    fontSize: '0.74rem',
-                                    fontWeight: 800,
-                                    padding: '2px 8px',
-                                    borderRadius: '6px',
-                                    border: '1px solid #bae6fd',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '4px'
-                                  }}>
-                                    👤 Personero Local: {item.coordinadoresLocales[0]['Nombres y Apellidos'] || item.coordinadoresLocales[0].nombresApellidos}
-                                  </span>
-                                ) : (
-                                  <span style={{
-                                    background: isDark ? 'rgba(234, 179, 8, 0.15)' : '#fef3c7',
-                                    color: '#d97706',
-                                    fontSize: '0.72rem',
-                                    fontWeight: 700,
-                                    padding: '2px 6px',
-                                    borderRadius: '6px',
-                                    border: '1px solid #fde68a'
-                                  }}>
-                                    ⚠️ Pendiente de Asignación
-                                  </span>
-                                )}
-                              </div>
-                              <span style={{ fontSize: '0.74rem', color: textSub }}>
-                                <strong>{item.personerosCount}</strong> / <strong>{item.mesasColegio || '-'}</strong> mesas cubiertas &bull; {item.accreditedCount} acreditados
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Coordinadores Locales de este Colegio */}
-                        <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '8px' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: '6px' }}>
-                            Personero(s) de este local de votación:
-                          </span>
-
-                          {item.coordinadoresLocales.length > 0 ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                              {item.coordinadoresLocales.map((coord, cIdx) => {
-                                const cName = coord['Nombres y Apellidos'] || coord.nombresApellidos || 'Coordinador';
-                                const cDni = coord['D.N.I.'] || coord.dni || '--------';
-                                const cCel = coord['Celular'] || coord.celular || '';
-                                const cPreg = String(coord['Preguntas'] || coord.preguntas || '').toLowerCase();
-                                const cCred = String(coord['Credenciales'] || coord.credenciales || '').toLowerCase();
-                                const isAcred = cCred === 'confirmado' || cPreg.includes('aprob');
-
-                                return (
-                                  <div
-                                    key={cIdx}
-                                    style={{
-                                      background: isDark ? '#0f172a' : '#ffffff',
-                                      border: '1px solid #cbd5e1',
-                                      borderRadius: '8px',
-                                      padding: '8px 10px',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'space-between',
-                                      gap: '8px'
-                                    }}
-                                  >
-                                    <div>
-                                      <div style={{ fontSize: '0.82rem', fontWeight: 800, color: textTitle }}>
-                                        {cName}
-                                      </div>
-                                      <div style={{ fontSize: '0.74rem', color: textSub, display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                        <span>DNI: <strong>{cDni}</strong></span>
-                                        {cCel && <span>Cel: <strong>{cCel}</strong></span>}
-                                      </div>
-                                    </div>
-                                    <span style={{
-                                      padding: '3px 8px',
-                                      borderRadius: '6px',
-                                      fontSize: '0.72rem',
-                                      fontWeight: 800,
-                                      background: isAcred ? '#dcfce7' : '#fef9c3',
-                                      color: isAcred ? '#166534' : '#854d0e',
-                                      whiteSpace: 'nowrap'
-                                    }}>
-                                      {isAcred ? '✅ Acreditado' : '⏳ En Proceso'}
-                                    </span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          ) : (
-                            <div style={{
-                              background: isDark ? 'rgba(234, 179, 8, 0.1)' : '#fefce8',
-                              border: '1px solid #fde047',
-                              borderRadius: '8px',
-                              padding: '8px 12px',
-                              fontSize: '0.78rem',
-                              color: isDark ? '#facc15' : '#a16207',
-                              fontWeight: 700,
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '6px'
-                            }}>
-                              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                              <span>Aún no hay Personero de Centro de Votación registrado para este centro de votación</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* SECCIÓN EXCLUSIVA DE MONITOREO LOCAL (PCV): MI CENTRO DE VOTACIÓN Y PERSONEROS DE MESA */}
               {isCoordinadorLocal && (
@@ -2836,20 +2609,6 @@ export function DashboardView({ onGoToTraining }) {
                     </select>
                   )}
 
-                  {/* Filtro Colegios para Coordinador Zonal */}
-                  {isCoordinadorZonal && coordinatorZonalLocales.length > 0 && (
-                    <select
-                      value={localZonal1}
-                      onChange={(e) => setLocalZonal1(e.target.value)}
-                      style={{ padding: '8px 10px', borderRadius: '8px', border: localZonal1 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: localZonal1 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: localZonal1 !== 'all' ? 700 : 500, flex: isMobile ? '1 1 calc(50% - 4px)' : 'none', minWidth: 0 }}
-                    >
-                      <option value="all">🏫 Mis Locales de Votación ({coordinatorZonalLocales.length})</option>
-                      {coordinatorZonalLocales.map((school, sIdx) => (
-                        <option key={sIdx} value={school}>{school}</option>
-                      ))}
-                    </select>
-                  )}
-
                   {/* Filtro Local para Coordinador de Local */}
                   {isCoordinadorLocal && coordinatorLocal && (
                     <div style={{
@@ -2881,7 +2640,6 @@ export function DashboardView({ onGoToTraining }) {
                     <option value="Personero de Mesa">Personero de Mesa</option>
                     {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro (PCV)</option>}
                     {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
-                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coord. Zonal (Histórico)</option>}
                   </select>
 
                   {/* Filtro Experiencia */}
@@ -3066,18 +2824,6 @@ export function DashboardView({ onGoToTraining }) {
                     </div>
                   )}
 
-                  {/* KPI 5 - Zonales Históricos (Azul Noche Somos Perú) */}
-                  {(isSuperAdmin || isCoordinadorDistrital) && tab1CoordsZonal > 0 && (
-                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderLeft: '4px solid #1e3a8a', borderRadius: '10px', padding: isMobile ? '10px 12px' : '14px', minWidth: 0, transition: 'all 0.3s ease' }}>
-                      <div style={{ fontSize: '0.66rem', fontWeight: 800, color: '#1e3a8a' }}>ZONALES (HISTÓRICO)</div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
-                        <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: isDark ? 'rgba(30, 58, 138, 0.25)' : '#ede9fe', color: '#1e3a8a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><MapPin className="w-3.5 h-3.5" /></div>
-                        <span style={{ fontSize: isMobile ? '1.2rem' : '1.45rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tab1CoordsZonal}</span>
-                      </div>
-                      <div style={{ fontSize: '0.65rem', color: textSub }}>Zonales registrados</div>
-                    </div>
-                  )}
-
                 </div>
               </div>
 
@@ -3179,106 +2925,10 @@ export function DashboardView({ onGoToTraining }) {
                     }}>
                       {!isCoordinadorLocal ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '6px' : '8px', flexWrap: 'wrap' }}>
-                          <span style={{ fontSize: '0.78rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <Filter className="w-3.5 h-3.5 text-sky-500" />
-                            <span>Tipo:</span>
+                          <span style={{ fontSize: '0.82rem', fontWeight: 800, color: textTitle, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <School className="w-4 h-4 text-sky-500" />
+                            <span>Centros de Votación ({districtSchools.length})</span>
                           </span>
-
-                          {/* Botón: Todos */}
-                          <button
-                            type="button"
-                            onClick={() => setZoneType1('all')}
-                            style={{
-                              padding: isMobile ? '4px 10px' : '5px 12px',
-                              borderRadius: '20px',
-                              border: zoneType1 === 'all' ? '2px solid #0284c7' : `1px solid ${borderCol}`,
-                              background: zoneType1 === 'all' ? (isDark ? 'rgba(2, 132, 199, 0.25)' : '#e0f2fe') : (isDark ? '#1e293b' : '#ffffff'),
-                              color: zoneType1 === 'all' ? '#0284c7' : textTitle,
-                              fontSize: isMobile ? '0.71rem' : '0.74rem',
-                              fontWeight: 800,
-                              cursor: 'pointer',
-                              transition: 'all 0.15s ease'
-                            }}
-                          >
-                            Todos ({districtSchools.length})
-                          </button>
-
-                          {/* Botón: Zonas Multi-Colegio */}
-                          <button
-                            type="button"
-                            onClick={() => setZoneType1('multi')}
-                            style={{
-                              padding: isMobile ? '4px 10px' : '5px 12px',
-                              borderRadius: '20px',
-                              border: zoneType1 === 'multi' ? '2px solid #8b5cf6' : `1px solid ${borderCol}`,
-                              background: zoneType1 === 'multi' ? (isDark ? 'rgba(139, 92, 246, 0.25)' : '#ede9fe') : (isDark ? '#1e293b' : '#ffffff'),
-                              color: zoneType1 === 'multi' ? '#7c3aed' : textTitle,
-                              fontSize: isMobile ? '0.71rem' : '0.74rem',
-                              fontWeight: 800,
-                              cursor: 'pointer',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                              transition: 'all 0.15s ease'
-                            }}
-                          >
-                            <span>🗺️ Multi-Colegio</span>
-                            <span style={{ background: '#8b5cf6', color: '#fff', padding: '1px 6px', borderRadius: '10px', fontSize: '0.66rem', fontWeight: 900 }}>
-                              {countMultiZoneSchools}
-                            </span>
-                          </button>
-
-                          {/* Botón: Colegios Únicos */}
-                          <button
-                            type="button"
-                            onClick={() => setZoneType1('single')}
-                            style={{
-                              padding: isMobile ? '4px 10px' : '5px 12px',
-                              borderRadius: '20px',
-                              border: zoneType1 === 'single' ? '2px solid #10b981' : `1px solid ${borderCol}`,
-                              background: zoneType1 === 'single' ? (isDark ? 'rgba(16, 185, 129, 0.25)' : '#dcfce7') : (isDark ? '#1e293b' : '#ffffff'),
-                              color: zoneType1 === 'single' ? '#15803d' : textTitle,
-                              fontSize: isMobile ? '0.71rem' : '0.74rem',
-                              fontWeight: 800,
-                              cursor: 'pointer',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                              transition: 'all 0.15s ease'
-                            }}
-                          >
-                            <span>🏫 Únicos</span>
-                            <span style={{ background: '#10b981', color: '#fff', padding: '1px 6px', borderRadius: '10px', fontSize: '0.66rem', fontWeight: 900 }}>
-                              {countSingleZoneSchools}
-                            </span>
-                          </button>
-
-                          {/* Botón: Sin Coordinador Zonal */}
-                          {countUnassignedZoneSchools > 0 && (
-                            <button
-                              type="button"
-                              onClick={() => setZoneType1('unassigned')}
-                              style={{
-                                padding: isMobile ? '4px 10px' : '5px 12px',
-                                borderRadius: '20px',
-                                border: zoneType1 === 'unassigned' ? '2px solid #f59e0b' : `1px solid ${borderCol}`,
-                                background: zoneType1 === 'unassigned' ? (isDark ? 'rgba(245, 158, 11, 0.25)' : '#fef3c7') : (isDark ? '#1e293b' : '#ffffff'),
-                                color: zoneType1 === 'unassigned' ? '#d97706' : textTitle,
-                                fontSize: isMobile ? '0.71rem' : '0.74rem',
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '4px',
-                                transition: 'all 0.15s ease'
-                              }}
-                            >
-                              <span>⚠️ Sin Zonal</span>
-                              <span style={{ background: '#f59e0b', color: '#fff', padding: '1px 6px', borderRadius: '10px', fontSize: '0.66rem', fontWeight: 900 }}>
-                                {countUnassignedZoneSchools}
-                              </span>
-                            </button>
-                          )}
                         </div>
                       ) : (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -3324,7 +2974,6 @@ export function DashboardView({ onGoToTraining }) {
                                 width: isMobile ? '100%' : 'auto'
                               }}
                             >
-                              <option value="zonal_group">🗺️ Agrupados por Zona / Coordinador (Juntos)</option>
                               <option value="personeros_desc">👥 Mayor cantidad de Personeros</option>
                               <option value="personeros_asc">👥 Menor cantidad de Personeros</option>
                               <option value="alfabetico_asc">🔤 Nombre Local de Votación (A - Z)</option>
@@ -3464,76 +3113,10 @@ export function DashboardView({ onGoToTraining }) {
                         </div>
                       ) : (
                         filteredDistrictSchools.map((school, sIdx) => {
-                          const isMulti = school.zonalTotalColegios > 1;
-                          const isSingle = school.zonalTotalColegios === 1;
-                          const isUnassigned = !school.zonalPersonero;
-
-                          const borderColorLeft = isCoordinadorLocal ? '#10b981' : (isMulti ? '#8b5cf6' : (isSingle ? '#10b981' : '#f59e0b'));
-
-                          const prevSchool = sIdx > 0 ? filteredDistrictSchools[sIdx - 1] : null;
-                          const prevZonalName = prevSchool?.zonalPersonero ? (prevSchool.zonalPersonero['Nombres y Apellidos'] || prevSchool.zonalPersonero.nombresApellidos || '').trim() : 'sin_zona';
-                          const currentZonalName = school.zonalPersonero ? (school.zonalPersonero['Nombres y Apellidos'] || school.zonalPersonero.nombresApellidos || '').trim() : 'sin_zona';
-                          const isMultiGroup = (school.zonalTotalColegios || 0) > 1;
-                          const isNewGroup = !isCoordinadorLocal && isMultiGroup && sortBySchool1 === 'zonal_group' && (sIdx === 0 || prevZonalName !== currentZonalName);
+                          const borderColorLeft = isCoordinadorLocal ? '#10b981' : (school.plvPersonero ? '#0284c7' : '#f59e0b');
 
                           return (
                             <React.Fragment key={`school-frag-${sIdx}`}>
-                              {/* Separador visual de Zona Multi-Colegio (solo cuando agrupa más de 1 colegio) */}
-                              {isNewGroup && (
-                                <div
-                                  style={{
-                                    gridColumn: '1 / -1',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '8px 14px',
-                                    background: isDark ? 'rgba(139, 92, 246, 0.12)' : '#f5f3ff',
-                                    border: '1px solid #c4b5fd',
-                                    borderRadius: '10px',
-                                    marginTop: sIdx > 0 ? '12px' : '0',
-                                    marginBottom: '2px',
-                                    flexWrap: 'wrap',
-                                    gap: '8px'
-                                  }}
-                                >
-                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-                                    <span style={{ fontSize: '1.1rem' }}>🗺️</span>
-                                    <div style={{ minWidth: 0 }}>
-                                      <strong style={{ fontSize: '0.86rem', color: isDark ? '#ddd6fe' : '#5b21b6' }}>
-                                        {school.zonalPersonero ? `Zona Multi-Colegio: ${school.zonalPersonero['Nombres y Apellidos'] || school.zonalPersonero.nombresApellidos}` : 'Centros sin Coordinador Zonal Asignado'}
-                                      </strong>
-                                      <span style={{ fontSize: '0.73rem', color: textSub, marginLeft: '8px' }}>
-                                        ({school.zonalTotalColegios} colegios a cargo)
-                                      </span>
-                                    </div>
-                                  </div>
-
-                                  {school.zonalPersonero && (school.zonalPersonero['Celular'] || school.zonalPersonero.celular) && (
-                                    <a
-                                      href={`https://wa.me/51${String(school.zonalPersonero['Celular'] || school.zonalPersonero.celular).replace(/\D/g, '')}`}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={(e) => e.stopPropagation()}
-                                      style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '4px',
-                                        background: '#16a34a',
-                                        color: '#fff',
-                                        padding: '3px 8px',
-                                        borderRadius: '6px',
-                                        fontSize: '0.7rem',
-                                        fontWeight: 800,
-                                        textDecoration: 'none'
-                                      }}
-                                    >
-                                      <Phone className="w-2.5 h-2.5" />
-                                      <span>WhatsApp Zonal</span>
-                                    </a>
-                                  )}
-                                </div>
-                              )}
-
                               <div
                                 className="animate-filter-in"
                                 onClick={() => setSelectedSchoolDetail(school)}
@@ -3735,47 +3318,6 @@ export function DashboardView({ onGoToTraining }) {
                                           {school.asignadas} de {school.totalMesas || 1} mesas ({school.cobertura}%)
                                         </strong>
                                       </div>
-
-                                      {/* 3. Coordinador Zonal (Histórico / Respaldo si existe) */}
-                                      {school.zonalPersonero && (
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.7rem', paddingTop: '3px', borderTop: `1px dashed ${borderCol}` }}>
-                                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflow: 'hidden', minWidth: 0 }}>
-                                            <span style={{
-                                              background: isDark ? 'rgba(139, 92, 246, 0.15)' : '#ede9fe',
-                                              color: '#7c3aed',
-                                              padding: '1px 5px',
-                                              borderRadius: '4px',
-                                              fontWeight: 700,
-                                              fontSize: '0.64rem',
-                                              flexShrink: 0
-                                            }}>
-                                              🗺️ Zonal
-                                            </span>
-                                            <span style={{ color: textSub, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                              {school.zonalPersonero['Nombres y Apellidos'] || school.zonalPersonero.nombresApellidos}
-                                            </span>
-                                          </div>
-                                          {(school.zonalPersonero['Celular'] || school.zonalPersonero.celular) && (
-                                            <a
-                                              href={`https://wa.me/51${String(school.zonalPersonero['Celular'] || school.zonalPersonero.celular).replace(/\D/g, '')}`}
-                                              target="_blank"
-                                              rel="noreferrer"
-                                              onClick={(e) => e.stopPropagation()}
-                                              style={{
-                                                color: '#16a34a',
-                                                fontSize: '0.68rem',
-                                                textDecoration: 'none',
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                gap: '2px'
-                                              }}
-                                            >
-                                              <Phone className="w-2.5 h-2.5" />
-                                              <span>{school.zonalPersonero['Celular'] || school.zonalPersonero.celular}</span>
-                                            </a>
-                                          )}
-                                        </div>
-                                      )}
                                     </>
                                   )}
                                 </div>
@@ -3847,10 +3389,8 @@ export function DashboardView({ onGoToTraining }) {
                           const rolLower = rol.toLowerCase();
                           if (rolLower.includes('distrital') || rolLower.includes('distrito')) {
                             hierarchyBadge = { label: 'Coordinador Distrital', icon: '🏛️', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
-                          } else if (rolLower.includes('zonal') || rolLower.includes('zona')) {
-                            hierarchyBadge = { label: 'Coordinador Zonal', icon: '🗺️', bg: '#ede9fe', color: '#6d28d9', border: '#ddd6fe' };
-                          } else if (rolLower.includes('local') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('centro')) {
-                            hierarchyBadge = { label: 'Personero de Centro (PCV)', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
+                          } else if (rolLower.includes('local') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('centro') || rolLower.includes('zonal') || rolLower.includes('zona')) {
+                            hierarchyBadge = { label: 'Personero de Centro de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
                           }
 
                           return (
@@ -4019,9 +3559,7 @@ export function DashboardView({ onGoToTraining }) {
                               const rolLower = rol.toLowerCase();
                               if (rolLower.includes('distrital') || rolLower.includes('distrito')) {
                                 hierarchyBadge = { label: 'Coordinador Distrital', icon: '🏛️', bg: '#dbeafe', color: '#1e40af', border: '#bfdbfe' };
-                              } else if (rolLower.includes('zonal') || rolLower.includes('zona')) {
-                                hierarchyBadge = { label: 'Coordinador Zonal', icon: '🗺️', bg: '#ede9fe', color: '#6d28d9', border: '#ddd6fe' };
-                              } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('plv') || rolLower.includes('pcv')) {
+                              } else if (rolLower.includes('local') || rolLower.includes('centro') || rolLower.includes('plv') || rolLower.includes('pcv') || rolLower.includes('zonal') || rolLower.includes('zona')) {
                                 hierarchyBadge = { label: 'Personero de Centro de Votación', icon: '🏫', bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' };
                               }
 
@@ -4313,20 +3851,6 @@ export function DashboardView({ onGoToTraining }) {
                     </select>
                   )}
 
-                  {/* Filtro Colegios para Coordinador Zonal en Tab 2 */}
-                  {isCoordinadorZonal && coordinatorZonalLocales.length > 0 && (
-                    <select
-                      value={localZonal2}
-                      onChange={(e) => setLocalZonal2(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: '8px', border: localZonal2 !== 'all' ? '1.5px solid #0284c7' : `1px solid ${borderCol}`, fontSize: '0.82rem', background: localZonal2 !== 'all' ? (isDark ? '#1e293b' : '#f0f9ff') : bgInput, color: textTitle, fontWeight: localZonal2 !== 'all' ? 700 : 500 }}
-                    >
-                      <option value="all">🏫 Todos los Locales de mi Zona ({coordinatorZonalLocales.length})</option>
-                      {coordinatorZonalLocales.map((school, sIdx) => (
-                        <option key={sIdx} value={school}>{school}</option>
-                      ))}
-                    </select>
-                  )}
-
                   {/* Filtro Local para Coordinador de Local en Tab 2 */}
                   {isCoordinadorLocal && coordinatorLocal && (
                     <div style={{
@@ -4353,9 +3877,8 @@ export function DashboardView({ onGoToTraining }) {
                   >
                     <option value="all">🛡️ Todos los Roles</option>
                     <option value="Personero de Mesa">Personero de Mesa</option>
-                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro (PCV)</option>}
+                    {!isCoordinadorLocal && <option value="Personero de Local de Votación">Personero de Centro de Votación (PCV)</option>}
                     {isSuperAdmin && <option value="Coordinador Distrital">Coordinador Distrital</option>}
-                    {(isSuperAdmin || isCoordinadorDistrital) && <option value="Coordinador Zonal">Coord. Zonal (Histórico)</option>}
                   </select>
 
                   {isFiltered2 && (
@@ -5428,62 +4951,8 @@ export function DashboardView({ onGoToTraining }) {
               </button>
             </div>
 
-            {/* Pestañas del Modal: [ Personeros de este Centro ] [ Desglose de Zona Completa ] */}
-            {!isCoordinadorLocal && (
-              <div style={{ display: 'flex', borderBottom: `1px solid ${borderCol}`, background: isDark ? '#0f172a' : '#f1f5f9', padding: isMobile ? '4px 8px' : '6px 12px', gap: isMobile ? '4px' : '8px' }}>
-                <button
-                  type="button"
-                  onClick={() => setSchoolDetailTab('personeros')}
-                  style={{
-                    flex: 1,
-                    padding: isMobile ? '6px 8px' : '7px 12px',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: schoolDetailTab === 'personeros' ? '#0284c7' : 'transparent',
-                    color: schoolDetailTab === 'personeros' ? '#ffffff' : textSub,
-                    fontSize: isMobile ? '0.7rem' : '0.76rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '4px',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <Users className="w-3 h-3" />
-                  <span>Personeros ({selectedSchoolDetail.allPersoneros.length})</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSchoolDetailTab('zona')}
-                  style={{
-                    flex: 1,
-                    padding: isMobile ? '6px 8px' : '7px 12px',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: schoolDetailTab === 'zona' ? '#8b5cf6' : 'transparent',
-                    color: schoolDetailTab === 'zona' ? '#ffffff' : textSub,
-                    fontSize: isMobile ? '0.7rem' : '0.76rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '4px',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <Layers className="w-3 h-3" />
-                  <span>Zona ({selectedSchoolDetail.zonalTotalColegios || 1} loc.)</span>
-                </button>
-              </div>
-            )}
-
-            {/* TAB 1: Lista Real de Personeros del Colegio Seleccionado */}
-            {(isCoordinadorLocal || schoolDetailTab === 'personeros') && (
-              <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {/* Lista Real de Personeros del Colegio Seleccionado */}
+            <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {/* Tarjeta Destacada del Personero de Centro de Votación (PCV) */}
                 <div style={{
                   background: selectedSchoolDetail.plvPersonero ? (isDark ? 'rgba(2, 132, 199, 0.12)' : '#f0f9ff') : (isDark ? 'rgba(245, 158, 11, 0.12)' : '#fefce8'),
@@ -5672,207 +5141,6 @@ export function DashboardView({ onGoToTraining }) {
                   })
                 )}
               </div>
-            )}
-
-            {/* TAB 2: DESGLOSE DETALLADO DE TODA LA ZONA MULTI-COLEGIO */}
-            {!isCoordinadorLocal && schoolDetailTab === 'zona' && (
-              <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                
-                {/* Coordinador Zonal a Cargo */}
-                <div style={{
-                  background: isDark ? 'rgba(139, 92, 246, 0.15)' : '#ede9fe',
-                  border: '1px solid #c4b5fd',
-                  borderRadius: '12px',
-                  padding: '12px 14px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '10px'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#8b5cf6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.86rem', flexShrink: 0 }}>
-                      {selectedSchoolDetail.zonalPersonero ? (selectedSchoolDetail.zonalPersonero['Nombres y Apellidos'] || selectedSchoolDetail.zonalPersonero.nombresApellidos || 'Z').charAt(0).toUpperCase() : 'Z'}
-                    </div>
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#6d28d9', textTransform: 'uppercase' }}>
-                        Coordinador Zonal a Cargo
-                      </div>
-                      <div style={{ fontSize: '0.92rem', fontWeight: 900, color: textTitle, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {selectedSchoolDetail.zonalPersonero ? (selectedSchoolDetail.zonalPersonero['Nombres y Apellidos'] || selectedSchoolDetail.zonalPersonero.nombresApellidos) : '⚠️ Sin Coordinador Zonal asignado'}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: textSub, display: 'flex', gap: '8px', alignItems: 'center', marginTop: '1px' }}>
-                        {selectedSchoolDetail.zonalPersonero && <span>DNI: <strong>{selectedSchoolDetail.zonalPersonero['D.N.I.'] || selectedSchoolDetail.zonalPersonero.dni || '-'}</strong></span>}
-                        <span>&bull;</span>
-                        <span><strong>{selectedSchoolDetail.zonalTotalColegios || 1}</strong> locales de votación en su zona</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {selectedSchoolDetail.zonalPersonero && (selectedSchoolDetail.zonalPersonero['Celular'] || selectedSchoolDetail.zonalPersonero.celular) && (
-                    <a
-                      href={`https://wa.me/51${String(selectedSchoolDetail.zonalPersonero['Celular'] || selectedSchoolDetail.zonalPersonero.celular).replace(/\D/g, '')}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        padding: '6px 10px',
-                        borderRadius: '6px',
-                        background: '#16a34a',
-                        color: '#fff',
-                        fontSize: '0.74rem',
-                        fontWeight: 800,
-                        textDecoration: 'none',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        flexShrink: 0
-                      }}
-                    >
-                      <Phone className="w-3 h-3" />
-                      <span>WhatsApp</span>
-                    </a>
-                  )}
-                </div>
-
-                {/* Lista Completa de Colegios de la Misma Zona */}
-                <div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: 800, color: textSub, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Colegios que integran esta Zona ({selectedSchoolDetail.zonalTotalColegios || (selectedSchoolDetail.zonalAssignedSchoolsList || []).length || 1}):
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {(selectedSchoolDetail.zonalAssignedSchoolsList && selectedSchoolDetail.zonalAssignedSchoolsList.length > 0
-                      ? selectedSchoolDetail.zonalAssignedSchoolsList
-                      : [selectedSchoolDetail.nombre]
-                    ).map((schName, schIdx) => {
-                      const isCurrent = normalizeLocalName(schName) === normalizeLocalName(selectedSchoolDetail.nombre);
-                      const matchingSchoolObj = districtSchools.find(s => normalizeLocalName(s.nombre) === normalizeLocalName(schName));
-                      const plv = matchingSchoolObj?.plvPersonero;
-                      const regCount = matchingSchoolObj?.allPersoneros?.length || 0;
-                      const mesasCount = matchingSchoolObj?.totalMesas || matchingSchoolObj?.mesas || '-';
-
-                      return (
-                        <div
-                          key={schIdx}
-                          style={{
-                            background: isCurrent ? (isDark ? 'rgba(2, 132, 199, 0.15)' : '#f0f9ff') : (isDark ? '#0f172a' : '#ffffff'),
-                            border: `1.5px solid ${isCurrent ? '#0284c7' : borderCol}`,
-                            borderRadius: '10px',
-                            padding: '10px 12px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '6px',
-                            transition: 'all 0.15s ease'
-                          }}
-                        >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-                              <div style={{
-                                width: '24px',
-                                height: '24px',
-                                borderRadius: '6px',
-                                background: isCurrent ? '#0284c7' : '#ede9fe',
-                                color: isCurrent ? '#fff' : '#7c3aed',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 900,
-                                fontSize: '0.72rem',
-                                flexShrink: 0
-                              }}>
-                                {schIdx + 1}
-                              </div>
-                              <div style={{ minWidth: 0, flex: 1 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                                  <strong style={{ fontSize: '0.86rem', color: textTitle }}>
-                                    {schName}
-                                  </strong>
-                                  {isCurrent && (
-                                    <span style={{ background: '#0284c7', color: '#fff', fontSize: '0.65rem', fontWeight: 800, padding: '1px 6px', borderRadius: '4px' }}>
-                                      ⭐ Colegio Actual
-                                    </span>
-                                  )}
-                                </div>
-                                <div style={{ fontSize: '0.72rem', color: textSub, marginTop: '2px' }}>
-                                  <strong>{regCount}</strong> personeros registrados &bull; <strong>{mesasCount}</strong> mesas
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Botón para Inspeccionar este Colegio */}
-                            {!isCurrent && matchingSchoolObj && (
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setSelectedSchoolDetail(matchingSchoolObj);
-                                  setSchoolDetailTab('personeros');
-                                }}
-                                style={{
-                                  padding: '4px 8px',
-                                  borderRadius: '6px',
-                                  border: `1px solid ${borderCol}`,
-                                  background: isDark ? '#1e293b' : '#f1f5f9',
-                                  color: textTitle,
-                                  fontSize: '0.7rem',
-                                  fontWeight: 800,
-                                  cursor: 'pointer',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  gap: '3px',
-                                  flexShrink: 0
-                                }}
-                              >
-                                <Search className="w-2.5 h-2.5" />
-                                <span>Ver Mesas</span>
-                              </button>
-                            )}
-                          </div>
-
-                          {/* Fila del Personero de Local de este colegio hermano */}
-                          <div style={{ borderTop: `1px dashed ${borderCol}`, paddingTop: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.73rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                              <span style={{
-                                background: plv ? '#e0f2fe' : (isDark ? 'rgba(245, 158, 11, 0.15)' : '#fef3c7'),
-                                color: plv ? '#0369a1' : '#b45309',
-                                padding: '1px 5px',
-                                borderRadius: '4px',
-                                fontSize: '0.65rem',
-                                fontWeight: 800
-                              }}>
-                                🏫 PCV
-                              </span>
-                              <span style={{ fontWeight: 700, color: plv ? textTitle : '#b45309' }}>
-                                {plv ? (plv['Nombres y Apellidos'] || plv.nombresApellidos) : '⚠️ Sin Personero de Centro (PCV) asignado'}
-                              </span>
-                            </div>
-
-                            {plv && (plv['Celular'] || plv.celular) && (
-                              <a
-                                href={`https://wa.me/51${String(plv['Celular'] || plv.celular).replace(/\D/g, '')}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                style={{
-                                  color: '#16a34a',
-                                  fontWeight: 800,
-                                  fontSize: '0.68rem',
-                                  textDecoration: 'none',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  gap: '2px'
-                                }}
-                              >
-                                <Phone className="w-2.5 h-2.5" />
-                                <span>{plv['Celular'] || plv.celular}</span>
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-              </div>
-            )}
 
           </div>
         </div>
@@ -5882,6 +5150,7 @@ export function DashboardView({ onGoToTraining }) {
       {selectedPersonero && (
         <EditAssignmentModal
           personero={selectedPersonero}
+          mode={activeTab === 'capacitacion' ? 'capacitacion' : 'full'}
           onClose={() => setSelectedPersonero(null)}
           onSaved={fetchData}
         />

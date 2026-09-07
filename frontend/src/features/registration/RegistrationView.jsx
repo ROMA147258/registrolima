@@ -1257,52 +1257,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   errorMsg={fieldErrors.distrito_asignado}
                 />
               </div>
-            ) : isCoordinadorZonal ? (
-              /* Caso Coordinador Zonal: Solo Distrito y Colegios Asignados (Múltiples) */
-              <>
-                <div className="form-group" style={{ marginBottom: '12px' }}>
-                  <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                    Distrito Asignado <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
-                  <CustomSearchableSelect
-                    id="field-distrito_asignado"
-                    name="distrito_asignado"
-                    value={formData.distrito_asignado}
-                    onChange={handleChange}
-                    options={DISTRITOS_LIMA}
-                    placeholder="Seleccione Distrito de la Zona"
-                    icon={MapPin}
-                    required
-                    hasError={!!fieldErrors.distrito_asignado}
-                    errorMsg={fieldErrors.distrito_asignado}
-                  />
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                    <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700, margin: 0 }}>
-                      Colegios / Locales de la Zona <span style={{ color: '#ef4444' }}>*</span>
-                    </label>
-                    <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 700 }}>
-                      (Escoger de 1 a más colegios)
-                    </span>
-                  </div>
-                  <MultiSearchableSelect
-                    id="field-local_asignado"
-                    name="local_asignado"
-                    value={formData.local_asignado}
-                    onChange={handleChange}
-                    options={localesAsignados}
-                    assignedOptions={assignedLocalesAsignados}
-                    placeholder={formData.distrito_asignado ? `Escribir o seleccionar colegios en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
-                    icon={School}
-                    required
-                    disabled={!formData.distrito_asignado}
-                    hasError={!!fieldErrors.local_asignado}
-                    errorMsg={fieldErrors.local_asignado}
-                  />
-                </div>
-              </>
             ) : (
               /* Caso Personero de Mesa o Coordinador de Local */
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>

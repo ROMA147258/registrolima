@@ -55,9 +55,7 @@ export function TrainingView({ onGoToDashboard }) {
 
   const rolTitle = isCoordinadorDistrital
     ? 'Coordinador Distrital'
-    : (isCoordinadorZonal
-      ? 'Coordinador Zonal'
-      : (isCoordinadorLocal ? 'Personero de Centro de Votación' : 'Personero de Mesa'));
+    : (isCoordinadorLocal || isCoordinadorZonal ? 'Personero de Centro de Votación' : 'Personero de Mesa');
 
   return (
     <div style={{

@@ -787,6 +787,18 @@ export class PostgresPersoneroRepository {
       fields.push(`credenciales = $${idx++}`);
       values.push(cred);
     }
+    if (params.video !== undefined) {
+      fields.push(`video = $${idx++}`);
+      values.push(parseInt(params.video, 10) || 0);
+    }
+    if (params.pdf !== undefined) {
+      fields.push(`pdf = $${idx++}`);
+      values.push(parseInt(params.pdf, 10) || 0);
+    }
+    if (params.preguntas !== undefined) {
+      fields.push(`preguntas = $${idx++}`);
+      values.push(params.preguntas);
+    }
 
     if (fields.length === 0) {
       return { entity: existing.entity, tableName };

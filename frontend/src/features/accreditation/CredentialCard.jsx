@@ -13,10 +13,8 @@ export function CredentialCard({ user, onBack }) {
   let displayRol = 'PERSONERO DE MESA';
   if (rawRol.includes('DISTRIT')) {
     displayRol = 'COORDINADOR DE DISTRITOS';
-  } else if (rawRol.includes('LOCAL') || rawRol.includes('COLEGIO')) {
-    displayRol = 'PERSONERO DE LOCAL DE VOTACIÓN';
-  } else if (rawRol.includes('ZONA')) {
-    displayRol = 'COORDINADOR ZONAL';
+  } else if (rawRol.includes('LOCAL') || rawRol.includes('COLEGIO') || rawRol.includes('CENTRO') || rawRol.includes('ZONA')) {
+    displayRol = 'PERSONERO DE CENTRO DE VOTACIÓN';
   } else {
     displayRol = rawRol;
   }

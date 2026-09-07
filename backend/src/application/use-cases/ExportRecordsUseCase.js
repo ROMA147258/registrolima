@@ -33,13 +33,17 @@ export class ExportRecordsUseCase {
   // Hoja 1: Únicamente los datos más relevantes solicitados
   formatRecordForSheet1(r, index) {
     const data = r.toJSON ? r.toJSON() : r;
+    let rawRol = String(data.rolADesempenar || data['Rol a Desempeñar'] || data.rol_a_desempenar || 'Personero de Mesa').trim();
+    if (rawRol.toLowerCase().includes('zonal') || rawRol.toLowerCase().includes('zona')) {
+      rawRol = 'Personero de Centro de Votación';
+    }
 
     return {
       'Nº': index + 1,
       'Nombres y Apellidos': String(data.nombresApellidos || data['Nombres y Apellidos'] || data.nombres_y_apellidos || '').trim(),
       'DNI': String(data.dni || data['D.N.I.'] || data.DNI || '').trim(),
       'Teléfono': String(data.celular || data.Celular || data.telefono || '').trim(),
-      'Rol a Desempeñar': String(data.rolADesempenar || data['Rol a Desempeñar'] || data.rol_a_desempenar || 'Personero de Mesa').trim(),
+      'Rol a Desempeñar': rawRol,
       'Local de Votación Asignado': String(data.localDeVotacionAsignado || data['Local de Votación Asignado'] || data.local_de_votacion_asignado || data.localDeVotacion || data['Local de Votación'] || '-').trim(),
       'Mesa Asignada': String(data.mesaAsignada || data['Mesa Asignada'] || data.mesa_asignada || data.mesaDeSufragio || data['Mesa de Sufragio'] || '-').trim()
     };
@@ -48,7 +52,6 @@ export class ExportRecordsUseCase {
   // Hoja 2: Cantidad de roles a desempeñar (KPI)
   generateSheet2Roles(records) {
     let countDistrital = 0;
-    let countZonal = 0;
     let countPCV = 0;
     let countMesa = 0;
 
@@ -58,9 +61,7 @@ export class ExportRecordsUseCase {
 
       if (rol.includes('distrito') || rol.includes('distrital')) {
         countDistrital++;
-      } else if (rol.includes('zonal') || rol.includes('zona')) {
-        countZonal++;
-      } else if (rol.includes('local') || rol.includes('centro') || rol.includes('pcv') || rol.includes('plv')) {
+      } else if (rol.includes('local') || rol.includes('centro') || rol.includes('pcv') || rol.includes('plv') || rol.includes('zonal') || rol.includes('zona')) {
         countPCV++;
       } else {
         countMesa++;
@@ -69,13 +70,15 @@ export class ExportRecordsUseCase {
 
     const total = records.length;
 
-    return [
-      { 'Rol a Desempeñar': 'Coordinador Distrital', 'Cantidad': countDistrital },
-      { 'Rol a Desempeñar': 'Coordinador Zonal', 'Cantidad': countZonal },
-      { 'Rol a Desempeñar': 'Personero de Centro de Votación (PCV)', 'Cantidad': countPCV },
-      { 'Rol a Desempeñar': 'Personero de Mesa', 'Cantidad': countMesa },
-      { 'Rol a Desempeñar': 'TOTAL GENERAL', 'Cantidad': total }
-    ];
+    const list = [];
+    if (countDistrital > 0) {
+      list.push({ 'Rol a Desempeñar': 'Coordinador Distrital', 'Cantidad': countDistrital });
+    }
+    list.push({ 'Rol a Desempeñar': 'Personero de Centro de Votación (PCV)', 'Cantidad': countPCV });
+    list.push({ 'Rol a Desempeñar': 'Personero de Mesa', 'Cantidad': countMesa });
+    list.push({ 'Rol a Desempeñar': 'TOTAL GENERAL', 'Cantidad': total });
+
+    return list;
   }
 
   // Hoja 3: Cuántos faltan por completar por cada colegio con su total (KPI)

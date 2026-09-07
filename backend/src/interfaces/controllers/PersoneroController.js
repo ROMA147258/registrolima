@@ -214,6 +214,20 @@ export class PersoneroController {
         const aCred = getVal(a.credenciales || req.body.credenciales);
         if (aCred && bCred !== aCred) changes.credenciales = { antes: bCred, despues: aCred };
 
+        // 8. Video
+        if (req.body.video !== undefined) {
+          const bVid = parseInt(b.video || 0, 10);
+          const aVid = parseInt(req.body.video, 10);
+          if (bVid !== aVid) changes.video = { antes: `${bVid}/2`, despues: `${aVid}/2` };
+        }
+
+        // 9. PDF
+        if (req.body.pdf !== undefined) {
+          const bPdf = parseInt(b.pdf || 0, 10);
+          const aPdf = parseInt(req.body.pdf, 10);
+          if (bPdf !== aPdf) changes.pdf = { antes: `${bPdf}/2`, despues: `${aPdf}/2` };
+        }
+
         // Si no hubo diferencias en campos pero se guardó la ficha
         if (Object.keys(changes).length === 0) {
           changes.revalidacion = {
