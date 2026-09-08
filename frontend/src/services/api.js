@@ -32,10 +32,11 @@ export const api = {
 
   // Catálogos
   getDistritos: () => request('/distritos'),
-  getLocales: (distrito, rol = null) => {
+  getLocales: (distrito, rol = null, excludeDni = null) => {
     const params = new URLSearchParams();
     if (distrito) params.append('distrito', distrito);
     if (rol) params.append('rol', rol);
+    if (excludeDni) params.append('excludeDni', excludeDni);
     const qs = params.toString();
     return request(`/locales${qs ? `?${qs}` : ''}`);
   },

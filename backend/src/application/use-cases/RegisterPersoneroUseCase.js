@@ -69,13 +69,13 @@ export class RegisterPersoneroUseCase {
 
     // 6. VALIDACIONES DE CUPO SEGÚN EL ROL SELECCIONADO
     if (rolNorm.includes('zonal') || rolNorm.includes('zona')) {
-      // Coordinador Zonal: Validación de colegios asignados (no duplicar colegios en el mismo distrito)
-      if (!localAsig || localAsig.trim() === '' || localAsig.toLowerCase() === 'no aplica') {
-        throw new Error('Debe seleccionar al menos un colegio o local de votación asignado.');
+      // Coordinador Zonal: Validación de colegios asignados (mínimo 2 colegios y no duplicar colegios en el mismo distrito)
+      const selectedSchools = String(localAsig || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (selectedSchools.length < 2) {
+        throw new Error('Un Coordinador Zonal debe tener asignados como mínimo 2 colegios.');
       }
       if (distAsig) {
-        const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distAsig);
-        const selectedSchools = String(localAsig).split(',').map(s => s.trim()).filter(Boolean);
+        const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distAsig, 'zonal');
         for (const sch of selectedSchools) {
           const isTaken = assignedLocales.some(al => al.toLowerCase() === sch.toLowerCase());
           if (isTaken) {

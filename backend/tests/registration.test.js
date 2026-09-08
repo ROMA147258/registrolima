@@ -301,12 +301,27 @@ test('Validation Rule 5: Email and WhatsApp Alternativo cannot be duplicated', a
   );
 });
 
-test('Validation Rule 6: Coordinador Zonal can select 1 or more schools and prevents assigning already occupied schools', async () => {
+test('Validation Rule 6: Coordinador Zonal requires minimum 2 schools and prevents assigning already occupied schools', async () => {
   const repo = new MockPersoneroRepository();
   const audit = new MockAuditRepository();
   const useCase = new RegisterPersoneroUseCase(repo, audit);
 
-  // 1. Zonal Coordinator 1 successfully registers with 2 schools in SJL
+  // 1. Zonal Coordinator with less than 2 schools -> Must fail
+  await assert.rejects(
+    async () => {
+      await useCase.execute({
+        nombres_apellidos: 'Coordinador Zonal 0',
+        dni: '77770000',
+        celular: '977770000',
+        rol_electoral: 'Coordinador Zonal',
+        distrito_asignado: 'San Juan de Lurigancho',
+        local_asignado: 'IE 001 San Juan'
+      });
+    },
+    /Un Coordinador Zonal debe tener asignados como mínimo 2 colegios/
+  );
+
+  // 2. Zonal Coordinator 1 successfully registers with 2 schools in SJL
   const res1 = await useCase.execute({
     nombres_apellidos: 'Coordinador Zonal 1',
     dni: '77771111',
@@ -320,7 +335,7 @@ test('Validation Rule 6: Coordinador Zonal can select 1 or more schools and prev
   assert.equal(res1.data.rolADesempenar, 'Coordinador Zonal');
   assert.equal(res1.data.localDeVotacionAsignado, 'IE 001 San Juan, IE 002 Mariscal Caceres');
 
-  // 2. Zonal Coordinator 2 attempts to register selecting one already assigned school -> Must fail
+  // 3. Zonal Coordinator 2 attempts to register selecting one already assigned school -> Must fail
   await assert.rejects(
     async () => {
       await useCase.execute({
@@ -335,14 +350,14 @@ test('Validation Rule 6: Coordinador Zonal can select 1 or more schools and prev
     /El colegio 'IE 002 Mariscal Caceres' ya se encuentra asignado a otro Coordinador Zonal en San Juan de Lurigancho/
   );
 
-  // 3. Zonal Coordinator 2 registers with available schools in SJL -> Must succeed
+  // 4. Zonal Coordinator 2 registers with 2 available schools in SJL -> Must succeed
   const res2 = await useCase.execute({
     nombres_apellidos: 'Coordinador Zonal 2',
     dni: '77772222',
     celular: '977772222',
     rol_electoral: 'Coordinador Zonal',
     distrito_asignado: 'San Juan de Lurigancho',
-    local_asignado: 'IE 003 Antenor Orrego'
+    local_asignado: 'IE 003 Antenor Orrego, IE 004 Cesar Vallejo'
   });
 
   assert.equal(res2.status, 'success');

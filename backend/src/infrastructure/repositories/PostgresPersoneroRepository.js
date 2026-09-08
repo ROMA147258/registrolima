@@ -486,14 +486,60 @@ export class PostgresPersoneroRepository {
     return parseInt(res.rows[0]?.count || 0, 10);
   }
 
+  getDistrictVariants(name) {
+    if (!name) return [];
+    const raw = String(name).trim();
+    const upper = raw.toUpperCase();
+    const clean = upper.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const variants = new Set([raw, upper, clean]);
+
+    if (clean === 'SAN JUAN DE LURIGANCHO' || clean.includes('SAN JUAN DE LURIGANCHO')) {
+      variants.add('SAN JUAN DE LURIGANCHO');
+      variants.add('SJL');
+    } else if (clean === 'SAN JUAN DE MIRAFLORES' || clean.includes('SAN JUAN DE MIRAFLORES')) {
+      variants.add('SAN JUAN DE MIRAFLORES');
+      variants.add('SJM');
+    } else if (clean === 'SAN MARTIN DE PORRES' || clean.includes('SAN MARTIN DE PORRES')) {
+      variants.add('SAN MARTIN DE PORRES');
+      variants.add('SAN MARTÍN DE PORRES');
+      variants.add('SMP');
+    } else if (clean === 'LURIGANCHO' || clean.includes('CHOSICA') || clean === 'LURIGANCHO-CHOSICA') {
+      variants.add('LURIGANCHO');
+      variants.add('LURIGANCHO-CHOSICA');
+      variants.add('CHOSICA');
+    } else if (clean === 'LIMA' || clean === 'CERCADO DE LIMA' || clean === 'LIMA CERCADO') {
+      variants.add('LIMA');
+      variants.add('CERCADO DE LIMA');
+      variants.add('LIMA CERCADO');
+    } else if (clean === 'SANTIAGO DE SURCO' || clean === 'SURCO') {
+      variants.add('SANTIAGO DE SURCO');
+      variants.add('SURCO');
+    } else if (clean === 'MAGDALENA DEL MAR' || clean === 'MAGDALENA') {
+      variants.add('MAGDALENA DEL MAR');
+      variants.add('MAGDALENA');
+    } else if (clean === 'VILLA MARIA DEL TRIUNFO' || clean === 'VMT') {
+      variants.add('VILLA MARIA DEL TRIUNFO');
+      variants.add('VILLA MARÍA DEL TRIUNFO');
+      variants.add('VMT');
+    } else if (clean === 'VILLA EL SALVADOR' || clean === 'VES') {
+      variants.add('VILLA EL SALVADOR');
+      variants.add('VES');
+    } else if (clean === 'PUEBLO LIBRE') {
+      variants.add('PUEBLO LIBRE');
+    }
+
+    return Array.from(variants);
+  }
+
   async getAssignedLocalesByDistrito(distritoAsignado, rol = null, excludeDni = null) {
     await this.ensureTablesExist();
     const pool = await dbPool.getPool();
-    const cleanDist = String(distritoAsignado || '').trim().toLowerCase();
-    if (!cleanDist) return [];
+    if (!distritoAsignado) return [];
 
+    const variants = this.getDistrictVariants(distritoAsignado).map(v => v.toUpperCase());
     const cleanRol = String(rol || '').toLowerCase().trim();
     const assignedSet = new Set();
+    const placeholders = variants.map((_, i) => `$${i + 1}`).join(', ');
 
     // 1. Si es Coordinador / Personero de Local: solo reportar colegios que ya alcanzaron el cupo de 2 personeros
     if (cleanRol.includes('local') && !cleanRol.includes('zonal')) {
@@ -501,11 +547,11 @@ export class PostgresPersoneroRepository {
         let qLocal = `
           SELECT local_de_votacion_asignado, COUNT(*) as qty
           FROM rcoordinadores
-          WHERE LOWER(TRIM(distrito_asignado)) = $1
+          WHERE UPPER(TRIM(distrito_asignado)) IN (${placeholders})
         `;
-        const paramsL = [cleanDist];
+        const paramsL = [...variants];
         if (excludeDni) {
-          qLocal += ` AND TRIM(dni) != $2`;
+          qLocal += ` AND TRIM(dni) != $${paramsL.length + 1}`;
           paramsL.push(String(excludeDni).trim());
         }
         qLocal += ` GROUP BY local_de_votacion_asignado HAVING COUNT(*) >= 2`;
@@ -523,10 +569,10 @@ export class PostgresPersoneroRepository {
     // 2. Si es Coordinador Zonal: consultar colegios ocupados en rcoordinadoresz
     if (cleanRol.includes('zonal') || cleanRol.includes('zona')) {
       try {
-        let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE LOWER(TRIM(distrito_asignado)) = $1`;
-        const paramsZ = [cleanDist];
+        let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE UPPER(TRIM(distrito_asignado)) IN (${placeholders})`;
+        const paramsZ = [...variants];
         if (excludeDni) {
-          qZonal += ` AND TRIM(dni) != $2`;
+          qZonal += ` AND TRIM(dni) != $${paramsZ.length + 1}`;
           paramsZ.push(String(excludeDni).trim());
         }
         const resZ = await pool.query(qZonal, paramsZ);
@@ -540,8 +586,13 @@ export class PostgresPersoneroRepository {
 
     // 3. Fallback por defecto (Zonales)
     try {
-      let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE LOWER(TRIM(distrito_asignado)) = $1`;
-      const resZ = await pool.query(qZonal, [cleanDist]);
+      let qZonal = `SELECT local_de_votacion_asignado FROM rcoordinadoresz WHERE UPPER(TRIM(distrito_asignado)) IN (${placeholders})`;
+      const paramsZ = [...variants];
+      if (excludeDni) {
+        qZonal += ` AND TRIM(dni) != $${paramsZ.length + 1}`;
+        paramsZ.push(String(excludeDni).trim());
+      }
+      const resZ = await pool.query(qZonal, paramsZ);
       resZ.rows.forEach(r => {
         const val = r.local_de_votacion_asignado || '';
         val.split(',').map(s => s.trim()).filter(Boolean).forEach(loc => assignedSet.add(loc));

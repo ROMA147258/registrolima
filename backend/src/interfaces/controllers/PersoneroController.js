@@ -145,7 +145,7 @@ export class PersoneroController {
 
       // 9. Validar Colegios Asignados para Coordinador Zonal
       if (distrito && local && (cleanRol.includes('zonal') || cleanRol.includes('zona'))) {
-        const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distrito);
+        const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(distrito, 'zonal', dni);
         const selectedSchools = String(local).split(',').map(s => s.trim()).filter(Boolean);
         for (const sch of selectedSchools) {
           if (assignedLocales.some(al => al.toLowerCase() === sch.toLowerCase())) {
@@ -169,6 +169,42 @@ export class PersoneroController {
     try {
       const { dni } = req.params;
       const before = await this.personeroRepo.findByDni(dni);
+      if (!before || !before.entity) {
+        return res.status(404).json({ status: 'error', message: 'No se encontró el registro con el DNI proporcionado.' });
+      }
+
+      const rol = req.body.rolADesempenar || req.body.rol || before.entity.rolADesempenar;
+      const cleanRol = String(rol || '').toLowerCase().trim();
+      const isZonal = cleanRol.includes('zonal') || cleanRol.includes('zona');
+
+      if (isZonal) {
+        const dist = req.body.distritoAsignado || req.body.distrito || before.entity.distritoAsignado || before.entity.distritoDondeVota;
+        const loc = req.body.localAsignado !== undefined ? req.body.localAsignado : (req.body.local !== undefined ? req.body.local : before.entity.localDeVotacionAsignado);
+        const selectedSchools = String(loc || '').split(',').map(s => s.trim()).filter(Boolean);
+
+        if (selectedSchools.length < 2) {
+          return res.status(400).json({
+            status: 'error',
+            message: 'Un Coordinador Zonal debe tener asignados como mínimo 2 colegios.'
+          });
+        }
+
+        if (dist) {
+          const origSchools = String(before.entity.localDeVotacionAsignado || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+          const assignedLocales = await this.personeroRepo.getAssignedLocalesByDistrito(dist, 'zonal', dni);
+          for (const sch of selectedSchools) {
+            if (origSchools.includes(sch.toLowerCase())) continue;
+            const isTaken = assignedLocales.some(al => al.toLowerCase() === sch.toLowerCase());
+            if (isTaken) {
+              return res.status(400).json({
+                status: 'error',
+                message: `El colegio '${sch}' ya se encuentra asignado a otro Coordinador Zonal en ${dist}.`
+              });
+            }
+          }
+        }
+      }
+
       const result = await this.personeroRepo.updatePersonero(dni, req.body);
 
       // Calcular diferencias exhaustivas para auditoría

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   LayoutGrid, GraduationCap, Cable, RefreshCw, LogOut, Moon, Sun,
   Users, UserCheck, ShieldCheck, CheckCircle2, Car, Calendar, Info,
@@ -748,6 +748,24 @@ export function DashboardView({ onGoToTraining }) {
     }
   });
 
+  // Ref para registrar los IDs de auditoría que ya se mostraron en toast y evitar repeticiones en cada ciclo de 10s
+  const lastShownToastIdRef = useRef(null);
+
+  // Cerrar toast y marcarlo como visto para que no vuelva a aparecer
+  const dismissToast = (toastObj = null) => {
+    const target = toastObj || latestToast;
+    if (target && target.id) {
+      const toastId = target.id;
+      lastShownToastIdRef.current = Math.max(lastShownToastIdRef.current || 0, toastId);
+      setLastSeenAuditId(prev => {
+        const nextId = Math.max(prev || 0, toastId);
+        try { localStorage.setItem('supera_last_seen_audit_id', String(nextId)); } catch {}
+        return nextId;
+      });
+    }
+    setLatestToast(null);
+  };
+
   const fetchAuditLogs = async (isBackground = false) => {
     if (!canViewAudit) return;
     if (!isBackground) setAuditLoading(true);
@@ -761,13 +779,17 @@ export function DashboardView({ onGoToTraining }) {
       setLastSeenAuditId(prev => {
         if (prev === null && logs.length > 0) {
           const maxId = Math.max(...logs.map(l => l.id || 0));
+          lastShownToastIdRef.current = maxId;
           try { localStorage.setItem('supera_last_seen_audit_id', String(maxId)); } catch {}
           return maxId;
         } else if (prev !== null && logs.length > 0 && isBackground) {
-          // Detectar si llegaron modificaciones o eliminaciones nuevas
-          const freshChanges = logs.filter(l => (l.id > prev) && (l.action === 'UPDATE_PERSONERO' || l.action === 'DELETE_PERSONERO'));
+          // Detectar si llegaron modificaciones o eliminaciones nuevas que no hayan sido mostradas ni cerradas
+          const baselineId = Math.max(prev || 0, lastShownToastIdRef.current || 0);
+          const freshChanges = logs.filter(l => (l.id > baselineId) && (l.action === 'UPDATE_PERSONERO' || l.action === 'DELETE_PERSONERO'));
           if (freshChanges.length > 0) {
-            setLatestToast(freshChanges[0]);
+            const newestChange = freshChanges[0];
+            lastShownToastIdRef.current = Math.max(lastShownToastIdRef.current || 0, ...freshChanges.map(f => f.id || 0));
+            setLatestToast(newestChange);
           }
         }
         return prev;
@@ -790,11 +812,11 @@ export function DashboardView({ onGoToTraining }) {
     }
   }, [canViewAudit]);
 
-  // Auto-cerrar toast emergente después de 8 segundos
+  // Auto-cerrar toast emergente después de 8 segundos registrándolo como cerrado
   useEffect(() => {
     if (!latestToast) return;
     const timer = setTimeout(() => {
-      setLatestToast(null);
+      dismissToast(latestToast);
     }, 8000);
     return () => clearTimeout(timer);
   }, [latestToast]);
@@ -808,9 +830,11 @@ export function DashboardView({ onGoToTraining }) {
   const markAllAuditAsSeen = () => {
     if (auditLogs.length > 0) {
       const maxId = Math.max(...auditLogs.map(l => l.id || 0));
+      lastShownToastIdRef.current = Math.max(lastShownToastIdRef.current || 0, maxId);
       setLastSeenAuditId(maxId);
       try { localStorage.setItem('supera_last_seen_audit_id', String(maxId)); } catch {}
     }
+    setLatestToast(null);
     setShowNotifMenu(false);
   };
 
@@ -5411,7 +5435,7 @@ export function DashboardView({ onGoToTraining }) {
               </div>
             </div>
             <button
-              onClick={() => setLatestToast(null)}
+              onClick={() => dismissToast(latestToast)}
               style={{ background: 'none', border: 'none', color: textSub, cursor: 'pointer', padding: '2px' }}
             >
               <X className="w-4 h-4" />
@@ -5461,7 +5485,7 @@ export function DashboardView({ onGoToTraining }) {
             <button
               onClick={() => {
                 setActiveTab('auditoria');
-                setLatestToast(null);
+                dismissToast(latestToast);
               }}
               style={{
                 background: '#0284c7',

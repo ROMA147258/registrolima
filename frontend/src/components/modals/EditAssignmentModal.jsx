@@ -30,6 +30,8 @@ function MultiSchoolSearchSelect({
   value = '',
   onChange,
   locales = [],
+  assignedLocales = [],
+  originalSchools = [],
   distrito = '',
   disabled = false
 }) {
@@ -80,9 +82,19 @@ function MultiSchoolSearchSelect({
     return searchKeywords.every(kw => cleanLoc.includes(kw));
   });
 
+  const isOwnSchool = (schoolName) =>
+    originalSchools.some(os => os.trim().toLowerCase() === schoolName.trim().toLowerCase());
+
   const toggleSchool = (schoolName) => {
     const norm = schoolName.trim();
     const isSelected = selectedList.some(s => s.toLowerCase() === norm.toLowerCase());
+    const isOccupied = !isSelected && !isOwnSchool(norm) && assignedLocales.some(al => al.trim().toLowerCase() === norm.toLowerCase());
+
+    if (isOccupied) {
+      alert(`El colegio "${norm}" ya se encuentra asignado a otro Coordinador Zonal en este distrito.`);
+      return;
+    }
+
     let updated;
     if (isSelected) {
       updated = selectedList.filter(s => s.toLowerCase() !== norm.toLowerCase());
@@ -104,7 +116,8 @@ function MultiSchoolSearchSelect({
     const currentSet = new Set(selectedList.map(s => s.toLowerCase()));
     const newItems = [...selectedList];
     filteredLocales.forEach(loc => {
-      if (!currentSet.has(loc.toLowerCase())) {
+      const isOccupied = !isOwnSchool(loc) && assignedLocales.some(al => al.trim().toLowerCase() === loc.trim().toLowerCase());
+      if (!currentSet.has(loc.toLowerCase()) && !isOccupied) {
         currentSet.add(loc.toLowerCase());
         newItems.push(loc);
       }
@@ -117,13 +130,15 @@ function MultiSchoolSearchSelect({
     onChange('');
   };
 
+  const hasMinSchools = selectedList.length >= 2;
+
   return (
     <div className="form-group" style={{ position: 'relative', width: '100%' }}>
       {/* Label con icono y contador */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px', flexWrap: 'wrap', gap: '4px' }}>
         <label className="form-label" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#0284c7', fontSize: '0.85rem' }}>
           <School className="w-4 h-4 text-sky-400" />
-          <span>Locales de Votación Asignados a la Zona</span>
+          <span>Locales de Votación Asignados (Mínimo 2)</span>
           <span style={{ color: '#ef4444' }}>*</span>
         </label>
         <span style={{ 
@@ -131,10 +146,11 @@ function MultiSchoolSearchSelect({
           fontWeight: 800, 
           padding: '2px 8px', 
           borderRadius: '12px', 
-          background: selectedList.length > 0 ? 'rgba(2, 132, 199, 0.15)' : '#f1f5f9',
-          color: selectedList.length > 0 ? '#0284c7' : '#64748b'
+          background: hasMinSchools ? 'rgba(16, 185, 129, 0.15)' : (selectedList.length === 1 ? '#fef3c7' : '#f1f5f9'),
+          color: hasMinSchools ? '#047857' : (selectedList.length === 1 ? '#b45309' : '#64748b'),
+          border: hasMinSchools ? '1px solid #a7f3d0' : (selectedList.length === 1 ? '1px solid #fde68a' : 'none')
         }}>
-          {selectedList.length} {selectedList.length === 1 ? 'local seleccionado' : 'locales seleccionados'}
+          {selectedList.length} {selectedList.length === 1 ? 'local (Mínimo 2)' : (hasMinSchools ? 'locales asignados ✓' : 'locales seleccionados')}
         </span>
       </div>
 
@@ -323,31 +339,36 @@ function MultiSchoolSearchSelect({
             {filteredLocales.length > 0 ? (
               filteredLocales.map((school, idx) => {
                 const isSelected = selectedList.some(s => s.toLowerCase() === school.trim().toLowerCase());
+                const isOccupied = !isSelected && !isOwnSchool(school) && assignedLocales.some(al => al.trim().toLowerCase() === school.trim().toLowerCase());
+
                 return (
                   <div
                     key={idx}
-                    onClick={() => toggleSchool(school)}
+                    onClick={() => {
+                      if (!isOccupied) toggleSchool(school);
+                    }}
                     style={{
                       padding: '10px 14px',
                       fontSize: '0.84rem',
                       fontWeight: isSelected ? 800 : 500,
-                      color: isSelected ? '#0369a1' : '#0f172a',
-                      background: isSelected ? '#f0f9ff' : '#ffffff',
-                      cursor: 'pointer',
+                      color: isOccupied ? '#94a3b8' : (isSelected ? '#0369a1' : '#0f172a'),
+                      background: isOccupied ? '#f8fafc' : (isSelected ? '#f0f9ff' : '#ffffff'),
+                      cursor: isOccupied ? 'not-allowed' : 'pointer',
                       borderBottom: idx !== filteredLocales.length - 1 ? '1px solid #f1f5f9' : 'none',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
+                      opacity: isOccupied ? 0.75 : 1,
                       transition: 'all 0.1s ease'
                     }}
                     onMouseEnter={(e) => {
-                      if (!isSelected) {
+                      if (!isSelected && !isOccupied) {
                         e.currentTarget.style.background = '#e0f2fe';
                         e.currentTarget.style.color = '#0284c7';
                       }
                     }}
                     onMouseLeave={(e) => {
-                      if (!isSelected) {
+                      if (!isSelected && !isOccupied) {
                         e.currentTarget.style.background = '#ffffff';
                         e.currentTarget.style.color = '#0f172a';
                       }
@@ -357,9 +378,9 @@ function MultiSchoolSearchSelect({
                       {isSelected ? (
                         <CheckSquare className="w-4 h-4 text-sky-600 flex-shrink-0" />
                       ) : (
-                        <Square className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <Square className={`w-4 h-4 ${isOccupied ? 'text-slate-300' : 'text-slate-400'} flex-shrink-0`} />
                       )}
-                      <span>{school}</span>
+                      <span style={{ textDecoration: isOccupied ? 'line-through' : 'none' }}>{school}</span>
                     </div>
                     {isSelected && (
                       <span style={{ 
@@ -371,6 +392,18 @@ function MultiSchoolSearchSelect({
                         borderRadius: '4px' 
                       }}>
                         Asignado
+                      </span>
+                    )}
+                    {isOccupied && (
+                      <span style={{ 
+                        fontSize: '0.68rem', 
+                        fontWeight: 800, 
+                        color: '#dc2626', 
+                        background: '#fee2e2', 
+                        padding: '2px 6px', 
+                        borderRadius: '4px' 
+                      }}>
+                        ⛔ Asignado a otro Zonal
                       </span>
                     )}
                   </div>
@@ -387,8 +420,10 @@ function MultiSchoolSearchSelect({
         )}
       </div>
 
-      <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '4px' }}>
-        💡 Escriba en el buscador para filtrar y marque los colegios que conforman la zona de este coordinador.
+      <span style={{ fontSize: '0.73rem', color: selectedList.length < 2 ? '#b45309' : '#0284c7', fontWeight: 600, display: 'block', marginTop: '4px' }}>
+        {selectedList.length < 2 
+          ? '⚠️ Mínimo 2 colegios requeridos: Marque los locales de votación que conforman la zona de este coordinador (no se pueden repetir).' 
+          : '💡 Marque o desmarque los colegios que conforman la zona de este coordinador zonal.'}
       </span>
     </div>
   );
@@ -557,10 +592,13 @@ import { useAuth } from '../../context/AuthContext.jsx';
 function normalizePersoneroRole(rawRole) {
   if (!rawRole) return 'Personero de Mesa';
   const r = String(rawRole).trim().toLowerCase();
+  if (r.includes('zonal') || r.includes('zona')) {
+    return 'Coordinador Zonal';
+  }
   if (r.includes('distrito') || r.includes('distrital')) {
     return 'Coordinador Distrital';
   }
-  if (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || r.includes('zonal') || r.includes('zona') || (r.includes('coordinador') && !r.includes('central'))) {
+  if (r.includes('local') || r.includes('centro') || r.includes('pcv') || r.includes('plv') || (r.includes('coordinador') && !r.includes('central'))) {
     return 'Personero de Local de Votación';
   }
   return 'Personero de Mesa';
@@ -609,29 +647,46 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
   });
 
   const [locales, setLocales] = useState([]);
+  const [assignedLocales, setAssignedLocales] = useState([]);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
   const dni = personero?.['D.N.I.'] || personero?.['DNI'] || personero?.dni || personero?.dni_numero;
-  const isZonal = false;
+  const rawOriginalSchools = personero?.['Local de Votación Asignado'] || personero?.['Local de Votación'] || personero?.localDeVotacionAsignado || personero?.localDeVotacion || '';
+  const originalSchools = rawOriginalSchools.split(',').map(s => s.trim()).filter(Boolean);
+
+  const isZonal = (formData.rolADesempenar || '').toLowerCase().includes('zonal') || (formData.rolADesempenar || '').toLowerCase().includes('zona');
   const isMesa = (formData.rolADesempenar || '').toLowerCase().includes('personero') || isLimitedCoordinator;
 
-  // Roles permitidos según nivel de usuario (excluyendo cualquier opción de zonal)
-  const availableRoles = (isSuperAdmin
+  const isVMT = (formData.distritoAsignado || '').toUpperCase().includes('VILLA MARIA DEL TRIUNFO') || (formData.distritoAsignado || '').toUpperCase().includes('VMT');
+
+  // Roles permitidos según nivel de usuario
+  const availableRoles = isSuperAdmin
     ? ROLES
-    : Array.from(new Set([...['Personero de Mesa', 'Personero de Local de Votación'], initialRole]))
-  ).filter(r => !r.toLowerCase().includes('zonal') && !r.toLowerCase().includes('zona'));
+    : Array.from(new Set([
+        'Personero de Mesa',
+        'Personero de Local de Votación',
+        ...(isVMT || isZonal ? ['Coordinador Zonal'] : []),
+        initialRole
+      ]));
 
   useEffect(() => {
     if (formData.distritoAsignado) {
-      api.getLocales(formData.distritoAsignado)
-        .then(res => setLocales(res.data || []))
-        .catch(() => setLocales([]));
+      api.getLocales(formData.distritoAsignado, formData.rolADesempenar, dni)
+        .then(res => {
+          setLocales(res.data || []);
+          setAssignedLocales(res.assignedLocales || []);
+        })
+        .catch(() => {
+          setLocales([]);
+          setAssignedLocales([]);
+        });
     } else {
       setLocales([]);
+      setAssignedLocales([]);
     }
-  }, [formData.distritoAsignado]);
+  }, [formData.distritoAsignado, formData.rolADesempenar, dni]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -650,6 +705,29 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
 
   const handleSave = async (e) => {
     e.preventDefault();
+
+    // Validaciones específicas para Coordinador Zonal
+    if (isZonal) {
+      const selectedList = (formData.localAsignado || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      if (selectedList.length < 2) {
+        setErrorMsg('Un Coordinador Zonal debe tener asignados como mínimo 2 colegios.');
+        return;
+      }
+
+      // Validar que ningún colegio nuevo seleccionado esté ocupado por otro Coordinador Zonal
+      const conflict = selectedList.find(sch => 
+        !originalSchools.some(os => os.trim().toLowerCase() === sch.toLowerCase()) &&
+        assignedLocales.some(al => al.trim().toLowerCase() === sch.toLowerCase())
+      );
+      if (conflict) {
+        setErrorMsg(`El colegio "${conflict}" ya se encuentra asignado a otro Coordinador Zonal en ${formData.distritoAsignado}.`);
+        return;
+      }
+    }
 
     // Comprobar si hubo cambios reales en la ficha
     const origNom = (personero?.['Nombres y Apellidos'] || personero?.nombresApellidos || '').trim();
@@ -694,7 +772,7 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
         celular: formData.celular,
         distritoAsignado: formData.distritoAsignado,
         localAsignado: formData.localAsignado,
-        mesaAsignada: formData.mesaAsignada,
+        mesaAsignada: isZonal ? 'No aplica' : formData.mesaAsignada,
         rolADesempenar: formData.rolADesempenar,
         author: authorName,
         authorRole: authorRoleName
@@ -1013,6 +1091,8 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
                   value={formData.localAsignado}
                   onChange={(newVal) => setFormData(prev => ({ ...prev, localAsignado: newVal }))}
                   locales={locales}
+                  assignedLocales={assignedLocales}
+                  originalSchools={originalSchools}
                   distrito={formData.distritoAsignado}
                 />
               ) : (
@@ -1024,21 +1104,23 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
                 />
               )}
 
-              {/* Mesa Asignada */}
-              <div>
-                <InputField
-                  label="Mesa Asignada"
-                  icon={Table}
-                  name="mesaAsignada"
-                  value={formData.mesaAsignada}
-                  onChange={handleChange}
-                  placeholder="Ej. 064321 (6 dígitos de la mesa)"
-                  maxLength={6}
-                />
-                <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '2px' }}>
-                  💡 Ingrese el número de mesa de 6 dígitos asignada al personero en este centro de votación.
-                </span>
-              </div>
+              {/* Mesa Asignada (No aplica para Coordinador Zonal) */}
+              {!isZonal && (
+                <div>
+                  <InputField
+                    label="Mesa Asignada"
+                    icon={Table}
+                    name="mesaAsignada"
+                    value={formData.mesaAsignada}
+                    onChange={handleChange}
+                    placeholder="Ej. 064321 (6 dígitos de la mesa)"
+                    maxLength={6}
+                  />
+                  <span style={{ fontSize: '0.72rem', color: '#0284c7', fontWeight: 600, display: 'block', marginTop: '2px' }}>
+                    💡 Ingrese el número de mesa de 6 dígitos asignada al personero en este centro de votación.
+                  </span>
+                </div>
+              )}
             </>
           )}
 
