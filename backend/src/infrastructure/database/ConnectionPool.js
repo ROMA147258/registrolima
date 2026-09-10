@@ -34,6 +34,11 @@ class DatabasePool {
           connectionTimeoutMillis: 10000
         });
 
+        // Capturar errores en clientes idle para evitar cierre del proceso por reconexión de Neon
+        pool.on('error', (err) => {
+          console.warn('⚠️ PostgreSQL Pool (Neon) advertencia en cliente inactivo:', err.message);
+        });
+
         // Test connection
         const client = await pool.connect();
         const res = await client.query('SELECT current_database() as db, current_user as usr, version() as ver');
@@ -67,6 +72,11 @@ class DatabasePool {
         max: 20,
         idleTimeoutMillis: 30000,
         connectionTimeoutMillis: 10000
+      });
+
+      // Capturar errores en clientes idle para evitar cierre del proceso
+      pool.on('error', (err) => {
+        console.warn('⚠️ PostgreSQL Pool advertencia en cliente inactivo:', err.message);
       });
 
       const client = await pool.connect();

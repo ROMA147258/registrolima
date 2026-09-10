@@ -103,7 +103,7 @@ export function CredentialCard({ user, onBack }) {
             }}
           >
             <Printer className="w-4 h-4 text-white" />
-            <span>Imprimir Certificado</span>
+            <span>Imprimir Constancia</span>
           </button>
           <button
             onClick={handlePrint}

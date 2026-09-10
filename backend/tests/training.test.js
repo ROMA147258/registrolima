@@ -37,7 +37,7 @@ class MockAuditRepository {
   }
 }
 
-test('Training Flow - Video increments 1 by 1 and saves', async () => {
+test('Training Flow - Video completes and saves', async () => {
   const repo = new MockPersoneroRepository();
   const audit = new MockAuditRepository();
   const useCase = new UpdateTrainingProgressUseCase(repo, audit);
@@ -49,30 +49,20 @@ test('Training Flow - Video increments 1 by 1 and saves', async () => {
   assert.equal(step1.video, 1);
   assert.equal(step1.pdf, 0);
   assert.equal(step1.credenciales, 'Bloqueado');
-
-  // Video 2
-  const step2 = await useCase.execute({ dni: '44556677', type: 'video', current: 1 });
-  assert.equal(step2.video, 2);
-  assert.equal(step2.credenciales, 'Bloqueado');
 });
 
-test('Training Flow - PDF increments 1 by 1 and saves', async () => {
+test('Training Flow - PDF completes and saves', async () => {
   const repo = new MockPersoneroRepository();
   const audit = new MockAuditRepository();
   const useCase = new UpdateTrainingProgressUseCase(repo, audit);
 
-  repo.seed(new Personero({ nombresApellidos: 'Test Personero', dni: '44556677', video: 2, pdf: 0, preguntas: 'Pendiente' }));
+  repo.seed(new Personero({ nombresApellidos: 'Test Personero', dni: '44556677', video: 1, pdf: 0, preguntas: 'Pendiente' }));
 
   // PDF 1
   const step1 = await useCase.execute({ dni: '44556677', type: 'pdf', current: 0 });
+  assert.equal(step1.video, 1);
   assert.equal(step1.pdf, 1);
-  assert.equal(step1.credenciales, 'Bloqueado');
-
-  // PDF 2
-  const step2 = await useCase.execute({ dni: '44556677', type: 'pdf', current: 1 });
-  assert.equal(step2.video, 2);
-  assert.equal(step2.pdf, 2);
-  assert.equal(step2.credenciales, 'Bloqueado'); // Still blocked until quiz is passed
+  assert.equal(step1.credenciales, 'Bloqueado'); // Still blocked until quiz is passed
 });
 
 test('Training Flow - Quiz passed (5/5) unlocks certificate and sets Confirmado', async () => {
@@ -80,11 +70,11 @@ test('Training Flow - Quiz passed (5/5) unlocks certificate and sets Confirmado'
   const audit = new MockAuditRepository();
   const useCase = new UpdateTrainingProgressUseCase(repo, audit);
 
-  repo.seed(new Personero({ nombresApellidos: 'Test Personero', dni: '44556677', video: 2, pdf: 2, preguntas: 'Pendiente' }));
+  repo.seed(new Personero({ nombresApellidos: 'Test Personero', dni: '44556677', video: 1, pdf: 1, preguntas: 'Pendiente' }));
 
   const stepQuiz = await useCase.execute({ dni: '44556677', type: 'quiz', current: 0 });
-  assert.equal(stepQuiz.video, 2);
-  assert.equal(stepQuiz.pdf, 2);
+  assert.equal(stepQuiz.video, 1);
+  assert.equal(stepQuiz.pdf, 1);
   assert.equal(stepQuiz.quiz, 'Aprobado');
   assert.equal(stepQuiz.credenciales, 'Confirmado');
   assert.equal(stepQuiz.user.Credenciales, 'Confirmado');

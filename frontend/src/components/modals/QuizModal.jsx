@@ -508,7 +508,7 @@ export function QuizModal({ onClose, onPassQuiz, onViewCertificate }) {
                     }}
                   >
                     <Award className="w-5 h-5 text-amber-300" />
-                    <span>🎓 Ver Mi Certificado Oficial</span>
+                    <span>🎓 Ver Mi Constancia de Capacitación</span>
                   </button>
                 )}
 

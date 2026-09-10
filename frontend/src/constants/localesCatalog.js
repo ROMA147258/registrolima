@@ -24345,6 +24345,48 @@ export const LOCALES_OFICIALES = [
   }
 ];
 
+// Mapas indexados para búsqueda instantánea de locales oficiales
+const _normMap = new Map();
+const _cleanMap = new Map();
+
+LOCALES_OFICIALES.forEach(loc => {
+  const norm = String(loc.nombre || '').trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const clean = norm.replace(/[^A-Z0-9]/g, '');
+  if (!_normMap.has(norm)) _normMap.set(norm, loc);
+  if (!_cleanMap.has(clean)) _cleanMap.set(clean, loc);
+});
+
+export function findOfficialLocal(schoolName, distName = null) {
+  if (!schoolName) return null;
+  const raw = String(schoolName).trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (_normMap.has(raw)) return _normMap.get(raw);
+
+  const clean = raw.replace(/[^A-Z0-9]/g, '');
+  if (_cleanMap.has(clean)) return _cleanMap.get(clean);
+
+  // Búsqueda inteligente por inclusión en el distrito correspondiente si se proporciona
+  if (distName) {
+    const distNorm = String(distName).trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const inDist = LOCALES_OFICIALES.filter(l => {
+      const d = String(l.distrito).trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return d === distNorm || d.includes(distNorm) || distNorm.includes(d);
+    });
+    const matchInDist = inDist.find(l => {
+      const lNorm = String(l.nombre).trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const lClean = lNorm.replace(/[^A-Z0-9]/g, '');
+      return lNorm.includes(raw) || raw.includes(lNorm) || lClean.includes(clean) || clean.includes(lClean);
+    });
+    if (matchInDist) return matchInDist;
+  }
+
+  // Fallback general en toda Lima Metropolitana
+  return LOCALES_OFICIALES.find(l => {
+    const lNorm = String(l.nombre).trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const lClean = lNorm.replace(/[^A-Z0-9]/g, '');
+    return lNorm.includes(raw) || raw.includes(lNorm) || lClean.includes(clean) || clean.includes(lClean);
+  }) || null;
+}
+
 export function getLocalesByDistrito(distName) {
   if (!distName || distName === 'all' || distName === 'Todos') {
     return LOCALES_OFICIALES;

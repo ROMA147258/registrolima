@@ -114,9 +114,10 @@ export function AuthProvider({ children }) {
   const cleanUsername = String(user?.username || '').toLowerCase();
   const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['supera', 'admin', 'eric', 'paola', 'susana'].includes(cleanUsername) || rolName === 'superadministrador';
   
-  // Exclusivo para el usuario master (supera / admin): eric, paola y susana NO pueden ver la pestaña de Historial de Auditoría
   const isMasterSuperAdmin = (cleanUsername === 'supera' || cleanUsername === 'admin' || (!['eric', 'paola', 'pola', 'susana'].includes(cleanUsername) && (role === 'superadmin' || role === 'admin')));
-  const canViewAudit = isMasterSuperAdmin;
+  
+  // Auditoría disponible para todos los usuarios Superadministradores
+  const canViewAudit = isSuperAdmin;
 
   const isCoordinadorDistrital = !isSuperAdmin && (
     Boolean(user?.isCoordinadorDistrital) ||

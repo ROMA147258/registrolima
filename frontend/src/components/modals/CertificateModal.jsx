@@ -68,7 +68,7 @@ export function CertificateModal({ user, onClose }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ fontSize: '1.1rem' }}>🎓</span>
             <span style={{ fontSize: '0.98rem', fontWeight: 900, letterSpacing: '0.5px' }}>
-              Certificado Oficial de Capacitación • Elecciones 2026
+              Constancia de Capacitación • Elecciones 2026
             </span>
           </div>
 
@@ -353,7 +353,7 @@ export function CertificateModal({ user, onClose }) {
                       CONSTANCIA
                     </h1>
                     <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#002B66', margin: '2px 0 0 0', letterSpacing: '1px' }}>
-                      DE PARTICIPACIÓN
+                      DE CAPACITACIÓN
                     </h2>
                   </div>
                   <div style={{ height: '2px', width: '45px', background: '#e30613' }}></div>

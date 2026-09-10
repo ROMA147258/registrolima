@@ -37,7 +37,7 @@ export class PostgresAuditRepository {
     }
   }
 
-  async findAll({ action, limit = 200, offset = 0 } = {}) {
+  async findAll({ action, limit = 2000, offset = 0 } = {}) {
     try {
       await this.ensureTableExists();
       const pool = await dbPool.getPool();
@@ -47,8 +47,19 @@ export class PostgresAuditRepository {
       const conditions = [];
 
       if (action) {
-        params.push(action);
-        conditions.push(`action = $${params.length}`);
+        if (action === 'modificaciones') {
+          conditions.push("action IN ('UPDATE_PERSONERO', 'DELETE_PERSONERO')");
+        } else if (action.includes(',')) {
+          const actionList = action.split(',').map(a => a.trim());
+          const placeholders = actionList.map(a => {
+            params.push(a);
+            return `$${params.length}`;
+          });
+          conditions.push(`action IN (${placeholders.join(', ')})`);
+        } else {
+          params.push(action);
+          conditions.push(`action = $${params.length}`);
+        }
       }
 
       if (conditions.length > 0) {
@@ -56,7 +67,7 @@ export class PostgresAuditRepository {
       }
 
       query += ` ORDER BY created_at DESC, id DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
-      params.push(Math.min(parseInt(limit, 10) || 200, 500));
+      params.push(Math.min(parseInt(limit, 10) || 2000, 10000));
       params.push(parseInt(offset, 10) || 0);
 
       const res = await pool.query(query, params);

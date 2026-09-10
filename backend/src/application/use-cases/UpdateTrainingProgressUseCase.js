@@ -21,15 +21,15 @@ export class UpdateTrainingProgressUseCase {
     let quizStatus = entity.preguntas || 'Pendiente';
 
     if (type === 'video') {
-      videoCount = Math.min(2, Math.max(videoCount, (parseInt(current, 10) || 0) + 1));
+      videoCount = Math.max(videoCount, 1);
     } else if (type === 'pdf') {
-      pdfCount = Math.min(2, Math.max(pdfCount, (parseInt(current, 10) || 0) + 1));
+      pdfCount = Math.max(pdfCount, 1);
     } else if (type === 'quiz' || type === 'preguntas') {
       quizStatus = TRAINING_RULES.PASSING_QUIZ_STATUS;
     }
 
     const isQuizPassed = quizStatus === TRAINING_RULES.PASSING_QUIZ_STATUS;
-    const credencialesStatus = (videoCount >= 2 && pdfCount >= 2 && isQuizPassed)
+    const credencialesStatus = (videoCount >= TRAINING_RULES.REQUIRED_VIDEOS && pdfCount >= TRAINING_RULES.REQUIRED_PDFS && isQuizPassed)
       ? TRAINING_RULES.CREDENTIAL_CONFIRMED
       : TRAINING_RULES.CREDENTIAL_BLOCKED;
 

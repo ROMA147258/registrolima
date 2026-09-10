@@ -18,7 +18,7 @@ import {
   TOTAL_MESAS_LIMA_METROPOLITANA, TOTAL_LOCALES_LIMA_METROPOLITANA, TOTAL_ELECTORES_LIMA_METROPOLITANA,
   getMesasForLocal, getMesasForDistrito, getElectoresForDistrito, getLocalesCountForDistrito
 } from '../../constants/catalogs.js';
-import { getLocalesByDistrito } from '../../constants/localesCatalog.js';
+import { getLocalesByDistrito, findOfficialLocal } from '../../constants/localesCatalog.js';
 import { api } from '../../services/api.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -685,6 +685,8 @@ export function DashboardView({ onGoToTraining }) {
   const [dist1, setDist1] = useState(() => (coordinatorDistrict ? coordinatorDistrict : 'all'));
   const [localZonal1, setLocalZonal1] = useState('all');
   const [role1, setRole1] = useState('all');
+  const [coordLocalFilter1, setCoordLocalFilter1] = useState('all'); // 'all', 'con_pcv', 'sin_pcv'
+  const [alertFilter1, setAlertFilter1] = useState('all'); // 'all', 'critico', 'parcial', 'optimo', 'excedido'
   const [exp1, setExp1] = useState('all');
   const [mov1, setMov1] = useState('all');
   const [comp1, setComp1] = useState('all');
@@ -694,6 +696,64 @@ export function DashboardView({ onGoToTraining }) {
   const [selectedSchoolDetail, setSelectedSchoolDetail] = useState(null);
   const [schoolDetailTab, setSchoolDetailTab] = useState('personeros'); // 'personeros' | 'zona'
   const [expandedMesa, setExpandedMesa] = useState(null);
+  const [sortByMesa, setSortByMesa] = useState('mesa_asc'); // 'mesa_asc', 'mesa_desc', 'nombre_asc', 'acreditados_primero', 'movilidad_primero', 'experiencia_primero'
+
+  // Personeros de mesa ordenados dentro del modal de detalle de colegio
+  const sortedModalMesaPersoneros = useMemo(() => {
+    if (!selectedSchoolDetail) return [];
+    const list = [...(selectedSchoolDetail.mesaPersoneros || [])];
+
+    return list.sort((a, b) => {
+      const mesaA = String(a['Mesa Asignada'] || a.mesaAsignada || a['Mesa de Sufragio'] || a.mesaDeSufragio || a.mesa_asignada || a.mesa || '').trim();
+      const mesaB = String(b['Mesa Asignada'] || b.mesaAsignada || b['Mesa de Sufragio'] || b.mesaDeSufragio || b.mesa_asignada || b.mesa || '').trim();
+      const numA = parseInt(mesaA, 10);
+      const numB = parseInt(mesaB, 10);
+      const hasNumA = !isNaN(numA);
+      const hasNumB = !isNaN(numB);
+
+      const nameA = String(a['Nombres y Apellidos'] || a.nombresApellidos || '').trim();
+      const nameB = String(b['Nombres y Apellidos'] || b.nombresApellidos || '').trim();
+
+      const credA = String(a['Credenciales'] || a.credenciales || '').toLowerCase() === 'confirmado';
+      const credB = String(b['Credenciales'] || b.credenciales || '').toLowerCase() === 'confirmado';
+
+      const movA = getMov(a) === 'Sí';
+      const movB = getMov(b) === 'Sí';
+
+      const expA = getExp(a) === 'Sí';
+      const expB = getExp(b) === 'Sí';
+
+      if (sortByMesa === 'mesa_asc') {
+        if (hasNumA && hasNumB) return numA - numB;
+        if (hasNumA) return -1;
+        if (hasNumB) return 1;
+        return nameA.localeCompare(nameB);
+      }
+      if (sortByMesa === 'mesa_desc') {
+        if (hasNumA && hasNumB) return numB - numA;
+        if (hasNumA) return -1;
+        if (hasNumB) return 1;
+        return nameA.localeCompare(nameB);
+      }
+      if (sortByMesa === 'nombre_asc') {
+        return nameA.localeCompare(nameB);
+      }
+      if (sortByMesa === 'acreditados_primero') {
+        if (credA !== credB) return credA ? -1 : 1;
+        return nameA.localeCompare(nameB);
+      }
+      if (sortByMesa === 'movilidad_primero') {
+        if (movA !== movB) return movA ? -1 : 1;
+        return nameA.localeCompare(nameB);
+      }
+      if (sortByMesa === 'experiencia_primero') {
+        if (expA !== expB) return expA ? -1 : 1;
+        return nameA.localeCompare(nameB);
+      }
+
+      return nameA.localeCompare(nameB);
+    });
+  }, [selectedSchoolDetail, sortByMesa]);
 
   // Filtros Tab 2 (Capacitaciones)
   const [search2, setSearch2] = useState('');
@@ -770,7 +830,7 @@ export function DashboardView({ onGoToTraining }) {
     if (!canViewAudit) return;
     if (!isBackground) setAuditLoading(true);
     try {
-      const res = await api.getAuditLogs({ limit: 200 });
+      const res = await api.getAuditLogs({ limit: 2500 });
       const logs = res?.data || [];
       setAuditLogs(logs);
 
@@ -1155,6 +1215,23 @@ export function DashboardView({ onGoToTraining }) {
     });
   }, [allRecords, coordinatorDistrict, dist1]);
 
+  // Mapa rápido de locales que tienen Personero de Centro (PCV) registrado
+  const schoolsWithPlvSet = useMemo(() => {
+    const set = new Set();
+    (records || []).forEach(r => {
+      const rRol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+      const isPLV = rRol.includes('local') || rRol.includes('pcv') || rRol.includes('plv') || (rRol.includes('coordinador') && !rRol.includes('distrito') && !rRol.includes('distrital') && !rRol.includes('zonal') && !rRol.includes('zona'));
+      if (!isPLV) return;
+      const rawLoc = r['Local de Votación Asignado'] || r.localDeVotacionAsignado || r['Local de Votación'] || r.localDeVotacion || '';
+      if (!rawLoc || rawLoc === '-' || rawLoc.toLowerCase() === 'no aplica') return;
+      const schoolNames = rawLoc.includes(',') ? rawLoc.split(',').map(s => s.trim()).filter(Boolean) : [rawLoc.trim()];
+      schoolNames.forEach(loc => {
+        set.add(normalizeLocalName(loc));
+      });
+    });
+    return set;
+  }, [records]);
+
   // =========================================================================
   // FILTRADO TAB 1 (PANEL GENERAL)
   // =========================================================================
@@ -1174,13 +1251,24 @@ export function DashboardView({ onGoToTraining }) {
       const mDist = coordinatorDistrict ? matchesDistrict(dist, coordinatorDistrict) : matchesDistrict(dist, dist1);
       const mLocalZonal = !isCoordinadorZonal || localZonal1 === 'all' || matchesLocal(local, localZonal1);
       const mRole = matchesRole(rol, role1);
+
+      // Filtro Con / Sin Coordinador Local o Personero de Centro (PCV)
+      const rRolLower = String(rol).toLowerCase();
+      const isPlvRole = rRolLower.includes('local') || rRolLower.includes('pcv') || rRolLower.includes('plv');
+      const normLoc = normalizeLocalName(local);
+      const schoolHasPlv = schoolsWithPlvSet.has(normLoc) || isPlvRole;
+
+      const mCoordLocal = coordLocalFilter1 === 'all' || (
+        coordLocalFilter1 === 'con_pcv' ? schoolHasPlv : (!schoolHasPlv && !isPlvRole)
+      );
+
       const mExp = exp1 === 'all' || (exp1 === 'si' ? getExp(r) === 'Sí' : getExp(r) === 'No');
       const mMov = mov1 === 'all' || (mov1 === 'si' ? getMov(r) === 'Sí' : getMov(r) === 'No');
       const mComp = comp1 === 'all' || (comp1 === 'si' ? getComp(r) === 'Sí' : getComp(r) === 'No');
 
-      return mSearch && mDist && mLocalZonal && mRole && mExp && mMov && mComp;
+      return mSearch && mDist && mLocalZonal && mRole && mCoordLocal && mExp && mMov && mComp;
     });
-  }, [records, search1, dist1, localZonal1, role1, exp1, mov1, comp1, coordinatorDistrict, isCoordinadorZonal]);
+  }, [records, search1, dist1, localZonal1, role1, coordLocalFilter1, exp1, mov1, comp1, coordinatorDistrict, isCoordinadorZonal, schoolsWithPlvSet]);
 
   // KPIs dinámicos sobre los registros filtrados de Tab 1
   let tab1Total = filteredRecords1.length;
@@ -1209,7 +1297,7 @@ export function DashboardView({ onGoToTraining }) {
     if (getComp(r) === 'Sí') tab1Comp++;
   });
 
-  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || (isCoordinadorZonal && localZonal1 !== 'all') || role1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
+  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || (isCoordinadorZonal && localZonal1 !== 'all') || role1 !== 'all' || coordLocalFilter1 !== 'all' || alertFilter1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
 
   // Meta territorial dinámica según el distrito asignado o seleccionado, o colegio, o zona
   const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
@@ -1288,7 +1376,23 @@ export function DashboardView({ onGoToTraining }) {
         const norm = normalizeLocalName(loc);
         if (!schoolMap.has(norm)) {
           const dist = r['Distrito Asignado'] || r.distritoAsignado || r['Distrito donde Vota'] || r.distritoDondeVota || (dist1 !== 'all' ? dist1 : 'Lima');
-          schoolMap.set(norm, { nombre: loc, distrito: dist, direccion: '', mesas: 1, personeros: [] });
+          const official = findOfficialLocal(loc, dist);
+          schoolMap.set(norm, {
+            nombre: official?.nombre || loc,
+            distrito: official?.distrito || dist,
+            direccion: official?.direccion || '',
+            mesas: official?.mesas || 1,
+            electores: official?.electores || 300,
+            personeros: []
+          });
+        } else {
+          const existing = schoolMap.get(norm);
+          if (!existing.direccion) {
+            const official = findOfficialLocal(loc, existing.distrito);
+            if (official?.direccion) existing.direccion = official.direccion;
+            if (official?.mesas && (!existing.mesas || existing.mesas === 1)) existing.mesas = official.mesas;
+            if (official?.electores && (!existing.electores || existing.electores === 300)) existing.electores = official.electores;
+          }
         }
         const existingList = schoolMap.get(norm).personeros;
         const dni = String(r['D.N.I.'] || r['DNI'] || r.dni || '');
@@ -1321,8 +1425,20 @@ export function DashboardView({ onGoToTraining }) {
     // Si es coordinador de local, filtrar solo su colegio
     if (isCoordinadorLocal && coordinatorLocal) {
       const normLocal = normalizeLocalName(coordinatorLocal);
+      const official = findOfficialLocal(coordinatorLocal, coordinatorDistrict);
       const entry = schoolMap.get(normLocal);
-      const rawSchool = entry || { nombre: coordinatorLocal, distrito: coordinatorDistrict || '', direccion: '', mesas: 1, personeros: [] };
+      const rawSchool = entry || {
+        nombre: official?.nombre || coordinatorLocal,
+        distrito: official?.distrito || coordinatorDistrict || '',
+        direccion: official?.direccion || '',
+        mesas: official?.mesas || 1,
+        electores: official?.electores || 300,
+        personeros: []
+      };
+      if (official && !rawSchool.direccion) rawSchool.direccion = official.direccion;
+      if (official && (!rawSchool.mesas || rawSchool.mesas === 1)) rawSchool.mesas = official.mesas;
+      if (official && (!rawSchool.electores || rawSchool.electores === 300)) rawSchool.electores = official.electores;
+
       const allPersoneros = rawSchool.personeros || [];
       const mesaPersoneros = allPersoneros.filter(r => {
         const rol = normalizeDistrictName(r['Rol a Desempeñar'] || r.rolADesempenar || '');
@@ -1341,10 +1457,16 @@ export function DashboardView({ onGoToTraining }) {
       }];
     }
 
-    // Mapear todas las entradas del mapa a objetos school enriquecidos
+    // Mapear todas las entradas del mapa a objetos school enriquecidos con catálogo oficial
     const mapped = Array.from(schoolMap.values()).map(school => {
+      const official = findOfficialLocal(school.nombre, school.distrito);
+      const officialDir = official?.direccion || '';
+      const officialMesas = official?.mesas || null;
+      const officialElectores = official?.electores || null;
+
       const schoolPersoneros = school.personeros;
-      const distritoNombre = school.distrito || (dist1 !== 'all' ? dist1 : 'Lima');
+      const distritoNombre = school.distrito || official?.distrito || (dist1 !== 'all' ? dist1 : 'Lima');
+      const direccion = school.direccion || officialDir || '';
       const normDist = normalizeDistrictName(distritoNombre);
       const normSchool = normalizeLocalName(school.nombre);
 
@@ -1375,23 +1497,52 @@ export function DashboardView({ onGoToTraining }) {
         return !rol.includes('LOCAL') && !rol.includes('PLV') && !rol.includes('PCV') && !rol.includes('DISTRIT') && !rol.includes('ZONAL');
       });
 
-      const totalMesas = school.mesas || Math.max(1, Math.round((school.electores || 300) / 300));
+      const totalMesas = school.mesas || officialMesas || Math.max(1, Math.round((school.electores || officialElectores || 300) / 300));
       const asignadas = mesaPersoneros.length;
-      const cobertura = totalMesas > 0 ? Math.min(100, Math.round((asignadas / totalMesas) * 100)) : 0;
-      const totalElectores = school.electores || totalMesas * 300;
+      const cobertura = totalMesas > 0 ? Math.round((asignadas / totalMesas) * 100) : 0;
+      const totalElectores = school.electores || officialElectores || totalMesas * 300;
+      const isExceeded = asignadas > totalMesas;
 
       let statusLabel = 'Crítico';
       let statusColor = '#ef4444';
-      if (cobertura >= 80) { statusLabel = 'Completo'; statusColor = '#10b981'; }
-      else if (cobertura >= 50) { statusLabel = 'Regular'; statusColor = '#f59e0b'; }
+      let statusBg = 'rgba(239, 68, 68, 0.15)';
+      let statusBorder = '#f87171';
+      let statusBadgeText = `🔴 Crítico (${cobertura}%)`;
+
+      if (isExceeded) {
+        statusLabel = 'Excedido';
+        statusColor = '#e11d48';
+        statusBg = 'rgba(225, 29, 72, 0.15)';
+        statusBorder = '#fda4af';
+        statusBadgeText = `🚨 Excedido (+${asignadas - totalMesas})`;
+      } else if (cobertura >= 76) {
+        statusLabel = 'Óptimo';
+        statusColor = '#10b981';
+        statusBg = 'rgba(16, 185, 129, 0.15)';
+        statusBorder = '#86efac';
+        statusBadgeText = `🟢 Óptimo (${cobertura}%)`;
+      } else if (cobertura >= 31) {
+        statusLabel = 'Parcial';
+        statusColor = '#f59e0b';
+        statusBg = 'rgba(245, 158, 11, 0.15)';
+        statusBorder = '#fde68a';
+        statusBadgeText = `🟡 Parcial (${cobertura}%)`;
+      } else {
+        statusLabel = 'Crítico';
+        statusColor = '#ef4444';
+        statusBg = 'rgba(239, 68, 68, 0.15)';
+        statusBorder = '#f87171';
+        statusBadgeText = `🔴 Crítico (${cobertura}%)`;
+      }
 
       return {
         nombre: school.nombre,
         distrito: distritoNombre,
-        direccion: school.direccion || '',
-        mesas: school.mesas,
-        electores: school.electores,
-        totalMesas, asignadas, cobertura, totalElectores, statusLabel, statusColor,
+        direccion: direccion,
+        mesas: totalMesas,
+        electores: totalElectores,
+        totalMesas, asignadas, cobertura, totalElectores,
+        isExceeded, statusLabel, statusColor, statusBg, statusBorder, statusBadgeText,
         zonalPersonero, plvPersonero, mesaPersoneros,
         zonalTotalColegios,
         zonalAssignedSchoolsList,
@@ -1417,7 +1568,9 @@ export function DashboardView({ onGoToTraining }) {
     // Solo mostrar colegios que tienen personeros (a menos que sea el colegio del coord. de local)
     // O si hay filtro de distrito activo, mostrar todos los del catálogo
     const withPersoneros = filtered.filter(s => s.allPersoneros.length > 0);
-    const result = withPersoneros.length > 0 ? withPersoneros : filtered.slice(0, 20);
+    const result = (dist1 !== 'all' || coordinatorDistrict)
+      ? filtered
+      : (withPersoneros.length > 0 ? withPersoneros : filtered.slice(0, 50));
 
     return result.sort((a, b) => (b.allPersoneros.length - a.allPersoneros.length) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre));
   }, [records, dist1, coordinatorDistrict, isCoordinadorLocal, coordinatorLocal, isCoordinadorZonal, coordinatorZonalLocales]);
@@ -1428,10 +1581,42 @@ export function DashboardView({ onGoToTraining }) {
   const countSingleZoneSchools = useMemo(() => districtSchools.filter(s => s.zonalTotalColegios === 1).length, [districtSchools]);
   const countUnassignedZoneSchools = useMemo(() => districtSchools.filter(s => !s.zonalPersonero).length, [districtSchools]);
 
+  // Contadores por Alertas de Cobertura en Colegios:
+  // 0% – 30%: 🔴 Crítico (#ef4444)
+  // 31% – 75%: 🟡 Parcial (#f59e0b)
+  // 76% – 100%: 🟢 Óptimo (#10b981)
+  // > 100%: 🚨 Excedido (#e11d48)
+  const countCriticoSchools = useMemo(() => districtSchools.filter(s => s.statusLabel === 'Crítico').length, [districtSchools]);
+  const countParcialSchools = useMemo(() => districtSchools.filter(s => s.statusLabel === 'Parcial').length, [districtSchools]);
+  const countOptimoSchools = useMemo(() => districtSchools.filter(s => s.statusLabel === 'Óptimo').length, [districtSchools]);
+  const countExcedidoSchools = useMemo(() => districtSchools.filter(s => s.statusLabel === 'Excedido').length, [districtSchools]);
+
+  // Contadores por Con / Sin Personero de Centro (PCV)
+  const countConPcvSchools = useMemo(() => districtSchools.filter(s => !!s.plvPersonero).length, [districtSchools]);
+  const countSinPcvSchools = useMemo(() => districtSchools.filter(s => !s.plvPersonero).length, [districtSchools]);
+
   const filteredDistrictSchools = useMemo(() => {
     let list = districtSchools;
 
-    // 1. Filtrado por Tipo de Zona (Multi-Colegio, Único, Sin Zonal)
+    // 0. Filtrado por Con / Sin Coordinador Local o Personero de Centro (PCV)
+    if (coordLocalFilter1 === 'con_pcv') {
+      list = list.filter(s => !!s.plvPersonero);
+    } else if (coordLocalFilter1 === 'sin_pcv') {
+      list = list.filter(s => !s.plvPersonero);
+    }
+
+    // 1. Filtrado por Alertas de Cobertura en Colegios (Crítico 0-30%, Parcial 31-75%, Óptimo 76-100%, Excedido >100%)
+    if (alertFilter1 === 'critico') {
+      list = list.filter(s => s.statusLabel === 'Crítico');
+    } else if (alertFilter1 === 'parcial') {
+      list = list.filter(s => s.statusLabel === 'Parcial');
+    } else if (alertFilter1 === 'optimo') {
+      list = list.filter(s => s.statusLabel === 'Óptimo');
+    } else if (alertFilter1 === 'excedido') {
+      list = list.filter(s => s.statusLabel === 'Excedido');
+    }
+
+    // 2. Filtrado por Tipo de Zona (Multi-Colegio, Único, Sin Zonal)
     if (zoneType1 === 'multi') {
       list = list.filter(s => s.zonalTotalColegios > 1);
     } else if (zoneType1 === 'single') {
@@ -1440,31 +1625,94 @@ export function DashboardView({ onGoToTraining }) {
       list = list.filter(s => !s.zonalPersonero);
     }
 
-    // 2. Si hay filtros de personeros activos (Rol, Experiencia, Movilidad, Compromiso)
+    // 3. Si hay filtros de personeros activos (Rol, Experiencia, Movilidad, Compromiso)
     const hasPersoneroFilters = role1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
     if (hasPersoneroFilters) {
-      const validDnis = new Set(filteredRecords1.map(r => String(r['D.N.I.'] || r['DNI'] || r.dni || '')));
-      list = list.filter(s => (s.allPersoneros || []).some(p => validDnis.has(String(p['D.N.I.'] || p['DNI'] || p.dni || ''))));
+      if (role1 === 'Coordinador Distrital') {
+        // Los Coordinadores Distritales son distritales y no están asignados dentro de s.allPersoneros de un colegio específico
+      } else {
+        const validDnis = new Set(filteredRecords1.map(r => String(r['D.N.I.'] || r['DNI'] || r.dni || '')));
+        list = list.filter(s => (s.allPersoneros || []).some(p => validDnis.has(String(p['D.N.I.'] || p['DNI'] || p.dni || ''))));
+      }
     }
 
-    // 3. Filtrado por Búsqueda de Texto
+    // 4. Filtrado por Búsqueda de Texto (preciso: nombre de colegio, dirección, distrito o personas asignadas a este local)
     if (search1.trim()) {
-      const term = search1.toLowerCase().trim();
-      const validDnis = new Set(filteredRecords1.map(r => String(r['D.N.I.'] || r['DNI'] || r.dni || '')));
+      const rawTerm = search1.trim().toLowerCase();
+      const normTerm = normalizeLocalName(rawTerm);
 
       list = list.filter(s => {
-        const matchSchoolName = s.nombre && s.nombre.toLowerCase().includes(term);
-        const matchAddress = s.direccion && s.direccion.toLowerCase().includes(term);
-        const matchDistrict = s.distrito && s.distrito.toLowerCase().includes(term);
-        const matchZonalName = s.zonalPersonero && (String(s.zonalPersonero['Nombres y Apellidos'] || s.zonalPersonero.nombresApellidos || '').toLowerCase().includes(term));
-        const matchPlvName = s.plvPersonero && (String(s.plvPersonero['Nombres y Apellidos'] || s.plvPersonero.nombresApellidos || '').toLowerCase().includes(term));
-        const matchPersoneros = (s.allPersoneros || []).some(p => validDnis.has(String(p['D.N.I.'] || p['DNI'] || p.dni || '')));
-        return matchSchoolName || matchAddress || matchDistrict || matchZonalName || matchPlvName || matchPersoneros;
+        const sNorm = normalizeLocalName(s.nombre || '');
+        const dNorm = normalizeDistrictName(s.distrito || '');
+        const addrNorm = normalizeLocalName(s.direccion || '');
+
+        const matchSchoolName = sNorm.includes(normTerm) || (s.nombre && s.nombre.toLowerCase().includes(rawTerm));
+        const matchAddress = addrNorm.includes(normTerm) || (s.direccion && s.direccion.toLowerCase().includes(rawTerm));
+        const matchDistrict = dNorm.includes(normTerm) || (s.distrito && s.distrito.toLowerCase().includes(rawTerm));
+
+        // Personero de Mesa asignado a este colegio
+        const matchMesaPersonero = (s.mesaPersoneros || []).some(p => {
+          const pName = (p['Nombres y Apellidos'] || p.nombresApellidos || '').toLowerCase();
+          const pDni = String(p['D.N.I.'] || p['DNI'] || p.dni || '');
+          return pName.includes(rawTerm) || pDni.includes(rawTerm);
+        });
+
+        // Coordinador de Local asignado a este colegio
+        const matchPlv = s.plvPersonero && (
+          (s.plvPersonero['Nombres y Apellidos'] || s.plvPersonero.nombresApellidos || '').toLowerCase().includes(rawTerm) ||
+          String(s.plvPersonero['D.N.I.'] || s.plvPersonero.dni || '').includes(rawTerm)
+        );
+
+        // Coordinador Zonal a cargo de este colegio
+        const matchZonal = s.zonalPersonero && (
+          (s.zonalPersonero['Nombres y Apellidos'] || s.zonalPersonero.nombresApellidos || '').toLowerCase().includes(rawTerm) ||
+          String(s.zonalPersonero['D.N.I.'] || s.zonalPersonero.dni || '').includes(rawTerm)
+        );
+
+        return matchSchoolName || matchAddress || matchDistrict || matchMesaPersonero || matchPlv || matchZonal;
       });
     }
 
-    // 4. Ordenamiento
+    // 5. Ordenamiento de Centros según cobertura de personeros, cantidad o zona
     const sorted = [...list].sort((a, b) => {
+      const isExcA = a.asignadas > (a.totalMesas || 1);
+      const isExcB = b.asignadas > (b.totalMesas || 1);
+
+      // --- 1. Mayor Cobertura de Personeros (100% a 0%) ---
+      if (sortBySchool1 === 'cobertura_desc') {
+        return (b.cobertura - a.cobertura) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 2. Menor Cobertura de Personeros (0% a 100% - Faltan personeros) ---
+      if (sortBySchool1 === 'cobertura_asc') {
+        return (a.cobertura - b.cobertura) || (a.asignadas - b.asignadas) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 3. Sobrecupo de Personeros (Superan las mesas requeridas) ---
+      if (sortBySchool1 === 'excedidos_primero') {
+        const diffA = isExcA ? (a.asignadas - (a.totalMesas || 1)) : -1;
+        const diffB = isExcB ? (b.asignadas - (b.totalMesas || 1)) : -1;
+        return (diffB - diffA) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 4. Sin Personero de Centro (PCV) Primero ---
+      if (sortBySchool1 === 'sin_pcv_primero') {
+        const hasA = !!a.plvPersonero ? 1 : 0;
+        const hasB = !!b.plvPersonero ? 1 : 0;
+        return (hasA - hasB) || (a.cobertura - b.cobertura) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 5. Con Personero de Centro (PCV) Primero ---
+      if (sortBySchool1 === 'con_pcv_primero') {
+        const hasA = !!a.plvPersonero ? 1 : 0;
+        const hasB = !!b.plvPersonero ? 1 : 0;
+        return (hasB - hasA) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 6. Más Personeros Registrados en el Centro (Total de personas) ---
+      if (sortBySchool1 === 'personeros_desc') {
+        return ((b.allPersoneros?.length || b.asignadas || 0) - (a.allPersoneros?.length || a.asignadas || 0)) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 7. Nombre Alfabético (A - Z) ---
+      if (sortBySchool1 === 'alfabetico_asc') {
+        return a.nombre.localeCompare(b.nombre);
+      }
+      // --- 8. Agrupar por Coordinador Zonal ---
       if (sortBySchool1 === 'zonal_group') {
         const nameA = a.zonalPersonero ? (a.zonalPersonero['Nombres y Apellidos'] || a.zonalPersonero.nombresApellidos || '').trim() : 'zzzz_sin_zona';
         const nameB = b.zonalPersonero ? (b.zonalPersonero['Nombres y Apellidos'] || b.zonalPersonero.nombresApellidos || '').trim() : 'zzzz_sin_zona';
@@ -1472,30 +1720,12 @@ export function DashboardView({ onGoToTraining }) {
         if (cmpZ !== 0) return cmpZ;
         return a.nombre.localeCompare(b.nombre);
       }
-      if (sortBySchool1 === 'alfabetico_asc') {
-        return a.nombre.localeCompare(b.nombre);
-      }
-      if (sortBySchool1 === 'alfabetico_desc') {
-        return b.nombre.localeCompare(a.nombre);
-      }
-      if (sortBySchool1 === 'personeros_asc') {
-        return (a.allPersoneros.length - b.allPersoneros.length) || a.nombre.localeCompare(b.nombre);
-      }
-      if (sortBySchool1 === 'mesas_desc') {
-        return ((b.totalMesas || 0) - (a.totalMesas || 0)) || (b.allPersoneros.length - a.allPersoneros.length);
-      }
-      if (sortBySchool1 === 'cobertura_desc') {
-        return (b.cobertura - a.cobertura) || (b.allPersoneros.length - a.allPersoneros.length);
-      }
-      if (sortBySchool1 === 'cobertura_asc') {
-        return (a.cobertura - b.cobertura) || (a.allPersoneros.length - a.allPersoneros.length);
-      }
-      // 'personeros_desc'
-      return (b.allPersoneros.length - a.allPersoneros.length) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre);
+
+      return (b.cobertura - a.cobertura) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre);
     });
 
     return sorted;
-  }, [districtSchools, filteredRecords1, zoneType1, search1, role1, exp1, mov1, comp1, sortBySchool1]);
+  }, [districtSchools, filteredRecords1, coordLocalFilter1, alertFilter1, zoneType1, search1, role1, exp1, mov1, comp1, sortBySchool1]);
   // Ajuste de metas por búsqueda activa (ahora que filteredDistrictSchools está disponible)
   if (search1.trim() && filteredDistrictSchools.length > 0 && filteredDistrictSchools.length < targetLocales) {
     targetLocales = filteredDistrictSchools.length;
@@ -1827,11 +2057,11 @@ export function DashboardView({ onGoToTraining }) {
               </button>
             )}
 
-            {/* Opción para Coordinadores Aprobados: Ver Certificado Oficial */}
+            {/* Opción para Coordinadores Aprobados: Ver Constancia de Capacitación */}
             {isCoordinatorApproved && (
               <button
                 onClick={() => setShowCertificate(true)}
-                title={isSidebarCollapsed ? "Ver mi Certificado Oficial de Acreditación" : undefined}
+                title={isSidebarCollapsed ? "Ver mi Constancia de Capacitación" : undefined}
                 style={{
                   padding: isSidebarCollapsed ? '10px' : '10px 12px',
                   borderRadius: '8px',
@@ -1853,7 +2083,7 @@ export function DashboardView({ onGoToTraining }) {
                 <Award className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                 {!isSidebarCollapsed && (
                   <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    Mi Certificado Oficial
+                    Mi Constancia de Capacitación
                   </span>
                 )}
               </button>
@@ -2899,7 +3129,7 @@ export function DashboardView({ onGoToTraining }) {
                   {/* Botón Limpiar Filtros */}
                   {isFiltered1 && (
                     <button
-                      onClick={() => { setSearch1(''); setDist1(coordinatorDistrict || 'all'); setRole1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
+                      onClick={() => { setSearch1(''); setDist1(coordinatorDistrict || 'all'); setRole1('all'); setCoordLocalFilter1('all'); setAlertFilter1('all'); setExp1('all'); setMov1('all'); setComp1('all'); }}
                       style={{
                         padding: '8px 14px',
                         borderRadius: '8px',
@@ -2948,6 +3178,50 @@ export function DashboardView({ onGoToTraining }) {
                     {role1 !== 'all' && (
                       <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
                         🛡️ {role1} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setRole1('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {coordLocalFilter1 !== 'all' && (
+                      <span style={{ background: isDark ? '#1e293b' : '#f1f5f9', padding: '3px 8px', borderRadius: '6px', border: `1px solid ${borderCol}` }}>
+                        🏫 PCV: {coordLocalFilter1 === 'con_pcv' ? 'Con Personero de Centro' : 'Sin Personero de Centro'} <strong style={{ color: '#ef4444', cursor: 'pointer', marginLeft: '4px' }} onClick={() => setCoordLocalFilter1('all')}>×</strong>
+                      </span>
+                    )}
+
+                    {alertFilter1 !== 'all' && (
+                      <span style={{
+                        background: isDark ? (
+                          alertFilter1 === 'critico' ? 'rgba(239, 68, 68, 0.2)' :
+                          alertFilter1 === 'parcial' ? 'rgba(245, 158, 11, 0.2)' :
+                          alertFilter1 === 'optimo' ? 'rgba(16, 185, 129, 0.2)' :
+                          'rgba(225, 29, 72, 0.2)'
+                        ) : (
+                          alertFilter1 === 'critico' ? '#fee2e2' :
+                          alertFilter1 === 'parcial' ? '#fef3c7' :
+                          alertFilter1 === 'optimo' ? '#dcfce7' :
+                          '#ffe4e6'
+                        ),
+                        color: alertFilter1 === 'critico' ? '#dc2626' :
+                               alertFilter1 === 'parcial' ? '#d97706' :
+                               alertFilter1 === 'optimo' ? '#15803d' :
+                               '#be123c',
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        border: `1px solid ${
+                          alertFilter1 === 'critico' ? '#fca5a5' :
+                          alertFilter1 === 'parcial' ? '#fde68a' :
+                          alertFilter1 === 'optimo' ? '#86efac' :
+                          '#fda4af'
+                        }`,
+                        fontWeight: 800,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}>
+                        {alertFilter1 === 'critico' && '🔴 Crítico (0% – 30%)'}
+                        {alertFilter1 === 'parcial' && '🟡 Parcial (31% – 75%)'}
+                        {alertFilter1 === 'optimo' && '🟢 Óptimo (76% – 100%)'}
+                        {alertFilter1 === 'excedido' && '🚨 Excedido (> 100%)'}
+                        <strong style={{ cursor: 'pointer', marginLeft: '4px' }} onClick={() => setAlertFilter1('all')}>×</strong>
                       </span>
                     )}
 
@@ -3060,11 +3334,16 @@ export function DashboardView({ onGoToTraining }) {
                 </div>
               </div>
 
-              {/* BOTONES DE VISTA DE TAB 1: [ Cards ] [ Tabla Padrón ] [ Directorio ] [ Excel ] */}
+              {/* BOTONES DE VISTA DE TAB 1: [ Centros y Mesas ] [ Padrón Detallado ] [ Descargar Excel ] */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   <button
-                    onClick={() => setViewMode1('cards')}
+                    onClick={() => {
+                      setViewMode1('cards');
+                      if (role1 === 'Coordinador Distrital' || role1 === 'Coordinador Zonal') {
+                        setRole1('all');
+                      }
+                    }}
                     style={{
                       padding: '8px 16px',
                       borderRadius: '8px',
@@ -3138,8 +3417,337 @@ export function DashboardView({ onGoToTraining }) {
                 </a>
               </div>
 
+              {/* VISTA TARJETAS DE COORDINADORES (CUANDO SE FILTRA POR ROL COORDINADOR) */}
+              {viewMode1 === 'cards' && (role1 === 'Coordinador Distrital' || role1 === 'Coordinador Zonal') && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {/* SECCIÓN 1: COORDINADORES DISTRITALES */}
+                  {role1 === 'Coordinador Distrital' && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '16px', padding: isMobile ? '14px' : '20px', boxShadow: isDark ? '0 4px 16px rgba(0,0,0,0.2)' : '0 2px 10px rgba(0,0,0,0.04)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ background: 'linear-gradient(135deg, #1e40af 0%, #002B66 100%)', color: '#fff', padding: '4px 10px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 900, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                            🏛️ COORDINADORES DISTRITALES
+                          </span>
+                          <strong style={{ fontSize: '0.92rem', color: textTitle }}>
+                            ({filteredRecords1.filter(r => {
+                              const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+                              return rol.includes('distrital') || rol.includes('distrito');
+                            }).length} registrados)
+                          </strong>
+                        </div>
+                        <span style={{ fontSize: '0.74rem', color: textSub }}>
+                          {dist1 !== 'all' ? `Distrito: ${dist1}` : 'Todos los distritos de Lima'}
+                        </span>
+                      </div>
+
+                      {filteredRecords1.filter(r => {
+                        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+                        return rol.includes('distrital') || rol.includes('distrito');
+                      }).length === 0 ? (
+                        <div style={{ padding: '24px 16px', textAlign: 'center', background: isDark ? 'rgba(234, 179, 8, 0.08)' : '#fefce8', border: '1px solid #fde047', borderRadius: '12px', color: isDark ? '#facc15' : '#a16207', fontSize: '0.84rem', fontWeight: 700 }}>
+                          ⚠️ Aún no hay Coordinador Distrital registrado para los filtros seleccionados ({dist1 !== 'all' ? dist1 : 'Lima'}).
+                        </div>
+                      ) : (
+                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(320px, 1fr))', gap: '14px' }}>
+                          {filteredRecords1.filter(r => {
+                            const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+                            return rol.includes('distrital') || rol.includes('distrito');
+                          }).map((cd, cdIdx) => {
+                            const cdName = cd['Nombres y Apellidos'] || cd.nombresApellidos || 'Coordinador Distrital';
+                            const cdDni = cd['D.N.I.'] || cd['DNI'] || cd.dni || '—';
+                            const cdCel = cd['Celular'] || cd.celular || '';
+                            const cdEmail = cd['Correo Electrónico'] || cd.correoElectronico || cd.email || '';
+                            const cdDist = cd['Distrito Asignado'] || cd['Distrito donde Vota'] || cd.distritoAsignado || 'Lima';
+                            const cdCred = String(cd['Credenciales'] || cd.credenciales || '').toLowerCase();
+                            const isAcred = cdCred === 'confirmado';
+                            const exp = getExp(cd);
+                            const mov = getMov(cd);
+                            const comp = getComp(cd);
+
+                            return (
+                              <div
+                                key={cdIdx}
+                                style={{
+                                  background: isDark ? '#1e293b' : '#ffffff',
+                                  border: `1.5px solid ${isAcred ? '#86efac' : borderCol}`,
+                                  borderLeft: '5px solid #1e40af',
+                                  borderRadius: '14px',
+                                  padding: '16px',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '10px',
+                                  boxShadow: isDark ? '0 4px 12px rgba(0,0,0,0.2)' : '0 1px 6px rgba(0,0,0,0.04)'
+                                }}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <span style={{
+                                    background: '#1e40af',
+                                    color: '#ffffff',
+                                    padding: '3px 9px',
+                                    borderRadius: '6px',
+                                    fontSize: '0.72rem',
+                                    fontWeight: 900,
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px'
+                                  }}>
+                                    📍 {cdDist}
+                                  </span>
+                                  <span style={{
+                                    fontSize: '0.7rem',
+                                    fontWeight: 800,
+                                    padding: '2px 8px',
+                                    borderRadius: '6px',
+                                    background: isAcred ? '#dcfce7' : '#fef9c3',
+                                    color: isAcred ? '#15803d' : '#854d0e',
+                                    border: `1px solid ${isAcred ? '#86efac' : '#fde047'}`
+                                  }}>
+                                    {isAcred ? '✅ Acreditado' : '⏳ Pendiente'}
+                                  </span>
+                                </div>
+
+                                <div>
+                                  <div style={{ fontWeight: 900, fontSize: '0.96rem', color: textTitle }}>
+                                    {cdName}
+                                  </div>
+                                  <div style={{ fontSize: '0.76rem', color: textSub, marginTop: '2px' }}>
+                                    DNI: <strong>{cdDni}</strong> {cdEmail && <span style={{ marginLeft: '6px' }}>✉️ {cdEmail}</span>}
+                                  </div>
+                                </div>
+
+                                <div style={{ display: 'flex', gap: '8px', fontSize: '0.72rem', fontWeight: 800 }}>
+                                  <span style={{ color: exp === 'Sí' ? '#16a34a' : '#94a3b8' }}>⭐ Exp: {exp}</span>
+                                  <span style={{ color: mov === 'Sí' ? '#16a34a' : '#94a3b8' }}>🚗 Mov: {mov}</span>
+                                  <span style={{ color: comp === 'Sí' ? '#16a34a' : '#ef4444' }}>📅 Comp: {comp}</span>
+                                </div>
+
+                                <div style={{ marginTop: 'auto', paddingTop: '10px', borderTop: `1px dashed ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                  {cdCel ? (
+                                    <a
+                                      href={`https://wa.me/51${String(cdCel).replace(/\D/g, '')}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      style={{
+                                        background: '#16a34a',
+                                        color: '#ffffff',
+                                        padding: '5px 10px',
+                                        borderRadius: '6px',
+                                        fontSize: '0.72rem',
+                                        fontWeight: 800,
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '4px'
+                                      }}
+                                    >
+                                      <Phone className="w-3 h-3" />
+                                      <span>{cdCel}</span>
+                                    </a>
+                                  ) : (
+                                    <span style={{ fontSize: '0.72rem', color: textSub }}>Sin Celular</span>
+                                  )}
+
+                                  <div style={{ display: 'flex', gap: '6px' }}>
+                                    <button
+                                      onClick={() => setSelectedPersonero(cd)}
+                                      style={{
+                                        padding: '5px 10px',
+                                        borderRadius: '6px',
+                                        border: `1px solid ${borderCol}`,
+                                        background: isDark ? '#1e293b' : '#f8fafc',
+                                        color: textTitle,
+                                        fontSize: '0.72rem',
+                                        fontWeight: 800,
+                                        cursor: 'pointer',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '3px'
+                                      }}
+                                    >
+                                      <Edit3 className="w-3 h-3 text-sky-500" />
+                                      <span>Ver Ficha</span>
+                                    </button>
+
+                                    <button
+                                      onClick={() => { setDist1(cdDist); setRole1('all'); setViewMode1('cards'); }}
+                                      style={{
+                                        padding: '5px 10px',
+                                        borderRadius: '6px',
+                                        border: '1px solid #0284c7',
+                                        background: isDark ? 'rgba(2,132,199,0.15)' : '#e0f2fe',
+                                        color: '#0284c7',
+                                        fontSize: '0.72rem',
+                                        fontWeight: 800,
+                                        cursor: 'pointer'
+                                      }}
+                                    >
+                                      Ver Centros &rarr;
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* SECCIÓN 2: COORDINADORES ZONALES */}
+                  {role1 === 'Coordinador Zonal' && (
+                    <div style={{ background: bgCard, border: `1px solid ${borderCol}`, borderRadius: '16px', padding: isMobile ? '14px' : '20px', boxShadow: isDark ? '0 4px 16px rgba(0,0,0,0.2)' : '0 2px 10px rgba(0,0,0,0.04)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)', color: '#fff', padding: '4px 10px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 900, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                            🗺️ COORDINADORES ZONALES
+                          </span>
+                          <strong style={{ fontSize: '0.92rem', color: textTitle }}>
+                            ({filteredRecords1.filter(r => {
+                              const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+                              return rol.includes('zonal') || rol.includes('zona');
+                            }).length} registrados)
+                          </strong>
+                        </div>
+                        <span style={{ fontSize: '0.74rem', color: textSub }}>
+                          Zonas electorales asignadas
+                        </span>
+                      </div>
+
+                      {filteredRecords1.filter(r => {
+                        const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+                        return rol.includes('zonal') || rol.includes('zona');
+                      }).length === 0 ? (
+                        <div style={{ padding: '24px 16px', textAlign: 'center', background: isDark ? 'rgba(139, 92, 246, 0.08)' : '#ede9fe', border: '1px solid #c4b5fd', borderRadius: '12px', color: '#7c3aed', fontSize: '0.84rem', fontWeight: 700 }}>
+                          ℹ️ No hay Coordinadores Zonales registrados con los filtros seleccionados ({dist1 !== 'all' ? dist1 : 'Lima'}).
+                        </div>
+                      ) : (
+                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))', gap: '14px' }}>
+                          {filteredRecords1.filter(r => {
+                            const rol = String(r['Rol a Desempeñar'] || r.rolADesempenar || '').toLowerCase();
+                            return rol.includes('zonal') || rol.includes('zona');
+                          }).map((z, zIdx) => {
+                            const zName = z['Nombres y Apellidos'] || z.nombresApellidos || 'Coordinador Zonal';
+                            const zDni = z['D.N.I.'] || z['DNI'] || z.dni || '—';
+                            const zCel = z['Celular'] || z.celular || '';
+                            const zDist = z['Distrito Asignado'] || z['Distrito donde Vota'] || z.distritoAsignado || 'Lima';
+                            const rawLocales = z['Local de Votación Asignado'] || z.localDeVotacionAsignado || z['Local de Votación'] || '';
+                            const zSchools = rawLocales.split(',').map(s => s.trim()).filter(Boolean);
+                            const zCred = String(z['Credenciales'] || z.credenciales || '').toLowerCase();
+                            const isAcred = zCred === 'confirmado';
+
+                            return (
+                              <div
+                                key={zIdx}
+                                style={{
+                                  background: isDark ? '#1e293b' : '#ffffff',
+                                  border: `1.5px solid ${isAcred ? '#86efac' : borderCol}`,
+                                  borderLeft: '5px solid #8b5cf6',
+                                  borderRadius: '14px',
+                                  padding: '16px',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '10px',
+                                  boxShadow: isDark ? '0 4px 12px rgba(0,0,0,0.2)' : '0 1px 6px rgba(0,0,0,0.04)'
+                                }}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <span style={{
+                                    background: '#7c3aed',
+                                    color: '#ffffff',
+                                    padding: '3px 9px',
+                                    borderRadius: '6px',
+                                    fontSize: '0.72rem',
+                                    fontWeight: 900
+                                  }}>
+                                    🗺️ {zDist}
+                                  </span>
+                                  <span style={{
+                                    fontSize: '0.7rem',
+                                    fontWeight: 800,
+                                    padding: '2px 8px',
+                                    borderRadius: '6px',
+                                    background: isAcred ? '#dcfce7' : '#fef9c3',
+                                    color: isAcred ? '#15803d' : '#854d0e',
+                                    border: `1px solid ${isAcred ? '#86efac' : '#fde047'}`
+                                  }}>
+                                    {isAcred ? '✅ Acreditado' : '⏳ Pendiente'}
+                                  </span>
+                                </div>
+
+                                <div>
+                                  <div style={{ fontWeight: 900, fontSize: '0.96rem', color: textTitle }}>
+                                    {zName}
+                                  </div>
+                                  <div style={{ fontSize: '0.76rem', color: textSub, marginTop: '2px' }}>
+                                    DNI: <strong>{zDni}</strong>
+                                  </div>
+                                </div>
+
+                                <div style={{ background: isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc', padding: '8px 10px', borderRadius: '8px', border: `1px solid ${borderCol}` }}>
+                                  <div style={{ fontSize: '0.72rem', color: textSub, fontWeight: 700, marginBottom: '4px' }}>
+                                    🏫 Locales de votación a cargo ({zSchools.length}):
+                                  </div>
+                                  <AssignedSchoolsPillList schools={zSchools} isDark={isDark} borderCol={borderCol} />
+                                </div>
+
+                                <div style={{ marginTop: 'auto', paddingTop: '10px', borderTop: `1px dashed ${borderCol}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+                                  {zCel ? (
+                                    <a
+                                      href={`https://wa.me/51${String(zCel).replace(/\D/g, '')}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      style={{
+                                        background: '#16a34a',
+                                        color: '#ffffff',
+                                        padding: '5px 10px',
+                                        borderRadius: '6px',
+                                        fontSize: '0.72rem',
+                                        fontWeight: 800,
+                                        textDecoration: 'none',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '4px'
+                                      }}
+                                    >
+                                      <Phone className="w-3 h-3" />
+                                      <span>{zCel}</span>
+                                    </a>
+                                  ) : (
+                                    <span style={{ fontSize: '0.72rem', color: textSub }}>Sin Celular</span>
+                                  )}
+
+                                  <button
+                                    onClick={() => setSelectedPersonero(z)}
+                                    style={{
+                                      padding: '5px 12px',
+                                      borderRadius: '6px',
+                                      border: `1px solid ${borderCol}`,
+                                      background: isDark ? '#1e293b' : '#f8fafc',
+                                      color: textTitle,
+                                      fontSize: '0.72rem',
+                                      fontWeight: 800,
+                                      cursor: 'pointer',
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px'
+                                    }}
+                                  >
+                                    <Edit3 className="w-3 h-3 text-sky-500" />
+                                    <span>Ver Ficha</span>
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* VISTA 1: CARDS DE COLEGIOS Y MESAS */}
-              {viewMode1 === 'cards' && (
+              {viewMode1 === 'cards' && role1 !== 'Coordinador Distrital' && role1 !== 'Coordinador Zonal' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {/* Centros de Votación */}
                   <div>
@@ -3158,10 +3766,209 @@ export function DashboardView({ onGoToTraining }) {
                     }}>
                       {!isCoordinadorLocal ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '6px' : '8px', flexWrap: 'wrap' }}>
-                          <span style={{ fontSize: '0.82rem', fontWeight: 800, color: textTitle, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ fontSize: '0.82rem', fontWeight: 800, color: textTitle, display: 'flex', alignItems: 'center', gap: '6px', marginRight: '4px' }}>
                             <School className="w-4 h-4 text-sky-500" />
-                            <span>Centros de Votación ({districtSchools.length})</span>
+                            <span>Centros ({districtSchools.length})</span>
                           </span>
+
+                          {/* Quick Filter Pills de Alertas de Cobertura */}
+                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap' }}>
+                            <button
+                              type="button"
+                              onClick={() => { setAlertFilter1('all'); setCoordLocalFilter1('all'); }}
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: (alertFilter1 === 'all' && coordLocalFilter1 === 'all') ? '1.5px solid #0284c7' : `1px solid ${borderCol}`,
+                                background: (alertFilter1 === 'all' && coordLocalFilter1 === 'all') ? (isDark ? '#0369a1' : '#e0f2fe') : (isDark ? '#1e293b' : '#ffffff'),
+                                color: (alertFilter1 === 'all' && coordLocalFilter1 === 'all') ? (isDark ? '#ffffff' : '#0369a1') : textSub,
+                                fontSize: '0.72rem',
+                                fontWeight: (alertFilter1 === 'all' && coordLocalFilter1 === 'all') ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease'
+                              }}
+                            >
+                              Todos ({districtSchools.length})
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setAlertFilter1(alertFilter1 === 'critico' ? 'all' : 'critico')}
+                              title="0% – 30% Cobertura"
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: alertFilter1 === 'critico' ? '1.5px solid #ef4444' : (countCriticoSchools > 0 ? '1px solid #fca5a5' : `1px solid ${borderCol}`),
+                                background: alertFilter1 === 'critico' ? '#ef4444' : (countCriticoSchools > 0 ? (isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2') : 'transparent'),
+                                color: alertFilter1 === 'critico' ? '#ffffff' : (countCriticoSchools > 0 ? '#ef4444' : textSub),
+                                fontSize: '0.72rem',
+                                fontWeight: alertFilter1 === 'critico' ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '3px'
+                              }}
+                            >
+                              <span>🔴 Crítico (0-30%)</span>
+                              <span style={{
+                                background: alertFilter1 === 'critico' ? 'rgba(255,255,255,0.3)' : 'rgba(239,68,68,0.2)',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                fontSize: '0.66rem',
+                                fontWeight: 800
+                              }}>{countCriticoSchools}</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setAlertFilter1(alertFilter1 === 'parcial' ? 'all' : 'parcial')}
+                              title="31% – 75% Cobertura"
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: alertFilter1 === 'parcial' ? '1.5px solid #f59e0b' : (countParcialSchools > 0 ? '1px solid #fcd34d' : `1px solid ${borderCol}`),
+                                background: alertFilter1 === 'parcial' ? '#f59e0b' : (countParcialSchools > 0 ? (isDark ? 'rgba(245, 158, 11, 0.15)' : '#fffbeb') : 'transparent'),
+                                color: alertFilter1 === 'parcial' ? '#ffffff' : (countParcialSchools > 0 ? '#d97706' : textSub),
+                                fontSize: '0.72rem',
+                                fontWeight: alertFilter1 === 'parcial' ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '3px'
+                              }}
+                            >
+                              <span>🟡 Parcial (31-75%)</span>
+                              <span style={{
+                                background: alertFilter1 === 'parcial' ? 'rgba(255,255,255,0.3)' : 'rgba(245,158,11,0.2)',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                fontSize: '0.66rem',
+                                fontWeight: 800
+                              }}>{countParcialSchools}</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setAlertFilter1(alertFilter1 === 'optimo' ? 'all' : 'optimo')}
+                              title="76% – 100% Cobertura"
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: alertFilter1 === 'optimo' ? '1.5px solid #10b981' : (countOptimoSchools > 0 ? '1px solid #86efac' : `1px solid ${borderCol}`),
+                                background: alertFilter1 === 'optimo' ? '#10b981' : (countOptimoSchools > 0 ? (isDark ? 'rgba(16, 185, 129, 0.15)' : '#ecfdf5') : 'transparent'),
+                                color: alertFilter1 === 'optimo' ? '#ffffff' : (countOptimoSchools > 0 ? '#059669' : textSub),
+                                fontSize: '0.72rem',
+                                fontWeight: alertFilter1 === 'optimo' ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '3px'
+                              }}
+                            >
+                              <span>🟢 Óptimo (76-100%)</span>
+                              <span style={{
+                                background: alertFilter1 === 'optimo' ? 'rgba(255,255,255,0.3)' : 'rgba(16,185,129,0.2)',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                fontSize: '0.66rem',
+                                fontWeight: 800
+                              }}>{countOptimoSchools}</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setAlertFilter1(alertFilter1 === 'excedido' ? 'all' : 'excedido')}
+                              title="> 100% Cobertura (Mesas sobrepasadas)"
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: alertFilter1 === 'excedido' ? '1.5px solid #e11d48' : (countExcedidoSchools > 0 ? '1px solid #fda4af' : `1px solid ${borderCol}`),
+                                background: alertFilter1 === 'excedido' ? '#e11d48' : (countExcedidoSchools > 0 ? (isDark ? 'rgba(225, 29, 72, 0.15)' : '#fff1f2') : 'transparent'),
+                                color: alertFilter1 === 'excedido' ? '#ffffff' : (countExcedidoSchools > 0 ? '#e11d48' : textSub),
+                                fontSize: '0.72rem',
+                                fontWeight: alertFilter1 === 'excedido' ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '3px'
+                              }}
+                            >
+                              <span>🚨 Excedido (&gt;100%)</span>
+                              <span style={{
+                                background: alertFilter1 === 'excedido' ? 'rgba(255,255,255,0.3)' : 'rgba(225,29,72,0.2)',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                fontSize: '0.66rem',
+                                fontWeight: 800
+                              }}>{countExcedidoSchools}</span>
+                            </button>
+
+                            {/* Separador */}
+                            <span style={{ color: borderCol, padding: '0 2px' }}>|</span>
+
+                            {/* Quick Filter Pills de Personero de Centro (PCV) */}
+                            <button
+                              type="button"
+                              onClick={() => setCoordLocalFilter1(coordLocalFilter1 === 'con_pcv' ? 'all' : 'con_pcv')}
+                              title="Colegios CON Personero de Centro (PCV)"
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: coordLocalFilter1 === 'con_pcv' ? '1.5px solid #0284c7' : (countConPcvSchools > 0 ? '1px solid #bae6fd' : `1px solid ${borderCol}`),
+                                background: coordLocalFilter1 === 'con_pcv' ? '#0284c7' : (countConPcvSchools > 0 ? (isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe') : 'transparent'),
+                                color: coordLocalFilter1 === 'con_pcv' ? '#ffffff' : (countConPcvSchools > 0 ? '#0284c7' : textSub),
+                                fontSize: '0.72rem',
+                                fontWeight: coordLocalFilter1 === 'con_pcv' ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '3px'
+                              }}
+                            >
+                              <span>✅ Con PCV</span>
+                              <span style={{
+                                background: coordLocalFilter1 === 'con_pcv' ? 'rgba(255,255,255,0.3)' : 'rgba(2,132,199,0.2)',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                fontSize: '0.66rem',
+                                fontWeight: 800
+                              }}>{countConPcvSchools}</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setCoordLocalFilter1(coordLocalFilter1 === 'sin_pcv' ? 'all' : 'sin_pcv')}
+                              title="Colegios SIN Personero de Centro (PCV)"
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '20px',
+                                border: coordLocalFilter1 === 'sin_pcv' ? '1.5px solid #f59e0b' : (countSinPcvSchools > 0 ? '1px solid #fcd34d' : `1px solid ${borderCol}`),
+                                background: coordLocalFilter1 === 'sin_pcv' ? '#f59e0b' : (countSinPcvSchools > 0 ? (isDark ? 'rgba(245, 158, 11, 0.15)' : '#fffbeb') : 'transparent'),
+                                color: coordLocalFilter1 === 'sin_pcv' ? '#ffffff' : (countSinPcvSchools > 0 ? '#d97706' : textSub),
+                                fontSize: '0.72rem',
+                                fontWeight: coordLocalFilter1 === 'sin_pcv' ? 800 : 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.15s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '3px'
+                              }}
+                            >
+                              <span>⚠️ Sin PCV</span>
+                              <span style={{
+                                background: coordLocalFilter1 === 'sin_pcv' ? 'rgba(255,255,255,0.3)' : 'rgba(245,158,11,0.2)',
+                                padding: '1px 5px',
+                                borderRadius: '10px',
+                                fontSize: '0.66rem',
+                                fontWeight: 800
+                              }}>{countSinPcvSchools}</span>
+                            </button>
+                          </div>
                         </div>
                       ) : (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -3189,7 +3996,7 @@ export function DashboardView({ onGoToTraining }) {
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flex: isMobile ? 1 : 'none' }}>
                             <span style={{ fontSize: '0.76rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', gap: '3px', whiteSpace: 'nowrap' }}>
                               <ArrowUpDown className="w-3.5 h-3.5 text-amber-500" />
-                              <span style={{ display: isMobile ? 'none' : 'inline' }}>Ordenar por:</span>
+                              <span style={{ display: isMobile ? 'none' : 'inline' }}>Ordenar centros:</span>
                             </span>
                             <select
                               value={sortBySchool1}
@@ -3207,13 +4014,22 @@ export function DashboardView({ onGoToTraining }) {
                                 width: isMobile ? '100%' : 'auto'
                               }}
                             >
-                              <option value="personeros_desc">👥 Mayor cantidad de Personeros</option>
-                              <option value="personeros_asc">👥 Menor cantidad de Personeros</option>
-                              <option value="alfabetico_asc">🔤 Nombre Local de Votación (A - Z)</option>
-                              <option value="alfabetico_desc">🔤 Nombre Local de Votación (Z - A)</option>
-                              <option value="mesas_desc">🗳️ Mayor cantidad de Mesas</option>
-                              <option value="cobertura_desc">📈 Mayor Cobertura (%)</option>
-                              <option value="cobertura_asc">📉 Menor Cobertura (%)</option>
+                              <optgroup label="📊 COBERTURA DE PERSONEROS">
+                                <option value="cobertura_desc">📈 Mayor Cobertura (100% → 0% personeros asignados)</option>
+                                <option value="cobertura_asc">📉 Menor Cobertura / Urgentes (0% → 100% faltan personeros)</option>
+                                <option value="excedidos_primero">🚨 Sobrecupo (Más personeros que mesas requeridas)</option>
+                              </optgroup>
+                              <optgroup label="🏫 PERSONERO DE CENTRO (PCV)">
+                                <option value="sin_pcv_primero">⚠️ Sin Personero de Centro (PCV) primero</option>
+                                <option value="con_pcv_primero">✅ Con Personero de Centro (PCV) primero</option>
+                              </optgroup>
+                              <optgroup label="👥 CANTIDAD DE PERSONEROS">
+                                <option value="personeros_desc">👥 Más Personeros Registrados en el Centro</option>
+                              </optgroup>
+                              <optgroup label="🔤 ALFABÉTICO Y ZONAS">
+                                <option value="alfabetico_asc">🔤 Nombre del Centro (A → Z)</option>
+                                <option value="zonal_group">🗺️ Por Coordinador Zonal</option>
+                              </optgroup>
                             </select>
                           </div>
                         )}
@@ -3316,6 +4132,7 @@ export function DashboardView({ onGoToTraining }) {
                                   setSearch1('');
                                   setDist1(coordinatorDistrict || 'all');
                                   setRole1('all');
+                                  setCoordLocalFilter1('all');
                                   setExp1('all');
                                   setMov1('all');
                                   setComp1('all');
@@ -3346,7 +4163,8 @@ export function DashboardView({ onGoToTraining }) {
                         </div>
                       ) : (
                         filteredDistrictSchools.map((school, sIdx) => {
-                          const borderColorLeft = isCoordinadorLocal ? '#10b981' : (school.plvPersonero ? '#0284c7' : '#f59e0b');
+                          const isExceeded = school.isExceeded;
+                          const borderColorLeft = school.statusColor;
 
                           return (
                             <React.Fragment key={`school-frag-${sIdx}`}>
@@ -3355,7 +4173,7 @@ export function DashboardView({ onGoToTraining }) {
                                 onClick={() => setSelectedSchoolDetail(school)}
                                 style={{
                                   background: bgCard,
-                                  border: `1px solid ${borderCol}`,
+                                  border: `1px solid ${isExceeded ? '#fda4af' : borderCol}`,
                                   borderLeft: `5px solid ${borderColorLeft}`,
                                   borderRadius: '14px',
                                   padding: '14px 16px',
@@ -3376,21 +4194,39 @@ export function DashboardView({ onGoToTraining }) {
                                   e.currentTarget.style.boxShadow = isDark ? '0 4px 12px rgba(0,0,0,0.2)' : '0 1px 6px rgba(0,0,0,0.04)';
                                 }}
                               >
-                                {/* Tags superiores: Distrito + Indicador Claro de Zona */}
+                                {/* Tags superiores: Distrito + Indicador de Alerta de Cobertura + Indicador de PCV */}
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', flexWrap: 'wrap' }}>
-                                  <span style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '4px',
-                                    background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
-                                    color: '#0284c7',
-                                    padding: '2px 8px',
-                                    borderRadius: '6px',
-                                    fontSize: '0.71rem',
-                                    fontWeight: 800
-                                  }}>
-                                    📍 {school.distrito}
-                                  </span>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                                    <span style={{
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      background: isDark ? 'rgba(2, 132, 199, 0.2)' : '#e0f2fe',
+                                      color: '#0284c7',
+                                      padding: '2px 8px',
+                                      borderRadius: '6px',
+                                      fontSize: '0.71rem',
+                                      fontWeight: 800
+                                    }}>
+                                      📍 {school.distrito}
+                                    </span>
+
+                                    {/* Badge Alerta de Cobertura: 0-30% Crítico, 31-75% Parcial, 76-100% Óptimo, >100% Excedido */}
+                                    <span style={{
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      background: isDark ? school.statusBg : (school.cobertura >= 76 && !school.isExceeded ? '#dcfce7' : (school.cobertura >= 31 && !school.isExceeded ? '#fef3c7' : (school.isExceeded ? '#ffe4e6' : '#fee2e2'))),
+                                      color: school.statusColor,
+                                      border: `1px solid ${school.statusBorder}`,
+                                      padding: '2px 8px',
+                                      borderRadius: '6px',
+                                      fontSize: '0.71rem',
+                                      fontWeight: 900
+                                    }}>
+                                      {school.statusBadgeText}
+                                    </span>
+                                  </div>
 
                                   {isCoordinadorLocal ? (
                                     <span style={{
@@ -3448,29 +4284,13 @@ export function DashboardView({ onGoToTraining }) {
                                       {school.nombre}
                                     </strong>
                                   </div>
-
-                                  {/* Badge Registrados */}
-                                  <div style={{
-                                    background: '#10b981',
-                                    color: '#ffffff',
-                                    padding: '3px 8px',
-                                    borderRadius: '16px',
-                                    fontSize: '0.72rem',
-                                    fontWeight: 900,
-                                    flexShrink: 0,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '4px'
-                                  }}>
-                                    <span>👥 {school.asignadas} {school.asignadas === 1 ? 'Mesa' : 'Mesas'}</span>
-                                  </div>
                                 </div>
 
                                 {/* Dirección */}
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.73rem', color: textSub }}>
                                   <span>📍</span>
                                   <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    {school.direccion || 'DIRECCIÓN NO REGISTRADA'}
+                                    {school.direccion || findOfficialLocal(school.nombre, school.distrito)?.direccion || 'DIRECCIÓN NO REGISTRADA'}
                                   </span>
                                 </div>
 
@@ -3482,7 +4302,7 @@ export function DashboardView({ onGoToTraining }) {
                                   display: 'flex',
                                   flexDirection: 'column',
                                   gap: '6px',
-                                  border: `1px solid ${borderCol}`
+                                  border: `1px solid ${isExceeded ? '#fda4af' : borderCol}`
                                 }}>
                                   {isCoordinadorLocal ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.74rem' }}>
@@ -3491,9 +4311,14 @@ export function DashboardView({ onGoToTraining }) {
                                         <strong style={{ color: '#0284c7' }}>{user?.nombresApellidos || user?.['Nombres y Apellidos'] || 'Asignado'}</strong>
                                       </div>
                                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
-                                        <span style={{ color: textSub, fontWeight: 700 }}>Mesas Cubiertas:</span>
-                                        <strong style={{ color: school.asignadas >= (school.totalMesas || 1) ? '#16a34a' : '#f59e0b' }}>
-                                          {school.asignadas} de {school.totalMesas || 1} mesas ({school.cobertura}%)
+                                        <span style={{ color: textSub, fontWeight: 700 }}>Cobertura de Mesas:</span>
+                                        <strong style={{
+                                          color: isExceeded ? '#e11d48' : school.statusColor,
+                                          fontWeight: 900
+                                        }}>
+                                          {isExceeded
+                                            ? `🚨 ${school.asignadas} de ${school.totalMesas || 1} mesas (Sobrepasó por +${school.asignadas - (school.totalMesas || 1)})`
+                                            : `${school.asignadas} de ${school.totalMesas || 1} mesas (${school.cobertura}%) • ${school.statusLabel}`}
                                         </strong>
                                       </div>
                                     </div>
@@ -3547,8 +4372,13 @@ export function DashboardView({ onGoToTraining }) {
                                       {/* 2. Cobertura de Mesas y Personeros */}
                                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', fontSize: '0.72rem' }}>
                                         <span style={{ color: textSub, fontWeight: 700 }}>Cobertura de Mesas:</span>
-                                        <strong style={{ color: school.asignadas >= (school.totalMesas || 1) ? '#16a34a' : '#f59e0b' }}>
-                                          {school.asignadas} de {school.totalMesas || 1} mesas ({school.cobertura}%)
+                                        <strong style={{
+                                          color: isExceeded ? '#e11d48' : school.statusColor,
+                                          fontWeight: 900
+                                        }}>
+                                          {isExceeded
+                                            ? `🚨 ${school.asignadas} de ${school.totalMesas || 1} mesas (Sobrepasó por +${school.asignadas - (school.totalMesas || 1)})`
+                                            : `${school.asignadas} de ${school.totalMesas || 1} mesas (${school.cobertura}%) • ${school.statusLabel}`}
                                         </strong>
                                       </div>
                                     </>
@@ -4606,29 +5436,6 @@ export function DashboardView({ onGoToTraining }) {
                     Historial de Modificaciones y Eliminaciones
                   </h2>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={fetchAuditLogs}
-                  disabled={auditLoading}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    padding: '6px 12px',
-                    borderRadius: '6px',
-                    border: `1px solid ${borderCol}`,
-                    background: isDark ? '#1e293b' : '#f0f9ff',
-                    color: '#0284c7',
-                    fontWeight: 800,
-                    fontSize: '0.76rem',
-                    cursor: auditLoading ? 'not-allowed' : 'pointer',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <RefreshCw className={`w-3.5 h-3.5 ${auditLoading ? 'animate-spin' : ''}`} />
-                  <span>{auditLoading ? 'Actualizando...' : 'Recargar'}</span>
-                </button>
               </div>
 
               {/* Barra KPI Compacta */}
@@ -5158,7 +5965,7 @@ export function DashboardView({ onGoToTraining }) {
                   </strong>
                 </div>
                 <div style={{ fontSize: '0.72rem', color: textSub, marginTop: '2px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                  <span>📍 Distrito: <strong>{selectedSchoolDetail.distrito}</strong></span>
+                  <span>📍 <strong>{selectedSchoolDetail.direccion || findOfficialLocal(selectedSchoolDetail.nombre, selectedSchoolDetail.distrito)?.direccion || selectedSchoolDetail.distrito}</strong> ({selectedSchoolDetail.distrito})</span>
                   <span>&bull;</span>
                   <span><strong>{selectedSchoolDetail.allPersoneros.length}</strong> {selectedSchoolDetail.allPersoneros.length === 1 ? 'personero' : 'personeros'}</span>
                 </div>
@@ -5189,200 +5996,352 @@ export function DashboardView({ onGoToTraining }) {
               </button>
             </div>
 
-            {/* Lista Real de Personeros del Colegio Seleccionado */}
-            <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {/* Tarjeta Destacada del Personero de Centro de Votación (PCV) */}
-                <div style={{
-                  background: selectedSchoolDetail.plvPersonero ? (isDark ? 'rgba(2, 132, 199, 0.12)' : '#f0f9ff') : (isDark ? 'rgba(245, 158, 11, 0.12)' : '#fefce8'),
-                  border: `1.5px solid ${selectedSchoolDetail.plvPersonero ? '#38bdf8' : '#fde047'}`,
-                  borderRadius: '12px',
-                  padding: '12px 14px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px'
-                }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{
-                      fontSize: '0.74rem',
-                      fontWeight: 900,
-                      color: selectedSchoolDetail.plvPersonero ? '#0284c7' : '#b45309',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '5px'
-                    }}>
-                      <School className="w-3.5 h-3.5" />
-                      <span>PERSONERO DE CENTRO DE VOTACIÓN (PCV)</span>
-                    </span>
-                    {selectedSchoolDetail.plvPersonero && (
-                      <span style={{ fontSize: '0.68rem', fontWeight: 800, background: '#10b981', color: '#fff', padding: '1px 8px', borderRadius: '10px' }}>
-                        ASIGNADO
-                      </span>
-                    )}
+            {/* Contenido del Modal: Coordinación y Personeros de Mesa */}
+            <div style={{ padding: '16px 20px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                
+                {/* 1. SECCIÓN DE COORDINACIÓN (LOCAL Y ZONAL) */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ fontSize: '0.74rem', fontWeight: 900, color: textSub, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    🏛️ Estructura de Coordinación:
                   </div>
 
-                  {selectedSchoolDetail.plvPersonero ? (
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-                      <div>
-                        <strong style={{ fontSize: '0.92rem', color: textTitle, display: 'block' }}>
-                          {selectedSchoolDetail.plvPersonero['Nombres y Apellidos'] || selectedSchoolDetail.plvPersonero.nombresApellidos}
-                        </strong>
-                        <div style={{ fontSize: '0.74rem', color: textSub, marginTop: '2px' }}>
-                          DNI: <strong>{selectedSchoolDetail.plvPersonero['D.N.I.'] || selectedSchoolDetail.plvPersonero.dni}</strong>
-                        </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '8px' }}>
+                    {/* Tarjeta Coordinador de Local (PCV) */}
+                    <div style={{
+                      background: selectedSchoolDetail.plvPersonero ? (isDark ? 'rgba(2, 132, 199, 0.12)' : '#f0f9ff') : (isDark ? 'rgba(245, 158, 11, 0.12)' : '#fefce8'),
+                      border: `1.5px solid ${selectedSchoolDetail.plvPersonero ? '#38bdf8' : '#fde047'}`,
+                      borderRadius: '12px',
+                      padding: '10px 12px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      gap: '6px'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 900,
+                          color: selectedSchoolDetail.plvPersonero ? '#0284c7' : '#b45309',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}>
+                          <School className="w-3.5 h-3.5" />
+                          <span>Coord. de Local (PCV)</span>
+                        </span>
+                        {selectedSchoolDetail.plvPersonero ? (
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: '#10b981', color: '#fff', padding: '1px 6px', borderRadius: '8px' }}>
+                            ASIGNADO
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: '#f59e0b', color: '#fff', padding: '1px 6px', borderRadius: '8px' }}>
+                            VACANTE
+                          </span>
+                        )}
                       </div>
 
-                      {(selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular) && (
-                        <a
-                          href={`https://wa.me/51${String(selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular).replace(/\D/g, '')}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '5px',
-                            background: '#16a34a',
-                            color: '#ffffff',
-                            padding: '5px 12px',
-                            borderRadius: '8px',
-                            fontSize: '0.74rem',
-                            fontWeight: 800,
-                            textDecoration: 'none'
-                          }}
-                        >
-                          <Phone className="w-3 h-3" />
-                          <span>WhatsApp ({selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular})</span>
-                        </a>
+                      {selectedSchoolDetail.plvPersonero ? (
+                        <div>
+                          <strong style={{ fontSize: '0.86rem', color: textTitle, display: 'block', lineHeight: 1.2 }}>
+                            {selectedSchoolDetail.plvPersonero['Nombres y Apellidos'] || selectedSchoolDetail.plvPersonero.nombresApellidos}
+                          </strong>
+                          <div style={{ fontSize: '0.72rem', color: textSub, marginTop: '2px' }}>
+                            DNI: <strong>{selectedSchoolDetail.plvPersonero['D.N.I.'] || selectedSchoolDetail.plvPersonero.dni}</strong>
+                          </div>
+                          {(selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular) && (
+                            <a
+                              href={`https://wa.me/51${String(selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular).replace(/\D/g, '')}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                background: '#16a34a',
+                                color: '#ffffff',
+                                padding: '4px 8px',
+                                borderRadius: '6px',
+                                fontSize: '0.7rem',
+                                fontWeight: 800,
+                                textDecoration: 'none',
+                                marginTop: '4px'
+                              }}
+                            >
+                              <Phone className="w-2.5 h-2.5" />
+                              <span>{selectedSchoolDetail.plvPersonero['Celular'] || selectedSchoolDetail.plvPersonero.celular}</span>
+                            </a>
+                          )}
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: '0.72rem', color: '#b45309', fontWeight: 600 }}>
+                          ⚠️ Sin Coordinador de Local asignado.
+                        </div>
                       )}
                     </div>
-                  ) : (
-                    <div style={{ fontSize: '0.78rem', color: '#b45309', fontWeight: 700 }}>
-                      ⚠️ Este centro de votación aún no tiene un Personero de Centro de Votación asignado.
+
+                    {/* Tarjeta Coordinador Zonal */}
+                    <div style={{
+                      background: selectedSchoolDetail.zonalPersonero ? (isDark ? 'rgba(139, 92, 246, 0.12)' : '#f5f3ff') : (isDark ? 'rgba(100, 116, 139, 0.12)' : '#f8fafc'),
+                      border: `1.5px solid ${selectedSchoolDetail.zonalPersonero ? '#a78bfa' : borderCol}`,
+                      borderRadius: '12px',
+                      padding: '10px 12px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      gap: '6px'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 900,
+                          color: selectedSchoolDetail.zonalPersonero ? '#7c3aed' : textSub,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}>
+                          <span>🗺️</span>
+                          <span>Coordinador Zonal</span>
+                        </span>
+                        {selectedSchoolDetail.zonalPersonero ? (
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: '#8b5cf6', color: '#fff', padding: '1px 6px', borderRadius: '8px' }}>
+                            A CARGO
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: '#64748b', color: '#fff', padding: '1px 6px', borderRadius: '8px' }}>
+                            SIN ZONAL
+                          </span>
+                        )}
+                      </div>
+
+                      {selectedSchoolDetail.zonalPersonero ? (
+                        <div>
+                          <strong style={{ fontSize: '0.86rem', color: textTitle, display: 'block', lineHeight: 1.2 }}>
+                            {selectedSchoolDetail.zonalPersonero['Nombres y Apellidos'] || selectedSchoolDetail.zonalPersonero.nombresApellidos}
+                          </strong>
+                          <div style={{ fontSize: '0.72rem', color: textSub, marginTop: '2px' }}>
+                            DNI: <strong>{selectedSchoolDetail.zonalPersonero['D.N.I.'] || selectedSchoolDetail.zonalPersonero.dni}</strong>
+                          </div>
+                          {(selectedSchoolDetail.zonalPersonero['Celular'] || selectedSchoolDetail.zonalPersonero.celular) && (
+                            <a
+                              href={`https://wa.me/51${String(selectedSchoolDetail.zonalPersonero['Celular'] || selectedSchoolDetail.zonalPersonero.celular).replace(/\D/g, '')}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                background: '#16a34a',
+                                color: '#ffffff',
+                                padding: '4px 8px',
+                                borderRadius: '6px',
+                                fontSize: '0.7rem',
+                                fontWeight: 800,
+                                textDecoration: 'none',
+                                marginTop: '4px'
+                              }}
+                            >
+                              <Phone className="w-2.5 h-2.5" />
+                              <span>{selectedSchoolDetail.zonalPersonero['Celular'] || selectedSchoolDetail.zonalPersonero.celular}</span>
+                            </a>
+                          )}
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: '0.72rem', color: textSub, fontWeight: 600 }}>
+                          No asignado a una zona específica.
+                        </div>
+                      )}
                     </div>
+                  </div>
+                </div>
+
+                {/* 2. SECCIÓN EXCLUSIVA DE PERSONEROS DE MESA */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 900, color: textSub, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      👥 Personeros de Mesa Registrados ({sortedModalMesaPersoneros.length} de {selectedSchoolDetail.totalMesas || 1} mesas):
+                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        fontWeight: 800,
+                        color: sortedModalMesaPersoneros.length >= (selectedSchoolDetail.totalMesas || 1) ? '#16a34a' : '#0284c7'
+                      }}>
+                        {selectedSchoolDetail.cobertura}% Cubierto
+                      </span>
+                      {sortedModalMesaPersoneros.length > 1 && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <ArrowUpDown className="w-3 h-3 text-emerald-500" />
+                          <select
+                            value={sortByMesa}
+                            onChange={(e) => setSortByMesa(e.target.value)}
+                            style={{
+                              padding: '3px 8px',
+                              borderRadius: '6px',
+                              border: `1px solid ${borderCol}`,
+                              background: isDark ? '#1e293b' : '#ffffff',
+                              color: textTitle,
+                              fontSize: '0.7rem',
+                              fontWeight: 800,
+                              cursor: 'pointer',
+                              outline: 'none'
+                            }}
+                          >
+                            <optgroup label="🗳️ MESA ASIGNADA">
+                              <option value="mesa_asc">🔢 Mesa Asignada: Menor a Mayor</option>
+                              <option value="mesa_desc">🔢 Mesa Asignada: Mayor a Menor</option>
+                            </optgroup>
+                            <optgroup label="👤 DATOS DEL PERSONERO">
+                              <option value="nombre_asc">🔤 Nombre del Personero (A → Z)</option>
+                            </optgroup>
+                            <optgroup label="📋 ESTADO Y LOGÍSTICA">
+                              <option value="acreditados_primero">✅ Personeros Acreditados primero</option>
+                              <option value="movilidad_primero">🚗 Personeros con Movilidad primero</option>
+                              <option value="experiencia_primero">⭐ Personeros con Experiencia primero</option>
+                            </optgroup>
+                          </select>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {sortedModalMesaPersoneros.length === 0 ? (
+                    <div style={{
+                      textAlign: 'center',
+                      padding: '24px 16px',
+                      background: isDark ? 'rgba(255,255,255,0.02)' : '#f8fafc',
+                      borderRadius: '10px',
+                      border: `1px dashed ${borderCol}`,
+                      color: textSub,
+                      fontSize: '0.82rem'
+                    }}>
+                      ⚠️ No hay personeros de mesa registrados todavía en este local de votación.
+                    </div>
+                  ) : (
+                    sortedModalMesaPersoneros.map((assignedPerson, mIdx) => {
+                      const pName = assignedPerson['Nombres y Apellidos'] || assignedPerson.nombresApellidos || 'Sin Nombre';
+                      const pDni = assignedPerson['D.N.I.'] || assignedPerson.dni || '-';
+                      const pCel = assignedPerson['Celular'] || assignedPerson.celular || '';
+                      const pMesa = assignedPerson['Mesa de Votación'] || assignedPerson.mesa || assignedPerson.mesa_asignada || assignedPerson.mesaAsignada || 'Por Asignar';
+                      const pAcc = (assignedPerson['Acreditado'] || '').toLowerCase() === 'si';
+                      const isExpanded = expandedMesa === `p-${mIdx}`;
+
+                      return (
+                        <div
+                          key={`mesa-p-${mIdx}`}
+                          style={{
+                            background: isDark ? '#0f172a' : '#ffffff',
+                            border: `1px solid ${borderCol}`,
+                            borderLeft: '5px solid #10b981',
+                            borderRadius: '10px',
+                            padding: '10px 12px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '6px',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                          onClick={() => setExpandedMesa(isExpanded ? null : `p-${mIdx}`)}
+                        >
+                          {/* Fila Principal del Personero de Mesa */}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                              <div style={{ fontSize: '0.88rem', fontWeight: 900, color: textTitle }}>
+                                {pName}
+                              </div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px', flexWrap: 'wrap' }}>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 800, background: '#dcfce7', color: '#15803d', padding: '1px 6px', borderRadius: '4px' }}>
+                                  🗳️ Mesa: {pMesa}
+                                </span>
+                                <span style={{ fontSize: '0.72rem', color: textSub }}>
+                                  DNI: <strong>{pDni}</strong>
+                                </span>
+                              </div>
+                            </div>
+
+                            {pCel && (
+                              <a
+                                href={`https://wa.me/51${String(pCel).replace(/\D/g, '')}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  background: '#16a34a',
+                                  color: '#ffffff',
+                                  padding: '4px 8px',
+                                  borderRadius: '6px',
+                                  fontSize: '0.7rem',
+                                  fontWeight: 800,
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                <Phone className="w-2.5 h-2.5" />
+                                <span>{pCel}</span>
+                              </a>
+                            )}
+                          </div>
+
+                          {/* DETALLE EXPANDIDO */}
+                          {isExpanded && (
+                            <div style={{
+                              marginTop: '6px',
+                              paddingTop: '6px',
+                              borderTop: `1px dashed ${borderCol}`,
+                              fontSize: '0.74rem',
+                              color: textSub,
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '4px'
+                            }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '4px' }}>
+                                <div>📱 <strong>WhatsApp:</strong> {pCel || '-'}</div>
+                                <div>✉️ <strong>Email:</strong> {assignedPerson['Correo Electrónico'] || assignedPerson.correoElectronico || assignedPerson.email || '-'}</div>
+                              </div>
+                              <div>📍 Distrito donde vota: <strong>{assignedPerson['Distrito donde Vota'] || assignedPerson.distritoDondeVota || assignedPerson.distrito || '-'}</strong></div>
+                              <div>⭐ Experiencia previa: <strong>{assignedPerson['Tiene Experiencia'] || assignedPerson.tieneExperiencia || 'No'}</strong></div>
+                              <div>🚗 Movilidad propia: <strong>{assignedPerson['Cuenta con Movilidad'] || assignedPerson.cuentaConMovilidad || 'No'}</strong></div>
+                              <div>📅 Compromiso: <strong>{assignedPerson['Se Compromete'] || assignedPerson.seCompromete || 'Sí'}</strong></div>
+
+                              {(isSuperAdmin || isCoordinadorDistrital) && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedPersonero(assignedPerson);
+                                  }}
+                                  style={{
+                                    marginTop: '6px',
+                                    padding: '6px 12px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #0284c7',
+                                    background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
+                                    color: '#0284c7',
+                                    fontWeight: 800,
+                                    fontSize: '0.74rem',
+                                    cursor: 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '5px'
+                                  }}
+                                >
+                                  <Edit3 className="w-3.5 h-3.5" />
+                                  <span>{isSuperAdmin ? 'Modificar Registro Completo' : 'Reasignar Centro / Mesa'}</span>
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })
                   )}
                 </div>
 
-                <div style={{ fontSize: '0.76rem', fontWeight: 800, color: textSub, textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '4px' }}>
-                  Personeros de Mesa Asignados ({selectedSchoolDetail.allPersoneros.length}):
-                </div>
-
-                {selectedSchoolDetail.allPersoneros.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '24px', color: textSub, fontSize: '0.85rem' }}>
-                    No hay personeros de mesa registrados en este centro de votación aún.
-                  </div>
-                ) : (
-                  selectedSchoolDetail.allPersoneros.map((assignedPerson, mIdx) => {
-                    const pName = assignedPerson['Nombres y Apellidos'] || assignedPerson.nombresApellidos || 'Sin Nombre';
-                    const pDni = assignedPerson['D.N.I.'] || assignedPerson.dni || '-';
-                    const pCel = assignedPerson['Celular'] || assignedPerson.celular || '';
-                    const pMesa = assignedPerson['Mesa de Votación'] || assignedPerson.mesa || '-';
-                    const pAcc = (assignedPerson['Acreditado'] || '').toLowerCase() === 'si';
-                    const pRol = assignedPerson['Rol'] || assignedPerson.rol || 'Personero de Mesa';
-                    const pEmail = assignedPerson['Correo Electrónico'] || assignedPerson.correoElectronico || assignedPerson.email || '-';
-                    const isExpanded = expandedMesa === `p-${mIdx}`;
-
-                    return (
-                      <div
-                        key={mIdx}
-                        style={{
-                          background: isDark ? '#0f172a' : '#ffffff',
-                          border: `1px solid ${borderCol}`,
-                          borderLeft: '5px solid #10b981',
-                          borderRadius: '12px',
-                          padding: '12px 14px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '6px',
-                          cursor: 'pointer',
-                          transition: 'all 0.15s ease'
-                        }}
-                        onClick={() => setExpandedMesa(isExpanded ? null : `p-${mIdx}`)}
-                      >
-                        {/* Fila Principal del Personero */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <div style={{ fontSize: '0.92rem', fontWeight: 900, color: textTitle }}>
-                              {pName}
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
-                              <span style={{ fontSize: '0.72rem', fontWeight: 800, background: '#dcfce7', color: '#15803d', padding: '1px 6px', borderRadius: '4px' }}>
-                                {pRol}
-                              </span>
-                              <span style={{ fontSize: '0.72rem', color: textSub }}>
-                                DNI: <strong>{pDni}</strong>
-                              </span>
-                            </div>
-                          </div>
-
-                          <div style={{
-                            width: '26px',
-                            height: '26px',
-                            borderRadius: '50%',
-                            background: '#dcfce7',
-                            color: '#15803d',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: 900,
-                            fontSize: '0.78rem'
-                          }}>
-                            ✓
-                          </div>
-                        </div>
-
-                        {/* DETALLE EXPANDIDO */}
-                        {isExpanded && (
-                          <div style={{
-                            marginTop: '8px',
-                            paddingTop: '8px',
-                            borderTop: `1px dashed ${borderCol}`,
-                            fontSize: '0.75rem',
-                            color: textSub,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '6px'
-                          }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-                              <div>📱 <strong>Celular:</strong> {pCel}</div>
-                              <div>✉️ <strong>Email:</strong> {pEmail}</div>
-                            </div>
-
-                            {(isSuperAdmin || isCoordinadorDistrital) && (
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedPersonero(assignedPerson);
-                                }}
-                                style={{
-                                  marginTop: '4px',
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
-                                  border: '1px solid #0284c7',
-                                  background: isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe',
-                                  color: '#0284c7',
-                                  fontWeight: 800,
-                                  fontSize: '0.74rem',
-                                  cursor: 'pointer',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  gap: '5px'
-                                }}
-                              >
-                                <Edit3 className="w-3.5 h-3.5" />
-                                <span>{isSuperAdmin ? 'Modificar Registro Completo' : 'Reasignar Centro / Mesa'}</span>
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })
-                )}
               </div>
-
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* Modal Ficha / Edición */}
       {selectedPersonero && (
