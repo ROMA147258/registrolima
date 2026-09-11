@@ -81,12 +81,13 @@ export class Personero {
   isTrainingComplete() {
     const p = String(this.preguntas || '').trim().toLowerCase();
     const c = String(this.credenciales || '').trim().toLowerCase();
-    return (this.video >= 2 && this.pdf >= 2 && (p.includes('aprob') || p.includes('pasad') || c === 'confirmado')) || c === 'confirmado';
+    return p.includes('aprob') || p.includes('pasad') || c === 'confirmado' || (this.video >= 1 && this.pdf >= 1 && (p.includes('aprob') || p.includes('pasad')));
   }
 
   evaluateCredentialStatus() {
+    const p = String(this.preguntas || '').trim().toLowerCase();
     const c = String(this.credenciales || '').trim().toLowerCase();
-    if (c === 'confirmado' || this.isTrainingComplete()) {
+    if (c === 'confirmado' || p.includes('aprob') || p.includes('pasad') || this.isTrainingComplete()) {
       this.credenciales = 'Confirmado';
       this.preguntas = 'Aprobado';
     } else {

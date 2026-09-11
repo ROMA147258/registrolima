@@ -26,17 +26,19 @@ export class UpdateTrainingProgressUseCase {
       pdfCount = Math.max(pdfCount, 1);
     } else if (type === 'quiz' || type === 'preguntas') {
       quizStatus = TRAINING_RULES.PASSING_QUIZ_STATUS;
+      videoCount = Math.max(videoCount, 1);
+      pdfCount = Math.max(pdfCount, 1);
     }
 
-    const isQuizPassed = quizStatus === TRAINING_RULES.PASSING_QUIZ_STATUS;
-    const credencialesStatus = (videoCount >= TRAINING_RULES.REQUIRED_VIDEOS && pdfCount >= TRAINING_RULES.REQUIRED_PDFS && isQuizPassed)
+    const isQuizPassed = quizStatus === TRAINING_RULES.PASSING_QUIZ_STATUS || String(quizStatus).toLowerCase().includes('aprob') || String(quizStatus).toLowerCase().includes('pasad');
+    const credencialesStatus = (isQuizPassed || entity.credenciales === TRAINING_RULES.CREDENTIAL_CONFIRMED)
       ? TRAINING_RULES.CREDENTIAL_CONFIRMED
       : TRAINING_RULES.CREDENTIAL_BLOCKED;
 
     const updated = await this.personeroRepo.updateProgress(cleanDni, {
       video: videoCount,
       pdf: pdfCount,
-      preguntas: quizStatus,
+      preguntas: isQuizPassed ? 'Aprobado' : quizStatus,
       credenciales: credencialesStatus
     });
 

@@ -129,6 +129,19 @@ export class PostgresPersoneroRepository {
           token_verificacion VARCHAR(100)
         );
       `);
+
+      // Sincronizar automáticamente: todos los que tengan preguntas aprobado o credenciales confirmado deben tener ambos
+      const tablesToSync = ['rpersoneros', 'rcoordinadores', 'rcoordinadoresd', 'rcoordinadoresz'];
+      for (const t of tablesToSync) {
+        try {
+          await pool.query(`
+            UPDATE ${t}
+            SET credenciales = 'Confirmado', preguntas = 'Aprobado'
+            WHERE (LOWER(preguntas) LIKE '%aprob%' OR LOWER(preguntas) LIKE '%pasad%' OR LOWER(credenciales) = 'confirmado')
+              AND (credenciales != 'Confirmado' OR preguntas != 'Aprobado');
+          `);
+        } catch (e) {}
+      }
     } catch (err) {
       console.warn('Advertencia asegurando tablas de PostgreSQL:', err.message);
     }
@@ -145,8 +158,8 @@ export class PostgresPersoneroRepository {
     const pdfVal = parseInt(row.pdf ?? row.pdfs_completados ?? row.pdfs ?? row['PDF'] ?? row['PDFs Completados'] ?? 0, 10);
 
     const isAppr = rawPreguntas.toLowerCase().includes('aprob') || rawPreguntas.toLowerCase().includes('pasad') || rawCredenciales.toLowerCase() === 'confirmado';
-    const finalCred = (rawCredenciales.toLowerCase() === 'confirmado' || (videoVal >= 2 && pdfVal >= 2 && isAppr)) ? 'Confirmado' : (rawCredenciales || 'Bloqueado');
-    const finalPreg = isAppr ? 'Aprobado' : (rawPreguntas || 'Pendiente');
+    const finalCred = (isAppr || rawCredenciales.toLowerCase() === 'confirmado') ? 'Confirmado' : (rawCredenciales || 'Bloqueado');
+    const finalPreg = (isAppr || rawCredenciales.toLowerCase() === 'confirmado') ? 'Aprobado' : (rawPreguntas || 'Pendiente');
 
     const props = {
       id: row.id || row.ID,
@@ -740,8 +753,15 @@ export class PostgresPersoneroRepository {
       if (type === 'quiz' || type === 'preguntas') q = 'Aprobado';
     }
 
-    const isFullyApproved = v >= 2 && p >= 2 && String(q).toLowerCase() === 'aprobado';
-    credStatus = isFullyApproved ? 'Confirmado' : 'Bloqueado';
+    const isFullyApproved = String(q).toLowerCase().includes('aprob') || String(q).toLowerCase().includes('pasad') || String(credStatus).toLowerCase() === 'confirmado';
+    if (isFullyApproved) {
+      q = 'Aprobado';
+      credStatus = 'Confirmado';
+      v = Math.max(v, 1);
+      p = Math.max(p, 1);
+    } else {
+      credStatus = credStatus || 'Bloqueado';
+    }
 
     const query = `
       UPDATE ${tableName}
@@ -834,9 +854,19 @@ export class PostgresPersoneroRepository {
       fields.push(`rol_a_desempenar = $${idx++}`);
       values.push(rol);
     }
-    if (cred !== undefined) {
+    let finalCred = cred;
+    let finalPreg = params.preguntas;
+
+    if (finalPreg && (String(finalPreg).toLowerCase().includes('aprob') || String(finalPreg).toLowerCase().includes('pasad')) && !finalCred) {
+      finalCred = 'Confirmado';
+    }
+    if (finalCred && String(finalCred).toLowerCase() === 'confirmado' && !finalPreg) {
+      finalPreg = 'Aprobado';
+    }
+
+    if (finalCred !== undefined) {
       fields.push(`credenciales = $${idx++}`);
-      values.push(cred);
+      values.push(finalCred);
     }
     if (params.video !== undefined) {
       fields.push(`video = $${idx++}`);
@@ -846,9 +876,9 @@ export class PostgresPersoneroRepository {
       fields.push(`pdf = $${idx++}`);
       values.push(parseInt(params.pdf, 10) || 0);
     }
-    if (params.preguntas !== undefined) {
+    if (finalPreg !== undefined) {
       fields.push(`preguntas = $${idx++}`);
-      values.push(params.preguntas);
+      values.push(finalPreg);
     }
 
     if (fields.length === 0) {
