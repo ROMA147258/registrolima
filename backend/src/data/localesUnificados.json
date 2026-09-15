@@ -967,15 +967,6 @@
     "dpto": "LIMA",
     "provincia": "LIMA",
     "distrito": "CARABAYLLO",
-    "colegio": "IEP ALBERT EINSTEIN",
-    "direccion": "AV SAN PEDRO MZ A LT 12-24",
-    "mesas": 11
-  },
-  {
-    "ubigeo": "140105",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "CARABAYLLO",
     "colegio": "IE 8161 MANUEL SCORZA TORRE",
     "direccion": "CALLE 5 SN",
     "mesas": 16
@@ -9634,15 +9625,6 @@
     "dpto": "LIMA",
     "provincia": "LIMA",
     "distrito": "COMAS",
-    "colegio": "IEP SANTO TOMAS",
-    "direccion": "AV TUPAC AMARU 4519",
-    "mesas": 4
-  },
-  {
-    "ubigeo": "140106",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "COMAS",
     "colegio": "IE 2060 VIRGEN DE GUADALUPE",
     "direccion": "JR MICAELA BASTIDAS 998",
     "mesas": 18
@@ -13120,15 +13102,6 @@
     "colegio": "IEP CORAZÓN DE JESÚS",
     "direccion": "CALLE LOS ALHELIS MZ F LOTE 12-13",
     "mesas": 13
-  },
-  {
-    "ubigeo": "140142",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "LOS OLIVOS",
-    "colegio": "IEP CORAZON DE JESUS",
-    "direccion": "AV RIO MARAÑON 442",
-    "mesas": 7
   },
   {
     "ubigeo": "140142",
@@ -18220,15 +18193,6 @@
     "dpto": "LIMA",
     "provincia": "LIMA",
     "distrito": "SAN MARTIN DE PORRES",
-    "colegio": "IEP SAN AGUSTÍN DE ANTARES",
-    "direccion": "CALLE THOMAS ESTEVES SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140126",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "SAN MARTIN DE PORRES",
     "colegio": "IEP ANGELITOS DE MI TERRUÑO",
     "direccion": "MZ I LT 36 URB MI TERRUÑO",
     "mesas": 4
@@ -19915,5 +19879,14 @@
     "colegio": "IEP INNOVA SCHOOLS - VES VALLEJO",
     "direccion": "CALLE 6 SN LT 38 VILLA EL SALVADOR",
     "mesas": 20
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP PROLOG SEDE JOSE GALVEZ PRIMARIA",
+    "direccion": "",
+    "mesas": 8
   }
 ]

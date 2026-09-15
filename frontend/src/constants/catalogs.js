@@ -76,7 +76,7 @@ export const DISTRITO_METAS = {
   "Santiago de Surco": 1179,
   "Surquillo": 338,
   "Villa El Salvador": 1171,
-  "Villa María del Triunfo": 1234
+  "Villa María del Triunfo": 1242
 };
 
 export const LOCAL_METAS = {
@@ -4415,7 +4415,7 @@ export const DISTRITO_ELECTORAL_DATA = {
   "SAN BARTOLO": { "locales": 2, "mesas": 24, "electores": 7200 },
   "SANTA MARIA DEL MAR": { "locales": 1, "mesas": 6, "electores": 1800 },
   "CIENEGUILLA": { "locales": 7, "mesas": 105, "electores": 31500 },
-  "VILLA MARIA DEL TRIUNFO": { "locales": 89, "mesas": 1234, "electores": 370200 },
+  "VILLA MARIA DEL TRIUNFO": { "locales": 90, "mesas": 1242, "electores": 372600 },
   "LOS OLIVOS": { "locales": 63, "mesas": 984, "electores": 295200 },
   "CHACLACAYO": { "locales": 8, "mesas": 138, "electores": 41400 },
   "LURIGANCHO": { "locales": 41, "mesas": 550, "electores": 165000 },

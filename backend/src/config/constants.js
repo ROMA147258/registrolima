@@ -92,6 +92,6 @@ export const DISTRITO_METAS = {
   "Santiago de Surco": 1179,
   "Surquillo": 338,
   "Villa El Salvador": 1171,
-  "Villa María del Triunfo": 1234
+  "Villa María del Triunfo": 1242
 };
 
