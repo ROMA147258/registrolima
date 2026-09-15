@@ -15254,8 +15254,8 @@ export const LOCALES_OFICIALES = [
     "distrito": "VILLA MARIA DEL TRIUNFO",
     "nombre": "COLEGIO CIENTIFICO NIKOLA TESLA",
     "direccion": "MZ F LT 7 AAHH 19 DE JULIO",
-    "mesas": 5,
-    "electores": 1500
+    "mesas": 7,
+    "electores": 2100
   },
   {
     "id": 6820,
@@ -15727,8 +15727,8 @@ export const LOCALES_OFICIALES = [
     "distrito": "VILLA MARIA DEL TRIUNFO",
     "nombre": "IE MARISCAL ELOY GASPAR URETA",
     "direccion": "AV 26 DE NOVIEMBRE 102 - A",
-    "mesas": 18,
-    "electores": 5400
+    "mesas": 19,
+    "electores": 5700
   },
   {
     "id": 6863,
@@ -15815,8 +15815,8 @@ export const LOCALES_OFICIALES = [
     "distrito": "VILLA MARIA DEL TRIUNFO",
     "nombre": "IE 7226 - 562 JOSE OLAYA BALANDRA",
     "direccion": "AV LOS INCAS MZ 15 LT 6 SECTOR 3",
-    "mesas": 26,
-    "electores": 7800
+    "mesas": 24,
+    "electores": 7200
   },
   {
     "id": 6871,
@@ -15848,8 +15848,8 @@ export const LOCALES_OFICIALES = [
     "distrito": "VILLA MARIA DEL TRIUNFO",
     "nombre": "IEP MIGUEL GRAU INICIAL",
     "direccion": "CALLE LA CONCORDIA SN MZA 2J LT. 5A",
-    "mesas": 6,
-    "electores": 1800
+    "mesas": 5,
+    "electores": 1500
   },
   {
     "id": 6874,
@@ -24311,3 +24311,25 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   }
 ];
+
+export function getLocalesByDistrito(distrito) {
+  if (!distrito || distrito === 'all') return LOCALES_OFICIALES;
+  const clean = String(distrito).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  return LOCALES_OFICIALES.filter(l => {
+    const d = String(l.distrito).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+    return d === clean || d.includes(clean) || clean.includes(d);
+  });
+}
+
+export function findOfficialLocal(localName, distrito) {
+  if (!localName) return null;
+  const cleanLocal = String(localName).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  let list = LOCALES_OFICIALES;
+  if (distrito && distrito !== 'all') {
+    list = getLocalesByDistrito(distrito);
+  }
+  return list.find(l => {
+    const n = String(l.nombre).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+    return n === cleanLocal || n.includes(cleanLocal) || cleanLocal.includes(n);
+  }) || null;
+}
