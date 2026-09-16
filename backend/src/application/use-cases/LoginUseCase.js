@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../../config/env.js';
 import { ROLES } from '../../config/constants.js';
+import { bloomFilterService } from '../../infrastructure/cache/RegistrationBloomFilterService.js';
 
 export class LoginUseCase {
   constructor(personeroRepository, userRepository, auditRepository) {
@@ -76,7 +77,17 @@ export class LoginUseCase {
       };
     }
 
-    // 2. Verificación de Personeros y Coordinadores en dbo.Rpersoneros y dbo.Rcoordinadores
+    // 2. Pre-filtro Bloom Filter ultra-rápido para descartar usuarios inexistentes en 0.001ms
+    if (
+      !bloomFilterService.mightContainUser(rawUser) &&
+      !bloomFilterService.mightContainDni(cleanDni) &&
+      !bloomFilterService.mightContainName(rawUser) &&
+      !bloomFilterService.mightContainUser(cleanPass)
+    ) {
+      throw new Error('Credenciales incorrectas o usuario no encontrado en el padrón electoral.');
+    }
+
+    // 3. Verificación de Personeros y Coordinadores en dbo.Rpersoneros y dbo.Rcoordinadores
     try {
       const match = await this.personeroRepo.findByCredentials(rawUser, cleanPass || cleanDni);
       if (match && match.entity) {

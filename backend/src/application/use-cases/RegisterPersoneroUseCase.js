@@ -1,6 +1,7 @@
 import { Personero } from '../../domain/entities/Personero.js';
 import { Coordinador } from '../../domain/entities/Coordinador.js';
 import { ValidationDomainService } from '../../domain/services/ValidationDomainService.js';
+import { bloomFilterService } from '../../infrastructure/cache/RegistrationBloomFilterService.js';
 
 export class RegisterPersoneroUseCase {
   constructor(personeroRepository, auditRepository) {
@@ -34,12 +35,14 @@ export class RegisterPersoneroUseCase {
     // 1. VALIDACIÓN: NOMBRES Y APELLIDOS NO DUPLICADOS
     const existingName = await this.personeroRepo.findByFullName(nombres);
     if (existingName && existingName.entity) {
+      bloomFilterService.register({ nombre: nombres });
       throw new Error(`La persona '${nombres}' ya se encuentra registrada en el sistema. No se permite duplicar registros.`);
     }
 
     // 2. VALIDACIÓN: DNI NO DUPLICADO
     const existingUser = await this.personeroRepo.findByDni(dni);
     if (existingUser && existingUser.entity) {
+      bloomFilterService.register({ dni, nombre: nombres });
       throw new Error(`El DNI ${dni} ya se encuentra registrado en el sistema como ${existingUser.entity.rolADesempenar || 'registrado'}. No se permite duplicar el registro.`);
     }
 
@@ -47,6 +50,7 @@ export class RegisterPersoneroUseCase {
     if (celular) {
       const existingPhone = await this.personeroRepo.findByPhone(celular);
       if (existingPhone && existingPhone.entity) {
+        bloomFilterService.register({ celular });
         throw new Error(`El número de celular ${celular} ya se encuentra registrado en el sistema.`);
       }
     }
@@ -55,6 +59,7 @@ export class RegisterPersoneroUseCase {
     if (correo) {
       const existingEmail = await this.personeroRepo.findByEmail(correo);
       if (existingEmail && existingEmail.entity) {
+        bloomFilterService.register({ email: correo });
         throw new Error(`El correo electrónico '${correo}' ya se encuentra registrado en el sistema.`);
       }
     }
@@ -63,6 +68,7 @@ export class RegisterPersoneroUseCase {
     if (numWsAlt && numWsAlt !== 'Mismo número') {
       const existingWs = await this.personeroRepo.findByWhatsapp(numWsAlt);
       if (existingWs && existingWs.entity) {
+        bloomFilterService.register({ celular: numWsAlt });
         throw new Error(`El número de WhatsApp alternativo ${numWsAlt} ya se encuentra registrado en el sistema.`);
       }
     }
@@ -146,6 +152,17 @@ export class RegisterPersoneroUseCase {
 
     const entity = isCoordinador ? new Coordinador(entityProps) : new Personero(entityProps);
     const saved = await this.personeroRepo.save(entity, isCoordinador);
+
+    // Registrar en el Bloom Filter en memoria para verificaciones instantáneas
+    try {
+      bloomFilterService.register({
+        dni,
+        celular,
+        email: correo,
+        nombre: nombres,
+        claveAcceso
+      });
+    } catch (e) {}
 
     if (this.auditRepo && typeof this.auditRepo.log === 'function') {
       try {

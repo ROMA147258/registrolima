@@ -5,6 +5,7 @@ import { createApiRouter } from './interfaces/routes/index.js';
 import { errorHandler } from './interfaces/middleware/errorHandler.js';
 import { dbPool } from './infrastructure/database/ConnectionPool.js';
 import { MigrationRunner } from './infrastructure/database/MigrationRunner.js';
+import { bloomFilterService } from './infrastructure/cache/RegistrationBloomFilterService.js';
 
 const app = express();
 
@@ -62,6 +63,9 @@ app.listen(PORT, '0.0.0.0', async () => {
     await dbPool.getPool();
     await MigrationRunner.runMigrations();
     console.log('✅ Base de datos PostgreSQL y migraciones listas.');
+
+    // Inicializar Bloom Filter en memoria
+    await bloomFilterService.init();
   } catch (err) {
     console.warn('⚠️ Base de datos PostgreSQL offline o no disponible en este momento:', err.message);
   }
