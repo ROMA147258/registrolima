@@ -847,10 +847,6 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.distrito_asignado = 'Seleccione el distrito donde será asignado.';
     }
 
-    if (!formData.local_asignado && !isCoordinadorDistrital) {
-      errors.local_asignado = 'Seleccione el centro de votación asignado.';
-    }
-
     // 4. Compromiso y Logística
     if (!formData.tiene_experiencia) {
       errors.tiene_experiencia = 'Indique si tiene experiencia previa.';
@@ -1176,7 +1172,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
           </div>
 
           {/* SECCIÓN 3: ROL Y ASIGNACIÓN ELECTORAL */}
-          <div style={{ border: fieldErrors.rol_electoral || fieldErrors.distrito_asignado || fieldErrors.local_asignado ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+          <div style={{ border: fieldErrors.rol_electoral || fieldErrors.distrito_asignado ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>3</div>
               <span>ROL Y ASIGNACIÓN ELECTORAL</span>
@@ -1263,72 +1259,24 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
               </button>
             </div>
 
-            {/* Campos condicionales según el rol */}
-            {isCoordinadorDistrital ? (
-              /* Caso Coordinador de Distritos: Solo Distrito Asignado */
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                  Distrito Asignado (Donde es Coordinador) <span style={{ color: '#ef4444' }}>*</span>
-                </label>
-                <CustomSearchableSelect
-                  id="field-distrito_asignado"
-                  name="distrito_asignado"
-                  value={formData.distrito_asignado}
-                  onChange={handleChange}
-                  options={DISTRITOS_LIMA}
-                  placeholder="Seleccione Distrito del que es Coordinador"
-                  icon={MapPin}
-                  required
-                  hasError={!!fieldErrors.distrito_asignado}
-                  errorMsg={fieldErrors.distrito_asignado}
-                />
-              </div>
-            ) : (
-              /* Caso Personero de Mesa o Coordinador de Local */
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                {/* Distrito Asignado */}
-                <div>
-                  <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                    Distrito Asignado <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
-                  <CustomSearchableSelect
-                    id="field-distrito_asignado"
-                    name="distrito_asignado"
-                    value={formData.distrito_asignado}
-                    onChange={handleChange}
-                    options={DISTRITOS_LIMA}
-                    placeholder="Seleccione Distrito"
-                    icon={MapPin}
-                    required
-                    hasError={!!fieldErrors.distrito_asignado}
-                    errorMsg={fieldErrors.distrito_asignado}
-                  />
-                </div>
-
-                {/* Centro de Votación Asignado */}
-                <div>
-                  <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                    Centro de Votación Asignado <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
-                  <CustomSearchableSelect
-                    id="field-local_asignado"
-                    name="local_asignado"
-                    value={formData.local_asignado}
-                    onChange={handleChange}
-                    options={isCoordinadorLocal
-                      ? localesAsignados.filter(loc => !assignedLocalesAsignados.some(al => al.toLowerCase().trim() === loc.toLowerCase().trim()))
-                      : localesAsignados
-                    }
-                    placeholder={formData.distrito_asignado ? `Seleccione Centro de Votación en ${formData.distrito_asignado}` : "Primero seleccione un distrito"}
-                    icon={School}
-                    required
-                    disabled={!formData.distrito_asignado}
-                    hasError={!!fieldErrors.local_asignado}
-                    errorMsg={fieldErrors.local_asignado}
-                  />
-                </div>
-              </div>
-            )}
+            {/* Campo: Distrito Asignado */}
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                {isCoordinadorDistrital ? 'Distrito Asignado (Donde es Coordinador)' : 'Distrito Asignado'} <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <CustomSearchableSelect
+                id="field-distrito_asignado"
+                name="distrito_asignado"
+                value={formData.distrito_asignado}
+                onChange={handleChange}
+                options={DISTRITOS_LIMA}
+                placeholder={isCoordinadorDistrital ? "Seleccione Distrito del que es Coordinador" : "Seleccione Distrito"}
+                icon={MapPin}
+                required
+                hasError={!!fieldErrors.distrito_asignado}
+                errorMsg={fieldErrors.distrito_asignado}
+              />
+            </div>
           </div>
 
           {/* SECCIÓN 4: COMPROMISO Y LOGÍSTICA */}

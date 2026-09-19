@@ -111,8 +111,9 @@ export function AuthProvider({ children }) {
   };
 
   const rolName = String(user?.['Rol a Desempeñar'] || user?.role || '').toLowerCase();
-  const cleanUsername = String(user?.username || '').toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['supera', 'admin', 'eric', 'paola', 'susana'].includes(cleanUsername) || rolName === 'superadministrador';
+  const cleanUsername = String(user?.username || user?.usuario || '').toLowerCase();
+  const fullName = String(user?.['Nombres y Apellidos'] || user?.fullName || '').toLowerCase();
+  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['supera', 'admin', 'eric', 'paola', 'pola', 'susana'].includes(cleanUsername) || cleanUsername.includes('paola') || cleanUsername.includes('pola') || fullName.includes('paola') || rolName === 'superadministrador';
   
   const isMasterSuperAdmin = (cleanUsername === 'supera' || cleanUsername === 'admin' || (!['eric', 'paola', 'pola', 'susana'].includes(cleanUsername) && (role === 'superadmin' || role === 'admin')));
   
