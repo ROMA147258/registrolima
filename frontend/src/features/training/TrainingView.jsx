@@ -152,9 +152,9 @@ export function TrainingView({ onGoToDashboard }) {
   };
 
   // -------------------------------------------------------------
-  // PASO 2: LÓGICA DE PDF (TEMPORIZADOR 1 MINUTO)
+  // PASO 2: LÓGICA DE PDF (TEMPORIZADOR 3 MINUTOS)
   // -------------------------------------------------------------
-  const [timeLeft, setTimeLeft] = useState(isPdfDone ? 0 : 60);
+  const [timeLeft, setTimeLeft] = useState(isPdfDone ? 0 : 180);
   const [canFinishPdf, setCanFinishPdf] = useState(isPdfDone);
   const [savingPdf, setSavingPdf] = useState(false);
   const pdfUrl = '/manuals/Cartilla_del_Personero_ERM_2026.pdf';
@@ -330,7 +330,7 @@ export function TrainingView({ onGoToDashboard }) {
         top: 0,
         zIndex: 50
       }}>
-        {/* Marca CAPACÍTATE e Institucional */}
+        {/* Marca Módulo de Capacitación e Institucional */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <img 
             src="/images/logo_somos_peru.svg" 
@@ -340,7 +340,7 @@ export function TrainingView({ onGoToDashboard }) {
           />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#002B66', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-              Capacítate
+              Módulo de Capacitación
             </span>
           </div>
         </div>
@@ -425,7 +425,7 @@ export function TrainingView({ onGoToDashboard }) {
             {/* Lista de Pasos del Menú */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', padding: '0 10px 14px 10px' }}>
               
-              {/* Paso 1: Ver curso (Píldora Activa Cyan/Verde en guia.png) */}
+              {/* Paso 1: Video (Píldora Activa Cyan/Verde en guia.png) */}
               <div
                 onClick={() => setCurrentStep(1)}
                 className="portal-step-item"
@@ -451,7 +451,7 @@ export function TrainingView({ onGoToDashboard }) {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Play className={`w-3.5 h-3.5 ${currentStep === 1 ? 'fill-white text-white' : (isVideoDone ? 'text-emerald-600' : 'text-slate-400')}`} />
-                  <span>1. Ver curso</span>
+                  <span>1. Video</span>
                 </div>
                 {isVideoDone || canFinishVideo ? (
                   <CheckCircle2 className={`w-4 h-4 ${currentStep === 1 ? 'text-white' : 'text-emerald-500'}`} />
@@ -555,44 +555,19 @@ export function TrainingView({ onGoToDashboard }) {
         </aside>
 
         {/* -------------------------------------------------------------
-            COLUMNA CENTRAL: VER CURSO / PLAYER (MATCH GUIA.PNG)
+            COLUMNA CENTRAL: PLAYER Y CONTENIDO
             ------------------------------------------------------------- */}
         <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           
-          {/* Breadcrumb + Título + Botón Volver a Cursos */}
-          <div>
-            <div style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 600, marginBottom: '4px' }}>
-              Personero &gt; Curso Virtual para Personeros 2026
-            </div>
-            
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
-              <h1 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#002B66', margin: 0, letterSpacing: '-0.02em' }}>
-                {currentStep === 1 && 'Ver Curso'}
+          {/* Título de la Sección Actual (sin breadcrumb ni botón anterior) */}
+          {currentStep > 1 && (
+            <div>
+              <h1 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#002B66', margin: '0 0 4px 0', letterSpacing: '-0.02em' }}>
                 {currentStep === 2 && 'Lectura de Cartilla'}
                 {currentStep === 3 && 'Evaluación del Personero'}
               </h1>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                {currentStep > 1 && (
-                  <button
-                    onClick={() => setCurrentStep(prev => Math.max(1, prev - 1))}
-                    style={{
-                      background: '#ffffff',
-                      border: '1px solid #cbd5e1',
-                      color: '#475569',
-                      padding: '6px 14px',
-                      borderRadius: '8px',
-                      fontSize: '0.76rem',
-                      fontWeight: 800,
-                      cursor: 'pointer'
-                    }}
-                  >
-                    ← Anterior
-                  </button>
-                )}
-              </div>
             </div>
-          </div>
+          )}
 
           {/* Tarjeta Principal de Contenido / Video Player */}
           <div style={{
@@ -618,13 +593,13 @@ export function TrainingView({ onGoToDashboard }) {
               gap: '10px'
             }}>
               <span>
-                {currentStep === 1 && 'Curso virtual para personeros ERM 2026 - Módulo 1 / Oficina Nacional de Procesos Electorales'}
+                {currentStep === 1 && 'Curso virtual para personeros ERM 2026 - Módulo 1'}
                 {currentStep === 2 && 'Cartilla Oficial del Personero Electoral ERM 2026'}
                 {currentStep === 3 && 'Cuestionario de Evaluación de Conocimientos Electorales'}
               </span>
               <span style={{ fontSize: '0.7rem', color: '#93c5fd', fontWeight: 700 }}>
-                {currentStep === 1 && 'Video Oficial'}
-                {currentStep === 2 && 'Documento PDF'}
+                {currentStep === 1 && 'Fuente: ONPE'}
+                {currentStep === 2 && 'Fuente: ONPE'}
                 {currentStep === 3 && '5 Preguntas'}
               </span>
             </div>
@@ -777,7 +752,7 @@ export function TrainingView({ onGoToDashboard }) {
                     ) : (
                       <>
                         <Clock className="w-4 h-4 text-sky-600 flex-shrink-0 animate-spin" />
-                        <span>Tiempo de lectura requerido: 1 minuto</span>
+                        <span>Tiempo de lectura requerido: 3 minutos</span>
                       </>
                     )}
                   </div>

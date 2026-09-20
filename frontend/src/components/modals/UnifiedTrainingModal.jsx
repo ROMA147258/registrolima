@@ -118,9 +118,9 @@ export function UnifiedTrainingModal({
   };
 
   // -------------------------------------------------------------
-  // PASO 2: ESTADOS Y LÓGICA DE PDF (TEMPORIZADOR 1 MINUTO)
+  // PASO 2: ESTADOS Y LÓGICA DE PDF (TEMPORIZADOR 3 MINUTOS)
   // -------------------------------------------------------------
-  const [timeLeft, setTimeLeft] = useState(isPdfDone ? 0 : 60);
+  const [timeLeft, setTimeLeft] = useState(isPdfDone ? 0 : 180);
   const [canFinishPdf, setCanFinishPdf] = useState(isPdfDone);
   const [savingPdf, setSavingPdf] = useState(false);
   const pdfUrl = '/manuals/Cartilla_del_Personero_ERM_2026.pdf';
