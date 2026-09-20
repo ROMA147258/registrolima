@@ -5427,6 +5427,7 @@ export function DashboardView({ onGoToTraining }) {
                 isDark={isDark}
                 allPersoneros={records}
                 userDistrito={coordinatorDistrict || dist1 || 'VILLA MARIA DEL TRIUNFO'}
+                onSelectPersonero={(p) => setSelectedPersonero(p)}
                 onFilterByLocal={(colegio) => {
                   setDist1('Villa María del Triunfo');
                   setLocalZonal1(colegio);
