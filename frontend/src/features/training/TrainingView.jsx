@@ -593,7 +593,7 @@ export function TrainingView({ onGoToDashboard }) {
               gap: '10px'
             }}>
               <span>
-                {currentStep === 1 && 'Curso virtual para personeros ERM 2026'}
+                {currentStep === 1 && 'Capacitación para personeros ERM2026'}
                 {currentStep === 2 && 'Cartilla Oficial del Personero Electoral ERM 2026'}
                 {currentStep === 3 && 'Cuestionario de Evaluación de Conocimientos Electorales'}
               </span>
