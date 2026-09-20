@@ -74,7 +74,15 @@ export function TrainingView({ onGoToDashboard }) {
   const [canFinishVideo, setCanFinishVideo] = useState(isVideoDone);
   const [videoWarning, setVideoWarning] = useState(null);
   const [savingVideo, setSavingVideo] = useState(false);
+  const [isVideoStarted, setIsVideoStarted] = useState(false);
   const maxTimeRef = useRef(0);
+
+  const handlePlayVideo = () => {
+    setIsVideoStarted(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
@@ -643,13 +651,13 @@ export function TrainingView({ onGoToDashboard }) {
                   </div>
                 )}
 
-                {/* Contenedor 16:9 del Video */}
+                {/* Contenedor 16:9 del Video con Portada Inicial */}
                 <div style={{
                   position: 'relative',
                   width: '100%',
                   aspectRatio: '16 / 9',
                   background: '#000000',
-                  borderRadius: '12px',
+                  borderRadius: '14px',
                   overflow: 'hidden',
                   display: 'flex',
                   alignItems: 'center',
@@ -661,8 +669,9 @@ export function TrainingView({ onGoToDashboard }) {
                     controls
                     controlsList="nodownload noplaybackrate"
                     disablePictureInPicture
-                    preload="metadata"
+                    preload="auto"
                     poster="/images/IMG_5684.JPEG"
+                    onPlay={() => setIsVideoStarted(true)}
                     onTimeUpdate={handleTimeUpdate}
                     onSeeking={handleSeeking}
                     onSeeked={handleSeeked}
@@ -672,6 +681,74 @@ export function TrainingView({ onGoToDashboard }) {
                     <source src="/videos/IMG_5774.MP4" type="video/mp4" />
                     Tu navegador no soporta reproducción de video HTML5.
                   </video>
+
+                  {/* Portada Superpuesta Interactiva */}
+                  {!isVideoStarted && (
+                    <div
+                      onClick={handlePlayVideo}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundImage: 'url(/images/IMG_5684.JPEG)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                        backgroundRepeat: 'no-repeat'
+                      }}
+                    >
+                      {/* Capa de oscurecimiento suave */}
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)'
+                      }} />
+
+                      {/* Botón Central de Play */}
+                      <div style={{
+                        position: 'relative',
+                        zIndex: 11,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '12px'
+                      }}>
+                        <div style={{
+                          width: '76px',
+                          height: '76px',
+                          borderRadius: '50%',
+                          background: '#0284c7',
+                          boxShadow: '0 0 0 10px rgba(2, 132, 199, 0.3), 0 14px 32px rgba(0,0,0,0.6)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#ffffff',
+                          transition: 'transform 0.2s ease'
+                        }}>
+                          <Play className="w-9 h-9" style={{ marginLeft: '4px', fill: '#ffffff' }} />
+                        </div>
+                        <span style={{
+                          color: '#ffffff',
+                          fontSize: '0.98rem',
+                          fontWeight: 800,
+                          textShadow: '0 2px 8px rgba(0,0,0,0.8)',
+                          background: 'rgba(15, 23, 42, 0.8)',
+                          padding: '6px 18px',
+                          borderRadius: '20px',
+                          border: '1px solid rgba(255,255,255,0.2)'
+                        }}>
+                          ▶️ Iniciar Video Tutorial
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Barra de Progreso Limpia */}

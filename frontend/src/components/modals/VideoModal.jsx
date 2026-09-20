@@ -8,7 +8,15 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
   const [canFinish, setCanFinish] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [warningMsg, setWarningMsg] = useState(null);
+  const [isVideoStarted, setIsVideoStarted] = useState(false);
   const maxTimeRef = useRef(0);
+
+  const handlePlayVideo = () => {
+    setIsVideoStarted(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
@@ -123,8 +131,9 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
               controls
               controlsList="nodownload noplaybackrate"
               disablePictureInPicture
-              preload="metadata"
+              preload="auto"
               poster="/images/IMG_5684.JPEG"
+              onPlay={() => setIsVideoStarted(true)}
               onTimeUpdate={handleTimeUpdate}
               onSeeking={handleSeeking}
               onSeeked={handleSeeked}
@@ -134,6 +143,71 @@ export function VideoModal({ onClose, onComplete, currentVideoCount = 0 }) {
               <source src="/videos/IMG_5774.MP4" type="video/mp4" />
               Tu navegador no soporta el formato de video MP4.
             </video>
+
+            {/* Portada Superpuesta Interactiva */}
+            {!isVideoStarted && (
+              <div
+                onClick={handlePlayVideo}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundImage: 'url(/images/IMG_5684.JPEG)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  backgroundRepeat: 'no-repeat'
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)'
+                }} />
+
+                <div style={{
+                  position: 'relative',
+                  zIndex: 11,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}>
+                  <div style={{
+                    width: '68px',
+                    height: '68px',
+                    borderRadius: '50%',
+                    background: '#0284c7',
+                    boxShadow: '0 0 0 8px rgba(2, 132, 199, 0.3), 0 10px 25px rgba(0,0,0,0.6)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffffff'
+                  }}>
+                    <Play className="w-8 h-8" style={{ marginLeft: '4px', fill: '#ffffff' }} />
+                  </div>
+                  <span style={{
+                    color: '#ffffff',
+                    fontSize: '0.9rem',
+                    fontWeight: 800,
+                    textShadow: '0 2px 6px rgba(0,0,0,0.8)',
+                    background: 'rgba(15, 23, 42, 0.8)',
+                    padding: '5px 14px',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255,255,255,0.2)'
+                  }}>
+                    ▶️ Iniciar Video
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Barra de Progreso Bloqueada */}
