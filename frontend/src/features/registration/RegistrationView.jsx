@@ -6,6 +6,8 @@ import {
 import { DISTRITOS_LIMA } from '../../constants/catalogs.js';
 import { api } from '../../services/api.js';
 
+const DISTRITOS_VOTA_OPTIONS = [...DISTRITOS_LIMA, 'Otros'];
+
 // Componente de Dropdown Desplegable Personalizado con Fondo Blanco y Estilo Somos Perú
 function CustomSearchableSelect({
   id,
@@ -510,7 +512,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
   // Carga dinámica de colegios desde dbo.mesas / dbo.colegios en SQL Server para Sección 2
   useEffect(() => {
-    if (formData.distrito_vota) {
+    if (formData.distrito_vota && formData.distrito_vota !== 'Otros') {
       api.getLocales(formData.distrito_vota)
         .then(res => setLocalesVota(res.data || []))
         .catch(() => setLocalesVota([]));
@@ -780,7 +782,14 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
     // Al cambiar distrito_vota o distrito_asignado, resetear el local seleccionado si cambia
     if (name === 'distrito_vota') {
-      setFormData(prev => ({ ...prev, distrito_vota: value, local_vota: '' }));
+      const isOther = value === 'Otros';
+      setFormData(prev => ({
+        ...prev,
+        distrito_vota: value,
+        local_vota: isOther ? 'No aplica' : ''
+      }));
+      clearFieldError('distrito_vota');
+      clearFieldError('local_vota');
       return;
     }
 
@@ -834,8 +843,10 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.distrito_vota = 'Seleccione el distrito donde vota.';
     }
 
-    if (!formData.local_vota || formData.local_vota.trim() === '') {
-      errors.local_vota = 'Seleccione su colegio o local de votación.';
+    if (formData.distrito_vota !== 'Otros') {
+      if (!formData.local_vota || formData.local_vota.trim() === '' || formData.local_vota === 'No aplica') {
+        errors.local_vota = 'Seleccione su colegio o local de votación.';
+      }
     }
 
     // 3. Rol y Asignación
@@ -1132,7 +1143,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                   name="distrito_vota"
                   value={formData.distrito_vota}
                   onChange={handleChange}
-                  options={DISTRITOS_LIMA}
+                  options={DISTRITOS_VOTA_OPTIONS}
                   placeholder="Seleccione Distrito"
                   icon={MapPin}
                   required
@@ -1143,19 +1154,23 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
 
               {/* Local de Votación */}
               <div>
-                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
-                  Local de Votación <span style={{ color: '#ef4444' }}>*</span>
+                <label className="form-label" style={{ color: formData.distrito_vota === 'Otros' ? '#94a3b8' : '#1e293b', fontSize: '0.8rem', fontWeight: 700 }}>
+                  Local de Votación {formData.distrito_vota === 'Otros' ? <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 500 }}>(Bloqueado)</span> : <span style={{ color: '#ef4444' }}>*</span>}
                 </label>
                 <CustomSearchableSelect
                   id="field-local_vota"
                   name="local_vota"
-                  value={formData.local_vota}
+                  value={formData.distrito_vota === 'Otros' ? 'No aplica' : formData.local_vota}
                   onChange={handleChange}
-                  options={localesVota}
-                  placeholder={formData.distrito_vota ? `Seleccione Local de Votación en ${formData.distrito_vota}` : "Primero seleccione un distrito"}
+                  options={formData.distrito_vota === 'Otros' ? ['No aplica'] : localesVota}
+                  placeholder={
+                    formData.distrito_vota === 'Otros'
+                      ? "No aplica (Vota en otro distrito)"
+                      : (formData.distrito_vota ? `Seleccione Local de Votación en ${formData.distrito_vota}` : "Primero seleccione un distrito")
+                  }
                   icon={School}
-                  required
-                  disabled={!formData.distrito_vota}
+                  required={formData.distrito_vota !== 'Otros'}
+                  disabled={!formData.distrito_vota || formData.distrito_vota === 'Otros'}
                   hasError={!!fieldErrors.local_vota}
                   errorMsg={fieldErrors.local_vota}
                 />

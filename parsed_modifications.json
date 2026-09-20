@@ -1,0 +1,893 @@
+[
+  {
+    "id": 3,
+    "rawHeader": "### Pregunta 3",
+    "question": "¿A qué hora deben presentarse los miembros de mesa y personeros para la instalación?",
+    "options": [
+      {
+        "raw": "- [x] **A) A las 7:00 a. m.** *(Correcta)*",
+        "clean": "A) A las 7:00 a. m.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) A las 8:30 a. m.",
+        "clean": "B) A las 8:30 a. m.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) A las 9:00 a. m.",
+        "clean": "C) A las 9:00 a. m.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) A las 6:00 a. m.",
+        "clean": "D) A las 6:00 a. m.",
+        "isCheckedInDoc": false,
+        "isYellow": true,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 26,
+        "rawText": "- [ ] D) A las 6:00 a. m.",
+        "cleanText": "- [ ] D) A las 6:00 a. m.",
+        "struckText": "",
+        "hasYellow": true,
+        "hasGreen": false,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** La instalación de la mesa de sufragio inicia a las 7:00 a. m.",
+    "rawQuestion": "**¿A qué hora deben presentarse los miembros de mesa y personeros para la instalación?**"
+  },
+  {
+    "id": 4,
+    "rawHeader": "### Pregunta 4",
+    "question": "¿A qué hora inicia el sufragio (la votación de los electores)?",
+    "options": [
+      {
+        "raw": "- [x] **A) A las 8:00 a. m.** *(Correcta)*",
+        "clean": "A) A las 8:00 a. m.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) A las 7:00 a. m.",
+        "clean": "B) A las 7:00 a. m.",
+        "isCheckedInDoc": false,
+        "isYellow": true,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) A las 9:00 a. m.",
+        "clean": "C) A las 9:00 a. m.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) A las 10:00 a. m.",
+        "clean": "D) A las 10:00 a. m.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 32,
+        "rawText": "- [ ] B) A las 7:00 a. m.",
+        "cleanText": "- [ ] B) A las 7:00 a. m.",
+        "struckText": "",
+        "hasYellow": true,
+        "hasGreen": false,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El sufragio inicia a las 8:00 a. m., una vez instalada la mesa.",
+    "rawQuestion": "**¿A qué hora inicia el sufragio (la votación de los electores)?**"
+  },
+  {
+    "id": 13,
+    "rawHeader": "### Pregunta 13",
+    "question": "¿Quiénes votan primero al comenzar el sufragio a las 7:00 a. m.?",
+    "options": [
+      {
+        "raw": "- [x] **A) Los miembros de mesa y luego los personeros que votan en esa misma mesa.** *(Correcta)*",
+        "clean": "A) Los miembros de mesa y luego los personeros que votan en esa misma mesa.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Los electores que llegaron primero a la fila.",
+        "clean": "B) Los electores que llegaron primero a la fila.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Los candidatos a la alcaldía.",
+        "clean": "C) Los candidatos a la alcaldía.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Los policías y militares de seguridad.",
+        "clean": "D) Los policías y militares de seguridad.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 102,
+        "rawText": "**¿Quiénes votan primero al comenzar el sufragio a las 7:00 a. m.?**",
+        "cleanText": "**¿Quiénes votan primero al comenzar el sufragio a las 7:00 a. m.?**",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Los miembros de la mesa votan en primer lugar, seguidos por los personeros acreditados que votan en esa mesa.",
+    "rawQuestion": "**¿Quiénes votan primero al comenzar el sufragio a las 7:00 a. m.?**"
+  },
+  {
+    "id": 30,
+    "rawHeader": "### Pregunta 30",
+    "question": "¿Qué debe hacer el personero inmediatamente después de recibir su copia del Acta Electoral?",
+    "options": [
+      {
+        "raw": "- [x] **A) Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.** *(Correcta)*",
+        "clean": "A) Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Guardarla en su casa sin mostrarla a nadie.",
+        "clean": "B) Guardarla en su casa sin mostrarla a nadie.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Borrar los números de los otros partidos con corrector.",
+        "clean": "C) Borrar los números de los otros partidos con corrector.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Firmarla en blanco y regalarla a un votante.",
+        "clean": "D) Firmarla en blanco y regalarla a un votante.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 239,
+        "rawText": "- [x] **A) Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.** *(Correcta)*",
+        "cleanText": "- [x] **A) Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.** *(Correcta)*",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El acta es la prueba legal del resultado; se debe verificar, cuidar y enviar de inmediato al centro de cómputo partidario.",
+    "rawQuestion": "**¿Qué debe hacer el personero inmediatamente después de recibir su copia del Acta Electoral?**"
+  },
+  {
+    "id": 34,
+    "rawHeader": "### Pregunta 34",
+    "question": "¿Qué debe hacer el personero si un elector se demora dentro de la cámara secreta?",
+    "options": [
+      {
+        "raw": "- [x] **A) Mantener la calma y permitir que los miembros de mesa manejen la situación con respeto a la privacidad del voto.** *(Correcta)*",
+        "clean": "A) Mantener la calma y permitir que los miembros de mesa manejen la situación con respeto a la privacidad del voto.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Acercarse a la cámara secreta para ver qué está haciendo.",
+        "clean": "B) Acercarse a la cámara secreta para ver qué está haciendo.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Entrar a ayudarlo a marcar la cédula.",
+        "clean": "C) Entrar a ayudarlo a marcar la cédula.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Gritarle desde la mesa para que se apure.",
+        "clean": "D) Gritarle desde la mesa para que se apure.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 272,
+        "rawText": "- [ ] B) Acercarse a la cámara secreta para ver qué está haciendo.",
+        "cleanText": "- [ ] B) Acercarse a la cámara secreta para ver qué está haciendo.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Nadie puede invadir la cámara secreta; los miembros de mesa son los únicos que pueden recordar amablemente el tiempo.",
+    "rawQuestion": "**¿Qué debe hacer el personero si un elector se demora dentro de la cámara secreta?**"
+  },
+  {
+    "id": 36,
+    "rawHeader": "### Pregunta 36",
+    "question": "¿Qué información contiene la sección del Acta de Sufragio?",
+    "options": [
+      {
+        "raw": "- [x] **A) El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.** *(Correcta)*",
+        "clean": "A) El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) El total de electores votaron.",
+        "clean": "B) El total de electores votaron.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) El número de cédulas rotas únicamente.",
+        "clean": "C) El número de cédulas rotas únicamente.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) La cantidad de policías en el aula.",
+        "clean": "D) La cantidad de policías en el aula.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 287,
+        "rawText": "- [x] **A) El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.** *(Correcta)*",
+        "cleanText": "- [x] **A) El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.** *(Correcta)*",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 288,
+        "rawText": "- [ ] B) El total de electores votaron.",
+        "cleanText": "- [ ] B) El total de electores votaron.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El Acta de Sufragio registra cuántos ciudadanos votaron y cuántos no asistieron a votar.",
+    "rawQuestion": "**¿Qué información contiene la sección del Acta de Sufragio?**"
+  },
+  {
+    "id": 38,
+    "rawHeader": "### Pregunta 38",
+    "question": "¿Qué debe hacer el personero si nota un error en la suma de los votos en la Hoja Borrador?",
+    "options": [
+      {
+        "raw": "- [x] **A) Hacer la observación con respeto antes de que los miembros de mesa pasen los datos al Acta de Escrutinio definitiva.** *(Correcta)*",
+        "clean": "A) Hacer la observación con respeto antes de que los miembros de mesa pasen los datos al Acta de Escrutinio definitiva.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Esperar a que firmen el acta para luego hacer el reclamo.",
+        "clean": "B) Esperar a que firmen el acta para luego hacer el reclamo.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Tachar con plumón negro el acta oficial.",
+        "clean": "C) Tachar con plumón negro el acta oficial.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Arrebatar la hoja borrador y salir corriendo.",
+        "clean": "D) Arrebatar la hoja borrador y salir corriendo.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 304,
+        "rawText": "- [ ] B) Esperar a que firmen el acta para luego hacer el reclamo.",
+        "cleanText": "- [ ] B) Esperar a que firmen el acta para luego hacer el reclamo.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El personero debe alertar respetuosamente para corregir las sumas en la hoja borrador antes de llenar el acta final.",
+    "rawQuestion": "**¿Qué debe hacer el personero si nota un error en la suma de los votos en la Hoja Borrador?**"
+  },
+  {
+    "id": 43,
+    "rawHeader": "### Pregunta 43",
+    "question": "¿Qué sucede si a las 7:00 a. m. falta uno de los miembros de mesa titulares?",
+    "options": [
+      {
+        "raw": "- [x] **A) El presidente asume con los suplentes presentes o, en su defecto, con los primeros electores de la fila.** *(Correcta)*",
+        "clean": "A) El presidente asume con los suplentes presentes o, en su defecto, con los primeros electores de la fila.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) La mesa se cierra y todos los electores se van a su casa.",
+        "clean": "B) La mesa se cierra y todos los electores se van a su casa.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) El personero se sienta a reemplazar al miembro de mesa y cobra el bono.",
+        "clean": "C) El personero se sienta a reemplazar al miembro de mesa y cobra el bono.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Se espera hasta las 4:00 p. m. a que llegue el titular.",
+        "clean": "D) Se espera hasta las 4:00 p. m. a que llegue el titular.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 342,
+        "rawText": "**¿Qué sucede si a las 7:00 a. m. falta uno de los miembros de mesa titulares?**",
+        "cleanText": "**¿Qué sucede si a las 7:00 a. m. falta uno de los miembros de mesa titulares?**",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Si faltan titulares, la mesa se completa con los suplentes o electores de la fila; nunca con personeros ni candidatos.",
+    "rawQuestion": "**¿Qué sucede si a las 7:00 a. m. falta uno de los miembros de mesa titulares?**"
+  },
+  {
+    "id": 45,
+    "rawHeader": "### Pregunta 45",
+    "question": "¿Qué es la lista de electores de una mesa de sufragio?",
+    "options": [
+      {
+        "raw": "- [x] **A) Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.** *(Correcta)*",
+        "clean": "A) Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Es una lista de los vecinos que pagaron sus arbitrios.",
+        "clean": "B) Es una lista de los vecinos que pagaron sus arbitrios.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Es el padrón de afiliados del partido que ganó las elecciones anteriores.",
+        "clean": "C) Es el padrón de afiliados del partido que ganó las elecciones anteriores.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral.",
+        "clean": "D) Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 358,
+        "rawText": "**¿Qué es la lista de electores de una mesa de sufragio?**",
+        "cleanText": "**¿Qué es la lista de electores de una mesa de sufragio?**",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 359,
+        "rawText": "- [x] **A) Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.** *(Correcta)*",
+        "cleanText": "- [x] **A) Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.** *(Correcta)*",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 362,
+        "rawText": "- [ ] D) Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral.",
+        "cleanText": "- [ ] D) Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El padrón electoral contiene la lista oficial de todos los ciudadanos habilitados para votar en esa mesa.",
+    "rawQuestion": "**¿Qué es la lista de electores de una mesa de sufragio?**"
+  },
+  {
+    "id": 46,
+    "rawHeader": "### Pregunta 46",
+    "question": "¿Cómo comprueba el secretario que un ciudadano ya emitió su voto en el padrón?",
+    "options": [
+      {
+        "raw": "- [x] **A) El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.** *(Correcta)*",
+        "clean": "A) El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) El elector le entrega una moneda al secretario.",
+        "clean": "B) El elector le entrega una moneda al secretario.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) El elector le realiza una señal al presidente.",
+        "clean": "C) El elector le realiza una señal al presidente.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) El personero marca o tacha el nombre del elector en la lista de electores.",
+        "clean": "D) El personero marca o tacha el nombre del elector en la lista de electores.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 367,
+        "rawText": "- [x] **A) El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.** *(Correcta)*",
+        "cleanText": "- [x] **A) El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.** *(Correcta)*",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 369,
+        "rawText": "- [ ] C) El elector le realiza una señal al presidente.",
+        "cleanText": "- [ ] C) El elector le realiza una señal al presidente.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 370,
+        "rawText": "- [ ] D) El personero marca o tacha el nombre del elector en la lista de electores.",
+        "cleanText": "- [ ] D) El personero marca o tacha el nombre del elector en la lista de electores.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El elector debe firmar y poner su huella digital en el padrón electoral tras depositar su voto en el ánfora.",
+    "rawQuestion": "**¿Cómo comprueba el secretario que un ciudadano ya emitió su voto en el padrón?**"
+  },
+  {
+    "id": 47,
+    "rawHeader": "### Pregunta 47",
+    "question": "¿Qué recibe el elector al momento de que le devuelven su DNI tras votar?",
+    "options": [
+      {
+        "raw": "- [x] **A) Su Documento Nacional de Identidad (DNI) Correcta)*",
+        "clean": "A) Su Documento Nacional de Identidad (DNI) Correcta)*",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Un certificado de participación electoral.",
+        "clean": "B) Un certificado de participación electoral.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Una copia del acta de escrutinio.",
+        "clean": "C) Una copia del acta de escrutinio.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Una constancia de haber emitido su voto.",
+        "clean": "D) Una constancia de haber emitido su voto.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 375,
+        "rawText": "- [x] **A) Su Documento Nacional de Identidad (DNI) Correcta)*",
+        "cleanText": "- [x] **A) Su Documento Nacional de Identidad (DNI) Correcta)*",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 376,
+        "rawText": "- [ ] B) Un certificado de participación electoral.",
+        "cleanText": "- [ ] B) Un certificado de participación electoral.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 378,
+        "rawText": "- [ ] D) Una constancia de haber emitido su voto.",
+        "cleanText": "- [ ] D) Una constancia de haber emitido su voto.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Al finalizar el voto, se le entrega su DNI con el holograma oficial pegado como constancia de sufragio.",
+    "rawQuestion": "**¿Qué recibe el elector al momento de que le devuelven su DNI tras votar?**"
+  },
+  {
+    "id": 48,
+    "rawHeader": "### Pregunta 48",
+    "question": "¿Qué debe verificar el personero en la camara secreta durante la instalación?",
+    "options": [
+      {
+        "raw": "- [x] **A) Que este acondicionada y tenga el cartel de candidatos.** *(Correcta)*",
+        "clean": "A) Que este acondicionada y tenga el cartel de candidatos.**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] B) Que tenga la información sobre el proceso electoral.",
+        "clean": "B) Que tenga la información sobre el proceso electoral.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Que este limpia y tenga buena iluminación.",
+        "clean": "C) Que este limpia y tenga buena iluminación.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Que tenga las cedulas de sufragio disponibles.",
+        "clean": "D) Que tenga las cedulas de sufragio disponibles.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 382,
+        "rawText": "**¿Qué debe verificar el personero en la camara secreta durante la instalación?**",
+        "cleanText": "**¿Qué debe verificar el personero en la camara secreta durante la instalación?**",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 383,
+        "rawText": "- [x] **A) Que este acondicionada y tenga el cartel de candidatos.** *(Correcta)*",
+        "cleanText": "- [x] **A) Que este acondicionada y tenga el cartel de candidatos.** *(Correcta)*",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 384,
+        "rawText": "- [ ] B) Que tenga la información sobre el proceso electoral.",
+        "cleanText": "- [ ] B) Que tenga la información sobre el proceso electoral.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 385,
+        "rawText": "- [ ] C) Que este limpia y tenga buena iluminación.",
+        "cleanText": "- [ ] C) Que este limpia y tenga buena iluminación.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 386,
+        "rawText": "- [ ] D) Que tenga las cedulas de sufragio disponibles.",
+        "cleanText": "- [ ] D) Que tenga las cedulas de sufragio disponibles.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** La cámara secreta debe estar limpia de propaganda y garantizar el secreto absoluto del voto.",
+    "rawQuestion": "**¿Qué debe verificar el personero en la camara secreta durante la instalación?**"
+  },
+  {
+    "id": 49,
+    "rawHeader": "### Pregunta 49",
+    "question": "¿Qué debe hacer un personero si detecta propaganda electoral dentro de la cámara secreta?",
+    "options": [
+      {
+        "raw": "- [x] **A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda y la destruyan.** *(Correcta)*",
+        "clean": "A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda .**",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": "y la destruyan"
+      },
+      {
+        "raw": "- [ ] B) Retirarla directamente sin informar a los miembros de mesa.",
+        "clean": "B) Retirarla directamente sin informar a los miembros de mesa.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Pegar encima propaganda de su propio partido.",
+        "clean": "C) Pegar encima propaganda de su propio partido.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Solicitar al elector que vote por otra opción.",
+        "clean": "D) Solicitar al elector que vote por otra opción.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 391,
+        "rawText": "- [x] **A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda y la destruyan.** *(Correcta)*",
+        "cleanText": "- [x] **A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda .** *(Correcta)*",
+        "struckText": "y la destruyan",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": true
+      },
+      {
+        "pIdx": 392,
+        "rawText": "- [ ] B) Retirarla directamente sin informar a los miembros de mesa.",
+        "cleanText": "- [ ] B) Retirarla directamente sin informar a los miembros de mesa.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 394,
+        "rawText": "- [ ] D) Solicitar al elector que vote por otra opción.",
+        "cleanText": "- [ ] D) Solicitar al elector que vote por otra opción.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Se debe comunicar a los miembros de mesa para que retiren de inmediato cualquier material de propaganda.",
+    "rawQuestion": "**¿Qué debe hacer un personero si detecta propaganda electoral dentro de la cámara secreta?**"
+  },
+  {
+    "id": 50,
+    "rawHeader": "### Pregunta 50",
+    "question": "¿Puede el elector tomar fotos a su cédula de votación con su teléfono celular dentro de la cámara secreta?",
+    "options": [
+      {
+        "raw": "- [x] **A) No, está legalmente prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio y evitar coacciones.** *(Correcta)*",
+        "clean": "A) No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio",
+        "isCheckedInDoc": true,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": "legalmente y evitar coacciones.**"
+      },
+      {
+        "raw": "- [ ] B) Sí, si no muestra su rostro.",
+        "clean": "B) Sí, si no muestra su rostro.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] C) Sí, si es para mostrarle a su jefe de trabajo.",
+        "clean": "C) Sí, si es para mostrarle a su jefe de trabajo.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": false,
+        "struckText": ""
+      },
+      {
+        "raw": "- [ ] D) Sí, si no publica la imagen.",
+        "clean": "D) Sí, si no publica la imagen.",
+        "isCheckedInDoc": false,
+        "isYellow": false,
+        "hasGreen": true,
+        "struckText": ""
+      }
+    ],
+    "hasModifications": true,
+    "modDetails": [
+      {
+        "pIdx": 399,
+        "rawText": "- [x] **A) No, está legalmente prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio y evitar coacciones.** *(Correcta)*",
+        "cleanText": "- [x] **A) No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio  *(Correcta)*",
+        "struckText": "legalmente y evitar coacciones.**",
+        "hasYellow": false,
+        "hasGreen": false,
+        "hasRed": true
+      },
+      {
+        "pIdx": 400,
+        "rawText": "- [ ] B) Sí, si no muestra su rostro.",
+        "cleanText": "- [ ] B) Sí, si no muestra su rostro.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      },
+      {
+        "pIdx": 402,
+        "rawText": "- [ ] D) Sí, si no publica la imagen.",
+        "cleanText": "- [ ] D) Sí, si no publica la imagen.",
+        "struckText": "",
+        "hasYellow": false,
+        "hasGreen": true,
+        "hasRed": false
+      }
+    ],
+    "answer": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Está prohibido el uso de celulares y cámaras en la cámara secreta para garantizar el voto libre y secreto.",
+    "rawQuestion": "**¿Puede el elector tomar fotos a su cédula de votación con su teléfono celular dentro de la cámara secreta?**"
+  }
+]

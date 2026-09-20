@@ -1,0 +1,631 @@
+[
+  {
+    "num": 3,
+    "questionText": "¿A qué hora deben presentarse los miembros de mesa y personeros para la instalación?",
+    "options": [
+      "A las 7:00 a. m.**",
+      "A las 8:30 a. m.",
+      "A las 9:00 a. m.",
+      "A las 6:00 a. m."
+    ],
+    "correctOptIndex": 3,
+    "explanation": "&gt; **💡 Justificación / Explicación:** La instalación de la mesa de sufragio inicia a las 7:00 a. m.",
+    "changesList": [
+      "[AMARILLO (Nueva respuesta)] \"-\"",
+      "[AMARILLO (Nueva respuesta)] \" \"",
+      "[AMARILLO (Nueva respuesta)] \"[ ]\"",
+      "[AMARILLO (Nueva respuesta)] \" D) A las 6:00 a. m.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) A las 7:00 a. m.** *(Correcta)*",
+        "text": "A las 7:00 a. m.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) A las 8:30 a. m.",
+        "text": "A las 8:30 a. m.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) A las 9:00 a. m.",
+        "text": "A las 9:00 a. m.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) A las 6:00 a. m.",
+        "text": "A las 6:00 a. m.",
+        "isChecked": false,
+        "isYellow": true
+      }
+    ]
+  },
+  {
+    "num": 4,
+    "questionText": "¿A qué hora inicia el sufragio (la votación de los electores)?",
+    "options": [
+      "A las 8:00 a. m.**",
+      "A las 7:00 a. m.",
+      "A las 9:00 a. m.",
+      "A las 10:00 a. m."
+    ],
+    "correctOptIndex": 1,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El sufragio inicia a las 8:00 a. m., una vez instalada la mesa.",
+    "changesList": [
+      "[AMARILLO (Nueva respuesta)] \"-\"",
+      "[AMARILLO (Nueva respuesta)] \" \"",
+      "[AMARILLO (Nueva respuesta)] \"[ ]\"",
+      "[AMARILLO (Nueva respuesta)] \" B) A las 7:00 a. m.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) A las 8:00 a. m.** *(Correcta)*",
+        "text": "A las 8:00 a. m.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) A las 7:00 a. m.",
+        "text": "A las 7:00 a. m.",
+        "isChecked": false,
+        "isYellow": true
+      },
+      {
+        "raw": "- [ ] C) A las 9:00 a. m.",
+        "text": "A las 9:00 a. m.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) A las 10:00 a. m.",
+        "text": "A las 10:00 a. m.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 13,
+    "questionText": "¿Quiénes votan primero al comenzar el sufragio a las 7:00 a. m.?",
+    "options": [
+      "Los miembros de mesa y luego los personeros que votan en esa misma mesa.**",
+      "Los electores que llegaron primero a la fila.",
+      "Los candidatos a la alcaldía.",
+      "Los policías y militares de seguridad."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Los miembros de la mesa votan en primer lugar, seguidos por los personeros acreditados que votan en esa mesa.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"7\"",
+      "[VERDE (Modificación de texto)] \":00 a. \"",
+      "[VERDE (Modificación de texto)] \"m.?*\"",
+      "[VERDE (Modificación de texto)] \"*\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Los miembros de mesa y luego los personeros que votan en esa misma mesa.** *(Correcta)*",
+        "text": "Los miembros de mesa y luego los personeros que votan en esa misma mesa.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Los electores que llegaron primero a la fila.",
+        "text": "Los electores que llegaron primero a la fila.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Los candidatos a la alcaldía.",
+        "text": "Los candidatos a la alcaldía.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Los policías y militares de seguridad.",
+        "text": "Los policías y militares de seguridad.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 30,
+    "questionText": "¿Qué debe hacer el personero inmediatamente después de recibir su copia del Acta Electoral?",
+    "options": [
+      "Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.**",
+      "Guardarla en su casa sin mostrarla a nadie.",
+      "Borrar los números de los otros partidos con corrector.",
+      "Firmarla en blanco y regalarla a un votante."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El acta es la prueba legal del resultado; se debe verificar, cuidar y enviar de inmediato al centro de cómputo partidario.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"personero de centro de \"",
+      "[VERDE (Modificación de texto)] \"votación\"",
+      "[VERDE (Modificación de texto)] \".*\"",
+      "[VERDE (Modificación de texto)] \"*\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.** *(Correcta)*",
+        "text": "Revisar que las cifras coincidan con el conteo, que esté firmada y entregarla o reportarla a su personero de centro de votación.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Guardarla en su casa sin mostrarla a nadie.",
+        "text": "Guardarla en su casa sin mostrarla a nadie.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Borrar los números de los otros partidos con corrector.",
+        "text": "Borrar los números de los otros partidos con corrector.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Firmarla en blanco y regalarla a un votante.",
+        "text": "Firmarla en blanco y regalarla a un votante.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 34,
+    "questionText": "¿Qué debe hacer el personero si un elector se demora dentro de la cámara secreta?",
+    "options": [
+      "Mantener la calma y permitir que los miembros de mesa manejen la situación con respeto a la privacidad del voto.**",
+      "Acercarse a la cámara secreta para ver qué está haciendo.",
+      "Entrar a ayudarlo a marcar la cédula.",
+      "Gritarle desde la mesa para que se apure."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Nadie puede invadir la cámara secreta; los miembros de mesa son los únicos que pueden recordar amablemente el tiempo.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"A\"",
+      "[VERDE (Modificación de texto)] \"cercarse a\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Mantener la calma y permitir que los miembros de mesa manejen la situación con respeto a la privacidad del voto.** *(Correcta)*",
+        "text": "Mantener la calma y permitir que los miembros de mesa manejen la situación con respeto a la privacidad del voto.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Acercarse a la cámara secreta para ver qué está haciendo.",
+        "text": "Acercarse a la cámara secreta para ver qué está haciendo.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Entrar a ayudarlo a marcar la cédula.",
+        "text": "Entrar a ayudarlo a marcar la cédula.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Gritarle desde la mesa para que se apure.",
+        "text": "Gritarle desde la mesa para que se apure.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 36,
+    "questionText": "¿Qué información contiene la sección del Acta de Sufragio?",
+    "options": [
+      "El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.**",
+      "El total de electores votaron.",
+      "El número de cédulas rotas únicamente.",
+      "La cantidad de policías en el aula."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El Acta de Sufragio registra cuántos ciudadanos votaron y cuántos no asistieron a votar.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"El total de \"",
+      "[VERDE (Modificación de texto)] \"ciudadanos\"",
+      "[VERDE (Modificación de texto)] \" que votaron\"",
+      "[VERDE (Modificación de texto)] \"el total de c\"",
+      "[VERDE (Modificación de texto)] \"edulas no utilizadas\"",
+      "[VERDE (Modificación de texto)] \"El total de electores votaron\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.** *(Correcta)*",
+        "text": "El total de ciudadanos que votaron, el total de cedulas no utilizadas y las observaciones.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) El total de electores votaron.",
+        "text": "El total de electores votaron.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) El número de cédulas rotas únicamente.",
+        "text": "El número de cédulas rotas únicamente.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) La cantidad de policías en el aula.",
+        "text": "La cantidad de policías en el aula.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 38,
+    "questionText": "¿Qué debe hacer el personero si nota un error en la suma de los votos en la Hoja Borrador?",
+    "options": [
+      "Hacer la observación con respeto antes de que los miembros de mesa pasen los datos al Acta de Escrutinio definitiva.**",
+      "Esperar a que firmen el acta para luego hacer el reclamo.",
+      "Tachar con plumón negro el acta oficial.",
+      "Arrebatar la hoja borrador y salir corriendo."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El personero debe alertar respetuosamente para corregir las sumas en la hoja borrador antes de llenar el acta final.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"hacer el reclamo.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Hacer la observación con respeto antes de que los miembros de mesa pasen los datos al Acta de Escrutinio definitiva.** *(Correcta)*",
+        "text": "Hacer la observación con respeto antes de que los miembros de mesa pasen los datos al Acta de Escrutinio definitiva.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Esperar a que firmen el acta para luego hacer el reclamo.",
+        "text": "Esperar a que firmen el acta para luego hacer el reclamo.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Tachar con plumón negro el acta oficial.",
+        "text": "Tachar con plumón negro el acta oficial.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Arrebatar la hoja borrador y salir corriendo.",
+        "text": "Arrebatar la hoja borrador y salir corriendo.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 43,
+    "questionText": "¿Qué sucede si a las 7:00 a. m. falta uno de los miembros de mesa titulares?",
+    "options": [
+      "El presidente asume con los suplentes presentes o, en su defecto, con los primeros electores de la fila.**",
+      "La mesa se cierra y todos los electores se van a su casa.",
+      "El personero se sienta a reemplazar al miembro de mesa y cobra el bono.",
+      "Se espera hasta las 4:00 p. m. a que llegue el titular."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Si faltan titulares, la mesa se completa con los suplentes o electores de la fila; nunca con personeros ni candidatos.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"7:\"",
+      "[VERDE (Modificación de texto)] \"00\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) El presidente asume con los suplentes presentes o, en su defecto, con los primeros electores de la fila.** *(Correcta)*",
+        "text": "El presidente asume con los suplentes presentes o, en su defecto, con los primeros electores de la fila.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) La mesa se cierra y todos los electores se van a su casa.",
+        "text": "La mesa se cierra y todos los electores se van a su casa.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) El personero se sienta a reemplazar al miembro de mesa y cobra el bono.",
+        "text": "El personero se sienta a reemplazar al miembro de mesa y cobra el bono.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Se espera hasta las 4:00 p. m. a que llegue el titular.",
+        "text": "Se espera hasta las 4:00 p. m. a que llegue el titular.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 45,
+    "questionText": "¿Qué es la lista de electores de una mesa de sufragio?",
+    "options": [
+      "Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.**",
+      "Es una lista de los vecinos que pagaron sus arbitrios.",
+      "Es el padrón de afiliados del partido que ganó las elecciones anteriores.",
+      "Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El padrón electoral contiene la lista oficial de todos los ciudadanos habilitados para votar en esa mesa.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"de una mesa de \"",
+      "[VERDE (Modificación de texto)] \"sufragio\"",
+      "[VERDE (Modificación de texto)] \"?*\"",
+      "[VERDE (Modificación de texto)] \"*\"",
+      "[VERDE (Modificación de texto)] \"y con espacios para registrar su firma e impresión dactilar después de votar\"",
+      "[VERDE (Modificación de texto)] \"Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral\"",
+      "[VERDE (Modificación de texto)] \".\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.** *(Correcta)*",
+        "text": "Es el documento oficial con la relación de ciudadanos habilitados para votar en esa mesa, con sus fotos,   y con espacios para registrar su firma e impresión dactilar después de votar.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Es una lista de los vecinos que pagaron sus arbitrios.",
+        "text": "Es una lista de los vecinos que pagaron sus arbitrios.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Es el padrón de afiliados del partido que ganó las elecciones anteriores.",
+        "text": "Es el padrón de afiliados del partido que ganó las elecciones anteriores.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral.",
+        "text": "Es la relación de personas designadas como miembros de mesa y personeros para la jornada electoral.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 46,
+    "questionText": "¿Cómo comprueba el secretario que un ciudadano ya emitió su voto en el padrón?",
+    "options": [
+      "El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.**",
+      "El elector le entrega una moneda al secretario.",
+      "El elector le realiza una señal al presidente.",
+      "El personero marca o tacha el nombre del elector en la lista de electores."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** El elector debe firmar y poner su huella digital en el padrón electoral tras depositar su voto en el ánfora.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"coloca\"",
+      "[VERDE (Modificación de texto)] \"le \"",
+      "[VERDE (Modificación de texto)] \"realiza una señal al\"",
+      "[VERDE (Modificación de texto)] \"El personero marca o tacha el nombre del elector en la lista de electores.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.** *(Correcta)*",
+        "text": "El elector coloca su firma y su huella dactilar en el recuadro que le corresponde en la lista de electores.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) El elector le entrega una moneda al secretario.",
+        "text": "El elector le entrega una moneda al secretario.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) El elector le realiza una señal al presidente.",
+        "text": "El elector le realiza una señal al presidente.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) El personero marca o tacha el nombre del elector en la lista de electores.",
+        "text": "El personero marca o tacha el nombre del elector en la lista de electores.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 47,
+    "questionText": "¿Qué recibe el elector al momento de que le devuelven su DNI tras votar?",
+    "options": [
+      "Su Documento Nacional de Identidad (DNI) Correcta)*",
+      "Un certificado de participación electoral.",
+      "Una copia del acta de escrutinio.",
+      "Una constancia de haber emitido su voto."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Al finalizar el voto, se le entrega su DNI con el holograma oficial pegado como constancia de sufragio.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"Su \"",
+      "[VERDE (Modificación de texto)] \"Documento Nacional de Identidad (DNI)\"",
+      "[VERDE (Modificación de texto)] \"Un certificado de participación electoral\"",
+      "[VERDE (Modificación de texto)] \".\"",
+      "[VERDE (Modificación de texto)] \"Una constancia de haber emitido su voto\"",
+      "[VERDE (Modificación de texto)] \".\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Su Documento Nacional de Identidad (DNI) Correcta)*",
+        "text": "Su Documento Nacional de Identidad (DNI) Correcta)*",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Un certificado de participación electoral.",
+        "text": "Un certificado de participación electoral.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Una copia del acta de escrutinio.",
+        "text": "Una copia del acta de escrutinio.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Una constancia de haber emitido su voto.",
+        "text": "Una constancia de haber emitido su voto.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 48,
+    "questionText": "¿Qué debe verificar el personero en la camara secreta durante la instalación?",
+    "options": [
+      "Que este acondicionada y tenga el cartel de candidatos.**",
+      "Que tenga la información sobre el proceso electoral.",
+      "Que este limpia y tenga buena iluminación.",
+      "Que tenga las cedulas de sufragio disponibles."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** La cámara secreta debe estar limpia de propaganda y garantizar el secreto absoluto del voto.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"en la \"",
+      "[VERDE (Modificación de texto)] \"cama\"",
+      "[VERDE (Modificación de texto)] \"ra\"",
+      "[VERDE (Modificación de texto)] \" secreta durante la \"",
+      "[VERDE (Modificación de texto)] \"instalación\"",
+      "[VERDE (Modificación de texto)] \"Que \"",
+      "[VERDE (Modificación de texto)] \"este acondicionada y tenga el cartel de \"",
+      "[VERDE (Modificación de texto)] \"candidatos\"",
+      "[VERDE (Modificación de texto)] \"tenga\"",
+      "[VERDE (Modificación de texto)] \" la información sobre el proceso electoral.\"",
+      "[VERDE (Modificación de texto)] \"este limpia y tenga buena iluminación.\"",
+      "[VERDE (Modificación de texto)] \"tenga\"",
+      "[VERDE (Modificación de texto)] \" las cedulas de sufragio disponibles.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Que este acondicionada y tenga el cartel de candidatos.** *(Correcta)*",
+        "text": "Que este acondicionada y tenga el cartel de candidatos.**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Que tenga la información sobre el proceso electoral.",
+        "text": "Que tenga la información sobre el proceso electoral.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Que este limpia y tenga buena iluminación.",
+        "text": "Que este limpia y tenga buena iluminación.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Que tenga las cedulas de sufragio disponibles.",
+        "text": "Que tenga las cedulas de sufragio disponibles.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 49,
+    "questionText": "¿Qué debe hacer un personero si detecta propaganda electoral dentro de la cámara secreta?",
+    "options": [
+      "Comunicar de inmediato a los miembros de mesa para que retiren la propaganda .**",
+      "Retirarla directamente sin informar a los miembros de mesa.",
+      "Pegar encima propaganda de su propio partido.",
+      "Solicitar al elector que vote por otra opción."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Se debe comunicar a los miembros de mesa para que retiren de inmediato cualquier material de propaganda.",
+    "changesList": [
+      "[VERDE (Modificación de texto)] \"Comunicar\"",
+      "[ROJO/TACHADO (Eliminar)] \"y la \"",
+      "[ROJO/TACHADO (Eliminar)] \"destruyan\"",
+      "[VERDE (Modificación de texto)] \"Retirarla directamente sin informar a los miembros de mesa.\"",
+      "[VERDE (Modificación de texto)] \"Solicitar al elector que vote por otra opción.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda y la destruyan.** *(Correcta)*",
+        "text": "Comunicar de inmediato a los miembros de mesa para que retiren la propaganda .**",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Retirarla directamente sin informar a los miembros de mesa.",
+        "text": "Retirarla directamente sin informar a los miembros de mesa.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Pegar encima propaganda de su propio partido.",
+        "text": "Pegar encima propaganda de su propio partido.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Solicitar al elector que vote por otra opción.",
+        "text": "Solicitar al elector que vote por otra opción.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  },
+  {
+    "num": 50,
+    "questionText": "¿Puede el elector tomar fotos a su cédula de votación con su teléfono celular dentro de la cámara secreta?",
+    "options": [
+      "No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio",
+      "Sí, si no muestra su rostro.",
+      "Sí, si es para mostrarle a su jefe de trabajo.",
+      "Sí, si no publica la imagen."
+    ],
+    "correctOptIndex": 0,
+    "explanation": "&gt; **💡 Justificación / Explicación:** Está prohibido el uso de celulares y cámaras en la cámara secreta para garantizar el voto libre y secreto.",
+    "changesList": [
+      "[ROJO/TACHADO (Eliminar)] \"legalmente\"",
+      "[ROJO/TACHADO (Eliminar)] \" \"",
+      "[ROJO/TACHADO (Eliminar)] \"y evitar \"",
+      "[ROJO/TACHADO (Eliminar)] \"coacciones.*\"",
+      "[ROJO/TACHADO (Eliminar)] \"*\"",
+      "[VERDE (Modificación de texto)] \"Sí, si no muestra su rostro.\"",
+      "[VERDE (Modificación de texto)] \"Sí, si no publica la imagen.\""
+    ],
+    "optionsRaw": [
+      {
+        "raw": "- [x] **A) No, está legalmente prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio y evitar coacciones.** *(Correcta)*",
+        "text": "No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio",
+        "isChecked": true,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] B) Sí, si no muestra su rostro.",
+        "text": "Sí, si no muestra su rostro.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] C) Sí, si es para mostrarle a su jefe de trabajo.",
+        "text": "Sí, si es para mostrarle a su jefe de trabajo.",
+        "isChecked": false,
+        "isYellow": false
+      },
+      {
+        "raw": "- [ ] D) Sí, si no publica la imagen.",
+        "text": "Sí, si no publica la imagen.",
+        "isChecked": false,
+        "isYellow": false
+      }
+    ]
+  }
+]
