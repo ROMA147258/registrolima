@@ -461,14 +461,15 @@ export function UnifiedTrainingModal({
                   controls
                   controlsList="nodownload noplaybackrate"
                   disablePictureInPicture
-                  preload="auto"
+                  preload="metadata"
+                  poster="/images/IMG_5684.JPEG"
                   onTimeUpdate={handleTimeUpdate}
                   onSeeking={handleSeeking}
                   onSeeked={handleSeeked}
                   onEnded={handleVideoEnded}
                   style={{ width: '100%', maxHeight: '430px', display: 'block', outline: 'none' }}
                 >
-                  <source src="/videos/tutorial_personero.mp4" type="video/mp4" />
+                  <source src="/videos/IMG_5774.MP4" type="video/mp4" />
                   Tu navegador no soporta el formato de video MP4.
                 </video>
               </div>

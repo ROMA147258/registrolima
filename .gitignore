@@ -24,3 +24,8 @@ mssql_data/
 Thumbs.db
 .vscode/
 .idea/
+
+# Large local media
+frontend/public/videos/IMG_5678.MP4
+*.mp4
+*.MP4

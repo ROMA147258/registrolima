@@ -9,6 +9,9 @@ export default defineConfig({
     strictPort: false,
     host: '0.0.0.0', // Permite acceso desde celulares en la misma red local Wi-Fi
     allowedHosts: true, // Permite cualquier dominio de Cloudflare Tunnel
+    watch: {
+      ignored: ['**/public/videos/**']
+    },
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:3000',
