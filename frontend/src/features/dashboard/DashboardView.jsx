@@ -692,6 +692,7 @@ export function DashboardView({ onGoToTraining }) {
   const [alertFilter1, setAlertFilter1] = useState('all'); // 'all', 'critico', 'parcial', 'optimo', 'excedido'
   const [exp1, setExp1] = useState('all');
   const [mov1, setMov1] = useState('all');
+  const [comp1, setComp1] = useState('all');
   const [zoneType1, setZoneType1] = useState('all'); // 'all', 'multi', 'single', 'unassigned'
 
   // Resetear filtro de colegio cuando cambia el distrito seleccionado
@@ -1277,11 +1278,12 @@ export function DashboardView({ onGoToTraining }) {
 
       const mExp = exp1 === 'all' || (exp1 === 'si' ? getExp(r) === 'Sí' : getExp(r) === 'No');
       const mMov = mov1 === 'all' || (mov1 === 'si' ? getMov(r) === 'Sí' : getMov(r) === 'No');
+      const mComp = comp1 === 'all' || (comp1 === 'si' ? getComp(r) === 'Sí' : getComp(r) === 'No');
       const mColegio = colegio1 === 'all' || matchesLocal(local, colegio1);
 
-      return mSearch && mDist && mLocalZonal && mRole && mColegio && mCoordLocal && mExp && mMov;
+      return mSearch && mDist && mLocalZonal && mRole && mColegio && mCoordLocal && mExp && mMov && mComp;
     });
-  }, [records, search1, dist1, localZonal1, role1, colegio1, coordLocalFilter1, exp1, mov1, coordinatorDistrict, isCoordinadorZonal, schoolsWithPlvSet]);
+  }, [records, search1, dist1, localZonal1, role1, colegio1, coordLocalFilter1, exp1, mov1, comp1, coordinatorDistrict, isCoordinadorZonal, schoolsWithPlvSet]);
 
   // Lista de colegios disponibles para el filtro según el distrito activo
   const availableSchoolsList = useMemo(() => {
@@ -1329,7 +1331,7 @@ export function DashboardView({ onGoToTraining }) {
     if (getMov(r) === 'Sí') tab1Mov++;
   });
 
-  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || (isCoordinadorZonal && localZonal1 !== 'all') || role1 !== 'all' || colegio1 !== 'all' || coordLocalFilter1 !== 'all' || alertFilter1 !== 'all' || exp1 !== 'all' || mov1 !== 'all';
+  const isFiltered1 = search1 !== '' || (!isCoordinador && dist1 !== 'all') || (isCoordinadorZonal && localZonal1 !== 'all') || role1 !== 'all' || colegio1 !== 'all' || coordLocalFilter1 !== 'all' || alertFilter1 !== 'all' || exp1 !== 'all' || mov1 !== 'all' || comp1 !== 'all';
 
   // Meta territorial dinámica según el distrito asignado o seleccionado, o colegio, o zona
   const activeDistrictName = (isCoordinador && coordinatorDistrict) ? coordinatorDistrict : (dist1 !== 'all' ? dist1 : null);
