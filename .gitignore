@@ -27,5 +27,5 @@ Thumbs.db
 
 # Large local media
 frontend/public/videos/IMG_5678.MP4
-*.mp4
-*.MP4
+!frontend/public/videos/IMG_5774.MP4
+!frontend/public/videos/IMG_5774_fast.MP4
