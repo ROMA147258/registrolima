@@ -19888,5 +19888,2030 @@
     "colegio": "IEP PROLOG SEDE JOSE GALVEZ PRIMARIA",
     "direccion": "",
     "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "COLEGIO",
+    "direccion": "DIRECCIÓN",
+    "mesas": 0
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "UNIVERSIDAD NACIONAL DEL CALLAO",
+    "direccion": "AV JUAN PABLO II 306",
+    "mesas": 34
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "ASOCIACION EDUCATIVA JORGE WASHINGTON",
+    "direccion": "JR VICTOR FAJARDO 441",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IE 5022 FRANCISCO IZQUIERDO RIOS",
+    "direccion": "JR NICOLAS DE PIEROLA 110",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IE DORA MAYER",
+    "direccion": "PARQUE LAS AMERICAS 140",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IE GENERAL PRADO",
+    "direccion": "AV JUAN PABLO II SN",
+    "mesas": 35
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IE 5011 DARIO ARRUS CUESTAS",
+    "direccion": "CALLE 72 SN",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IE 5050 SAN PEDRO",
+    "direccion": "CALLE 26 A -PARQUE SEÑOR DEL MAR SN",
+    "mesas": 16
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IEP CALLAO",
+    "direccion": "AV JUAN PABLO II SN",
+    "mesas": 26
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "CEBE SAN ANTONIO",
+    "direccion": "CALLE 58 MZ Q4 LOTE 1B",
+    "mesas": 23
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IEP VIRGEN DEL ROSARIO",
+    "direccion": "CALLE SEBASTIAN BARRANCA 209",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "INSTITUTO DE EDUCACION SUPERIOR PUBLICA SIMON BOLIVAR",
+    "direccion": "CALLE 3 402 CIUDAD DEL PESCADOR",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IE PASCUAL SACO OLIVEROS",
+    "direccion": "AV ALMIRANTE MIGUEL GRAU 2010",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070102",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "BELLAVISTA",
+    "colegio": "IEP INNOVA SCHOOLS - SEDE BELLAVISTA",
+    "direccion": "JR VICTOR FAJARDO 144",
+    "mesas": 21
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "COLEGIO PARROQUIAL SANTA ANGELA MERICI",
+    "direccion": "JR VICTOR ANDRES BELAUNDE CUADRA 1 SN",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE 4015 AUGUSTO SALAZAR BONDY",
+    "direccion": "JR ANGEL QUISPE 350",
+    "mesas": 21
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE 5030 TNTE CRNEL LEOPOLDO PEREZ SALMON",
+    "direccion": "AV LOPEZ PAZOS 203",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE 5041 NUESTRA SEÑORA DEL MONTE CARMELO",
+    "direccion": "JR LORETO SN",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE 5043 SAN MARTIN DE PORRES",
+    "direccion": "JR LIMA SN",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE 5044 BANDERA DE LA PAZ",
+    "direccion": "AV LOPEZ PAZOS 803",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE RAUL PORRAS BARRENECHEA",
+    "direccion": "JR LIMA SN",
+    "mesas": 24
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IE 88 CRISTO MILAGROSO",
+    "direccion": "JR JORGE CHAVEZ 600",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IEP REGINA PACIS PRIMARIA",
+    "direccion": "JR INDEPENDENCIA 199",
+    "mesas": 20
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IEP RICARDO PALMA",
+    "direccion": "JR REPÚBLICA DE SANTO DOMINGO 180",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IEP ANTON COLLEGE",
+    "direccion": "AV PRIMERO DE MAYO 731",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "CEBE VIRGEN DEL CARMEN",
+    "direccion": "AV LOPEZ PAZOS 851",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070103",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CARMEN DE LA LEGUA - REYNOSO",
+    "colegio": "IEP BARBARA D ACHILLE",
+    "direccion": "AV LOPEZ PAZOS 380",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "ESTADIO CAMPOLO ALCALDE",
+    "direccion": "AV RAUL HAYA DE LA TORRE SN",
+    "mesas": 44
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "CEP CONCORDIA UNIVERSAL - SECUNDARIA",
+    "direccion": "AV SANTA ROSA 448",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IEPM COLEGIO MILITAR LEONCIO PRADO",
+    "direccion": "AV LA PAZ SN",
+    "mesas": 26
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "CEBE LUISA SOLOGUREN DE SABOGAL",
+    "direccion": "AV LA MARINA CUADRA 40 SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IE 5027 ARTURO TIMORAN HALTENHOF",
+    "direccion": "PJE FELIX SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IE 4005 ALMIRANTE MIGUEL GRAU SEMINARIO",
+    "direccion": "AV LA PAZ 1000",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "CEBE LA PERLA",
+    "direccion": "PJE JUAN XXIII 143",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IE JOSE OLAYA BALANDRA",
+    "direccion": "JR ATAHUALPA CUADRA 7 SN",
+    "mesas": 27
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IE PARROQUIAL SAN JOSE",
+    "direccion": "AV MARISCAL CASTILLA CUADRA 8 SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IEP LICEO NAVAL CAPITAN DE NAVIO GERMAN ASTETE",
+    "direccion": "CALLE JUAN J PARDO SN",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "LOCAL DE EDUCACION CULTURA Y DEPORTE",
+    "direccion": "JR CAHUIDE 981",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "IE PARROQUIAL VIRGEN DE LA ESPERANZA",
+    "direccion": "CALLE MADRID 156 URB LA MACARENA",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070104",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PERLA",
+    "colegio": "CEP CONCORDIA UNIVERSAL - PRIMARIA",
+    "direccion": "JR HUASCAR 1400",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SAN AGUSTIN DE LOS SAIRES",
+    "direccion": "MZ N LOTE 15 -17 ETAPA II",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO MUNICIPAL DANIEL CARPIO",
+    "direccion": "CALLE REAL FELIPE SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO RAMÓN CASTILLA",
+    "direccion": "JR TALARA SN",
+    "mesas": 25
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "ESTADIO MUNICIPAL PREVI",
+    "direccion": "CALLE LAS MORAS SN",
+    "mesas": 33
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA PARQUE LA FRATERNIDAD",
+    "direccion": "CALLE 7 SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA PARQUE CHIMPUM CALLAO",
+    "direccion": "CALLE 3 SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO PARQUE ITALIA",
+    "direccion": "CALLE ANDRES AVELINO CACERES SN",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5136 FERNANDO BELAUNDE TERRY",
+    "direccion": "CALLE DANIEL ALCIDES CARRION MZ A SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA MIGUEL GRAU",
+    "direccion": "CALLE MIRAMAR SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO MARQUEZ - AV NESTOR GAMBETA",
+    "direccion": "AV NESTOR GAMBETA SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP FLORENCE NIGHTINGALE",
+    "direccion": "CALLE GUSTAVO POND MUSSO MZ A LOTE 2 Y 3",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "ESTADIO MARCOS CALDERON (EX LIGA DE FUTBOL INTERNA DE MARQUEZ)",
+    "direccion": "AV JOSE OLAYA SN",
+    "mesas": 32
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP JUNIOR CESAR DE LOS RIOS",
+    "direccion": "AV OCTAVIO ESPINOZA SN URB SANTA MARINA",
+    "mesas": 20
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE COPRODELI SAN MIGUEL",
+    "direccion": "CALLE 12 MZ D LT 10",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP BELLA UNION",
+    "direccion": "CALLE HUANCAVELICA 286",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP NIÑO JESUS DE PRAGA",
+    "direccion": "CALLE CESAR VALLEJO MZ G LT 1-5",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4008 NUESTRA SEÑORA DE FATIMA",
+    "direccion": "AV LOS DIAMANTES SN",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4016 NESTOR GAMBETA BONATTI",
+    "direccion": "AV ALAMEDA SN",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4018 ABRAHAM VALDELOMAR",
+    "direccion": "AV PROCERES SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5001 LUISA DE SABOGAL",
+    "direccion": "JR SAN MARTIN 156",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5005 GENERALISIMO DON JOSE DE SAN MARTIN",
+    "direccion": "JR AREQUIPA NORTE 143",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5007 NUESTRA SEÑORA DE GUADALUPE",
+    "direccion": "AV DOS DE MAYO SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5010 VIRGEN DE GUADALUPE",
+    "direccion": "JR ZARUMILLA SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5019 AUGUSTO CAZORLA",
+    "direccion": "AV REPUBLICA DE PANAMA 753",
+    "mesas": 23
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5024 FRANCISCO MIRO QUESADA CANTUARIAS",
+    "direccion": "JR SUPE 603 URB SANTA MARINA SUR",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5031 CESAR VALLEJO",
+    "direccion": "JR TUMBES SN",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5033 LAS 200 MILLAS",
+    "direccion": "CALLE 4 SN",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5036 RAFAEL BELAUNDE DIEZ CANSECO",
+    "direccion": "JR CESAR VALLEJO SN URB PLAYA RIMAC",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5040 PEDRO RUIZ",
+    "direccion": "AV VILLA JOSEFINA SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5042 JUAN FRANCISCO DE LA BODEGA Y QUADRA",
+    "direccion": "JR HUANCAVELICA 100 URB BELLA UNION",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5046 JOSE GALVEZ EGUSQUIZA",
+    "direccion": "JR TALARA SN",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5075 INCA GARCILAZO DE LA VEGA",
+    "direccion": "AV DANIEL ALCIDES CARRION SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5076 NUESTRA SEÑORA DE LAS MERCEDES",
+    "direccion": "JR VICTOR ESPINOZA SN",
+    "mesas": 32
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5079 JORGE CHAVEZ DARNELL",
+    "direccion": "CALLE VICTOR ANDRES BELAUNDE 100",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5080 SOR ANA DE LOS ANGELES",
+    "direccion": "CALLE ALAMEDA DE LOS MISIONEROS SN",
+    "mesas": 29
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5083 SAN MARTIN DE PORRES",
+    "direccion": "PJE 11 SN MZ X",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5084 CARLOS PHILIPS",
+    "direccion": "PJE K URB PREVI",
+    "mesas": 16
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5085 RAMIRO PRIALE PRIALE",
+    "direccion": "CALLE LOS FAISANES CUADRA 1",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5092 SANTA ROSA DE LIMA",
+    "direccion": "PJE K MZ G SECTOR V",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5097 SAN JUAN MACIAS",
+    "direccion": "AV CANADA SN",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5099 RICARDO PALMA",
+    "direccion": "CALLE JOSE OLAYA SN URB JORGE CHAVEZ",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5095 JULIO RAMON RIBEYRO",
+    "direccion": "CALLE GAMMA SN",
+    "mesas": 22
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5023 ABELARDO GAMARRA",
+    "direccion": "CALLE ROMULO ASERETTO SN MZ K URB FUNDO CHALACA",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5074 ALCIDES SPELUCIN VEGA",
+    "direccion": "CALLE 7 URB SESQUICENTENARIO",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4001 DOS DE MAYO",
+    "direccion": "AV ESTADOS UNIDOS SN",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5049 EMMA DETTMANN DE GUTIERREZ",
+    "direccion": "CALLE RUY DIAZ 316",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE HEROINAS TOLEDO",
+    "direccion": "AV MIGUEL GRAU 1176",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE JORGE BASADRE GROHMAN",
+    "direccion": "JR CALIFORNIA 280",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5026 JOSE MARIA ARGUEDAS",
+    "direccion": "CALLE LAS MORAS SN",
+    "mesas": 21
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE POLITECNICO NACIONAL DEL CALLAO",
+    "direccion": "AV ELMER FAUCETT CUADRA 7 SN",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP ALBORADA",
+    "direccion": "JR ANTONIO MIROQUESADA 1359",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP JOSE GALVEZ",
+    "direccion": "JR AREQUIPA NORTE 577",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5048 MARISCAL RAMON CASTILLA",
+    "direccion": "AV ALAMEDA SN",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP CAPITAN DE NAVIO JUAN FANNING GARCIA",
+    "direccion": "MZ H3 LOTE 12 13 14",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP LIBERTADOR SIMON BOLIVAR",
+    "direccion": "JR GUISSE 244",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SAGRADO CORAZÓN DE JESÚS",
+    "direccion": "JR ATAHUALPA 175",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SAN MARCOS DE OQUENDO",
+    "direccion": "CALLE VILLAS DE OQUENDO MZ I LT 1-4",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SANTÍSIMA GUADALUPE",
+    "direccion": "JR LAS AGUILAS 337",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SAN AGUSTIN DE OQUENDO",
+    "direccion": "AV ALEJANDRO BERTELLO BOLLATI MZ C LT 2-5",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP BLAS PASCAL",
+    "direccion": "CALLE SN MZ A URB LOS CLAVELES DE OQUENDO",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4007 VIRGEN DEL PILAR",
+    "direccion": "CALLE FRANCISCO DE ZELA MZ X LOTE 1",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SEÑOR DE LUREN DE OQUENDO",
+    "direccion": "CALLE SN MZ D1 LOTE 5-8",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE PARROQUIAL MERIDIONAL SANTA ANA",
+    "direccion": "AV ALAMEDA SN",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP VIRGEN DE GUADALUPE",
+    "direccion": "URB ALBINO HERRERA MZ E1 LOTE 8 2DA ETAPA",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5139 LAS COLINAS",
+    "direccion": "CALLE 10 SN",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5089 VIRGEN MARIA",
+    "direccion": "CALLE PRINCIPAL MZ P LT 549 URB EL ALAMO",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE PNP JUAN LINARES ROJAS",
+    "direccion": "CALLE CALIFORNIA SN",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COPRODELI COLEGIO MONSEÑOR DURAND",
+    "direccion": "CALLE 1 SN URB LAS 200 MILLAS",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP STAR TALENT PERU SCHOOL",
+    "direccion": "CALLE LAS CASTAÑAS 191-195",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "CETPRO NACIONES UNIDAS",
+    "direccion": "JR COLON 152",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP DIVINO CAUTIVO",
+    "direccion": "CALLE LUIS NEGREIROS MZ G LT 8",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COPRODELI SAN VICENTE",
+    "direccion": "CALLE LEONCIO PRADO SN",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SAGRADO NIÑO JESUS CHAPERITO",
+    "direccion": "CALLE SANTA ELENA MZ G LOTE 14 - 19",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP NIÑO JESUS MARISCAL CHAPERITO",
+    "direccion": "CALLE PACASMAYO 4737 URB JORGE CHAVEZ",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP JEAN CALVIN LEFRANC",
+    "direccion": "CALLE ROSALES MZ C LT 12",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP DANIEL ALCIDES CARRION INICIAL",
+    "direccion": "CALLE MARIA PARADO DE BELLIDO MZ 88 LT 6-7",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP JUANITO BOSCO",
+    "direccion": "AV VICTOR ANDRES BELAUNDE MZ D LT 3",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP LOS OLIVOS",
+    "direccion": "JR ALAMOS MZ G LT 18 Y 19",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE PARROQUIAL SAN JUAN BAUTISTA",
+    "direccion": "CALLE SAN JUAN BAUTISTA MZ 108 LT 6",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5143 ESCUELA DE TALENTOS",
+    "direccion": "AV 2 DE MAYO CON ESQUINA JR MONTEAGUDO",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "UNIVERSIDAD NACIONAL FEDERICO VILLARREAL  LOCAL F01L01",
+    "direccion": "AV NESTOR GAMBETA SN",
+    "mesas": 35
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4006 SANTA ROSA DE AMERICA",
+    "direccion": "CALLE SN URB RENOVACION PALOMINO",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP TERESA MONTERO SIVERONI",
+    "direccion": "JR HUACHO 195 URB SANTA MARINA",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COPRODELI AGUSTIN DE HIPONA",
+    "direccion": "PASAJE SN",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP CORAZÓN DE JESÚS",
+    "direccion": "JR EL ROBLE 326",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP ANGELES DE FATIMA",
+    "direccion": "AV FRANCISCO FORCELLEDO 100",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP GRUMETE MEDINA",
+    "direccion": "JR WASHIGNTON 248",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO MARQUEZ - CALLE TACNA",
+    "direccion": "CALLE TACNA SN",
+    "mesas": 20
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO MARQUEZ - CALLE 7",
+    "direccion": "CALLE 7 AAHH MARQUEZ",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA PARQUE LOS ESTIBADORES",
+    "direccion": "CALLE 3 SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA PARQUE ORMINDO VELA REATEGUI",
+    "direccion": "CALLE 14 SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA PARQUE GERARDO MILLONES",
+    "direccion": "CALLE 10 SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SAN LAZARO MATER MISERICORDIAE",
+    "direccion": "COOP ALBINO HERRERA ETAPA 1 MZ H LT 20-21",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "LOSA DEPORTIVA JUAN VELASCO ALVARADO",
+    "direccion": "CALLE PUNO SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP NUESTRA SEÑORA DE LA ASUNCION",
+    "direccion": "MZ F LOTE 7 LAS PRADERAS DE OQUENDO",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP JORDAN DE JESUS",
+    "direccion": "MZ F LT 3-4 URB 200 MILLAS",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP SANTISIMO NOMBRE DE MARIA",
+    "direccion": "AV CUZCO MZ C LT 18-19 URB SAN JUAN MACIAS",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "COMPLEJO DEPORTIVO VALERIANO LÓPEZ",
+    "direccion": "JR GUISSE SN",
+    "mesas": 33
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP INNOVA SCHOOLS - CALLAO SANTA ROSA",
+    "direccion": "AV ALEJANDRO BERTELLO 553",
+    "mesas": 31
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP INNOVA SCHOOLS - SEDE COLONIAL",
+    "direccion": "CALLE CONDE DE LEMOS 327 URB LA COLONIAL",
+    "mesas": 31
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5082 SARITA COLONIA",
+    "direccion": "AV RAMIRO PRIALE SN",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP VIRGEN DE CHAPI - PRIMARIA",
+    "direccion": "CALLE 5 MZ N LOTE 14 URB LOS JAZMINES",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 2093 SANTA ROSA",
+    "direccion": "AV LA REGLA MZ O LOTE 4",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 3090 FRANCO PERUANO",
+    "direccion": "CALLE 1 SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4010 HERMANOS RAFAEL SAMUEL Y EMILIO MOISES GOMEZ PAQUIYAURI",
+    "direccion": "CALLE BUENOS AIRES SN",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 4011 LA TABOADA DE LAS FRESAS",
+    "direccion": "CALLE LOS ALISOS SN URB LAS FRESAS",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IE 5037 ALMIRANTE MIGUEL GRAU",
+    "direccion": "AV HUMBERTO SANCHEZ CUZCANO SN",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IEP DANIEL ALCIDES CARRION",
+    "direccion": "NESTOR GAMBETA MZ 66 LOTE 21-22 MARQUEZ",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070101",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "CALLAO",
+    "colegio": "IESPP MARIA MADRE",
+    "direccion": "AV ALEJANDRO BERTELLO BOLLATI 494",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070105",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PUNTA",
+    "colegio": "IE 5013 JOSE GALVEZ BARRENECHEA",
+    "direccion": "JR PARQUE JOSE GALVEZ 130",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070105",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PUNTA",
+    "colegio": "IE PARROQUIAL CLARA COGORNO DE COGORNO",
+    "direccion": "JR AGUSTIN TOVAR SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070105",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PUNTA",
+    "colegio": "COLISEO FORTUNATO MAROTTA PARODI",
+    "direccion": "JR TOVAR 350",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070105",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PUNTA",
+    "colegio": "JARDIN MUNICIPAL LA PUNTA",
+    "direccion": "JR TOVAR SN",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070105",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "LA PUNTA",
+    "colegio": "CENTRO INTEGRAL DEL ADULTO MAYOR",
+    "direccion": "MALECON PARDO 125",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5096",
+    "direccion": "AV CARLOS VILLANUEVA SN ZONA 3 HIJOS DE VENTANILLA",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5117 JORGE PORTOCARRERO REBAZA",
+    "direccion": "AV CAMINO DEL INCA IZQUIERDO 2014",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5120 JOSE CARLOS MARIATEGUI LA CHIRA",
+    "direccion": "CALLE CACERES SN",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5125 CASUARINAS",
+    "direccion": "JR LAS VIOLETAS SN MZ A LOTE 1",
+    "mesas": 22
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5128 SAGRADO CORAZON DE MARIA",
+    "direccion": "MZ M1 LT 2 SECTOR E PACHACUTEC",
+    "mesas": 21
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5130  3 VICTOR RAUL HAYA DE LA TORRE",
+    "direccion": "AV 11 DE AGOSTO SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5138",
+    "direccion": "AV JOSE DE SAN MARTIN MZ 03 LT 09",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5140 PRESIDENTE DE LA REPUBLICA DE COLOMBIA - DR ALVARO URIBE VELEZ",
+    "direccion": "CALLE SN MZ G LOTE 1 BARRIO 15 AHH COSMOVISION",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5141 DIVINO MAESTRO",
+    "direccion": "AV BOLIVIA SN MZ C LT 4 AAHH NUEVO PROGRESO",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5142 VIRGEN DE GUADALUPE",
+    "direccion": "MZ C LOTE 01 GRUPO 2 BARRIO XV AAHH VIRGEN DE GUADALUPE",
+    "mesas": 22
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5146",
+    "direccion": "MZ U LT 1 SECTOR 1 OASIS DEL AAHH OASIS DE PACHACUTEC",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "CONSORCIO EDUCATIVO FEDERICO KAUFFMANN DOIG",
+    "direccion": "CALLE 5 MZ 23 LT 29-30",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP ESCRITOR CESAR VALLEJO II",
+    "direccion": "AV ARQUITECTOS SN",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "CONSORCIO EDUCATIVO FEDERICO KAUFFMANN DOIG SECUNDARIA",
+    "direccion": "CALLE 5 MZ 23 LT 23-24",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5118 - CMDTE JUAN VALER SANDOVAL",
+    "direccion": "CALLE GENERAL SANTA CRUZ SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5148 LAS BRISAS DE PACHACUTEC",
+    "direccion": "MZ B LOTE 1",
+    "mesas": 4
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5149",
+    "direccion": "SECTOR RESIDENCIAL 3 MZ G LT 1",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "COPRODELI SAN MARTIN",
+    "direccion": "MZ Q2 LOTE 1 SECTOR B",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE FE Y ALEGRIA 76",
+    "direccion": "CALLE SN GRUPO RESIDENCIAL 5 SECTOR F",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEI 125 DIVINO NIÑO JESUS",
+    "direccion": "CALLE LAS AZUCENAS SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP GUIA DIVINA",
+    "direccion": "MZ H2 LT 22 - 23 SECTOR I ANGAMOS",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5156 ELIAS AGUIRRE",
+    "direccion": "PARCELA AAHH NUEVO PACHACUTEC MZ G4 LOTE 8",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5051 VIRGEN DE FATIMA  PRIMARIA",
+    "direccion": "AV GERANIOS SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 4020 JOSE SANTOS CHOCANO",
+    "direccion": "AV LOS GERANIOS SN",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5052 VIRGEN DE LA MERCED",
+    "direccion": "AV LOS GERANIOS SN CALLE 4",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5053 VICTOR ANDRES BELAUNDE",
+    "direccion": "AV LOS GERANIOS SN",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5086 POLITECNICO DE VENTANILLA",
+    "direccion": "AV NEPTUNO SN TERCER SECTOR",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5088 HEROES DEL PACIFICO",
+    "direccion": "AV B SN SECTOR II ANGAMOS",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5093 ANTONIO RAYMONDI",
+    "direccion": "AV GONZALEZ GANOZA SN 1ER SECTOR",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5127 MARTIR JOSE OLAYA",
+    "direccion": "JR CAPULI SN",
+    "mesas": 26
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5137",
+    "direccion": "CALLE 39 C AMPLIACION B",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE FE Y ALEGRIA 29",
+    "direccion": "AV PRINCIPAL SN VENTANILLA ALTA",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE LICEO NAVAL CAPITAN DE CORBETA MANUEL CLAVERO MUGA",
+    "direccion": "AV MERCURIO SN",
+    "mesas": 36
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE NUESTRA SEÑORA DE BELEN",
+    "direccion": "CALLE LOS FICUS SN",
+    "mesas": 32
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP SOPHIANO COLLEGE",
+    "direccion": "CALLE 11 MZ C4 LT 1 - 2 Y 11 ZONA COMERCIAL",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5077 JOSE FAUSTINO SANCHEZ CARRION",
+    "direccion": "CALLE 3 SN",
+    "mesas": 23
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5122 JOSE ANDRES RAZURI ESTEVEZ",
+    "direccion": "CALLE LOS ECOLOGOS SN",
+    "mesas": 25
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5124 LIBERTADOR SIMON BOLIVAR DE HIROSHIMA",
+    "direccion": "AV CABO BLANCO SN",
+    "mesas": 25
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5094 NACIONES UNIDAS",
+    "direccion": "AV PERU SN",
+    "mesas": 27
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5121 PEDRO PLANAS SILVA",
+    "direccion": "JR EL TUCAN SN",
+    "mesas": 24
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5051 VIRGEN DE FATIMA- SECUNDARIA",
+    "direccion": "AV PRINCIPAL SN SECTOR A",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE HEROES DEL PACIFICO",
+    "direccion": "AV LA PLAYA SN",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE COMUNAL ALMIRANTE MIGUEL GRAU",
+    "direccion": "AV VENUS SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5130 PACHACUTEC",
+    "direccion": "CALLE MZ L M N LOTE 1 SECTOR A",
+    "mesas": 28
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5129 VENCEDORES DE PACHACUTEC",
+    "direccion": "CALLE 15 SECTOR D",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP SANTÍSIMO SEÑOR CAUTIVO DE AYABACA",
+    "direccion": "CALLE COMERCIO SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5145  BALNEARIO",
+    "direccion": "JR APURIMAC MZ L LT 1 SECTOR 1",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP TECNOLÓGICO CONSTRUCTORES",
+    "direccion": "AV CONSTRUCTORES MZ Y LOTE 10-12-13 SECTOR II",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP ESCUELA HOGAR",
+    "direccion": "AV LOS ELECTRICISTAS",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5150",
+    "direccion": "CALLE  SN MZ Q LOTE 1 SECTOR CERRO CACHITO-PACHACUTEC",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP CRISANTOS",
+    "direccion": "CALLE HUASCAR MZ D3 LT 18 SECTOR D",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 4021 DANIEL ALCIDES CARRION",
+    "direccion": "AV EL BIERZO SN",
+    "mesas": 23
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP  SAN PEDRO NOLASCO",
+    "direccion": "CALLE 11 SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP SAN ANTONIO DE PADUA",
+    "direccion": "AV PLAYA HERMOSA",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP SANTA MARIA DE PACHACUTEC",
+    "direccion": "SECTOR B MZ Y-1 LOTE 2-3-4-5",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP SEÑOR DE LOS MILAGROS",
+    "direccion": "AV LOS GERANIOS SN MZ V6 LOTE 2",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP FLORA TRISTAN",
+    "direccion": "MZ M LT 13 Y 14 SECTOR C3 PACHACUTEC",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5130  1 LOS LICENCIADOS",
+    "direccion": "MZ S 5 LT C 2",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5152 MIGUEL GRAU  SEMINARIO",
+    "direccion": "MZ 1A LT 1 PROYECTO EL MIRADOR NUEVO PACAHACUTEC",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP SAN JUAN DE DIOS TODOPODEROSO",
+    "direccion": "Z D1 LT 2 Y 3 DEL 14 AL16 AH JOSE OLAYA",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IEP MATEMATICO HARRY SULLIVAN",
+    "direccion": "MZ B LT 19 AH VIRGEN DE GUADALUPE",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 5154 SANTIAGO ANTUNEZ DE MAYOLO",
+    "direccion": "MZ A 12 LT 1 SECTOR A PROYECTO PILOTO PACHACUTEC",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "070106",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "VENTANILLA",
+    "colegio": "IE 3720 PARROQUIAL NUESTRA SEÑORA DE LA MISERICORDIA",
+    "direccion": "CARRETERA PANAMERICANA NORTE KM. 37.5",
+    "mesas": 25
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IE 5119 VILLA EMILIA",
+    "direccion": "CALLE LOS FICUS SN MZ M LT 1",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IEP SAN JUAN",
+    "direccion": "AV TRUJILLO SN",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IEP ELIM",
+    "direccion": "AV TRUJILLO SN",
+    "mesas": 14
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IE FE Y ALEGRIA 33",
+    "direccion": "AV PUNO SN",
+    "mesas": 16
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IE MANUEL SEOANE CORRALES",
+    "direccion": "AV HUAURA SN MZ G5 SECTOR G",
+    "mesas": 25
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IE 5098 KUMAMOTO",
+    "direccion": "AV CUZCO SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IE 5135 LA SALLE",
+    "direccion": "AV. VILLA SN MZ A1 LT1",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "070107",
+    "dpto": "CALLAO",
+    "provincia": "CALLAO",
+    "distrito": "MI PERU",
+    "colegio": "IEP CIRO ALEGRIA",
+    "direccion": "AV TRUJILLO SN MZ I LT 8-22-23",
+    "mesas": 8
   }
 ]

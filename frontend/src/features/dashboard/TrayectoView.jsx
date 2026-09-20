@@ -53,7 +53,17 @@ export const UBIGEOS_LIMA = {
   "SANTIAGO DE SURCO": { lat: -12.138898, lng: -76.998802 },
   "SURQUILLO": { lat: -12.112798, lng: -77.020508 },
   "VILLA EL SALVADOR": { lat: -12.212798, lng: -76.938896 },
-  "VILLA MARIA DEL TRIUNFO": { lat: -12.162798, lng: -76.938896 }
+  "VILLA MARIA DEL TRIUNFO": { lat: -12.162798, lng: -76.938896 },
+  "BELLAVISTA": { lat: -12.060300, lng: -77.126400 },
+  "CALLAO": { lat: -12.056500, lng: -77.118100 },
+  "CARMEN DE LA LEGUA - REYNOSO": { lat: -12.042200, lng: -77.086700 },
+  "CARMEN DE LA LEGUA REYNOSO": { lat: -12.042200, lng: -77.086700 },
+  "CARMEN DE LA LEGUA": { lat: -12.042200, lng: -77.086700 },
+  "LA PERLA": { lat: -12.068300, lng: -77.111700 },
+  "LA PUNTA": { lat: -12.072500, lng: -77.163300 },
+  "VENTANILLA": { lat: -11.879700, lng: -77.127200 },
+  "MI PERU": { lat: -11.854200, lng: -77.123600 },
+  "MI PERÚ": { lat: -11.854200, lng: -77.123600 }
 };
 
 // Normalizador de distritos

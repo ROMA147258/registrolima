@@ -489,7 +489,7 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     local_asignado: '',
     tiene_experiencia: 'No',
     cuenta_movilidad: 'No',
-    se_compromete: ''
+    se_compromete: 'Sí, me comprometo a asistir el 4 de Octubre del 2026'
   });
 
   const [localesVota, setLocalesVota] = useState([]);
@@ -847,17 +847,9 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
       errors.distrito_asignado = 'Seleccione el distrito donde será asignado.';
     }
 
-    // 4. Compromiso y Logística
+    // 4. Experiencia Previa
     if (!formData.tiene_experiencia) {
       errors.tiene_experiencia = 'Indique si tiene experiencia previa.';
-    }
-
-    if (!formData.cuenta_movilidad) {
-      errors.cuenta_movilidad = 'Indique si cuenta con movilidad propia.';
-    }
-
-    if (!formData.se_compromete || !formData.se_compromete.includes('Sí')) {
-      errors.se_compromete = 'Debe marcar la casilla obligatoria de compromiso para continuar.';
     }
 
     // Combinar con errores de duplicidad detectados en tiempo real (Nombres, DNI, Celular, Mesa, Local, Distrito)
@@ -1279,148 +1271,58 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
             </div>
           </div>
 
-          {/* SECCIÓN 4: COMPROMISO Y LOGÍSTICA */}
-          <div style={{ border: fieldErrors.tiene_experiencia || fieldErrors.cuenta_movilidad || fieldErrors.se_compromete ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
+          {/* SECCIÓN 4: EXPERIENCIA PREVIA */}
+          <div style={{ border: fieldErrors.tiene_experiencia ? '2px solid #ef4444' : '1.5px solid #bae6fd', borderRadius: '14px', padding: '16px', background: '#fafbfc', transition: 'border 0.2s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', color: '#0284c7', fontWeight: 800, fontSize: '0.85rem' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgb(14, 165, 233)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 900 }}>4</div>
-              <span>COMPROMISO Y LOGÍSTICA</span>
+              <span>EXPERIENCIA PREVIA</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
-              <div id="field-tiene_experiencia">
-                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
-                  ¿Tiene Experiencia como Personero? <span style={{ color: '#ef4444' }}>*</span>
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-                  <button
-                    type="button"
-                    onClick={() => handleToggle('tiene_experiencia', 'Sí')}
-                    style={{
-                      padding: '8px',
-                      borderRadius: '8px',
-                      border: '1px solid rgb(14, 165, 233)',
-                      background: formData.tiene_experiencia === 'Sí' ? 'rgb(14, 165, 233)' : '#ffffff',
-                      color: formData.tiene_experiencia === 'Sí' ? '#ffffff' : '#334155',
-                      fontWeight: 800,
-                      fontSize: '0.8rem',
-                      cursor: 'pointer',
-                      transform: formData.tiene_experiencia === 'Sí' ? 'scale(0.99)' : 'scale(1)',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    Sí
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleToggle('tiene_experiencia', 'No')}
-                    style={{
-                      padding: '8px',
-                      borderRadius: '8px',
-                      border: '1px solid rgb(14, 165, 233)',
-                      background: formData.tiene_experiencia === 'No' ? 'rgb(14, 165, 233)' : '#ffffff',
-                      color: formData.tiene_experiencia === 'No' ? '#ffffff' : '#334155',
-                      fontWeight: 800,
-                      fontSize: '0.8rem',
-                      cursor: 'pointer',
-                      transform: formData.tiene_experiencia === 'No' ? 'scale(0.99)' : 'scale(1)',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
-
-              <div id="field-cuenta_movilidad">
-                <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
-                  ¿Cuenta con Movilidad Propia? <span style={{ color: '#ef4444' }}>*</span>
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-                  <button
-                    type="button"
-                    onClick={() => handleToggle('cuenta_movilidad', 'Sí')}
-                    style={{
-                      padding: '8px',
-                      borderRadius: '8px',
-                      border: '1px solid rgb(14, 165, 233)',
-                      background: formData.cuenta_movilidad === 'Sí' ? 'rgb(14, 165, 233)' : '#ffffff',
-                      color: formData.cuenta_movilidad === 'Sí' ? '#ffffff' : '#334155',
-                      fontWeight: 800,
-                      fontSize: '0.8rem',
-                      cursor: 'pointer',
-                      transform: formData.cuenta_movilidad === 'Sí' ? 'scale(0.99)' : 'scale(1)',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    Sí
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleToggle('cuenta_movilidad', 'No')}
-                    style={{
-                      padding: '8px',
-                      borderRadius: '8px',
-                      border: '1px solid rgb(14, 165, 233)',
-                      background: formData.cuenta_movilidad === 'No' ? 'rgb(14, 165, 233)' : '#ffffff',
-                      color: formData.cuenta_movilidad === 'No' ? '#ffffff' : '#334155',
-                      fontWeight: 800,
-                      fontSize: '0.8rem',
-                      cursor: 'pointer',
-                      transform: formData.cuenta_movilidad === 'No' ? 'scale(0.99)' : 'scale(1)',
-                      transition: 'all 0.2s ease'
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="form-group" id="field-se_compromete" style={{ marginBottom: 0 }}>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  border: fieldErrors.se_compromete ? '2px solid #ef4444' : (formData.se_compromete ? '1.5px solid rgb(14, 165, 233)' : '1px solid #cbd5e1'),
-                  background: formData.se_compromete ? 'rgba(14, 165, 233, 0.08)' : '#ffffff',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  userSelect: 'none'
-                }}
-              >
-                <input
-                  type="checkbox"
-                  id="checkbox-se_compromete"
-                  name="se_compromete"
-                  checked={Boolean(formData.se_compromete && formData.se_compromete.includes('Sí'))}
-                  onChange={(e) => {
-                    const checked = e.target.checked;
-                    setFormData(prev => ({
-                      ...prev,
-                      se_compromete: checked ? 'Sí, me comprometo a asistir el 4 de Octubre del 2026' : ''
-                    }));
-                    if (fieldErrors.se_compromete) {
-                      setFieldErrors(prev => ({ ...prev, se_compromete: null }));
-                    }
-                  }}
-                  style={{
-                    width: '18px',
-                    height: '18px',
-                    accentColor: 'rgb(14, 165, 233)',
-                    cursor: 'pointer',
-                    flexShrink: 0
-                  }}
-                />
-                <span style={{ fontSize: '0.84rem', fontWeight: 800, color: formData.se_compromete ? '#0284c7' : '#1e293b' }}>
-                  Sí, me comprometo a asistir el 4 de Octubre del 2026 <span style={{ color: '#ef4444' }}>*</span>
-                </span>
+            <div id="field-tiene_experiencia">
+              <label className="form-label" style={{ color: '#1e293b', fontSize: '0.78rem', fontWeight: 700 }}>
+                ¿Tiene Experiencia como Personero? <span style={{ color: '#ef4444' }}>*</span>
               </label>
-              {fieldErrors.se_compromete && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <button
+                  type="button"
+                  onClick={() => handleToggle('tiene_experiencia', 'Sí')}
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    border: '1px solid rgb(14, 165, 233)',
+                    background: formData.tiene_experiencia === 'Sí' ? 'rgb(14, 165, 233)' : '#ffffff',
+                    color: formData.tiene_experiencia === 'Sí' ? '#ffffff' : '#334155',
+                    fontWeight: 800,
+                    fontSize: '0.84rem',
+                    cursor: 'pointer',
+                    transform: formData.tiene_experiencia === 'Sí' ? 'scale(0.99)' : 'scale(1)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Sí
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleToggle('tiene_experiencia', 'No')}
+                  style={{
+                    padding: '10px',
+                    borderRadius: '8px',
+                    border: '1px solid rgb(14, 165, 233)',
+                    background: formData.tiene_experiencia === 'No' ? 'rgb(14, 165, 233)' : '#ffffff',
+                    color: formData.tiene_experiencia === 'No' ? '#ffffff' : '#334155',
+                    fontWeight: 800,
+                    fontSize: '0.84rem',
+                    cursor: 'pointer',
+                    transform: formData.tiene_experiencia === 'No' ? 'scale(0.99)' : 'scale(1)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  No
+                </button>
+              </div>
+              {fieldErrors.tiene_experiencia && (
                 <span style={{ color: '#ef4444', fontSize: '0.72rem', fontWeight: 700, marginTop: '4px', display: 'block' }}>
-                  {fieldErrors.se_compromete}
+                  {fieldErrors.tiene_experiencia}
                 </span>
               )}
             </div>
@@ -1592,26 +1494,14 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
                 </div>
               </div>
 
-              {/* Bloque 4: Compromiso */}
+              {/* Bloque 4: Experiencia */}
               <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '12px 14px' }}>
                 <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0284c7', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  4. Logística y Compromiso
+                  4. Experiencia
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.82rem' }}>
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>¿Experiencia Previa?</span>
-                    <strong style={{ color: '#0f172a' }}>{formData.tiene_experiencia}</strong>
-                  </div>
-                  <div>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>¿Movilidad Propia?</span>
-                    <strong style={{ color: '#0f172a' }}>{formData.cuenta_movilidad}</strong>
-                  </div>
-                  <div style={{ gridColumn: 'span 2' }}>
-                    <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>Compromiso</span>
-                    <strong style={{ color: formData.se_compromete.includes('Sí') ? '#16a34a' : '#ef4444' }}>
-                      {formData.se_compromete}
-                    </strong>
-                  </div>
+                <div>
+                  <span style={{ color: '#64748b', display: 'block', fontSize: '0.74rem' }}>¿Tiene Experiencia Previa como Personero?</span>
+                  <strong style={{ color: '#0f172a', fontSize: '0.88rem' }}>{formData.tiene_experiencia}</strong>
                 </div>
               </div>
 
