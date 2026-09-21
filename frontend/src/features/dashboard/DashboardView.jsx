@@ -14,6 +14,7 @@ import { EditAssignmentModal } from '../../components/modals/EditAssignmentModal
 import { CertificateModal } from '../../components/modals/CertificateModal.jsx';
 import { TrayectoView } from './TrayectoView.jsx';
 import { ZonasElectoralesView } from './ZonasElectoralesView.jsx';
+import { MapaZonasVMTView } from './MapaZonasVMTView.jsx';
 import { bloomSearchAccelerator } from '../../utils/BloomFilter.js';
 import {
   DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA,
@@ -2044,16 +2045,16 @@ export function DashboardView({ onGoToTraining }) {
               )}
             </button>
 
-            {/* Tab: Zonas Electorales (Villa María del Triunfo / General) */}
+            {/* Tab: Mapa Zonal (Villa María del Triunfo - Yolanda) */}
             <button
-              onClick={() => setActiveTab('zonas')}
-              title={isSidebarCollapsed ? 'Zonas Electorales (VMT)' : undefined}
+              onClick={() => setActiveTab('mapa')}
+              title={isSidebarCollapsed ? 'Mapa Zonal (VMT)' : undefined}
               style={{
                 padding: isSidebarCollapsed ? '10px' : '10px 12px',
                 borderRadius: '8px',
                 border: 'none',
-                background: activeTab === 'zonas' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
-                color: activeTab === 'zonas' ? '#0284c7' : textSub,
+                background: activeTab === 'mapa' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                color: activeTab === 'mapa' ? '#0284c7' : textSub,
                 fontWeight: 700,
                 fontSize: '0.84rem',
                 cursor: 'pointer',
@@ -2065,10 +2066,10 @@ export function DashboardView({ onGoToTraining }) {
                 transition: 'all 0.15s ease'
               }}
             >
-              <Layers className="w-4 h-4 text-purple-500 flex-shrink-0" />
+              <MapPin className="w-4 h-4 text-emerald-500 flex-shrink-0" />
               {!isSidebarCollapsed && (
                 <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  Zonas Electorales
+                  Mapa Zonal
                 </span>
               )}
             </button>
@@ -2216,6 +2217,7 @@ export function DashboardView({ onGoToTraining }) {
                       : 'Progreso de Capacitaciones')
                 )}
                 {activeTab === 'zonas' && 'Zonas Electorales • Villa María del Triunfo'}
+                {activeTab === 'mapa' && 'Mapa Zonal Territorial • Villa María del Triunfo'}
                 {activeTab === 'sql' && 'Conexión Base de Datos'}
               </h1>
             </div>
@@ -5438,6 +5440,25 @@ export function DashboardView({ onGoToTraining }) {
           )}
 
           {/* =========================================================================
+              TAB: MAPA ZONAL (VILLA MARÍA DEL TRIUNFO)
+              ========================================================================= */}
+          {activeTab === 'mapa' && (
+            <div className="animate-fade-in" style={{ width: '100%' }}>
+              <MapaZonasVMTView
+                isDark={isDark}
+                allPersoneros={records}
+                onFilterByLocal={(colegio) => {
+                  setDist1('Villa María del Triunfo');
+                  setLocalZonal1(colegio);
+                  setActiveTab('overview');
+                }}
+                onSelectPersonero={(p) => setSelectedPersonero(p)}
+                onGoToZonasTab={() => setActiveTab('zonas')}
+              />
+            </div>
+          )}
+
+          {/* =========================================================================
               TAB 4: HISTORIAL DE CAMBIOS Y AUDITORÍA (EXCLUSIVO SUPERADMIN MASTER)
               ========================================================================= */}
           {activeTab === 'auditoria' && canViewAudit && (
@@ -5951,6 +5972,27 @@ export function DashboardView({ onGoToTraining }) {
           >
             <Layers style={{ width: '20px', height: '20px' }} />
             <span>Zonas</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('mapa')}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3px',
+              border: 'none',
+              background: 'transparent',
+              color: activeTab === 'mapa' ? '#0284c7' : textSub,
+              fontWeight: activeTab === 'mapa' ? 800 : 500,
+              fontSize: '0.62rem',
+              cursor: 'pointer',
+              padding: '8px 0'
+            }}
+          >
+            <MapPin style={{ width: '20px', height: '20px' }} />
+            <span>Mapa</span>
           </button>
 
           {canViewAudit && (

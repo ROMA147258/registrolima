@@ -47,35 +47,54 @@ export function ZonasElectoralesView({
   // Normalize string helper
   const normalize = (s) => (s || '').toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
 
-  // Helper to check if role is PCV / Coordinator
+  // Roles helpers estrictos
+  const isZonalRole = (rol) => {
+    const r = String(rol || '').toLowerCase();
+    return r.includes('zonal') || r.includes('zona');
+  };
+
   const isPCVRole = (rol) => {
     const r = String(rol || '').toLowerCase();
     return r.includes('centro') || r.includes('local') || r.includes('pcv') || r.includes('plv');
   };
 
-  // Map personeros count & items by school
-  const personerosBySchool = useMemo(() => {
+  const isMesaRole = (rol) => {
+    const r = String(rol || '').toLowerCase();
+    if (isZonalRole(r) || isPCVRole(r) || r.includes('distrital') || r.includes('distrito')) return false;
+    return true;
+  };
+
+  // Clasificación estricta de personeros por colegio
+  const schoolPersonnelMap = useMemo(() => {
     const map = new Map();
+
     allPersoneros.forEach(p => {
       const locAsig = p['Local de Votación Asignado'] || p.localDeVotacionAsignado || p.localAsignado || '';
       const locVota = p['Local de Votación'] || p.localDeVotacion || p.local || p['Colegio'] || p.colegio || '';
       const loc = locAsig || locVota;
       if (!loc) return;
 
+      const pRol = p['Rol a Desempeñar'] || p.rolADesempenar || p.rol_electoral || '';
+
       const locs = loc.includes(',') ? loc.split(',').map(s => s.trim()) : [loc];
       locs.forEach(singleLoc => {
         const norm = normalize(singleLoc);
         if (!norm) return;
         if (!map.has(norm)) {
-          map.set(norm, { total: 0, acreditados: 0, items: [] });
+          map.set(norm, { mesaPersoneros: [], pcv: null, zonal: null });
         }
-        const obj = map.get(norm);
-        obj.total += 1;
-        const cred = String(p.Credenciales || p.credenciales || '').toLowerCase();
-        if (cred === 'confirmado') obj.acreditados += 1;
-        obj.items.push(p);
+        const entry = map.get(norm);
+
+        if (isZonalRole(pRol)) {
+          if (!entry.zonal) entry.zonal = p;
+        } else if (isPCVRole(pRol)) {
+          if (!entry.pcv) entry.pcv = p;
+        } else if (isMesaRole(pRol)) {
+          entry.mesaPersoneros.push(p);
+        }
       });
     });
+
     return map;
   }, [allPersoneros]);
 
@@ -93,23 +112,28 @@ export function ZonasElectoralesView({
       const enrichedColegios = colegios.map(col => {
         totalMesas += col.mesas;
         const norm = normalize(col.colegio);
-        let pData = personerosBySchool.get(norm);
+        let pData = schoolPersonnelMap.get(norm);
         if (!pData) {
-          // fuzzy match
-          for (const [k, v] of personerosBySchool.entries()) {
+          for (const [k, v] of schoolPersonnelMap.entries()) {
             if (k.includes(norm) || norm.includes(k)) {
               pData = v;
               break;
             }
           }
         }
-        const assignedCount = pData ? pData.total : 0;
-        const acreditadosCount = pData ? pData.acreditados : 0;
+
+        const mesaPersoneros = pData ? pData.mesaPersoneros : [];
+        const pcv = pData ? pData.pcv : null;
+        const zonal = pData ? pData.zonal : null;
+
+        const assignedCount = mesaPersoneros.length;
+        const acreditadosCount = mesaPersoneros.filter(p => {
+          const cred = String(p.Credenciales || p.credenciales || '').toLowerCase();
+          return cred === 'confirmado';
+        }).length;
+
         totalPersoneros += assignedCount;
         totalAcreditados += acreditadosCount;
-
-        const items = pData ? pData.items : [];
-        const pcv = items.find(p => isPCVRole(p['Rol a Desempeñar'] || p.rolADesempenar || p.rol_electoral));
 
         let status = 'empty';
         if (assignedCount >= col.mesas && col.mesas > 0) {
@@ -123,8 +147,9 @@ export function ZonasElectoralesView({
           assignedCount,
           acreditadosCount,
           coveragePct: col.mesas > 0 ? Math.min(100, Math.round((assignedCount / col.mesas) * 100)) : 0,
-          personeros: items,
+          mesaPersoneros,
           pcv,
+          zonal,
           status
         };
       });
@@ -139,7 +164,7 @@ export function ZonasElectoralesView({
       };
     }
     return res;
-  }, [rawZonas, personerosBySchool]);
+  }, [rawZonas, schoolPersonnelMap]);
 
   // Global summary metrics
   const globalSummary = useMemo(() => {
@@ -188,14 +213,12 @@ export function ZonasElectoralesView({
       }
 
       const filteredSchools = zData.colegios.filter(col => {
-        // Status filter
         if (statusFilter !== 'all' && col.status !== statusFilter) {
           return false;
         }
 
         if (!q) return true;
 
-        // Search match on school, address, zone, or personeros names/DNI
         const matchesSchool = (
           col.colegio.toLowerCase().includes(q) ||
           (col.direccion && col.direccion.toLowerCase().includes(q)) ||
@@ -203,8 +226,7 @@ export function ZonasElectoralesView({
         );
         if (matchesSchool) return true;
 
-        // Search inside personeros of this school
-        const matchesPersonero = col.personeros.some(p => {
+        const matchesPersonero = col.mesaPersoneros.some(p => {
           const pName = String(p['Nombres y Apellidos'] || p.nombresApellidos || '').toLowerCase();
           const pDni = String(p['D.N.I.'] || p.dni || '');
           const pCel = String(p['Celular'] || p.celular || '');
@@ -311,7 +333,6 @@ export function ZonasElectoralesView({
               </div>
               <p style={{ fontSize: '0.8rem', color: textSub, margin: '4px 0 0 0' }}>
                 Organización territorial oficial: 7 zonas operativas, 90 locales de votación y 1,242 mesas de sufragio.
-                Haz clic en el botón <strong>"Ver Personeros"</strong> de cada colegio para desplegar su lista y teléfonos de contacto.
               </p>
             </div>
           </div>
@@ -423,7 +444,7 @@ export function ZonasElectoralesView({
               <Users className="w-5 h-5" />
             </div>
             <div>
-              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: textSub, textTransform: 'uppercase' }}>Personeros Registrados</div>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: textSub, textTransform: 'uppercase' }}>Personeros de Mesa</div>
               <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#f59e0b' }}>
                 {globalSummary.totalPersoneros} <span style={{ fontSize: '0.75rem', fontWeight: 700, color: textSub }}>({globalSummary.globalCoverage}%)</span>
               </div>
@@ -492,7 +513,7 @@ export function ZonasElectoralesView({
               color: statusFilter === 'empty' ? '#ffffff' : '#991b1b'
             }}
           >
-            ❌ Sin Personero ({globalSummary.sinPersonero})
+            ❌ Sin Personeros ({globalSummary.sinPersonero})
           </button>
         </div>
       </div>
@@ -514,7 +535,7 @@ export function ZonasElectoralesView({
           <Search className="w-4 h-4" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
           <input
             type="text"
-            placeholder="Buscar colegio, dirección, personero o DNI en VMT..."
+            placeholder="Buscar colegio, dirección, personero de mesa o DNI en VMT..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
@@ -530,24 +551,6 @@ export function ZonasElectoralesView({
               boxSizing: 'border-box'
             }}
           />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                background: 'transparent',
-                border: 'none',
-                color: '#94a3b8',
-                cursor: 'pointer',
-                fontSize: '0.8rem'
-              }}
-            >
-              ✕
-            </button>
-          )}
         </div>
 
         {/* Zona Pills Filter */}
@@ -601,7 +604,6 @@ export function ZonasElectoralesView({
         {Object.entries(filteredZonas).map(([zonaName, zData]) => {
           const isExp = !!expandedZonas[zonaName];
           const styleConf = ZONA_COLORS[zonaName] || { bg: 'rgba(2,132,199,0.1)', border: '#0284c7', text: '#0284c7', light: '#e0f2fe', badge: '📍' };
-
           const allSchoolsInZonaExpanded = zData.colegios.length > 0 && zData.colegios.every(c => !!expandedSchools[c.colegio]);
 
           return (
@@ -653,7 +655,7 @@ export function ZonasElectoralesView({
                     </div>
                     <div style={{ fontSize: '0.74rem', color: textSub, marginTop: '2px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                       <span>Mesas: <strong style={{ color: textTitle }}>{zData.totalMesas}</strong></span>
-                      <span>Personeros: <strong style={{ color: styleConf.text }}>{zData.totalPersoneros}</strong></span>
+                      <span>Personeros de Mesa: <strong style={{ color: styleConf.text }}>{zData.totalPersoneros}</strong></span>
                       <span>Acreditados: <strong style={{ color: '#16a34a' }}>{zData.totalAcreditados}</strong></span>
                     </div>
                   </div>
@@ -684,7 +686,6 @@ export function ZonasElectoralesView({
                         e.stopPropagation();
                         expandAllSchoolsInZona(zData.colegios, !allSchoolsInZonaExpanded);
                       }}
-                      title={allSchoolsInZonaExpanded ? 'Plegar personeros de todos los colegios' : 'Desplegar personeros de todos los colegios'}
                       style={{
                         background: isDark ? '#334155' : '#ffffff',
                         border: `1px solid ${borderCol}`,
@@ -735,7 +736,7 @@ export function ZonasElectoralesView({
                           <th style={{ padding: '8px 10px' }}>Local de Votación / Colegio</th>
                           <th style={{ padding: '8px 10px' }}>Dirección / Ubicación</th>
                           <th style={{ padding: '8px 10px', textAlign: 'center', width: '70px' }}>Mesas</th>
-                          <th style={{ padding: '8px 10px', textAlign: 'center', width: '110px' }}>Personeros</th>
+                          <th style={{ padding: '8px 10px', textAlign: 'center', width: '120px' }}>Personeros Mesa</th>
                           <th style={{ padding: '8px 10px', textAlign: 'center', width: '120px' }}>Estado</th>
                           <th style={{ padding: '8px 10px', textAlign: 'center', width: '180px' }}>Acción Directa</th>
                         </tr>
@@ -749,7 +750,7 @@ export function ZonasElectoralesView({
 
                           return (
                             <React.Fragment key={col.colegio || cIdx}>
-                              {/* MAIN SCHOOL ROW (NOT clickable on row, ONLY button triggers expansion) */}
+                              {/* MAIN SCHOOL ROW */}
                               <tr
                                 style={{
                                   borderBottom: isSchoolExpanded ? 'none' : `1px solid ${borderCol}`,
@@ -843,7 +844,6 @@ export function ZonasElectoralesView({
 
                                 <td style={{ padding: '9px 10px', textAlign: 'center' }}>
                                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                                    {/* Dedicated expansion trigger button */}
                                     <button
                                       type="button"
                                       onClick={() => toggleSchool(col.colegio)}
@@ -858,8 +858,7 @@ export function ZonasElectoralesView({
                                         cursor: 'pointer',
                                         display: 'inline-flex',
                                         alignItems: 'center',
-                                        gap: '4px',
-                                        transition: 'all 0.15s ease'
+                                        gap: '4px'
                                       }}
                                     >
                                       <Users className="w-3 h-3" />
@@ -870,7 +869,10 @@ export function ZonasElectoralesView({
                                     {onFilterByLocal && (
                                       <button
                                         type="button"
-                                        onClick={() => onFilterByLocal(col.colegio)}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          onFilterByLocal(col.colegio);
+                                        }}
                                         title="Abrir este colegio en el padrón general"
                                         style={{
                                           background: 'transparent',
@@ -930,7 +932,6 @@ export function ZonasElectoralesView({
                                           </div>
                                         </div>
 
-                                        {/* Coverage Indicator */}
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                                           <div style={{
                                             background: hasFull ? '#dcfce7' : hasPartial ? '#fef9c3' : '#fee2e2',
@@ -950,133 +951,140 @@ export function ZonasElectoralesView({
                                             <span>
                                               {hasFull && `¡100% Cubierto! (${col.assignedCount} personeros para ${col.mesas} mesas)`}
                                               {hasPartial && `Parcial: ${col.assignedCount} de ${col.mesas} mesas cubiertas (Faltan ${col.mesas - col.assignedCount} personeros)`}
-                                              {hasEmpty && `Sin personeros asignados (Meta: ${col.mesas} mesas)`}
+                                              {hasEmpty && `Sin personeros de mesa (Meta: ${col.mesas} mesas)`}
                                             </span>
                                           </div>
-
-                                          {onFilterByLocal && (
-                                            <button
-                                              type="button"
-                                              onClick={() => onFilterByLocal(col.colegio)}
-                                              style={{
-                                                background: '#0284c7',
-                                                color: '#ffffff',
-                                                border: 'none',
-                                                borderRadius: '8px',
-                                                padding: '5px 12px',
-                                                fontSize: '0.74rem',
-                                                fontWeight: 800,
-                                                cursor: 'pointer',
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                gap: '5px'
-                                              }}
-                                            >
-                                              <Search className="w-3.5 h-3.5" />
-                                              <span>Abrir en Padrón</span>
-                                            </button>
-                                          )}
                                         </div>
                                       </div>
 
-                                      {/* PCV COORDINATOR CARD */}
-                                      {col.pcv ? (
-                                        <div style={{
-                                          background: isDark ? 'rgba(16, 185, 129, 0.12)' : '#ecfdf5',
-                                          border: '1.5px solid #10b981',
-                                          borderRadius: '10px',
-                                          padding: '10px 14px',
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          justifyContent: 'space-between',
-                                          flexWrap: 'wrap',
-                                          gap: '10px'
-                                        }}>
-                                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <span style={{
-                                              background: '#10b981',
-                                              color: '#ffffff',
-                                              padding: '3px 8px',
-                                              borderRadius: '6px',
-                                              fontSize: '0.7rem',
-                                              fontWeight: 900,
-                                              display: 'inline-flex',
-                                              alignItems: 'center',
-                                              gap: '3px'
-                                            }}>
-                                              <Shield className="w-3 h-3" /> Coordinador de Local (PCV)
-                                            </span>
-                                            <strong style={{ fontSize: '0.86rem', color: textTitle }}>
-                                              {col.pcv['Nombres y Apellidos'] || col.pcv.nombresApellidos || 'Coordinador Asignado'}
-                                            </strong>
-                                            <span style={{ fontSize: '0.74rem', color: textSub }}>
-                                              (DNI: <strong>{col.pcv['D.N.I.'] || col.pcv.dni || '—'}</strong>)
-                                            </span>
+                                      {/* 1. SECCIÓN DE ESTRUCTURA DE COORDINACIÓN */}
+                                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                        <div style={{ fontSize: '0.72rem', fontWeight: 900, color: textSub, textTransform: 'uppercase' }}>
+                                          🏛️ Estructura de Coordinación:
+                                        </div>
+
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                                          {/* Coordinador de Local (PCV) */}
+                                          <div style={{
+                                            background: col.pcv ? (isDark ? 'rgba(2, 132, 199, 0.12)' : '#f0f9ff') : (isDark ? 'rgba(245, 158, 11, 0.12)' : '#fefce8'),
+                                            border: `1.5px solid ${col.pcv ? '#38bdf8' : '#fde047'}`,
+                                            borderRadius: '10px',
+                                            padding: '10px 12px',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            gap: '4px'
+                                          }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                              <span style={{ fontSize: '0.7rem', fontWeight: 900, color: col.pcv ? '#0284c7' : '#b45309' }}>
+                                                Coord. de Local (PCV)
+                                              </span>
+                                              <span style={{ fontSize: '0.62rem', fontWeight: 800, background: col.pcv ? '#10b981' : '#f59e0b', color: '#fff', padding: '1px 6px', borderRadius: '6px' }}>
+                                                {col.pcv ? 'ASIGNADO' : 'VACANTE'}
+                                              </span>
+                                            </div>
+
+                                            {col.pcv ? (
+                                              <div>
+                                                <strong style={{ fontSize: '0.84rem', color: textTitle, display: 'block', lineHeight: 1.2 }}>
+                                                  {col.pcv['Nombres y Apellidos'] || col.pcv.nombresApellidos}
+                                                </strong>
+                                                <div style={{ fontSize: '0.7rem', color: textSub, marginTop: '2px' }}>
+                                                  DNI: <strong>{col.pcv['D.N.I.'] || col.pcv.dni}</strong>
+                                                </div>
+                                                {(col.pcv['Celular'] || col.pcv.celular) && (
+                                                  <a
+                                                    href={`https://wa.me/51${String(col.pcv['Celular'] || col.pcv.celular).replace(/\D/g, '')}`}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    style={{
+                                                      display: 'inline-flex',
+                                                      alignItems: 'center',
+                                                      gap: '4px',
+                                                      background: '#16a34a',
+                                                      color: '#ffffff',
+                                                      padding: '3px 8px',
+                                                      borderRadius: '6px',
+                                                      fontSize: '0.68rem',
+                                                      fontWeight: 800,
+                                                      textDecoration: 'none',
+                                                      marginTop: '4px'
+                                                    }}
+                                                  >
+                                                    <Phone className="w-2.5 h-2.5" />
+                                                    <span>{col.pcv['Celular'] || col.pcv.celular}</span>
+                                                  </a>
+                                                )}
+                                              </div>
+                                            ) : (
+                                              <div style={{ fontSize: '0.7rem', color: '#b45309', fontWeight: 600 }}>
+                                                ⚠️ Sin Coordinador de Local asignado.
+                                              </div>
+                                            )}
                                           </div>
 
-                                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            {(col.pcv['Celular'] || col.pcv.celular) && (
-                                              <a
-                                                href={`https://wa.me/51${String(col.pcv['Celular'] || col.pcv.celular).replace(/\D/g, '')}?text=${encodeURIComponent(`Hola ${col.pcv['Nombres y Apellidos'] || ''}, te saludo desde la coordinación distrital de Somos Perú para coordinar sobre tu local ${col.colegio}.`)}`}
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                style={{
-                                                  background: '#16a34a',
-                                                  color: '#ffffff',
-                                                  padding: '4px 10px',
-                                                  borderRadius: '6px',
-                                                  fontSize: '0.72rem',
-                                                  fontWeight: 800,
-                                                  textDecoration: 'none',
-                                                  display: 'inline-flex',
-                                                  alignItems: 'center',
-                                                  gap: '4px'
-                                                }}
-                                              >
-                                                <Phone className="w-3 h-3" />
-                                                <span>WhatsApp: {col.pcv['Celular'] || col.pcv.celular}</span>
-                                              </a>
-                                            )}
+                                          {/* Coordinador Zonal */}
+                                          <div style={{
+                                            background: col.zonal ? (isDark ? 'rgba(139, 92, 246, 0.12)' : '#f5f3ff') : (isDark ? 'rgba(100, 116, 139, 0.12)' : '#f8fafc'),
+                                            border: `1.5px solid ${col.zonal ? '#a78bfa' : borderCol}`,
+                                            borderRadius: '10px',
+                                            padding: '10px 12px',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            gap: '4px'
+                                          }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                              <span style={{ fontSize: '0.7rem', fontWeight: 900, color: col.zonal ? '#7c3aed' : textSub }}>
+                                                Coord. Zonal
+                                              </span>
+                                              <span style={{ fontSize: '0.62rem', fontWeight: 800, background: col.zonal ? '#8b5cf6' : '#64748b', color: '#fff', padding: '1px 6px', borderRadius: '6px' }}>
+                                                {col.zonal ? 'A CARGO' : 'SIN ZONAL'}
+                                              </span>
+                                            </div>
 
-                                            {onSelectPersonero && (
-                                              <button
-                                                type="button"
-                                                onClick={() => onSelectPersonero(col.pcv)}
-                                                style={{
-                                                  background: isDark ? '#334155' : '#ffffff',
-                                                  border: `1px solid ${borderCol}`,
-                                                  color: textTitle,
-                                                  padding: '4px 8px',
-                                                  borderRadius: '6px',
-                                                  fontSize: '0.72rem',
-                                                  fontWeight: 700,
-                                                  cursor: 'pointer'
-                                                }}
-                                              >
-                                                Ver Ficha
-                                              </button>
+                                            {col.zonal ? (
+                                              <div>
+                                                <strong style={{ fontSize: '0.84rem', color: textTitle, display: 'block', lineHeight: 1.2 }}>
+                                                  {col.zonal['Nombres y Apellidos'] || col.zonal.nombresApellidos}
+                                                </strong>
+                                                <div style={{ fontSize: '0.7rem', color: textSub, marginTop: '2px' }}>
+                                                  DNI: <strong>{col.zonal['D.N.I.'] || col.zonal.dni}</strong>
+                                                </div>
+                                                {(col.zonal['Celular'] || col.zonal.celular) && (
+                                                  <a
+                                                    href={`https://wa.me/51${String(col.zonal['Celular'] || col.zonal.celular).replace(/\D/g, '')}`}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    style={{
+                                                      display: 'inline-flex',
+                                                      alignItems: 'center',
+                                                      gap: '4px',
+                                                      background: '#16a34a',
+                                                      color: '#ffffff',
+                                                      padding: '3px 8px',
+                                                      borderRadius: '6px',
+                                                      fontSize: '0.68rem',
+                                                      fontWeight: 800,
+                                                      textDecoration: 'none',
+                                                      marginTop: '4px'
+                                                    }}
+                                                  >
+                                                    <Phone className="w-2.5 h-2.5" />
+                                                    <span>{col.zonal['Celular'] || col.zonal.celular}</span>
+                                                  </a>
+                                                )}
+                                              </div>
+                                            ) : (
+                                              <div style={{ fontSize: '0.7rem', color: textSub, fontWeight: 600 }}>
+                                                Sin zonal asignado
+                                              </div>
                                             )}
                                           </div>
                                         </div>
-                                      ) : (
-                                        <div style={{
-                                          background: isDark ? 'rgba(245, 158, 11, 0.08)' : '#fffbeb',
-                                          border: '1px dashed #f59e0b',
-                                          borderRadius: '8px',
-                                          padding: '8px 12px',
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          gap: '8px',
-                                          fontSize: '0.76rem',
-                                          color: '#d97706',
-                                          fontWeight: 700
-                                        }}>
-                                          <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                                          <span>⚠️ Este local aún no tiene un Personero de Centro (PCV / Coordinador de Local) asignado.</span>
-                                        </div>
-                                      )}
+                                      </div>
 
-                                      {/* PERSONEROS LIST / TABLE */}
+                                      {/* 2. SECCIÓN EXCLUSIVA DE PERSONEROS DE MESA */}
                                       <div>
                                         <div style={{
                                           display: 'flex',
@@ -1086,29 +1094,25 @@ export function ZonasElectoralesView({
                                         }}>
                                           <span style={{ fontSize: '0.78rem', fontWeight: 900, color: textTitle, display: 'flex', alignItems: 'center', gap: '6px' }}>
                                             <Users className="w-4 h-4 text-blue-500" />
-                                            Personeros Registrados ({col.personeros.length})
+                                            Personeros de Mesa Registrados ({col.mesaPersoneros.length} de {col.mesas} mesas):
                                           </span>
                                           <span style={{ fontSize: '0.72rem', color: textSub }}>
-                                            {col.acreditadosCount} acreditados con credencial confirmada
+                                            {col.acreditadosCount} acreditados confirmados
                                           </span>
                                         </div>
 
-                                        {col.personeros.length === 0 ? (
+                                        {col.mesaPersoneros.length === 0 ? (
                                           <div style={{
-                                            background: isDark ? '#1e293b' : '#ffffff',
-                                            border: `1px solid ${borderCol}`,
-                                            borderRadius: '10px',
-                                            padding: '24px 16px',
+                                            background: isDark ? 'rgba(239, 68, 68, 0.08)' : '#fef2f2',
+                                            border: '1px dashed #fca5a5',
+                                            borderRadius: '8px',
+                                            padding: '16px',
                                             textAlign: 'center',
-                                            color: textSub
+                                            color: '#991b1b',
+                                            fontSize: '0.76rem',
+                                            fontWeight: 700
                                           }}>
-                                            <Users className="w-7 h-7 text-slate-400 mx-auto mb-2" />
-                                            <p style={{ margin: 0, fontWeight: 700, fontSize: '0.82rem', color: textTitle }}>
-                                              No hay personeros registrados en este local de votación.
-                                            </p>
-                                            <p style={{ margin: '4px 0 0 0', fontSize: '0.74rem' }}>
-                                              Se necesitan {col.mesas} personeros de mesa para cubrir todas las mesas.
-                                            </p>
+                                            ⚠️ No hay personeros de mesa registrados todavía en este local de votación.
                                           </div>
                                         ) : (
                                           <div style={{
@@ -1121,31 +1125,28 @@ export function ZonasElectoralesView({
                                               <thead>
                                                 <tr style={{ background: isDark ? '#0f172a' : '#f1f5f9', color: textSub, borderBottom: `1px solid ${borderCol}`, textAlign: 'left' }}>
                                                   <th style={{ padding: '6px 10px', width: '30px' }}>#</th>
-                                                  <th style={{ padding: '6px 10px' }}>Personero</th>
+                                                  <th style={{ padding: '6px 10px' }}>Personero de Mesa</th>
                                                   <th style={{ padding: '6px 10px', width: '90px' }}>D.N.I.</th>
-                                                  <th style={{ padding: '6px 10px', width: '110px', textAlign: 'center' }}>Mesa</th>
-                                                  <th style={{ padding: '6px 10px', width: '140px' }}>Rol</th>
+                                                  <th style={{ padding: '6px 10px', width: '110px', textAlign: 'center' }}>Mesa Asignada</th>
                                                   <th style={{ padding: '6px 10px', width: '100px', textAlign: 'center' }}>Credencial</th>
                                                   <th style={{ padding: '6px 10px', width: '130px', textAlign: 'center' }}>WhatsApp</th>
                                                   {onSelectPersonero && <th style={{ padding: '6px 10px', width: '70px', textAlign: 'center' }}>Ficha</th>}
                                                 </tr>
                                               </thead>
                                               <tbody>
-                                                {col.personeros.map((p, pIdx) => {
+                                                {col.mesaPersoneros.map((p, pIdx) => {
                                                   const pName = p['Nombres y Apellidos'] || p.nombresApellidos || p.nombres_apellidos || '—';
                                                   const pDni = p['D.N.I.'] || p['DNI'] || p.dni || '—';
                                                   const pCel = p['Celular'] || p.celular || '';
                                                   const pMesa = p['Mesa'] || p.mesa || p['Mesa de Sufragio'] || '—';
-                                                  const pRol = p['Rol a Desempeñar'] || p.rolADesempenar || p.rol_electoral || 'Personero de Mesa';
                                                   const pCred = String(p['Credenciales'] || p.credenciales || '').toLowerCase();
                                                   const isAcred = pCred === 'confirmado';
-                                                  const isPCV = isPCVRole(pRol);
 
                                                   return (
                                                     <tr
                                                       key={pIdx}
                                                       style={{
-                                                        borderBottom: pIdx === col.personeros.length - 1 ? 'none' : `1px solid ${borderCol}`,
+                                                        borderBottom: pIdx === col.mesaPersoneros.length - 1 ? 'none' : `1px solid ${borderCol}`,
                                                         background: pIdx % 2 === 0 ? 'transparent' : (isDark ? 'rgba(255,255,255,0.015)' : '#fafafa')
                                                       }}
                                                     >
@@ -1154,21 +1155,7 @@ export function ZonasElectoralesView({
                                                       </td>
 
                                                       <td style={{ padding: '7px 10px' }}>
-                                                        <div style={{ fontWeight: 800, color: textTitle, display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                                          <span>{pName}</span>
-                                                          {isPCV && (
-                                                            <span style={{
-                                                              background: '#10b981',
-                                                              color: '#fff',
-                                                              fontSize: '0.6rem',
-                                                              fontWeight: 900,
-                                                              padding: '1px 4px',
-                                                              borderRadius: '4px'
-                                                            }}>
-                                                              PCV
-                                                            </span>
-                                                          )}
-                                                        </div>
+                                                        <strong style={{ color: textTitle }}>{pName}</strong>
                                                       </td>
 
                                                       <td style={{ padding: '7px 10px', fontWeight: 700, color: textTitle }}>
@@ -1184,12 +1171,8 @@ export function ZonasElectoralesView({
                                                           borderRadius: '4px',
                                                           fontSize: '0.71rem'
                                                         }}>
-                                                          {pMesa && pMesa !== '—' ? `🗳️ Mesa ${pMesa}` : 'Sin mesa'}
+                                                          {pMesa && pMesa !== '—' ? `🗳️ Mesa ${pMesa}` : 'Sin mesa fija'}
                                                         </span>
-                                                      </td>
-
-                                                      <td style={{ padding: '7px 10px', color: textSub, fontSize: '0.71rem' }}>
-                                                        {pRol}
                                                       </td>
 
                                                       <td style={{ padding: '7px 10px', textAlign: 'center' }}>
@@ -1209,7 +1192,7 @@ export function ZonasElectoralesView({
                                                       <td style={{ padding: '7px 10px', textAlign: 'center' }}>
                                                         {pCel ? (
                                                           <a
-                                                            href={`https://wa.me/51${String(pCel).replace(/\D/g, '')}?text=${encodeURIComponent(`Hola ${pName}, te saludo de la coordinación electoral de Somos Perú en Villa María del Triunfo para coordinar tu labor en el local ${col.colegio}.`)}`}
+                                                            href={`https://wa.me/51${String(pCel).replace(/\D/g, '')}?text=${encodeURIComponent(`Hola ${pName}, te saludo de la coordinación electoral de Somos Perú en Villa María del Triunfo respecto a tu labor en ${col.colegio}.`)}`}
                                                             target="_blank"
                                                             rel="noreferrer"
                                                             style={{
