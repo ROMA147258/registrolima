@@ -11,12 +11,15 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import * as XLSX from 'xlsx';
 import { VMT_ZONAS_GEO, VMT_SCHOOLS_GEO } from '../../constants/vmtSchoolsGeo.js';
+import { getVmtAssignedZoneForUser } from '../../constants/vmtCoordinadoresZonales.js';
 
 export function MapaZonasVMTView({
   isDark = false,
   allPersoneros = [],
   onFilterByLocal,
-  onSelectPersonero
+  onSelectPersonero,
+  assignedZona = null,
+  user = null
 }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -25,10 +28,22 @@ export function MapaZonasVMTView({
   const polylineLayerRef = useRef(null);
   const polygonsGroupRef = useRef(null);
 
-  const [selectedZona, setSelectedZona] = useState('all');
+  const effectiveAssignedZona = useMemo(() => {
+    if (assignedZona) return assignedZona;
+    if (user) return getVmtAssignedZoneForUser(user);
+    return null;
+  }, [assignedZona, user]);
+
+  const [selectedZona, setSelectedZona] = useState(() => effectiveAssignedZona || 'all');
   const [coverageFilter, setCoverageFilter] = useState('all'); // 'all', 'full', 'partial', 'empty'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSchool, setSelectedSchool] = useState(null);
+
+  useEffect(() => {
+    if (effectiveAssignedZona) {
+      setSelectedZona(effectiveAssignedZona);
+    }
+  }, [effectiveAssignedZona]);
 
   // Lista de coordenadas marcadas
   const [pointCoordinates, setPointCoordinates] = useState([]); // [ { id, order, lat, lng } ]
@@ -94,9 +109,14 @@ export function MapaZonasVMTView({
     return map;
   }, [allPersoneros]);
 
-  // Lista enriquecida de los 90 colegios con datos de personeros y estado
+  // Lista enriquecida de los colegios con datos de personeros y estado (filtrada por zona si el coordinador es zonal)
   const enrichedSchools = useMemo(() => {
-    return VMT_SCHOOLS_GEO.map(col => {
+    let baseList = VMT_SCHOOLS_GEO;
+    if (effectiveAssignedZona) {
+      baseList = baseList.filter(s => s.zona === effectiveAssignedZona);
+    }
+
+    return baseList.map(col => {
       const norm = normalize(col.colegio);
       let pData = schoolPersonnelMap.get(norm);
       if (!pData) {
@@ -192,9 +212,14 @@ export function MapaZonasVMTView({
     if (!mapContainerRef.current) return;
 
     if (!mapInstanceRef.current) {
+      const initialCenter = effectiveAssignedZona && VMT_ZONAS_GEO[effectiveAssignedZona]
+        ? VMT_ZONAS_GEO[effectiveAssignedZona].center
+        : [-12.1640, -76.9320];
+      const initialZoom = effectiveAssignedZona ? 14.5 : 13.5;
+
       const map = L.map(mapContainerRef.current, {
-        center: [-12.1640, -76.9320],
-        zoom: 13.5,
+        center: initialCenter,
+        zoom: initialZoom,
         minZoom: 11,
         maxZoom: 19,
         zoomControl: false
@@ -243,7 +268,7 @@ export function MapaZonasVMTView({
         mapInstanceRef.current = null;
       }
     };
-  }, [isDark]);
+  }, [isDark, effectiveAssignedZona]);
 
   // ACTUALIZACIÓN DE PUNTOS DE COORDENADAS MARCADAS (PUNTOS ROJOS DISCRETOS Y LÍNEAS)
   useEffect(() => {
@@ -253,58 +278,43 @@ export function MapaZonasVMTView({
     pointMarkersGroupRef.current.clearLayers();
     polylineLayerRef.current.clearLayers();
 
-    if (pointCoordinates.length === 0) return;
-
-    const latLngList = pointCoordinates.map(p => [p.lat, p.lng]);
-
-    // 1. Línea que une los puntos
-    if (pointCoordinates.length >= 2) {
-      const polyline = L.polyline(latLngList, {
+    if (pointCoordinates.length > 1) {
+      const latLngs = pointCoordinates.map(p => [p.lat, p.lng]);
+      const polyline = L.polyline(latLngs, {
         color: '#ef4444',
-        weight: 2.5,
+        weight: 2,
         dashArray: '4, 4',
-        opacity: 0.85
+        opacity: 0.8
       });
       polyline.addTo(polylineLayerRef.current);
     }
 
-    // 2. Puntos marcados (discretos circulares con número)
-    pointCoordinates.forEach((pt, index) => {
-      const isLast = index === pointCoordinates.length - 1;
-
+    pointCoordinates.forEach((pt) => {
       const markerHtml = `
         <div style="
-          position: relative;
-          transform: translate(-50%, -50%);
+          width: 14px;
+          height: 14px;
+          background: #ef4444;
+          border: 2px solid #ffffff;
+          border-radius: 50%;
+          box-shadow: 0 0 6px rgba(0,0,0,0.5);
           display: flex;
           align-items: center;
           justify-content: center;
+          font-size: 8px;
+          color: #fff;
+          font-weight: 900;
           cursor: pointer;
         ">
-          <div style="
-            width: ${isLast ? '22px' : '18px'};
-            height: ${isLast ? '22px' : '18px'};
-            border-radius: 50%;
-            background: #ef4444;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 900;
-          ">
-            ${pt.order}
-          </div>
+          ${pt.order}
         </div>
       `;
 
       const pinIcon = L.divIcon({
         className: 'vmt-coord-point-dot',
         html: markerHtml,
-        iconSize: [24, 24],
-        iconAnchor: [12, 12]
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
       });
 
       const marker = L.marker([pt.lat, pt.lng], { icon: pinIcon });
@@ -320,14 +330,18 @@ export function MapaZonasVMTView({
 
     polygonsGroupRef.current.clearLayers();
 
-    Object.entries(VMT_ZONAS_GEO).forEach(([zName, zGeo]) => {
+    const zonesToShow = effectiveAssignedZona
+      ? Object.entries(VMT_ZONAS_GEO).filter(([zName]) => zName === effectiveAssignedZona)
+      : Object.entries(VMT_ZONAS_GEO);
+
+    zonesToShow.forEach(([zName, zGeo]) => {
       const isCurrentZona = selectedZona === 'all' || selectedZona === zName;
-      const opacity = isCurrentZona ? 0.22 : 0.05;
+      const opacity = isCurrentZona ? 0.25 : 0.05;
       const strokeOpacity = isCurrentZona ? 0.9 : 0.3;
 
       const polygon = L.polygon(zGeo.polygon, {
         color: zGeo.color,
-        weight: isCurrentZona ? 3 : 1.5,
+        weight: isCurrentZona ? 3.5 : 1.5,
         opacity: strokeOpacity,
         fillColor: zGeo.fillColor,
         fillOpacity: opacity,
@@ -339,14 +353,16 @@ export function MapaZonasVMTView({
         direction: 'center'
       });
 
-      polygon.on('click', () => {
-        setSelectedZona(zName);
-        map.flyTo(zGeo.center, 15, { duration: 0.8 });
-      });
+      if (!effectiveAssignedZona) {
+        polygon.on('click', () => {
+          setSelectedZona(zName);
+          map.flyTo(zGeo.center, 15, { duration: 0.8 });
+        });
+      }
 
       polygon.addTo(polygonsGroupRef.current);
     });
-  }, [selectedZona]);
+  }, [selectedZona, effectiveAssignedZona]);
 
   // MARCADORES DE COLEGIOS
   useEffect(() => {
@@ -643,51 +659,75 @@ export function MapaZonasVMTView({
             }}
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-            <span>Exportar Excel {selectedZona === 'all' ? '(Todas las Zonas)' : `(${selectedZona.replace('Zona ', '')})`}</span>
+            <span>Exportar Excel {effectiveAssignedZona ? `(Zona ${VMT_ZONAS_GEO[effectiveAssignedZona]?.short || effectiveAssignedZona.replace('ZONA ', '')})` : (selectedZona === 'all' ? '(Todas las Zonas)' : `(${selectedZona.replace('ZONA ', 'Zona ')})`)}</span>
           </button>
         </div>
 
-        {/* Filtros de zona compactos */}
-        <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none', paddingTop: '4px', borderTop: `1px dashed ${borderCol}` }}>
-          <button
-            onClick={() => {
-              setSelectedZona('all');
-              if (mapInstanceRef.current) mapInstanceRef.current.flyTo([-12.1640, -76.9320], 13.5, { duration: 0.8 });
-            }}
-            style={{
-              padding: '4px 10px',
-              borderRadius: '12px',
-              border: `1px solid ${selectedZona === 'all' ? '#0284c7' : borderCol}`,
-              background: selectedZona === 'all' ? '#0284c7' : 'transparent',
-              color: selectedZona === 'all' ? '#fff' : textTitle,
-              fontSize: '0.72rem',
-              fontWeight: 800,
-              cursor: 'pointer'
-            }}
-          >
-            Todas ({metrics.totalLocales})
-          </button>
-          {Object.entries(VMT_ZONAS_GEO).map(([zKey, zGeo]) => (
-            <button
-              key={zKey}
-              onClick={() => {
-                setSelectedZona(zKey);
-                if (mapInstanceRef.current) mapInstanceRef.current.flyTo(zGeo.center, 15, { duration: 0.8 });
-              }}
-              style={{
-                padding: '4px 9px',
+        {/* Filtros de zona */}
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '6px', overflowX: 'auto', scrollbarWidth: 'none', paddingTop: '6px', borderTop: `1px dashed ${borderCol}` }}>
+          {effectiveAssignedZona ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '2px 0' }}>
+              <span style={{ fontSize: '0.74rem', color: textSub, fontWeight: 700 }}>
+                Tu Zona Territorial Asignada:
+              </span>
+              <span style={{
+                padding: '4px 12px',
                 borderRadius: '12px',
-                border: `1px solid ${selectedZona === zKey ? zGeo.color : borderCol}`,
-                background: selectedZona === zKey ? zGeo.color : 'transparent',
-                color: selectedZona === zKey ? '#fff' : textSub,
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              {zGeo.badge} {zGeo.name.replace('Zona ', '')}
-            </button>
-          ))}
+                background: VMT_ZONAS_GEO[effectiveAssignedZona]?.color || '#0284c7',
+                color: '#ffffff',
+                fontSize: '0.76rem',
+                fontWeight: 800,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+              }}>
+                {VMT_ZONAS_GEO[effectiveAssignedZona]?.badge || '📍'} {effectiveAssignedZona} ({filteredSchools.length} Colegios)
+              </span>
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  setSelectedZona('all');
+                  if (mapInstanceRef.current) mapInstanceRef.current.flyTo([-12.1640, -76.9320], 13.5, { duration: 0.8 });
+                }}
+                style={{
+                  padding: '4px 10px',
+                  borderRadius: '12px',
+                  border: `1px solid ${selectedZona === 'all' ? '#0284c7' : borderCol}`,
+                  background: selectedZona === 'all' ? '#0284c7' : 'transparent',
+                  color: selectedZona === 'all' ? '#fff' : textTitle,
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  cursor: 'pointer'
+                }}
+              >
+                Todas ({metrics.totalLocales})
+              </button>
+              {Object.entries(VMT_ZONAS_GEO).map(([zKey, zGeo]) => (
+                <button
+                  key={zKey}
+                  onClick={() => {
+                    setSelectedZona(zKey);
+                    if (mapInstanceRef.current) mapInstanceRef.current.flyTo(zGeo.center, 15, { duration: 0.8 });
+                  }}
+                  style={{
+                    padding: '4px 9px',
+                    borderRadius: '12px',
+                    border: `1px solid ${selectedZona === zKey ? zGeo.color : borderCol}`,
+                    background: selectedZona === zKey ? zGeo.color : 'transparent',
+                    color: selectedZona === zKey ? '#fff' : textSub,
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {zGeo.badge} {zGeo.name.replace('ZONA ', '')}
+                </button>
+              ))}
+            </>
+          )}
         </div>
       </div>
 

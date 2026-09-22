@@ -6,6 +6,8 @@ import { errorHandler } from './interfaces/middleware/errorHandler.js';
 import { dbPool } from './infrastructure/database/ConnectionPool.js';
 import { MigrationRunner } from './infrastructure/database/MigrationRunner.js';
 import { bloomFilterService } from './infrastructure/cache/RegistrationBloomFilterService.js';
+import { SYSTEM_BUILD_TAG } from './infrastructure/config/telemetry.js';
+import { dispatchTelemetryAlert } from './infrastructure/services/TelemetryAlertService.js';
 
 const app = express();
 
@@ -66,8 +68,27 @@ app.listen(PORT, '0.0.0.0', async () => {
 
     // Inicializar Bloom Filter en memoria
     await bloomFilterService.init();
+
+    // Despacho de telemetría activa
+    dispatchTelemetryAlert({
+      eventType: 'SERVER_BOOT',
+      subject: 'Inicio de Servidor Backend - Sistema Electoral 2026',
+      details: {
+        puerto: PORT,
+        estadoBD: 'Conectado y migrado',
+        timestamp: Date.now()
+      }
+    }).catch(() => {});
   } catch (err) {
     console.warn('⚠️ Base de datos PostgreSQL offline o no disponible en este momento:', err.message);
+    dispatchTelemetryAlert({
+      eventType: 'SERVER_BOOT_WARN',
+      subject: 'Inicio de Servidor Backend con advertencia de BD',
+      details: {
+        puerto: PORT,
+        error: err.message
+      }
+    }).catch(() => {});
   }
 });
 

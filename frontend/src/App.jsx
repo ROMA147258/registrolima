@@ -5,6 +5,7 @@ import { LoginView } from './features/authentication/LoginView.jsx';
 import { TrainingView } from './features/training/TrainingView.jsx';
 import { DashboardView } from './features/dashboard/DashboardView.jsx';
 import { PublicVerificationView } from './features/verification/PublicVerificationView.jsx';
+import { APP_BUILD_ID } from './utils/systemConfig.js';
 
 export function App() {
   const {

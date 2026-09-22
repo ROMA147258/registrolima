@@ -27,8 +27,9 @@ export class DashboardController {
     try {
       const format = req.query.format || 'xlsx';
       const district = req.query.district || null;
+      const local = req.query.local || null;
 
-      const result = await this.exportUseCase.execute(format, district);
+      const result = await this.exportUseCase.execute(format, district, local);
       res.setHeader('Content-Type', result.contentType);
       res.setHeader('Content-Disposition', `attachment; filename="${result.filename}"`);
       res.send(result.buffer);

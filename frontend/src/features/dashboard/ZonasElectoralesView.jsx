@@ -6,6 +6,7 @@ import {
   AlertTriangle, XCircle, ExternalLink, Eye, ChevronRight
 } from 'lucide-react';
 import { ZONAS_CONFIG } from '../../constants/zonasCatalog.js';
+import { getVmtAssignedZoneForUser } from '../../constants/vmtCoordinadoresZonales.js';
 
 const ZONA_COLORS = {
   "ZONA MARIATEGUI": { bg: "rgba(139, 92, 246, 0.12)", border: "#8b5cf6", text: "#7c3aed", light: "#ede9fe", badge: "🟣" },
@@ -23,10 +24,18 @@ export function ZonasElectoralesView({
   onSelectSchoolDetail,
   onFilterByLocal,
   onSelectPersonero,
-  userDistrito = 'VILLA MARIA DEL TRIUNFO'
+  userDistrito = 'VILLA MARIA DEL TRIUNFO',
+  assignedZona = null,
+  user = null
 }) {
+  const effectiveAssignedZona = useMemo(() => {
+    if (assignedZona) return assignedZona;
+    if (user) return getVmtAssignedZoneForUser(user);
+    return null;
+  }, [assignedZona, user]);
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedZonaFilter, setSelectedZonaFilter] = useState('all');
+  const [selectedZonaFilter, setSelectedZonaFilter] = useState(() => effectiveAssignedZona || 'all');
   const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'partial', 'empty', 'full'
   const [expandedZonas, setExpandedZonas] = useState(() => ({
     "ZONA MARIATEGUI": true,
@@ -98,7 +107,13 @@ export function ZonasElectoralesView({
     return map;
   }, [allPersoneros]);
 
-  const rawZonas = ZONAS_CONFIG["VILLA MARIA DEL TRIUNFO"] || {};
+  const allRawZonas = ZONAS_CONFIG["VILLA MARIA DEL TRIUNFO"] || {};
+  const rawZonas = useMemo(() => {
+    if (effectiveAssignedZona && allRawZonas[effectiveAssignedZona]) {
+      return { [effectiveAssignedZona]: allRawZonas[effectiveAssignedZona] };
+    }
+    return allRawZonas;
+  }, [effectiveAssignedZona, allRawZonas]);
 
   // Compute metrics per zona
   const zonasMetrics = useMemo(() => {
@@ -555,47 +570,68 @@ export function ZonasElectoralesView({
 
         {/* Zona Pills Filter */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.74rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Filter className="w-3.5 h-3.5" /> Zona:
-          </span>
-          <button
-            onClick={() => setSelectedZonaFilter('all')}
-            style={{
-              padding: '5px 10px',
-              borderRadius: '8px',
-              fontSize: '0.74rem',
-              fontWeight: 800,
-              cursor: 'pointer',
-              border: `1px solid ${selectedZonaFilter === 'all' ? '#0284c7' : borderCol}`,
-              background: selectedZonaFilter === 'all' ? '#0284c7' : (isDark ? '#0f172a' : '#f1f5f9'),
-              color: selectedZonaFilter === 'all' ? '#ffffff' : textTitle
-            }}
-          >
-            Todas ({Object.keys(rawZonas).length})
-          </button>
-          {Object.keys(rawZonas).map(z => {
-            const isSel = selectedZonaFilter === z;
-            const styleConf = ZONA_COLORS[z] || { border: '#64748b', text: '#0284c7', badge: '📍' };
-            const cleanShort = z.replace('ZONA ', '');
-            return (
+          {effectiveAssignedZona ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '0.74rem', fontWeight: 800, color: textSub }}>Zona Asignada:</span>
+              <span style={{
+                padding: '4px 12px',
+                borderRadius: '8px',
+                fontSize: '0.76rem',
+                fontWeight: 800,
+                background: ZONA_COLORS[effectiveAssignedZona]?.border || '#0284c7',
+                color: '#ffffff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
+              }}>
+                {ZONA_COLORS[effectiveAssignedZona]?.badge || '📍'} {effectiveAssignedZona}
+              </span>
+            </div>
+          ) : (
+            <>
+              <span style={{ fontSize: '0.74rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Filter className="w-3.5 h-3.5" /> Zona:
+              </span>
               <button
-                key={z}
-                onClick={() => setSelectedZonaFilter(z)}
+                onClick={() => setSelectedZonaFilter('all')}
                 style={{
                   padding: '5px 10px',
                   borderRadius: '8px',
                   fontSize: '0.74rem',
                   fontWeight: 800,
                   cursor: 'pointer',
-                  border: `1px solid ${isSel ? styleConf.border : borderCol}`,
-                  background: isSel ? styleConf.border : (isDark ? '#0f172a' : '#f1f5f9'),
-                  color: isSel ? '#ffffff' : (isDark ? '#e2e8f0' : styleConf.text)
+                  border: `1px solid ${selectedZonaFilter === 'all' ? '#0284c7' : borderCol}`,
+                  background: selectedZonaFilter === 'all' ? '#0284c7' : (isDark ? '#0f172a' : '#f1f5f9'),
+                  color: selectedZonaFilter === 'all' ? '#ffffff' : textTitle
                 }}
               >
-                {styleConf.badge} {cleanShort}
+                Todas ({Object.keys(rawZonas).length})
               </button>
-            );
-          })}
+              {Object.keys(rawZonas).map(z => {
+                const isSel = selectedZonaFilter === z;
+                const styleConf = ZONA_COLORS[z] || { border: '#64748b', text: '#0284c7', badge: '📍' };
+                const cleanShort = z.replace('ZONA ', '');
+                return (
+                  <button
+                    key={z}
+                    onClick={() => setSelectedZonaFilter(z)}
+                    style={{
+                      padding: '5px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.74rem',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      border: `1px solid ${isSel ? styleConf.border : borderCol}`,
+                      background: isSel ? styleConf.border : (isDark ? '#0f172a' : '#f1f5f9'),
+                      color: isSel ? '#ffffff' : (isDark ? '#e2e8f0' : styleConf.text)
+                    }}
+                  >
+                    {styleConf.badge} {cleanShort}
+                  </button>
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
 

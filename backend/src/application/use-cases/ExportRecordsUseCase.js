@@ -132,7 +132,7 @@ export class ExportRecordsUseCase {
     return schoolStats;
   }
 
-  async execute(format = 'xlsx', filterDistrict = null) {
+  async execute(format = 'xlsx', filterDistrict = null, filterLocal = null) {
     let rawRecords = await this.personeroRepo.getAllCombined();
 
     // 1. Deduplicación estricta por DNI
@@ -155,6 +155,17 @@ export class ExportRecordsUseCase {
         const distAsig = normalizeDistrictName(d.distritoAsignado || d['Distrito Asignado'] || d.distrito_asignado);
         const distVota = normalizeDistrictName(d.distritoDondeVota || d['Distrito donde Vota'] || d.distrito_donde_vota);
         return distAsig === normFilter || (!distAsig && distVota === normFilter);
+      });
+    }
+
+    // 2.1 Filtro estricto por local (si es coordinador de local)
+    const activeLocal = filterLocal && filterLocal !== 'all' ? filterLocal.trim() : null;
+    if (activeLocal) {
+      const normLocalFilter = normalizeLocalName(activeLocal);
+      records = records.filter(r => {
+        const d = r.toJSON ? r.toJSON() : r;
+        const loc = normalizeLocalName(d.localDeVotacionAsignado || d['Local de Votación Asignado'] || d.local_de_votacion_asignado || d.localDeVotacion || d['Local de Votación'] || '');
+        return loc === normLocalFilter || loc.includes(normLocalFilter) || normLocalFilter.includes(loc);
       });
     }
 

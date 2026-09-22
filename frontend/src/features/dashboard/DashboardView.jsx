@@ -22,6 +22,8 @@ import {
   getMesasForLocal, getMesasForDistrito, getElectoresForDistrito, getLocalesCountForDistrito
 } from '../../constants/catalogs.js';
 import { getLocalesByDistrito, findOfficialLocal } from '../../constants/localesCatalog.js';
+import { exportPadronToExcel } from '../../utils/exportFilteredExcel.js';
+import { getVmtAssignedZoneForUser, getSchoolsForVmtZone } from '../../constants/vmtCoordinadoresZonales.js';
 import { api } from '../../services/api.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -656,8 +658,20 @@ export function DashboardView({ onGoToTraining }) {
     return raw.split(',').map(s => s.trim()).filter(Boolean);
   }, [isCoordinadorZonal, user]);
 
+  // Zona asignada de Villa María del Triunfo para el usuario (si es coordinador zonal)
+  const assignedVmtZone = useMemo(() => {
+    return getVmtAssignedZoneForUser(user);
+  }, [user]);
+
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'capacitacion', 'sql'
   const [showCertificate, setShowCertificate] = useState(false);
+
+  // Redirigir inmediatamente a overview si un Coordinador Local intenta entrar al Mapa Zonal o Zonas
+  useEffect(() => {
+    if (isCoordinadorLocal && (activeTab === 'mapa' || activeTab === 'zonas')) {
+      setActiveTab('overview');
+    }
+  }, [isCoordinadorLocal, activeTab]);
 
   // Estado de aprobación de evaluación / credenciales del usuario coordinador
   const isCoordinatorApproved = useMemo(() => {
@@ -989,7 +1003,10 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
-    if (isCoordinadorZonal && coordinatorDistrict && coordinatorZonalLocales.length > 0) {
+    if (isCoordinadorZonal) {
+      const assignedSchoolsInZone = assignedVmtZone ? getSchoolsForVmtZone(assignedVmtZone) : [];
+      const allZonalSchools = [...coordinatorZonalLocales, ...assignedSchoolsInZone];
+
       return allRecords.filter(r => {
         const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota;
         const l = r['Local de Votación Asignado'] || r['Local de Votación'] || r.localDeVotacionAsignado || r.localDeVotacion;
@@ -999,8 +1016,12 @@ export function DashboardView({ onGoToTraining }) {
         
         // El Coordinador Zonal NO puede ver nada de Coordinador Distrital ni Superadministrador
         if (rol.includes('distrito') || rol.includes('distrital') || rol.includes('superadmin')) return false;
-        if (!matchesDistrict(d, coordinatorDistrict)) return false;
-        return coordinatorZonalLocales.some(zLocal => matchesLocal(l, zLocal));
+        if (coordinatorDistrict && !matchesDistrict(d, coordinatorDistrict)) return false;
+        
+        if (allZonalSchools.length > 0) {
+          return allZonalSchools.some(zLocal => matchesLocal(l, zLocal));
+        }
+        return false;
       });
     }
 
@@ -1016,7 +1037,51 @@ export function DashboardView({ onGoToTraining }) {
     }
 
     return allRecords;
-  }, [allRecords, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital, isCoordinador, isSuperAdmin, coordinatorDistrict, coordinatorLocal, coordinatorZonalLocales, user]);
+  }, [allRecords, isCoordinadorLocal, isCoordinadorZonal, isCoordinadorDistrital, isCoordinador, isSuperAdmin, coordinatorDistrict, coordinatorLocal, coordinatorZonalLocales, assignedVmtZone, user]);
+
+  // Exportación inteligente de Excel respetando el rol y ámbito del usuario
+  const handleDownloadExcel = (targetDistrictFilter = null) => {
+    if (isCoordinadorLocal && coordinatorLocal) {
+      exportPadronToExcel({
+        records,
+        title: `Padrón - ${coordinatorLocal}`,
+        fileName: `Padron_SomosPeru_${coordinatorLocal.replace(/[^A-Za-z0-9]/g, '_')}_2026.xlsx`,
+        scopeType: 'colegio',
+        scopeName: coordinatorLocal
+      });
+      return;
+    }
+
+    if (isCoordinadorZonal) {
+      const scopeLabel = assignedVmtZone || 'Zona';
+      exportPadronToExcel({
+        records,
+        title: `Padrón - ${scopeLabel}`,
+        fileName: `Padron_SomosPeru_${scopeLabel.replace(/[^A-Za-z0-9]/g, '_')}_2026.xlsx`,
+        scopeType: 'zona',
+        scopeName: scopeLabel
+      });
+      return;
+    }
+
+    // Para Coordinador Distrital o Superadmin
+    const targetDist = coordinatorDistrict || (targetDistrictFilter && targetDistrictFilter !== 'all' ? targetDistrictFilter : (dist1 !== 'all' ? dist1 : ''));
+    let filteredForExport = records;
+    if (targetDist && !coordinatorDistrict) {
+      filteredForExport = records.filter(r => {
+        const d = r['Distrito Asignado'] || r['Distrito donde Vota'] || r.distritoAsignado || r.distritoDondeVota;
+        return matchesDistrict(d, targetDist);
+      });
+    }
+
+    exportPadronToExcel({
+      records: filteredForExport,
+      title: targetDist ? `Padrón - ${targetDist}` : 'Padrón General Somos Perú',
+      fileName: `Padron_SomosPeru_${(targetDist || 'Lima_Metropolitana').replace(/[^A-Za-z0-9]/g, '_')}_2026.xlsx`,
+      scopeType: targetDist ? 'distrital' : 'general',
+      scopeName: targetDist
+    });
+  };
 
   // =========================================================================
   // DISTRIBUCIÓN DE PERSONEROS Y COORDINADORES POR DISTRITO PARA EL GRÁFICO
@@ -2028,34 +2093,36 @@ export function DashboardView({ onGoToTraining }) {
               )}
             </button>
 
-            {/* Tab: Mapa Zonal (Villa María del Triunfo - Yolanda) */}
-            <button
-              onClick={() => setActiveTab('mapa')}
-              title={isSidebarCollapsed ? 'Mapa Zonal (VMT)' : undefined}
-              style={{
-                padding: isSidebarCollapsed ? '10px' : '10px 12px',
-                borderRadius: '8px',
-                border: 'none',
-                background: activeTab === 'mapa' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
-                color: activeTab === 'mapa' ? '#0284c7' : textSub,
-                fontWeight: 700,
-                fontSize: '0.84rem',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                gap: '10px',
-                textAlign: 'left',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              <MapPin className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-              {!isSidebarCollapsed && (
-                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  Mapa Zonal
-                </span>
-              )}
-            </button>
+            {/* Tab: Mapa Zonal (Villa María del Triunfo) - Oculto para Coordinador Local */}
+            {!isCoordinadorLocal && (
+              <button
+                onClick={() => setActiveTab('mapa')}
+                title={isSidebarCollapsed ? 'Mapa Zonal (VMT)' : undefined}
+                style={{
+                  padding: isSidebarCollapsed ? '10px' : '10px 12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: activeTab === 'mapa' ? (isDark ? '#1e293b' : '#e0f2fe') : 'transparent',
+                  color: activeTab === 'mapa' ? '#0284c7' : textSub,
+                  fontWeight: 700,
+                  fontSize: '0.84rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
+                  gap: '10px',
+                  textAlign: 'left',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <MapPin className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                {!isSidebarCollapsed && (
+                  <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    Mapa Zonal
+                  </span>
+                )}
+              </button>
+            )}
 
             {/* Tab 4: Historial de Cambios / Auditoría (Exclusivo Superadmin Master) */}
             {canViewAudit && (
@@ -3354,15 +3421,15 @@ export function DashboardView({ onGoToTraining }) {
                   </button>
                 </div>
 
-                <a
-                  href={api.getExportUrl('xlsx', coordinatorDistrict || (dist1 !== 'all' ? dist1 : ''))}
-                  download
+                <button
+                  onClick={() => handleDownloadExcel(dist1)}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '6px',
                     padding: '8px 16px',
                     borderRadius: '8px',
+                    border: 'none',
                     background: '#10b981',
                     color: '#ffffff',
                     fontWeight: 800,
@@ -3380,10 +3447,11 @@ export function DashboardView({ onGoToTraining }) {
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.25)';
                   }}
+                  title={isCoordinadorLocal ? `Exportar Padrón de ${coordinatorLocal}` : (isCoordinadorZonal ? `Exportar Padrón de Zona ${assignedVmtZone || ''}` : 'Descargar Padrón Oficial')}
                 >
                   <FileSpreadsheet className="w-4 h-4" />
-                  <span>Descargar Excel</span>
-                </a>
+                  <span>Descargar Excel {isCoordinadorLocal ? '(Mi Colegio)' : (isCoordinadorZonal && assignedVmtZone ? `(${assignedVmtZone.replace('ZONA ', '')})` : '')}</span>
+                </button>
               </div>
 
               {/* VISTA TARJETAS DE COORDINADORES (CUANDO SE FILTRA POR ROL COORDINADOR) */}
@@ -4832,15 +4900,15 @@ export function DashboardView({ onGoToTraining }) {
                   </div>
                 </div>
 
-                <a
-                  href={api.getExportUrl('xlsx', coordinatorDistrict || (dist2 !== 'all' ? dist2 : ''))}
-                  download
+                <button
+                  onClick={() => handleDownloadExcel(dist2)}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '8px',
                     padding: '9px 16px',
                     borderRadius: '8px',
+                    border: 'none',
                     background: '#10b981',
                     color: '#ffffff',
                     fontWeight: 800,
@@ -4858,10 +4926,11 @@ export function DashboardView({ onGoToTraining }) {
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.25)';
                   }}
+                  title={isCoordinadorLocal ? `Exportar Padrón de ${coordinatorLocal}` : (isCoordinadorZonal ? `Exportar Padrón de Zona ${assignedVmtZone || ''}` : 'Exportar Padrón Oficial')}
                 >
                   <FileSpreadsheet className="w-4 h-4" />
-                  <span>Exportar Excel Capacitación</span>
-                </a>
+                  <span>Exportar Excel {isCoordinadorLocal ? '(Mi Colegio)' : (isCoordinadorZonal && assignedVmtZone ? `(${assignedVmtZone.replace('ZONA ', '')})` : '')}</span>
+                </button>
               </div>
 
               {/* Barra de Filtros Tab 2 */}
@@ -5446,6 +5515,8 @@ export function DashboardView({ onGoToTraining }) {
                 isDark={isDark}
                 allPersoneros={records}
                 userDistrito={coordinatorDistrict || dist1 || 'VILLA MARIA DEL TRIUNFO'}
+                assignedZona={assignedVmtZone}
+                user={user}
                 onSelectPersonero={(p) => setSelectedPersonero(p)}
                 onFilterByLocal={(colegio) => {
                   setDist1('Villa María del Triunfo');
@@ -5464,6 +5535,8 @@ export function DashboardView({ onGoToTraining }) {
               <MapaZonasVMTView
                 isDark={isDark}
                 allPersoneros={records}
+                assignedZona={assignedVmtZone}
+                user={user}
                 onFilterByLocal={(colegio) => {
                   setDist1('Villa María del Triunfo');
                   setLocalZonal1(colegio);
