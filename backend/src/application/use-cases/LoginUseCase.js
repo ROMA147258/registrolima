@@ -44,37 +44,49 @@ export class LoginUseCase {
       }
     };
 
-    if (superadmins[cleanUser] && superadmins[cleanUser].passwords.includes(cleanPass)) {
-      const superadminData = superadmins[cleanUser];
-      const token = jwt.sign(
-        { username: cleanUser, role: ROLES.SUPERADMIN, name: superadminData.displayName },
-        config.jwt.secret,
-        { expiresIn: config.jwt.expiresIn }
-      );
+    if (superadmins[cleanUser]) {
+      if (superadmins[cleanUser].passwords.includes(cleanPass)) {
+        const superadminData = superadmins[cleanUser];
+        const token = jwt.sign(
+          { username: cleanUser, role: ROLES.SUPERADMIN, name: superadminData.displayName },
+          config.jwt.secret,
+          { expiresIn: config.jwt.expiresIn }
+        );
 
-      try {
-        await this.auditRepo?.log({
-          action: 'LOGIN_ADMIN',
-          userIdentifier: cleanUser,
+        try {
+          await this.auditRepo?.log({
+            action: 'LOGIN_ADMIN',
+            userIdentifier: cleanUser,
+            role: ROLES.SUPERADMIN,
+            details: { username: cleanUser, name: superadminData.displayName },
+            ipAddress: context.ip,
+            userAgent: context.userAgent
+          });
+        } catch (e) {}
+
+        return {
+          status: 'success',
           role: ROLES.SUPERADMIN,
-          details: { username: cleanUser, name: superadminData.displayName },
-          ipAddress: context.ip,
-          userAgent: context.userAgent
-        });
-      } catch (e) {}
+          token,
+          user: {
+            username: cleanUser,
+            fullName: superadminData.displayName,
+            'Nombres y Apellidos': superadminData.displayName,
+            'Rol a Desempeñar': 'Superadministrador',
+            role: ROLES.SUPERADMIN
+          }
+        };
+      } else {
+        throw new Error('Credenciales incorrectas o contraseña de administrador inválida.');
+      }
+    }
 
-      return {
-        status: 'success',
-        role: ROLES.SUPERADMIN,
-        token,
-        user: {
-          username: cleanUser,
-          fullName: superadminData.displayName,
-          'Nombres y Apellidos': superadminData.displayName,
-          'Rol a Desempeñar': 'Superadministrador',
-          role: ROLES.SUPERADMIN
-        }
-      };
+    if (!cleanPass) {
+      throw new Error('Por favor ingrese su contraseña o DNI para ingresar.');
+    }
+
+    if (!rawUser) {
+      throw new Error('Por favor ingrese su nombre completo o DNI para ingresar.');
     }
 
     // 2. Pre-filtro Bloom Filter ultra-rápido para descartar usuarios inexistentes en 0.001ms
@@ -87,9 +99,9 @@ export class LoginUseCase {
       throw new Error('Credenciales incorrectas o usuario no encontrado en el padrón electoral.');
     }
 
-    // 3. Verificación de Personeros y Coordinadores en dbo.Rpersoneros y dbo.Rcoordinadores
+    // 3. Verificación de Personeros y Coordinadores en PostgreSQL
     try {
-      const match = await this.personeroRepo.findByCredentials(rawUser, cleanPass || cleanDni);
+      const match = await this.personeroRepo.findByCredentials(rawUser, cleanPass);
       if (match && match.entity) {
         const entity = match.entity;
         const tblName = String(match.tableName || '').toLowerCase();
@@ -102,14 +114,16 @@ export class LoginUseCase {
         const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
         const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
 
-        if (isCoordDistrital) {
-          const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').replace(/[-\s]/g, '').trim();
-          if (expectedKey) {
-            const userPassClean = cleanPass.replace(/[-\s]/g, '').toUpperCase();
-            if (userPassClean !== expectedKey.toUpperCase()) {
-              throw new Error('Contraseña incorrecta. El Coordinador Distrital debe ingresar con su clave asignada.');
-            }
-          }
+        // Doble verificación estricta de contraseña: DNI o Clave de Acceso
+        const userPassClean = cleanPass.replace(/[-\s]/g, '').toLowerCase();
+        const entityDniClean = String(entity.dni || '').replace(/[-\s]/g, '').toLowerCase();
+        const entityKeyClean = String(entity.claveAcceso || entity['Clave de Acceso'] || '').replace(/[-\s]/g, '').toLowerCase();
+
+        const passMatchesDni = Boolean(userPassClean && entityDniClean && userPassClean === entityDniClean);
+        const passMatchesKey = Boolean(userPassClean && entityKeyClean && userPassClean === entityKeyClean);
+
+        if (!passMatchesDni && !passMatchesKey) {
+          throw new Error('Contraseña o DNI incorrecto. Verifique sus credenciales.');
         }
 
         const token = jwt.sign(
@@ -169,111 +183,41 @@ export class LoginUseCase {
         };
       }
     } catch (err) {
-      if (err.message && (err.message.includes('Coordinador Distrital') || err.message.includes('Coordinador de Distritos'))) {
+      if (err.message && (err.message.includes('Contraseña') || err.message.includes('Credenciales'))) {
         throw err;
       }
       console.error('Error buscando personero/coordinador en base de datos:', err);
     }
 
-    // 3. Verificación adicional por DNI exacto
-    if (cleanDni) {
-      try {
-        const match = await this.personeroRepo.findByDni(cleanDni);
-        if (match && match.entity) {
-          const entity = match.entity;
-          const tblName = String(match.tableName || '').toLowerCase();
-          const rolLower = String(entity.rolADesempenar || '').toLowerCase();
-          const isCoordDistrital = tblName.includes('coordinadoresd') || tblName.includes('coodinadoresd') || rolLower.includes('distrito') || rolLower.includes('distrital');
-          const isCoordZonal = !isCoordDistrital && (tblName.includes('coordinadorz') || tblName.includes('coordinadoresz') || rolLower.includes('zonal') || rolLower.includes('zona'));
-          const isCoordLocal = !isCoordDistrital && !isCoordZonal && (tblName.includes('coord') || rolLower.includes('coordinador') || rolLower.includes('local'));
-          const isCoord = isCoordDistrital || isCoordZonal || isCoordLocal;
-          const userRole = isCoord ? ROLES.COORDINADOR : ROLES.PERSONERO_REGISTRADO;
-          const distAsig = entity.distritoAsignado || entity.distritoDondeVota || '';
-          const localAsig = entity.localDeVotacionAsignado || entity.localDeVotacion || '';
-
-          if (isCoordDistrital) {
-            const expectedKey = String(entity.claveAcceso || entity['Clave de Acceso'] || '').replace(/[-\s]/g, '').trim();
-            if (expectedKey) {
-              const userPassClean = cleanPass.replace(/[-\s]/g, '').toUpperCase();
-              if (userPassClean !== expectedKey.toUpperCase()) {
-                throw new Error('Contraseña incorrecta. El Coordinador Distrital debe ingresar con su clave asignada.');
-              }
-            }
-          }
-
-          const token = jwt.sign(
-            { dni: entity.dni, role: userRole, name: entity.nombresApellidos, distrito: distAsig, local: localAsig },
-            config.jwt.secret,
-            { expiresIn: config.jwt.expiresIn }
-          );
-
-          return {
-            status: 'success',
-            role: userRole,
-            token,
-            user: {
-              'ID': entity.id,
-              'Nombres y Apellidos': entity.nombresApellidos,
-              'D.N.I.': entity.dni,
-              'Celular': entity.celular,
-              'Correo Electrónico': entity.correoElectronico,
-              'Distrito donde Vota': entity.distritoDondeVota,
-              'Mesa de Sufragio': entity.mesaDeSufragio,
-              'Local de Votación': entity.localDeVotacion,
-              'Rol a Desempeñar': entity.rolADesempenar,
-              'Distrito Asignado': distAsig,
-              'Mesa Asignada': entity.mesaAsignada,
-              'Local de Votación Asignado': localAsig,
-              'Tiene Experiencia como Personero': entity.tieneExperiencia,
-              'Cuenta con Movilidad Propia': entity.cuentaConMovilidad,
-              'Se compromete a colaborar el 4 de Octubre del 2026 en las Elecciones': entity.seCompromete,
-              'Video': entity.video,
-              'PDF': entity.pdf,
-              'Preguntas': entity.preguntas,
-              'Credenciales': entity.credenciales,
-              'Token': entity.tokenVerificacion,
-              id: entity.id,
-              username: entity.dni,
-              fullName: entity.nombresApellidos,
-              role: userRole,
-              distritoAsignado: distAsig,
-              localAsignado: localAsig,
-              isCoordinador: isCoord,
-              isCoordinadorDistrital: isCoordDistrital,
-              isCoordinadorZonal: isCoordZonal,
-              isCoordinadorLocal: isCoordLocal
-            }
-          };
-        }
-      } catch (err) {}
-    }
-
-    // 4. Verificación en tabla dbo.Usuarios
-    if (cleanUser && cleanPass) {
+    // 4. Verificación en tabla dbo.Usuarios (si aplica)
+    if (this.userRepo) {
       try {
         const dbUser = await this.userRepo.findByUsername(cleanUser);
         if (dbUser) {
-          const token = jwt.sign(
-            { id: dbUser.id, username: dbUser.username, role: dbUser.role, name: dbUser.fullName },
-            config.jwt.secret,
-            { expiresIn: config.jwt.expiresIn }
-          );
+          const passMatches = (dbUser.password && dbUser.password === cleanPass) || (dbUser.dni && String(dbUser.dni).trim() === cleanPass);
+          if (passMatches) {
+            const token = jwt.sign(
+              { id: dbUser.id, username: dbUser.username, role: dbUser.role, name: dbUser.fullName },
+              config.jwt.secret,
+              { expiresIn: config.jwt.expiresIn }
+            );
 
-          return {
-            status: 'success',
-            role: dbUser.role,
-            token,
-            user: {
-              id: dbUser.id,
-              username: dbUser.username,
-              fullName: dbUser.fullName,
-              role: dbUser.role
-            }
-          };
+            return {
+              status: 'success',
+              role: dbUser.role,
+              token,
+              user: {
+                id: dbUser.id,
+                username: dbUser.username,
+                fullName: dbUser.fullName,
+                role: dbUser.role
+              }
+            };
+          }
         }
       } catch (err) {}
     }
 
-    throw new Error('Credenciales incorrectas. Verifique su Nombre/Usuario y DNI/Contraseña.');
+    throw new Error('Credenciales incorrectas. Verifique su Nombre/DNI y su Contraseña o DNI.');
   }
 }

@@ -38,11 +38,22 @@ class MockPersoneroRepository {
   }
 
   async findByCredentials(username, passOrDni) {
-    const found = this.records.find(r => 
-      r.dni === String(username).trim() || 
-      r.dni === String(passOrDni).trim() ||
-      r.nombresApellidos?.toLowerCase().trim() === String(username).toLowerCase().trim()
-    );
+    const cleanUser = String(username || '').trim().toLowerCase();
+    const cleanPass = String(passOrDni || '').trim().toLowerCase();
+    if (!cleanUser || !cleanPass) return null;
+
+    const found = this.records.find(r => {
+      const nameMatch = r.nombresApellidos?.toLowerCase().trim() === cleanUser;
+      const dniUserMatch = String(r.dni).trim().toLowerCase() === cleanUser;
+      const userMatch = nameMatch || dniUserMatch;
+
+      const dniPassMatch = String(r.dni).trim().toLowerCase() === cleanPass;
+      const keyPassMatch = r.claveAcceso && String(r.claveAcceso).trim().toLowerCase().replace(/[-\s]/g, '') === cleanPass.replace(/[-\s]/g, '');
+      const passMatch = dniPassMatch || keyPassMatch;
+
+      return userMatch && passMatch;
+    });
+
     if (!found) return null;
     return { entity: found, tableName: found.rolADesempenar?.includes('Distrito') ? 'rcoordinadoresd' : 'rpersoneros' };
   }
@@ -393,7 +404,7 @@ test('Validation Rule 7: Coordinador de Distritos gets auto-generated password a
         password: 'wrong_password'
       });
     },
-    /Contraseña incorrecta. El Coordinador (Distrital|de Distritos) debe ingresar con su clave asignada/
+    /Contraseña o DNI incorrecto|Credenciales incorrectas/
   );
 
   // Login with CORRECT generated password -> Must succeed
@@ -404,6 +415,56 @@ test('Validation Rule 7: Coordinador de Distritos gets auto-generated password a
 
   assert.equal(loginRes.status, 'success');
   assert.equal(loginRes.user.isCoordinadorDistrital, true);
+});
+
+test('Strict Authentication: Full Name requires valid DNI or Clave de Acceso, rejects wrong password', async () => {
+  const repo = new MockPersoneroRepository();
+  const audit = new MockAuditRepository();
+  const { RegisterPersoneroUseCase } = await import('../src/application/use-cases/RegisterPersoneroUseCase.js');
+  const { LoginUseCase } = await import('../src/application/use-cases/LoginUseCase.js');
+
+  const regUseCase = new RegisterPersoneroUseCase(repo, audit);
+  const loginUseCase = new LoginUseCase(repo, null, audit);
+
+  await regUseCase.execute({
+    'Nombres y Apellidos': 'ESTEBAN TITO CIRINEO CONDOR',
+    'D.N.I.': '43874217',
+    'Celular': '987654321',
+    'Correo Electrónico': 'esteban@somosperu.pe',
+    'Rol a Desempeñar': 'Coordinador Zonal',
+    'Distrito Asignado': 'Villa María del Triunfo',
+    'Local de Votación Asignado': 'I.E. TUPAC AMARU II, I.E. FE Y ALEGRIA'
+  });
+
+  // 1. Full name + correct DNI -> SUCCESS
+  const res1 = await loginUseCase.execute({
+    username: 'ESTEBAN TITO CIRINEO CONDOR',
+    password: '43874217'
+  });
+  assert.equal(res1.status, 'success');
+  assert.equal(res1.user.username, '43874217');
+
+  // 2. Full name + WRONG password -> MUST REJECT
+  await assert.rejects(
+    async () => {
+      await loginUseCase.execute({
+        username: 'ESTEBAN TITO CIRINEO CONDOR',
+        password: 'cualquier_password_invalido'
+      });
+    },
+    /Credenciales incorrectas|Contraseña o DNI incorrecto/
+  );
+
+  // 3. DNI + WRONG password -> MUST REJECT
+  await assert.rejects(
+    async () => {
+      await loginUseCase.execute({
+        username: '43874217',
+        password: 'password_errado'
+      });
+    },
+    /Credenciales incorrectas|Contraseña o DNI incorrecto/
+  );
 });
 
 test('Superadmin Authentication: Eric, Paola, Susana, Admin all succeed and receive superadmin role', async () => {

@@ -134,6 +134,7 @@ export class PostgresPersoneroRepository {
       const tablesToSync = ['rpersoneros', 'rcoordinadores', 'rcoordinadoresd', 'rcoordinadoresz'];
       for (const t of tablesToSync) {
         try {
+          await pool.query(`ALTER TABLE ${t} ADD COLUMN IF NOT EXISTS clave_acceso VARCHAR(100);`);
           await pool.query(`
             UPDATE ${t}
             SET credenciales = 'Confirmado', preguntas = 'Aprobado'
@@ -236,38 +237,37 @@ export class PostgresPersoneroRepository {
     const pool = await dbPool.getPool();
     const cleanUser = String(userIdentifier || '').trim();
     const cleanPass = String(secretPassOrDni || '').trim();
-    const cleanDni = /^\d{7,9}$/.test(cleanUser) ? cleanUser : (/^\d{7,9}$/.test(cleanPass) ? cleanPass : '');
+
+    if (!cleanUser || !cleanPass) {
+      return null;
+    }
 
     const tables = [
-      { name: 'rcoordinadoresd', isCoord: true, hasClave: true },
-      { name: 'rcoordinadoresz', isCoord: true, hasClave: false },
-      { name: 'rcoordinadores', isCoord: true, hasClave: false },
-      { name: 'rpersoneros', isCoord: false, hasClave: false }
+      { name: 'rcoordinadoresd', isCoord: true },
+      { name: 'rcoordinadoresz', isCoord: true },
+      { name: 'rcoordinadores', isCoord: true },
+      { name: 'rpersoneros', isCoord: false }
     ];
 
     for (const tbl of tables) {
       try {
-        let query;
-        let params;
-        if (tbl.hasClave) {
-          query = `
-            SELECT * FROM ${tbl.name}
-            WHERE dni = $1 
-               OR LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($2))
-               OR (LOWER(TRIM(clave_acceso)) = LOWER(TRIM($3)) AND (dni = $1 OR LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($2)) OR $1 = ''))
-            LIMIT 1
-          `;
-          params = [cleanDni || cleanUser, cleanUser, cleanPass];
-        } else {
-          query = `
-            SELECT * FROM ${tbl.name}
-            WHERE dni = $1 
-               OR LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($2))
-               OR (dni = $2)
-            LIMIT 1
-          `;
-          params = [cleanDni || cleanPass, cleanUser];
-        }
+        const query = `
+          SELECT * FROM ${tbl.name}
+          WHERE (
+            LOWER(TRIM(nombres_y_apellidos)) = LOWER(TRIM($1))
+            OR TRIM(dni) = TRIM($1)
+          )
+          AND (
+            TRIM(dni) = TRIM($2)
+            OR (
+              clave_acceso IS NOT NULL 
+              AND TRIM(clave_acceso) != '' 
+              AND LOWER(REPLACE(TRIM(clave_acceso), ' ', '')) = LOWER(REPLACE(TRIM($2), ' ', ''))
+            )
+          )
+          LIMIT 1
+        `;
+        const params = [cleanUser, cleanPass];
 
         const res = await pool.query(query, params);
         if (res.rows.length > 0) {

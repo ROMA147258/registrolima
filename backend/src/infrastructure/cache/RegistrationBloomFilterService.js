@@ -83,8 +83,15 @@ class RegistrationBloomFilterService {
           }
           if (r.celular) this.phoneFilter.add(r.celular);
           if (r.email) this.emailFilter.add(r.email);
-          if (r.nombre) this.nameFilter.add(r.nombre);
-          if (r.clave_acceso) this.usernameFilter.add(r.clave_acceso);
+          if (r.nombre) {
+            this.nameFilter.add(r.nombre);
+            this.nameFilter.add(r.nombre.toLowerCase().trim());
+            this.usernameFilter.add(r.nombre.toLowerCase().trim());
+          }
+          if (r.clave_acceso) {
+            this.usernameFilter.add(r.clave_acceso);
+            this.usernameFilter.add(r.clave_acceso.toLowerCase().trim());
+          }
         });
 
         this.isInitialized = true;
@@ -104,6 +111,7 @@ class RegistrationBloomFilterService {
    * @returns {boolean} true if it MIGHT exist, false if it DEFINITELY DOES NOT exist
    */
   mightContainDni(dni) {
+    if (!this.isInitialized) return true;
     if (!dni) return false;
     return this.dniFilter.has(dni);
   }
@@ -112,6 +120,7 @@ class RegistrationBloomFilterService {
    * Fast check if Phone definitely does not exist
    */
   mightContainPhone(phone) {
+    if (!this.isInitialized) return true;
     if (!phone) return false;
     return this.phoneFilter.has(phone);
   }
@@ -120,6 +129,7 @@ class RegistrationBloomFilterService {
    * Fast check if Email definitely does not exist
    */
   mightContainEmail(email) {
+    if (!this.isInitialized) return true;
     if (!email) return false;
     return this.emailFilter.has(email);
   }
@@ -128,17 +138,19 @@ class RegistrationBloomFilterService {
    * Fast check if Full Name definitely does not exist
    */
   mightContainName(name) {
+    if (!this.isInitialized) return true;
     if (!name) return false;
-    return this.nameFilter.has(name);
+    return this.nameFilter.has(name) || this.nameFilter.has(name.toLowerCase().trim());
   }
 
   /**
    * Fast check if username / credential identifier exists
    */
   mightContainUser(identifier) {
+    if (!this.isInitialized) return true;
     if (!identifier) return false;
     const clean = String(identifier).trim().toLowerCase();
-    return this.usernameFilter.has(clean) || this.dniFilter.has(clean);
+    return this.usernameFilter.has(clean) || this.dniFilter.has(clean) || this.nameFilter.has(identifier) || this.nameFilter.has(clean);
   }
 
   /**
