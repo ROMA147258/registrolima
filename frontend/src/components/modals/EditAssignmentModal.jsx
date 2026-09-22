@@ -605,11 +605,11 @@ function normalizePersoneroRole(rawRole) {
 }
 
 export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved }) {
-  const { isSuperAdmin, isCoordinadorDistrital, user: authUser } = useAuth();
+  const { isSuperAdmin, isCoordinadorDistrital, isCoordinadorZonal, isCoordinadorLocal, user: authUser } = useAuth();
   const isTrainingMode = mode === 'capacitacion';
   
-  // El Coordinador Distrital puede editar y eliminar registros dentro de su distrito
-  const isLimitedCoordinator = !isSuperAdmin && isCoordinadorDistrital;
+  // El Coordinador Distrital o Zonal puede editar y gestionar registros dentro de su ámbito
+  const isLimitedCoordinator = !isSuperAdmin && (isCoordinadorDistrital || isCoordinadorZonal);
 
   // Verificación estricta: Únicamente el usuario 'supera' (o 'admin') tiene facultad para editar progreso y credenciales
   const cleanUsername = String(authUser?.username || '').toLowerCase().trim();
@@ -763,8 +763,18 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
     setSaving(true);
     setErrorMsg(null);
 
-    const authorName = authUser?.fullName || authUser?.name || authUser?.['Nombres y Apellidos'] || (isSuperAdmin ? 'Superadmin' : 'Coordinador Distrital');
-    const authorRoleName = isSuperAdmin ? 'Superadministrador' : `Coordinador Distrital (${authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || formData.distritoAsignado})`;
+    const actualRoleTitle = isSuperAdmin
+      ? 'Superadministrador'
+      : (isCoordinadorDistrital
+        ? 'Coordinador Distrital'
+        : (isCoordinadorZonal
+          ? 'Coordinador Zonal'
+          : (isCoordinadorLocal ? 'Personero de Local' : 'Coordinador')));
+
+    const authorName = authUser?.fullName || authUser?.name || authUser?.['Nombres y Apellidos'] || actualRoleTitle;
+    const authorRoleName = isSuperAdmin
+      ? 'Superadministrador'
+      : `${actualRoleTitle} (${authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || formData.distritoAsignado})`;
 
     try {
       const payload = {
@@ -799,8 +809,18 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
   };
 
   const handleDelete = async () => {
-    const authorName = authUser?.fullName || authUser?.name || authUser?.['Nombres y Apellidos'] || (isSuperAdmin ? 'Superadmin' : 'Coordinador Distrital');
-    const authorRoleName = isSuperAdmin ? 'Superadministrador' : `Coordinador Distrital (${authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || formData.distritoAsignado})`;
+    const actualRoleTitle = isSuperAdmin
+      ? 'Superadministrador'
+      : (isCoordinadorDistrital
+        ? 'Coordinador Distrital'
+        : (isCoordinadorZonal
+          ? 'Coordinador Zonal'
+          : (isCoordinadorLocal ? 'Personero de Local' : 'Coordinador')));
+
+    const authorName = authUser?.fullName || authUser?.name || authUser?.['Nombres y Apellidos'] || actualRoleTitle;
+    const authorRoleName = isSuperAdmin
+      ? 'Superadministrador'
+      : `${actualRoleTitle} (${authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || formData.distritoAsignado})`;
     const roleLabel = formData.rolADesempenar || 'Personero';
 
     const confirmTitle = isSuperAdmin
