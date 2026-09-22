@@ -1,7 +1,7 @@
-// Catálogo oficial extraído de data.md
+// Catálogo oficial de locales electorales
 export const LOCALES_OFICIALES = [
   {
-    "id": 5433,
+    "id": 1,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12,7 +12,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5434,
+    "id": 2,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23,7 +23,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13500
   },
   {
-    "id": 5435,
+    "id": 3,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -34,7 +34,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5436,
+    "id": 4,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -45,7 +45,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5437,
+    "id": 5,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -56,7 +56,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5438,
+    "id": 6,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -67,7 +67,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5439,
+    "id": 7,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -78,7 +78,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5440,
+    "id": 8,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -89,7 +89,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5441,
+    "id": 9,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -100,7 +100,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5442,
+    "id": 10,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -111,7 +111,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5443,
+    "id": 11,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -122,7 +122,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5444,
+    "id": 12,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -133,7 +133,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5445,
+    "id": 13,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -144,7 +144,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 5446,
+    "id": 14,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -155,7 +155,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 5447,
+    "id": 15,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -166,7 +166,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5448,
+    "id": 16,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -177,7 +177,7 @@ export const LOCALES_OFICIALES = [
     "electores": 19500
   },
   {
-    "id": 5449,
+    "id": 17,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -188,7 +188,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5450,
+    "id": 18,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -199,7 +199,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5451,
+    "id": 19,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -210,7 +210,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 5452,
+    "id": 20,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -221,7 +221,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5453,
+    "id": 21,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -232,7 +232,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5454,
+    "id": 22,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -243,7 +243,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5455,
+    "id": 23,
     "ubigeo": "140104",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -254,7 +254,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5456,
+    "id": 24,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -265,7 +265,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5457,
+    "id": 25,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -276,7 +276,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5458,
+    "id": 26,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -287,7 +287,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5459,
+    "id": 27,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -298,7 +298,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5460,
+    "id": 28,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -309,7 +309,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5461,
+    "id": 29,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -320,7 +320,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5462,
+    "id": 30,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -331,7 +331,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5463,
+    "id": 31,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -342,7 +342,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5464,
+    "id": 32,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -353,7 +353,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5465,
+    "id": 33,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -364,7 +364,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5466,
+    "id": 34,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -375,7 +375,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5467,
+    "id": 35,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -386,7 +386,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5468,
+    "id": 36,
     "ubigeo": "140401",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -397,7 +397,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5469,
+    "id": 37,
     "ubigeo": "140402",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -408,7 +408,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5470,
+    "id": 38,
     "ubigeo": "140403",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -419,7 +419,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5471,
+    "id": 39,
     "ubigeo": "140403",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -430,7 +430,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5472,
+    "id": 40,
     "ubigeo": "140404",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -441,7 +441,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5473,
+    "id": 41,
     "ubigeo": "140405",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -452,7 +452,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5474,
+    "id": 42,
     "ubigeo": "140405",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -463,7 +463,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5475,
+    "id": 43,
     "ubigeo": "140405",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -474,7 +474,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5476,
+    "id": 44,
     "ubigeo": "140405",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -485,7 +485,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5477,
+    "id": 45,
     "ubigeo": "140405",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -496,7 +496,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5478,
+    "id": 46,
     "ubigeo": "140405",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -507,7 +507,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5479,
+    "id": 47,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -518,7 +518,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5480,
+    "id": 48,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -529,7 +529,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5481,
+    "id": 49,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -540,7 +540,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5482,
+    "id": 50,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -551,7 +551,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5483,
+    "id": 51,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -562,7 +562,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5484,
+    "id": 52,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -573,7 +573,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5485,
+    "id": 53,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -584,7 +584,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5486,
+    "id": 54,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -595,7 +595,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5487,
+    "id": 55,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -606,7 +606,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5488,
+    "id": 56,
     "ubigeo": "140406",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -617,7 +617,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5489,
+    "id": 57,
     "ubigeo": "140407",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -628,7 +628,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5490,
+    "id": 58,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -639,7 +639,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5491,
+    "id": 59,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -650,7 +650,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5492,
+    "id": 60,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -661,7 +661,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5493,
+    "id": 61,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -672,7 +672,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 5494,
+    "id": 62,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -683,7 +683,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5495,
+    "id": 63,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -694,7 +694,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5496,
+    "id": 64,
     "ubigeo": "140408",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -705,7 +705,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5497,
+    "id": 65,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -716,7 +716,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5498,
+    "id": 66,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -727,7 +727,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 5499,
+    "id": 67,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -738,7 +738,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5500,
+    "id": 68,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -749,7 +749,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5501,
+    "id": 69,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -760,7 +760,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5502,
+    "id": 70,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -771,7 +771,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5503,
+    "id": 71,
     "ubigeo": "140409",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -782,7 +782,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5504,
+    "id": 72,
     "ubigeo": "140410",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -793,7 +793,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5505,
+    "id": 73,
     "ubigeo": "140410",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -804,7 +804,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5506,
+    "id": 74,
     "ubigeo": "140411",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -815,7 +815,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5507,
+    "id": 75,
     "ubigeo": "140411",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -826,7 +826,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5508,
+    "id": 76,
     "ubigeo": "140411",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -837,7 +837,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5509,
+    "id": 77,
     "ubigeo": "140411",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -848,7 +848,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5510,
+    "id": 78,
     "ubigeo": "140411",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -859,7 +859,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5511,
+    "id": 79,
     "ubigeo": "140412",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -870,7 +870,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5512,
+    "id": 80,
     "ubigeo": "140412",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -881,7 +881,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5513,
+    "id": 81,
     "ubigeo": "140413",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -892,7 +892,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5514,
+    "id": 82,
     "ubigeo": "140413",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -903,7 +903,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5515,
+    "id": 83,
     "ubigeo": "140413",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -914,7 +914,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5516,
+    "id": 84,
     "ubigeo": "140413",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -925,7 +925,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5517,
+    "id": 85,
     "ubigeo": "140414",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -936,7 +936,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5518,
+    "id": 86,
     "ubigeo": "140415",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -947,7 +947,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5519,
+    "id": 87,
     "ubigeo": "140416",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -958,7 +958,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5520,
+    "id": 88,
     "ubigeo": "140416",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -969,7 +969,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5521,
+    "id": 89,
     "ubigeo": "140416",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -980,7 +980,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5522,
+    "id": 90,
     "ubigeo": "140416",
     "departamento": "LIMA",
     "provincia": "CAÑETE",
@@ -991,7 +991,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5523,
+    "id": 91,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1002,7 +1002,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5524,
+    "id": 92,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1013,7 +1013,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5525,
+    "id": 93,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1024,7 +1024,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5526,
+    "id": 94,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1035,7 +1035,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5527,
+    "id": 95,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1046,7 +1046,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5528,
+    "id": 96,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1057,7 +1057,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5529,
+    "id": 97,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1068,7 +1068,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5530,
+    "id": 98,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1079,7 +1079,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5531,
+    "id": 99,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1090,7 +1090,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10500
   },
   {
-    "id": 5532,
+    "id": 100,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1101,7 +1101,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5533,
+    "id": 101,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1112,7 +1112,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5534,
+    "id": 102,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1123,7 +1123,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5535,
+    "id": 103,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1134,7 +1134,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5536,
+    "id": 104,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1145,7 +1145,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5537,
+    "id": 105,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1156,7 +1156,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5538,
+    "id": 106,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1167,7 +1167,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 5539,
+    "id": 107,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1178,7 +1178,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5540,
+    "id": 108,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1189,7 +1189,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5541,
+    "id": 109,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1200,7 +1200,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5542,
+    "id": 110,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1211,7 +1211,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5543,
+    "id": 111,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1222,7 +1222,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 5544,
+    "id": 112,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1233,7 +1233,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5545,
+    "id": 113,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1244,7 +1244,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5546,
+    "id": 114,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1255,7 +1255,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5547,
+    "id": 115,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1266,7 +1266,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5548,
+    "id": 116,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1277,7 +1277,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5549,
+    "id": 117,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1288,7 +1288,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 5550,
+    "id": 118,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1299,7 +1299,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5551,
+    "id": 119,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1310,7 +1310,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5552,
+    "id": 120,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1321,7 +1321,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5553,
+    "id": 121,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1332,7 +1332,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5554,
+    "id": 122,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1343,7 +1343,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5555,
+    "id": 123,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1354,7 +1354,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5556,
+    "id": 124,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1365,7 +1365,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5557,
+    "id": 125,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1376,7 +1376,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10500
   },
   {
-    "id": 5558,
+    "id": 126,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1387,7 +1387,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5559,
+    "id": 127,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1398,7 +1398,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5560,
+    "id": 128,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1409,7 +1409,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5561,
+    "id": 129,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1420,7 +1420,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5562,
+    "id": 130,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1431,7 +1431,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5563,
+    "id": 131,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1442,7 +1442,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5564,
+    "id": 132,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1453,7 +1453,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5565,
+    "id": 133,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1464,7 +1464,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5566,
+    "id": 134,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1475,7 +1475,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5567,
+    "id": 135,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1486,7 +1486,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5568,
+    "id": 136,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1497,7 +1497,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5569,
+    "id": 137,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1508,7 +1508,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5570,
+    "id": 138,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1519,7 +1519,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5571,
+    "id": 139,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1530,7 +1530,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 5572,
+    "id": 140,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1541,7 +1541,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5573,
+    "id": 141,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1552,7 +1552,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5574,
+    "id": 142,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1563,7 +1563,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5575,
+    "id": 143,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1574,7 +1574,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5576,
+    "id": 144,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1585,7 +1585,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5577,
+    "id": 145,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1596,7 +1596,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5578,
+    "id": 146,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1607,7 +1607,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13200
   },
   {
-    "id": 5579,
+    "id": 147,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1618,7 +1618,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5580,
+    "id": 148,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1629,7 +1629,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5581,
+    "id": 149,
     "ubigeo": "140105",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1640,7 +1640,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 5582,
+    "id": 150,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1651,7 +1651,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5583,
+    "id": 151,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1662,7 +1662,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5584,
+    "id": 152,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1673,7 +1673,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5585,
+    "id": 153,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1684,7 +1684,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5586,
+    "id": 154,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1695,7 +1695,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5587,
+    "id": 155,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1706,7 +1706,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5588,
+    "id": 156,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1717,7 +1717,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5589,
+    "id": 157,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1728,7 +1728,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5590,
+    "id": 158,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1739,7 +1739,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5591,
+    "id": 159,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1750,7 +1750,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5592,
+    "id": 160,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1761,7 +1761,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5593,
+    "id": 161,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1772,7 +1772,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5594,
+    "id": 162,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1783,7 +1783,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5595,
+    "id": 163,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1794,7 +1794,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5596,
+    "id": 164,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1805,7 +1805,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5597,
+    "id": 165,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1816,7 +1816,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5598,
+    "id": 166,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1827,7 +1827,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5599,
+    "id": 167,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1838,7 +1838,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5600,
+    "id": 168,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1849,7 +1849,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5601,
+    "id": 169,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1860,7 +1860,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5602,
+    "id": 170,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1871,7 +1871,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5603,
+    "id": 171,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1882,7 +1882,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5604,
+    "id": 172,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1893,7 +1893,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5605,
+    "id": 173,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1904,7 +1904,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5606,
+    "id": 174,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1915,7 +1915,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 5607,
+    "id": 175,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1926,7 +1926,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 5608,
+    "id": 176,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1937,7 +1937,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 5609,
+    "id": 177,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1948,7 +1948,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5610,
+    "id": 178,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1959,7 +1959,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5611,
+    "id": 179,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1970,7 +1970,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5612,
+    "id": 180,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1981,7 +1981,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5613,
+    "id": 181,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -1992,7 +1992,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5614,
+    "id": 182,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2003,7 +2003,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5615,
+    "id": 183,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2014,7 +2014,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5616,
+    "id": 184,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2025,7 +2025,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5617,
+    "id": 185,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2036,7 +2036,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 5618,
+    "id": 186,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2047,7 +2047,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5619,
+    "id": 187,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2058,7 +2058,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 5620,
+    "id": 188,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2069,7 +2069,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 5621,
+    "id": 189,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2080,7 +2080,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5622,
+    "id": 190,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2091,7 +2091,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5623,
+    "id": 191,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2102,7 +2102,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5624,
+    "id": 192,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2113,7 +2113,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 5625,
+    "id": 193,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2124,7 +2124,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5626,
+    "id": 194,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2135,7 +2135,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5627,
+    "id": 195,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2146,7 +2146,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5628,
+    "id": 196,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2157,7 +2157,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5629,
+    "id": 197,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2168,7 +2168,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5630,
+    "id": 198,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2179,7 +2179,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5631,
+    "id": 199,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2190,7 +2190,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5632,
+    "id": 200,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2201,7 +2201,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5633,
+    "id": 201,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2212,7 +2212,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5634,
+    "id": 202,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2223,7 +2223,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5635,
+    "id": 203,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2234,7 +2234,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5636,
+    "id": 204,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2245,7 +2245,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5637,
+    "id": 205,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2256,7 +2256,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5638,
+    "id": 206,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2267,7 +2267,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5639,
+    "id": 207,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2278,7 +2278,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5640,
+    "id": 208,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2289,7 +2289,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5641,
+    "id": 209,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2300,7 +2300,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5642,
+    "id": 210,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2311,7 +2311,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5643,
+    "id": 211,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2322,7 +2322,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5644,
+    "id": 212,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2333,7 +2333,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5645,
+    "id": 213,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2344,7 +2344,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5646,
+    "id": 214,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2355,7 +2355,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5647,
+    "id": 215,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2366,7 +2366,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5648,
+    "id": 216,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2377,7 +2377,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 5649,
+    "id": 217,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2388,7 +2388,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5650,
+    "id": 218,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2399,7 +2399,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 5651,
+    "id": 219,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2410,7 +2410,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 5652,
+    "id": 220,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2421,7 +2421,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5653,
+    "id": 221,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2432,7 +2432,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5654,
+    "id": 222,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2443,7 +2443,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 5655,
+    "id": 223,
     "ubigeo": "140108",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2454,7 +2454,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5656,
+    "id": 224,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2465,7 +2465,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5657,
+    "id": 225,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2476,7 +2476,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 5658,
+    "id": 226,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2487,7 +2487,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5659,
+    "id": 227,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2498,7 +2498,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5660,
+    "id": 228,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2509,7 +2509,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5661,
+    "id": 229,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2520,7 +2520,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5662,
+    "id": 230,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2531,7 +2531,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5663,
+    "id": 231,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2542,7 +2542,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 5664,
+    "id": 232,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2553,7 +2553,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5665,
+    "id": 233,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2564,7 +2564,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5666,
+    "id": 234,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2575,7 +2575,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5667,
+    "id": 235,
     "ubigeo": "140125",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -2586,7 +2586,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5668,
+    "id": 236,
     "ubigeo": "140301",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2597,7 +2597,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5669,
+    "id": 237,
     "ubigeo": "140302",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2608,7 +2608,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5670,
+    "id": 238,
     "ubigeo": "140303",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2619,7 +2619,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5671,
+    "id": 239,
     "ubigeo": "140304",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2630,7 +2630,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5672,
+    "id": 240,
     "ubigeo": "140305",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2641,7 +2641,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5673,
+    "id": 241,
     "ubigeo": "140306",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2652,7 +2652,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5674,
+    "id": 242,
     "ubigeo": "140307",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2663,7 +2663,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5675,
+    "id": 243,
     "ubigeo": "140307",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2674,7 +2674,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5676,
+    "id": 244,
     "ubigeo": "140307",
     "departamento": "LIMA",
     "provincia": "CANTA",
@@ -2685,7 +2685,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5677,
+    "id": 245,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2696,7 +2696,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5678,
+    "id": 246,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2707,7 +2707,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5679,
+    "id": 247,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2718,7 +2718,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5680,
+    "id": 248,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2729,7 +2729,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5681,
+    "id": 249,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2740,7 +2740,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5682,
+    "id": 250,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2751,7 +2751,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5683,
+    "id": 251,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2762,7 +2762,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5684,
+    "id": 252,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2773,7 +2773,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5685,
+    "id": 253,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2784,7 +2784,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5686,
+    "id": 254,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2795,7 +2795,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 5687,
+    "id": 255,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2806,7 +2806,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5688,
+    "id": 256,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2817,7 +2817,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5689,
+    "id": 257,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2828,7 +2828,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5690,
+    "id": 258,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2839,7 +2839,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5691,
+    "id": 259,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2850,7 +2850,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5692,
+    "id": 260,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2861,7 +2861,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5693,
+    "id": 261,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2872,7 +2872,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5694,
+    "id": 262,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2883,7 +2883,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5695,
+    "id": 263,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2894,7 +2894,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5696,
+    "id": 264,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2905,7 +2905,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5697,
+    "id": 265,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2916,7 +2916,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 5698,
+    "id": 266,
     "ubigeo": "140801",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2927,7 +2927,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5699,
+    "id": 267,
     "ubigeo": "140802",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2938,7 +2938,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5700,
+    "id": 268,
     "ubigeo": "140803",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2949,7 +2949,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5701,
+    "id": 269,
     "ubigeo": "140804",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2960,7 +2960,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5702,
+    "id": 270,
     "ubigeo": "140804",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2971,7 +2971,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5703,
+    "id": 271,
     "ubigeo": "140804",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2982,7 +2982,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5704,
+    "id": 272,
     "ubigeo": "140804",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -2993,7 +2993,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5705,
+    "id": 273,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3004,7 +3004,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5706,
+    "id": 274,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3015,7 +3015,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5707,
+    "id": 275,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3026,7 +3026,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 5708,
+    "id": 276,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3037,7 +3037,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 5709,
+    "id": 277,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3048,7 +3048,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5710,
+    "id": 278,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3059,7 +3059,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5711,
+    "id": 279,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3070,7 +3070,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5712,
+    "id": 280,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3081,7 +3081,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5713,
+    "id": 281,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3092,7 +3092,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5714,
+    "id": 282,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3103,7 +3103,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5715,
+    "id": 283,
     "ubigeo": "140805",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3114,7 +3114,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5716,
+    "id": 284,
     "ubigeo": "140806",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3125,7 +3125,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5717,
+    "id": 285,
     "ubigeo": "140806",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3136,7 +3136,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5718,
+    "id": 286,
     "ubigeo": "140807",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3147,7 +3147,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5719,
+    "id": 287,
     "ubigeo": "140808",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3158,7 +3158,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5720,
+    "id": 288,
     "ubigeo": "140809",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3169,7 +3169,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5721,
+    "id": 289,
     "ubigeo": "140810",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3180,7 +3180,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5722,
+    "id": 290,
     "ubigeo": "140811",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3191,7 +3191,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5723,
+    "id": 291,
     "ubigeo": "140812",
     "departamento": "LIMA",
     "provincia": "HUARAL",
@@ -3202,7 +3202,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5724,
+    "id": 292,
     "ubigeo": "140601",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3213,7 +3213,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5725,
+    "id": 293,
     "ubigeo": "140601",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3224,7 +3224,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5726,
+    "id": 294,
     "ubigeo": "140602",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3235,7 +3235,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5727,
+    "id": 295,
     "ubigeo": "140603",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3246,7 +3246,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5728,
+    "id": 296,
     "ubigeo": "140604",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3257,7 +3257,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5729,
+    "id": 297,
     "ubigeo": "140605",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3268,7 +3268,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5730,
+    "id": 298,
     "ubigeo": "140606",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3279,7 +3279,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5731,
+    "id": 299,
     "ubigeo": "140607",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3290,7 +3290,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5732,
+    "id": 300,
     "ubigeo": "140608",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3301,7 +3301,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5733,
+    "id": 301,
     "ubigeo": "140609",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3312,7 +3312,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5734,
+    "id": 302,
     "ubigeo": "140610",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3323,7 +3323,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5735,
+    "id": 303,
     "ubigeo": "140611",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3334,7 +3334,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5736,
+    "id": 304,
     "ubigeo": "140612",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3345,7 +3345,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5737,
+    "id": 305,
     "ubigeo": "140612",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3356,7 +3356,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5738,
+    "id": 306,
     "ubigeo": "140612",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3367,7 +3367,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5739,
+    "id": 307,
     "ubigeo": "140613",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3378,7 +3378,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5740,
+    "id": 308,
     "ubigeo": "140613",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3389,7 +3389,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5741,
+    "id": 309,
     "ubigeo": "140614",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3400,7 +3400,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5742,
+    "id": 310,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3411,7 +3411,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5743,
+    "id": 311,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3422,7 +3422,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5744,
+    "id": 312,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3433,7 +3433,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5745,
+    "id": 313,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3444,7 +3444,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5746,
+    "id": 314,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3455,7 +3455,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5747,
+    "id": 315,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3466,7 +3466,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5748,
+    "id": 316,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3477,7 +3477,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5749,
+    "id": 317,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3488,7 +3488,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5750,
+    "id": 318,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3499,7 +3499,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5751,
+    "id": 319,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3510,7 +3510,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5752,
+    "id": 320,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3521,7 +3521,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5753,
+    "id": 321,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3532,7 +3532,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5754,
+    "id": 322,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3543,7 +3543,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5755,
+    "id": 323,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3554,7 +3554,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5756,
+    "id": 324,
     "ubigeo": "140615",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3565,7 +3565,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5757,
+    "id": 325,
     "ubigeo": "140616",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3576,7 +3576,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5758,
+    "id": 326,
     "ubigeo": "140617",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3587,7 +3587,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5759,
+    "id": 327,
     "ubigeo": "140617",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3598,7 +3598,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5760,
+    "id": 328,
     "ubigeo": "140618",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3609,7 +3609,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5761,
+    "id": 329,
     "ubigeo": "140619",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3620,7 +3620,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5762,
+    "id": 330,
     "ubigeo": "140619",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3631,7 +3631,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5763,
+    "id": 331,
     "ubigeo": "140620",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3642,7 +3642,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5764,
+    "id": 332,
     "ubigeo": "140620",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3653,7 +3653,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5765,
+    "id": 333,
     "ubigeo": "140621",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3664,7 +3664,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5766,
+    "id": 334,
     "ubigeo": "140622",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3675,7 +3675,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5767,
+    "id": 335,
     "ubigeo": "140623",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3686,7 +3686,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5768,
+    "id": 336,
     "ubigeo": "140624",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3697,7 +3697,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5769,
+    "id": 337,
     "ubigeo": "140625",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3708,7 +3708,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5770,
+    "id": 338,
     "ubigeo": "140625",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3719,7 +3719,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5771,
+    "id": 339,
     "ubigeo": "140625",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3730,7 +3730,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5772,
+    "id": 340,
     "ubigeo": "140625",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3741,7 +3741,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5773,
+    "id": 341,
     "ubigeo": "140626",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3752,7 +3752,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5774,
+    "id": 342,
     "ubigeo": "140627",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3763,7 +3763,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5775,
+    "id": 343,
     "ubigeo": "140628",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3774,7 +3774,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5776,
+    "id": 344,
     "ubigeo": "140628",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3785,7 +3785,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5777,
+    "id": 345,
     "ubigeo": "140628",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3796,7 +3796,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5778,
+    "id": 346,
     "ubigeo": "140628",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3807,7 +3807,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5779,
+    "id": 347,
     "ubigeo": "140628",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3818,7 +3818,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5780,
+    "id": 348,
     "ubigeo": "140629",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3829,7 +3829,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5781,
+    "id": 349,
     "ubigeo": "140629",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3840,7 +3840,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5782,
+    "id": 350,
     "ubigeo": "140630",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3851,7 +3851,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5783,
+    "id": 351,
     "ubigeo": "140631",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3862,7 +3862,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5784,
+    "id": 352,
     "ubigeo": "140632",
     "departamento": "LIMA",
     "provincia": "HUAROCHIRI",
@@ -3873,7 +3873,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5785,
+    "id": 353,
     "ubigeo": "140201",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3884,7 +3884,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5786,
+    "id": 354,
     "ubigeo": "140201",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3895,7 +3895,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5787,
+    "id": 355,
     "ubigeo": "140205",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3906,7 +3906,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5788,
+    "id": 356,
     "ubigeo": "140205",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3917,7 +3917,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5789,
+    "id": 357,
     "ubigeo": "140206",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3928,7 +3928,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5790,
+    "id": 358,
     "ubigeo": "140206",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3939,7 +3939,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5791,
+    "id": 359,
     "ubigeo": "140207",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3950,7 +3950,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5792,
+    "id": 360,
     "ubigeo": "140207",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3961,7 +3961,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5793,
+    "id": 361,
     "ubigeo": "140208",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3972,7 +3972,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5794,
+    "id": 362,
     "ubigeo": "140208",
     "departamento": "LIMA",
     "provincia": "CAJATAMBO",
@@ -3983,7 +3983,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5795,
+    "id": 363,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -3994,7 +3994,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12000
   },
   {
-    "id": 5796,
+    "id": 364,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4005,7 +4005,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5797,
+    "id": 365,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4016,7 +4016,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5798,
+    "id": 366,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4027,7 +4027,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5799,
+    "id": 367,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4038,7 +4038,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13800
   },
   {
-    "id": 5800,
+    "id": 368,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4049,7 +4049,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5801,
+    "id": 369,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4060,7 +4060,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5802,
+    "id": 370,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4071,7 +4071,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5803,
+    "id": 371,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4082,7 +4082,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5804,
+    "id": 372,
     "ubigeo": "140501",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4093,7 +4093,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5805,
+    "id": 373,
     "ubigeo": "140502",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4104,7 +4104,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5806,
+    "id": 374,
     "ubigeo": "140502",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4115,7 +4115,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5807,
+    "id": 375,
     "ubigeo": "140504",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4126,7 +4126,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5808,
+    "id": 376,
     "ubigeo": "140504",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4137,7 +4137,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5809,
+    "id": 377,
     "ubigeo": "140504",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4148,7 +4148,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5810,
+    "id": 378,
     "ubigeo": "140505",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4159,7 +4159,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5811,
+    "id": 379,
     "ubigeo": "140506",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4170,7 +4170,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5812,
+    "id": 380,
     "ubigeo": "140506",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4181,7 +4181,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5813,
+    "id": 381,
     "ubigeo": "140506",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4192,7 +4192,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5814,
+    "id": 382,
     "ubigeo": "140506",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4203,7 +4203,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5815,
+    "id": 383,
     "ubigeo": "140506",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4214,7 +4214,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5816,
+    "id": 384,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4225,7 +4225,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5817,
+    "id": 385,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4236,7 +4236,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5818,
+    "id": 386,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4247,7 +4247,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5819,
+    "id": 387,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4258,7 +4258,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5820,
+    "id": 388,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4269,7 +4269,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5821,
+    "id": 389,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4280,7 +4280,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5822,
+    "id": 390,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4291,7 +4291,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5823,
+    "id": 391,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4302,7 +4302,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5824,
+    "id": 392,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4313,7 +4313,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5825,
+    "id": 393,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4324,7 +4324,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5826,
+    "id": 394,
     "ubigeo": "140507",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4335,7 +4335,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5827,
+    "id": 395,
     "ubigeo": "140508",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4346,7 +4346,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5828,
+    "id": 396,
     "ubigeo": "140508",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4357,7 +4357,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5829,
+    "id": 397,
     "ubigeo": "140509",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4368,7 +4368,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5830,
+    "id": 398,
     "ubigeo": "140509",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4379,7 +4379,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5831,
+    "id": 399,
     "ubigeo": "140511",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4390,7 +4390,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5832,
+    "id": 400,
     "ubigeo": "140511",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4401,7 +4401,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5833,
+    "id": 401,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4412,7 +4412,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 5834,
+    "id": 402,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4423,7 +4423,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5835,
+    "id": 403,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4434,7 +4434,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5836,
+    "id": 404,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4445,7 +4445,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5837,
+    "id": 405,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4456,7 +4456,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5838,
+    "id": 406,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4467,7 +4467,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5839,
+    "id": 407,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4478,7 +4478,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5840,
+    "id": 408,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4489,7 +4489,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5841,
+    "id": 409,
     "ubigeo": "140512",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4500,7 +4500,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5842,
+    "id": 410,
     "ubigeo": "140513",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4511,7 +4511,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5843,
+    "id": 411,
     "ubigeo": "140513",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4522,7 +4522,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5844,
+    "id": 412,
     "ubigeo": "140513",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4533,7 +4533,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5845,
+    "id": 413,
     "ubigeo": "140513",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4544,7 +4544,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5846,
+    "id": 414,
     "ubigeo": "140513",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4555,7 +4555,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5847,
+    "id": 415,
     "ubigeo": "140516",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4566,7 +4566,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5848,
+    "id": 416,
     "ubigeo": "140516",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4577,7 +4577,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5849,
+    "id": 417,
     "ubigeo": "140516",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4588,7 +4588,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5850,
+    "id": 418,
     "ubigeo": "140516",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4599,7 +4599,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5851,
+    "id": 419,
     "ubigeo": "140516",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4610,7 +4610,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5852,
+    "id": 420,
     "ubigeo": "140516",
     "departamento": "LIMA",
     "provincia": "HUAURA",
@@ -4621,7 +4621,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5853,
+    "id": 421,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4632,7 +4632,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5854,
+    "id": 422,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4643,7 +4643,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5855,
+    "id": 423,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4654,7 +4654,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5856,
+    "id": 424,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4665,7 +4665,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 5857,
+    "id": 425,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4676,7 +4676,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5858,
+    "id": 426,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4687,7 +4687,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5859,
+    "id": 427,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4698,7 +4698,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5860,
+    "id": 428,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4709,7 +4709,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5861,
+    "id": 429,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4720,7 +4720,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5862,
+    "id": 430,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4731,7 +4731,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5863,
+    "id": 431,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4742,7 +4742,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5864,
+    "id": 432,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4753,7 +4753,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 5865,
+    "id": 433,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4764,7 +4764,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5866,
+    "id": 434,
     "ubigeo": "140901",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4775,7 +4775,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5867,
+    "id": 435,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4786,7 +4786,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5868,
+    "id": 436,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4797,7 +4797,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5869,
+    "id": 437,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4808,7 +4808,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5870,
+    "id": 438,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4819,7 +4819,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5871,
+    "id": 439,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4830,7 +4830,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5872,
+    "id": 440,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4841,7 +4841,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5873,
+    "id": 441,
     "ubigeo": "140902",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4852,7 +4852,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5874,
+    "id": 442,
     "ubigeo": "140903",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4863,7 +4863,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5875,
+    "id": 443,
     "ubigeo": "140903",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4874,7 +4874,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5876,
+    "id": 444,
     "ubigeo": "140903",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4885,7 +4885,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5877,
+    "id": 445,
     "ubigeo": "140903",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4896,7 +4896,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5878,
+    "id": 446,
     "ubigeo": "140903",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4907,7 +4907,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5879,
+    "id": 447,
     "ubigeo": "140903",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4918,7 +4918,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5880,
+    "id": 448,
     "ubigeo": "140904",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4929,7 +4929,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5881,
+    "id": 449,
     "ubigeo": "140904",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4940,7 +4940,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5882,
+    "id": 450,
     "ubigeo": "140904",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4951,7 +4951,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5883,
+    "id": 451,
     "ubigeo": "140904",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4962,7 +4962,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 5884,
+    "id": 452,
     "ubigeo": "140904",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4973,7 +4973,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5885,
+    "id": 453,
     "ubigeo": "140905",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4984,7 +4984,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5886,
+    "id": 454,
     "ubigeo": "140905",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -4995,7 +4995,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5887,
+    "id": 455,
     "ubigeo": "140905",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -5006,7 +5006,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5888,
+    "id": 456,
     "ubigeo": "140905",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -5017,7 +5017,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5889,
+    "id": 457,
     "ubigeo": "140905",
     "departamento": "LIMA",
     "provincia": "BARRANCA",
@@ -5028,7 +5028,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5890,
+    "id": 458,
     "ubigeo": "141001",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5039,7 +5039,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5891,
+    "id": 459,
     "ubigeo": "141001",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5050,7 +5050,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5892,
+    "id": 460,
     "ubigeo": "141001",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5061,7 +5061,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5893,
+    "id": 461,
     "ubigeo": "141002",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5072,7 +5072,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5894,
+    "id": 462,
     "ubigeo": "141002",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5083,7 +5083,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5895,
+    "id": 463,
     "ubigeo": "141003",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5094,7 +5094,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5896,
+    "id": 464,
     "ubigeo": "141003",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5105,7 +5105,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5897,
+    "id": 465,
     "ubigeo": "141004",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5116,7 +5116,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5898,
+    "id": 466,
     "ubigeo": "141005",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5127,7 +5127,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5899,
+    "id": 467,
     "ubigeo": "141005",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5138,7 +5138,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5900,
+    "id": 468,
     "ubigeo": "141005",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5149,7 +5149,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5901,
+    "id": 469,
     "ubigeo": "141005",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5160,7 +5160,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5902,
+    "id": 470,
     "ubigeo": "141005",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5171,7 +5171,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5903,
+    "id": 471,
     "ubigeo": "141006",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5182,7 +5182,7 @@ export const LOCALES_OFICIALES = [
     "electores": 300
   },
   {
-    "id": 5904,
+    "id": 472,
     "ubigeo": "141006",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5193,7 +5193,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 5905,
+    "id": 473,
     "ubigeo": "141006",
     "departamento": "LIMA",
     "provincia": "OYON",
@@ -5204,7 +5204,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 5906,
+    "id": 474,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5215,7 +5215,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5907,
+    "id": 475,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5226,7 +5226,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5908,
+    "id": 476,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5237,7 +5237,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 5909,
+    "id": 477,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5248,7 +5248,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5910,
+    "id": 478,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5259,7 +5259,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5911,
+    "id": 479,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5270,7 +5270,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5912,
+    "id": 480,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5281,7 +5281,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5913,
+    "id": 481,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5292,7 +5292,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5914,
+    "id": 482,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5303,7 +5303,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5915,
+    "id": 483,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5314,7 +5314,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5916,
+    "id": 484,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5325,7 +5325,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 5917,
+    "id": 485,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5336,7 +5336,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 5918,
+    "id": 486,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5347,7 +5347,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5919,
+    "id": 487,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5358,7 +5358,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 5920,
+    "id": 488,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5369,7 +5369,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5921,
+    "id": 489,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5380,7 +5380,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5922,
+    "id": 490,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5391,7 +5391,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5923,
+    "id": 491,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5402,7 +5402,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5924,
+    "id": 492,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5413,7 +5413,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 5925,
+    "id": 493,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5424,7 +5424,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 5926,
+    "id": 494,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5435,7 +5435,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 5927,
+    "id": 495,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5446,7 +5446,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5928,
+    "id": 496,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5457,7 +5457,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5929,
+    "id": 497,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5468,7 +5468,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5930,
+    "id": 498,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5479,7 +5479,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5931,
+    "id": 499,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5490,7 +5490,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 5932,
+    "id": 500,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5501,7 +5501,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5933,
+    "id": 501,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5512,7 +5512,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5934,
+    "id": 502,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5523,7 +5523,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5935,
+    "id": 503,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5534,7 +5534,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5936,
+    "id": 504,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5545,7 +5545,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5937,
+    "id": 505,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5556,7 +5556,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5938,
+    "id": 506,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5567,7 +5567,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5939,
+    "id": 507,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5578,7 +5578,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5940,
+    "id": 508,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5589,7 +5589,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5941,
+    "id": 509,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5600,7 +5600,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5942,
+    "id": 510,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5611,7 +5611,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5943,
+    "id": 511,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5622,7 +5622,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5944,
+    "id": 512,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5633,7 +5633,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5945,
+    "id": 513,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5644,7 +5644,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5946,
+    "id": 514,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5655,7 +5655,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5947,
+    "id": 515,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5666,7 +5666,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5948,
+    "id": 516,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5677,7 +5677,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5949,
+    "id": 517,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5688,7 +5688,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5950,
+    "id": 518,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5699,7 +5699,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5951,
+    "id": 519,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5710,7 +5710,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5952,
+    "id": 520,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5721,7 +5721,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5953,
+    "id": 521,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5732,7 +5732,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5954,
+    "id": 522,
     "ubigeo": "140134",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5743,7 +5743,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5955,
+    "id": 523,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5754,7 +5754,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5956,
+    "id": 524,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5765,7 +5765,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5957,
+    "id": 525,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5776,7 +5776,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5958,
+    "id": 526,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5787,7 +5787,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5959,
+    "id": 527,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5798,7 +5798,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 5960,
+    "id": 528,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5809,7 +5809,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5961,
+    "id": 529,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5820,7 +5820,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 5962,
+    "id": 530,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5831,7 +5831,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5963,
+    "id": 531,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5842,7 +5842,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12300
   },
   {
-    "id": 5964,
+    "id": 532,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5853,7 +5853,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5965,
+    "id": 533,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5864,7 +5864,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 5966,
+    "id": 534,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5875,7 +5875,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 5967,
+    "id": 535,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5886,7 +5886,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 5968,
+    "id": 536,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5897,7 +5897,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 5969,
+    "id": 537,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5908,7 +5908,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5970,
+    "id": 538,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5919,7 +5919,7 @@ export const LOCALES_OFICIALES = [
     "electores": 18600
   },
   {
-    "id": 5971,
+    "id": 539,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5930,7 +5930,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5972,
+    "id": 540,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5941,7 +5941,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5973,
+    "id": 541,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5952,7 +5952,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 5974,
+    "id": 542,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5963,7 +5963,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5975,
+    "id": 543,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5974,7 +5974,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5976,
+    "id": 544,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5985,7 +5985,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5977,
+    "id": 545,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -5996,7 +5996,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 5978,
+    "id": 546,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6007,7 +6007,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5979,
+    "id": 547,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6018,7 +6018,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5980,
+    "id": 548,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6029,7 +6029,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5981,
+    "id": 549,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6040,7 +6040,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 5982,
+    "id": 550,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6051,7 +6051,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 5983,
+    "id": 551,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6062,7 +6062,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5984,
+    "id": 552,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6073,7 +6073,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5985,
+    "id": 553,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6084,7 +6084,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 5986,
+    "id": 554,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6095,7 +6095,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 5987,
+    "id": 555,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6106,7 +6106,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 5988,
+    "id": 556,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6117,7 +6117,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 5989,
+    "id": 557,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6128,7 +6128,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5990,
+    "id": 558,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6139,7 +6139,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5991,
+    "id": 559,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6150,7 +6150,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 5992,
+    "id": 560,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6161,7 +6161,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 5993,
+    "id": 561,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6172,7 +6172,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 5994,
+    "id": 562,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6183,7 +6183,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5995,
+    "id": 563,
     "ubigeo": "140110",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6194,7 +6194,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 5996,
+    "id": 564,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6205,7 +6205,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 5997,
+    "id": 565,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6216,7 +6216,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 5998,
+    "id": 566,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6227,7 +6227,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 5999,
+    "id": 567,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6238,7 +6238,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6000,
+    "id": 568,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6249,7 +6249,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6001,
+    "id": 569,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6260,7 +6260,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6002,
+    "id": 570,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6271,7 +6271,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6003,
+    "id": 571,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6282,7 +6282,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6004,
+    "id": 572,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6293,7 +6293,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6005,
+    "id": 573,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6304,7 +6304,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6006,
+    "id": 574,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6315,7 +6315,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6007,
+    "id": 575,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6326,7 +6326,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6008,
+    "id": 576,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6337,7 +6337,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6009,
+    "id": 577,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6348,7 +6348,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6010,
+    "id": 578,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6359,7 +6359,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6011,
+    "id": 579,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6370,7 +6370,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6012,
+    "id": 580,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6381,7 +6381,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13500
   },
   {
-    "id": 6013,
+    "id": 581,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6392,7 +6392,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12600
   },
   {
-    "id": 6014,
+    "id": 582,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6403,7 +6403,7 @@ export const LOCALES_OFICIALES = [
     "electores": 14100
   },
   {
-    "id": 6015,
+    "id": 583,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6414,7 +6414,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6016,
+    "id": 584,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6425,7 +6425,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6017,
+    "id": 585,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6436,7 +6436,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6018,
+    "id": 586,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6447,7 +6447,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6019,
+    "id": 587,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6458,7 +6458,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6020,
+    "id": 588,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6469,7 +6469,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6021,
+    "id": 589,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6480,7 +6480,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6022,
+    "id": 590,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6491,7 +6491,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6023,
+    "id": 591,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6502,7 +6502,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6024,
+    "id": 592,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6513,7 +6513,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6025,
+    "id": 593,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6524,7 +6524,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6026,
+    "id": 594,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6535,7 +6535,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6027,
+    "id": 595,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6546,7 +6546,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6028,
+    "id": 596,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6557,7 +6557,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6029,
+    "id": 597,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6568,7 +6568,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6030,
+    "id": 598,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6579,7 +6579,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6031,
+    "id": 599,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6590,7 +6590,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6032,
+    "id": 600,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6601,7 +6601,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6033,
+    "id": 601,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6612,7 +6612,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6034,
+    "id": 602,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6623,7 +6623,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6035,
+    "id": 603,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6634,7 +6634,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6036,
+    "id": 604,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6645,7 +6645,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6037,
+    "id": 605,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6656,7 +6656,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6038,
+    "id": 606,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6667,7 +6667,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6039,
+    "id": 607,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6678,7 +6678,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6040,
+    "id": 608,
     "ubigeo": "140109",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6689,7 +6689,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6041,
+    "id": 609,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6700,7 +6700,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6042,
+    "id": 610,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6711,7 +6711,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6043,
+    "id": 611,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6722,7 +6722,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6044,
+    "id": 612,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6733,7 +6733,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6045,
+    "id": 613,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6744,7 +6744,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6046,
+    "id": 614,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6755,7 +6755,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6047,
+    "id": 615,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6766,7 +6766,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6048,
+    "id": 616,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6777,7 +6777,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6049,
+    "id": 617,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6788,7 +6788,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6050,
+    "id": 618,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6799,7 +6799,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6051,
+    "id": 619,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6810,7 +6810,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6052,
+    "id": 620,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6821,7 +6821,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6053,
+    "id": 621,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6832,7 +6832,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6054,
+    "id": 622,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6843,7 +6843,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6055,
+    "id": 623,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6854,7 +6854,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6056,
+    "id": 624,
     "ubigeo": "140138",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6865,7 +6865,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6057,
+    "id": 625,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6876,7 +6876,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6058,
+    "id": 626,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6887,7 +6887,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6059,
+    "id": 627,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6898,7 +6898,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6060,
+    "id": 628,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6909,7 +6909,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6061,
+    "id": 629,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6920,7 +6920,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6062,
+    "id": 630,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6931,7 +6931,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6063,
+    "id": 631,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6942,7 +6942,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6064,
+    "id": 632,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6953,7 +6953,7 @@ export const LOCALES_OFICIALES = [
     "electores": 17100
   },
   {
-    "id": 6065,
+    "id": 633,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6964,7 +6964,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6066,
+    "id": 634,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6975,7 +6975,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6067,
+    "id": 635,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6986,7 +6986,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6068,
+    "id": 636,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -6997,7 +6997,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6069,
+    "id": 637,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7008,7 +7008,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6070,
+    "id": 638,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7019,7 +7019,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6071,
+    "id": 639,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7030,7 +7030,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6072,
+    "id": 640,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7041,7 +7041,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6073,
+    "id": 641,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7052,7 +7052,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6074,
+    "id": 642,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7063,7 +7063,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6075,
+    "id": 643,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7074,7 +7074,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6076,
+    "id": 644,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7085,7 +7085,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6077,
+    "id": 645,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7096,7 +7096,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6078,
+    "id": 646,
     "ubigeo": "140133",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7107,7 +7107,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6079,
+    "id": 647,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7118,7 +7118,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6080,
+    "id": 648,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7129,7 +7129,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6081,
+    "id": 649,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7140,7 +7140,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6082,
+    "id": 650,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7151,7 +7151,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6083,
+    "id": 651,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7162,7 +7162,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6084,
+    "id": 652,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7173,7 +7173,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6085,
+    "id": 653,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7184,7 +7184,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6086,
+    "id": 654,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7195,7 +7195,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6087,
+    "id": 655,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7206,7 +7206,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6088,
+    "id": 656,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7217,7 +7217,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6089,
+    "id": 657,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7228,7 +7228,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6090,
+    "id": 658,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7239,7 +7239,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6091,
+    "id": 659,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7250,7 +7250,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6092,
+    "id": 660,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7261,7 +7261,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6093,
+    "id": 661,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7272,7 +7272,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6094,
+    "id": 662,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7283,7 +7283,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6095,
+    "id": 663,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7294,7 +7294,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6096,
+    "id": 664,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7305,7 +7305,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6097,
+    "id": 665,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7316,7 +7316,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6098,
+    "id": 666,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7327,7 +7327,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6099,
+    "id": 667,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7338,7 +7338,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6100,
+    "id": 668,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7349,7 +7349,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6101,
+    "id": 669,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7360,7 +7360,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6102,
+    "id": 670,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7371,7 +7371,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6103,
+    "id": 671,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7382,7 +7382,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6104,
+    "id": 672,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7393,7 +7393,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6105,
+    "id": 673,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7404,7 +7404,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6106,
+    "id": 674,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7415,7 +7415,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6107,
+    "id": 675,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7426,7 +7426,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6108,
+    "id": 676,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7437,7 +7437,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6109,
+    "id": 677,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7448,7 +7448,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6110,
+    "id": 678,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7459,7 +7459,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13500
   },
   {
-    "id": 6111,
+    "id": 679,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7470,7 +7470,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6112,
+    "id": 680,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7481,7 +7481,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6113,
+    "id": 681,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7492,7 +7492,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6114,
+    "id": 682,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7503,7 +7503,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6115,
+    "id": 683,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7514,7 +7514,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6116,
+    "id": 684,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7525,7 +7525,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 6117,
+    "id": 685,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7536,7 +7536,7 @@ export const LOCALES_OFICIALES = [
     "electores": 25500
   },
   {
-    "id": 6118,
+    "id": 686,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7547,7 +7547,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6119,
+    "id": 687,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7558,7 +7558,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6120,
+    "id": 688,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7569,7 +7569,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6121,
+    "id": 689,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7580,7 +7580,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6122,
+    "id": 690,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7591,7 +7591,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6123,
+    "id": 691,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7602,7 +7602,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6124,
+    "id": 692,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7613,7 +7613,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6125,
+    "id": 693,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7624,7 +7624,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6126,
+    "id": 694,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7635,7 +7635,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6127,
+    "id": 695,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7646,7 +7646,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6128,
+    "id": 696,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7657,7 +7657,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6129,
+    "id": 697,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7668,7 +7668,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6130,
+    "id": 698,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7679,7 +7679,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6131,
+    "id": 699,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7690,7 +7690,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6132,
+    "id": 700,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7701,7 +7701,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6133,
+    "id": 701,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7712,7 +7712,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13200
   },
   {
-    "id": 6134,
+    "id": 702,
     "ubigeo": "140101",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7723,7 +7723,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6135,
+    "id": 703,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7734,7 +7734,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6136,
+    "id": 704,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7745,7 +7745,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6137,
+    "id": 705,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7756,7 +7756,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6138,
+    "id": 706,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7767,7 +7767,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6139,
+    "id": 707,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7778,7 +7778,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6140,
+    "id": 708,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7789,7 +7789,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6141,
+    "id": 709,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7800,7 +7800,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6142,
+    "id": 710,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7811,7 +7811,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6143,
+    "id": 711,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7822,7 +7822,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6144,
+    "id": 712,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7833,7 +7833,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6145,
+    "id": 713,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7844,7 +7844,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6146,
+    "id": 714,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7855,7 +7855,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6147,
+    "id": 715,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7866,7 +7866,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6148,
+    "id": 716,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7877,7 +7877,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6149,
+    "id": 717,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7888,7 +7888,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6150,
+    "id": 718,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7899,7 +7899,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6151,
+    "id": 719,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7910,7 +7910,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6152,
+    "id": 720,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7921,7 +7921,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6153,
+    "id": 721,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7932,7 +7932,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6154,
+    "id": 722,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7943,7 +7943,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6155,
+    "id": 723,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7954,7 +7954,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6156,
+    "id": 724,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7965,7 +7965,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6157,
+    "id": 725,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7976,7 +7976,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6158,
+    "id": 726,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7987,7 +7987,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6159,
+    "id": 727,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -7998,7 +7998,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6160,
+    "id": 728,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8009,7 +8009,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6161,
+    "id": 729,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8020,7 +8020,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6162,
+    "id": 730,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8031,7 +8031,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6163,
+    "id": 731,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8042,7 +8042,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6164,
+    "id": 732,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8053,7 +8053,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6165,
+    "id": 733,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8064,7 +8064,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6166,
+    "id": 734,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8075,7 +8075,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6167,
+    "id": 735,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8086,7 +8086,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6168,
+    "id": 736,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8097,7 +8097,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6169,
+    "id": 737,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8108,7 +8108,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6170,
+    "id": 738,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8119,7 +8119,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6171,
+    "id": 739,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8130,7 +8130,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6172,
+    "id": 740,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8141,7 +8141,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6173,
+    "id": 741,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8152,7 +8152,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6174,
+    "id": 742,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8163,7 +8163,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6175,
+    "id": 743,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8174,7 +8174,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6176,
+    "id": 744,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8185,7 +8185,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6177,
+    "id": 745,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8196,7 +8196,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6178,
+    "id": 746,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8207,7 +8207,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6179,
+    "id": 747,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8218,7 +8218,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6180,
+    "id": 748,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8229,7 +8229,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6181,
+    "id": 749,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8240,7 +8240,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6182,
+    "id": 750,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8251,7 +8251,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6183,
+    "id": 751,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8262,7 +8262,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6184,
+    "id": 752,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8273,7 +8273,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6185,
+    "id": 753,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8284,7 +8284,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6186,
+    "id": 754,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8295,7 +8295,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6187,
+    "id": 755,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8306,7 +8306,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6188,
+    "id": 756,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8317,7 +8317,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6189,
+    "id": 757,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8328,7 +8328,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6190,
+    "id": 758,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8339,7 +8339,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6191,
+    "id": 759,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8350,7 +8350,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12000
   },
   {
-    "id": 6192,
+    "id": 760,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8361,7 +8361,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6193,
+    "id": 761,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8372,7 +8372,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6194,
+    "id": 762,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8383,7 +8383,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6195,
+    "id": 763,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8394,7 +8394,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6196,
+    "id": 764,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8405,7 +8405,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6197,
+    "id": 765,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8416,7 +8416,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6198,
+    "id": 766,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8427,7 +8427,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6199,
+    "id": 767,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8438,7 +8438,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6200,
+    "id": 768,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8449,7 +8449,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6201,
+    "id": 769,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8460,7 +8460,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6202,
+    "id": 770,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8471,7 +8471,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6203,
+    "id": 771,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8482,7 +8482,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6204,
+    "id": 772,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8493,7 +8493,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6205,
+    "id": 773,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8504,7 +8504,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6206,
+    "id": 774,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8515,7 +8515,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6207,
+    "id": 775,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8526,7 +8526,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6208,
+    "id": 776,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8537,7 +8537,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6209,
+    "id": 777,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8548,7 +8548,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6210,
+    "id": 778,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8559,7 +8559,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6211,
+    "id": 779,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8570,7 +8570,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6212,
+    "id": 780,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8581,7 +8581,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6213,
+    "id": 781,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8592,7 +8592,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6214,
+    "id": 782,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8603,7 +8603,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6215,
+    "id": 783,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8614,7 +8614,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6216,
+    "id": 784,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8625,7 +8625,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6217,
+    "id": 785,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8636,7 +8636,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6218,
+    "id": 786,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8647,7 +8647,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6219,
+    "id": 787,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8658,7 +8658,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6220,
+    "id": 788,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8669,7 +8669,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6221,
+    "id": 789,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8680,7 +8680,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6222,
+    "id": 790,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8691,7 +8691,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6223,
+    "id": 791,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8702,7 +8702,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6224,
+    "id": 792,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8713,7 +8713,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6225,
+    "id": 793,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8724,7 +8724,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6226,
+    "id": 794,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8735,7 +8735,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6227,
+    "id": 795,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8746,7 +8746,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6228,
+    "id": 796,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8757,7 +8757,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6229,
+    "id": 797,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8768,7 +8768,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6230,
+    "id": 798,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8779,7 +8779,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6231,
+    "id": 799,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8790,7 +8790,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6232,
+    "id": 800,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8801,7 +8801,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6233,
+    "id": 801,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8812,7 +8812,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6234,
+    "id": 802,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8823,7 +8823,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6235,
+    "id": 803,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8834,7 +8834,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6236,
+    "id": 804,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8845,7 +8845,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6237,
+    "id": 805,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8856,7 +8856,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6238,
+    "id": 806,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8867,7 +8867,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6239,
+    "id": 807,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8878,7 +8878,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6240,
+    "id": 808,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8889,7 +8889,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6241,
+    "id": 809,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8900,7 +8900,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6242,
+    "id": 810,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8911,7 +8911,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6243,
+    "id": 811,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8922,7 +8922,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6244,
+    "id": 812,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8933,7 +8933,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6245,
+    "id": 813,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8944,7 +8944,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 6246,
+    "id": 814,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8955,7 +8955,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6247,
+    "id": 815,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8966,7 +8966,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6248,
+    "id": 816,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8977,7 +8977,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6249,
+    "id": 817,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8988,7 +8988,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6250,
+    "id": 818,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -8999,7 +8999,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6251,
+    "id": 819,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9010,7 +9010,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6252,
+    "id": 820,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9021,7 +9021,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6253,
+    "id": 821,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9032,7 +9032,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6254,
+    "id": 822,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9043,7 +9043,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6255,
+    "id": 823,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9054,7 +9054,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6256,
+    "id": 824,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9065,7 +9065,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6257,
+    "id": 825,
     "ubigeo": "140103",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9076,7 +9076,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6258,
+    "id": 826,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9087,7 +9087,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6259,
+    "id": 827,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9098,7 +9098,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6260,
+    "id": 828,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9109,7 +9109,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6261,
+    "id": 829,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9120,7 +9120,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6262,
+    "id": 830,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9131,7 +9131,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6263,
+    "id": 831,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9142,7 +9142,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6264,
+    "id": 832,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9153,7 +9153,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6265,
+    "id": 833,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9164,7 +9164,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6266,
+    "id": 834,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9175,7 +9175,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6267,
+    "id": 835,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9186,7 +9186,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6268,
+    "id": 836,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9197,7 +9197,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6269,
+    "id": 837,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9208,7 +9208,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6270,
+    "id": 838,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9219,7 +9219,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6271,
+    "id": 839,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9230,7 +9230,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6272,
+    "id": 840,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9241,7 +9241,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6273,
+    "id": 841,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9252,7 +9252,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6274,
+    "id": 842,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9263,7 +9263,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6275,
+    "id": 843,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9274,7 +9274,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6276,
+    "id": 844,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9285,7 +9285,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6277,
+    "id": 845,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9296,7 +9296,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6278,
+    "id": 846,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9307,7 +9307,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6279,
+    "id": 847,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9318,7 +9318,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6280,
+    "id": 848,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9329,7 +9329,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6281,
+    "id": 849,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9340,7 +9340,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6282,
+    "id": 850,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9351,7 +9351,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6283,
+    "id": 851,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9362,7 +9362,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6284,
+    "id": 852,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9373,7 +9373,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6285,
+    "id": 853,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9384,7 +9384,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 6286,
+    "id": 854,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9395,7 +9395,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12600
   },
   {
-    "id": 6287,
+    "id": 855,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9406,7 +9406,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6288,
+    "id": 856,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9417,7 +9417,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6289,
+    "id": 857,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9428,7 +9428,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6290,
+    "id": 858,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9439,7 +9439,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6291,
+    "id": 859,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9450,7 +9450,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6292,
+    "id": 860,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9461,7 +9461,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6293,
+    "id": 861,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9472,7 +9472,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6294,
+    "id": 862,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9483,7 +9483,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6295,
+    "id": 863,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9494,7 +9494,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6296,
+    "id": 864,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9505,7 +9505,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6297,
+    "id": 865,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9516,7 +9516,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6298,
+    "id": 866,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9527,7 +9527,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6299,
+    "id": 867,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9538,7 +9538,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6300,
+    "id": 868,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9549,7 +9549,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6301,
+    "id": 869,
     "ubigeo": "140135",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9560,7 +9560,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6302,
+    "id": 870,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9571,7 +9571,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6303,
+    "id": 871,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9582,7 +9582,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6304,
+    "id": 872,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9593,7 +9593,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6305,
+    "id": 873,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9604,7 +9604,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6306,
+    "id": 874,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9615,7 +9615,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6307,
+    "id": 875,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9626,7 +9626,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6308,
+    "id": 876,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9637,7 +9637,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6309,
+    "id": 877,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9648,7 +9648,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6310,
+    "id": 878,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9659,7 +9659,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6311,
+    "id": 879,
     "ubigeo": "140102",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9670,7 +9670,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6312,
+    "id": 880,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9681,7 +9681,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6313,
+    "id": 881,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9692,7 +9692,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6314,
+    "id": 882,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9703,7 +9703,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6315,
+    "id": 883,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9714,7 +9714,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6316,
+    "id": 884,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9725,7 +9725,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6317,
+    "id": 885,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9736,7 +9736,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6318,
+    "id": 886,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9747,7 +9747,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6319,
+    "id": 887,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9758,7 +9758,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6320,
+    "id": 888,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9769,7 +9769,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6321,
+    "id": 889,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9780,7 +9780,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6322,
+    "id": 890,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9791,7 +9791,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6323,
+    "id": 891,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9802,7 +9802,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6324,
+    "id": 892,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9813,7 +9813,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6325,
+    "id": 893,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9824,7 +9824,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6326,
+    "id": 894,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9835,7 +9835,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6327,
+    "id": 895,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9846,7 +9846,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6328,
+    "id": 896,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9857,7 +9857,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6329,
+    "id": 897,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9868,7 +9868,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6330,
+    "id": 898,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9879,7 +9879,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6331,
+    "id": 899,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9890,7 +9890,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6332,
+    "id": 900,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9901,7 +9901,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6333,
+    "id": 901,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9912,7 +9912,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6334,
+    "id": 902,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9923,7 +9923,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6335,
+    "id": 903,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9934,7 +9934,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6336,
+    "id": 904,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9945,7 +9945,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6337,
+    "id": 905,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9956,7 +9956,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6338,
+    "id": 906,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9967,7 +9967,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6339,
+    "id": 907,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9978,7 +9978,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6340,
+    "id": 908,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -9989,7 +9989,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6341,
+    "id": 909,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10000,7 +10000,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6342,
+    "id": 910,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10011,7 +10011,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6343,
+    "id": 911,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10022,7 +10022,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 6344,
+    "id": 912,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10033,7 +10033,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6345,
+    "id": 913,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10044,7 +10044,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6346,
+    "id": 914,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10055,7 +10055,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6347,
+    "id": 915,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10066,7 +10066,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6348,
+    "id": 916,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10077,7 +10077,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6349,
+    "id": 917,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10088,7 +10088,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6350,
+    "id": 918,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10099,7 +10099,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6351,
+    "id": 919,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10110,7 +10110,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6352,
+    "id": 920,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10121,7 +10121,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6353,
+    "id": 921,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10132,7 +10132,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6354,
+    "id": 922,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10143,7 +10143,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6355,
+    "id": 923,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10154,7 +10154,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 6356,
+    "id": 924,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10165,7 +10165,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6357,
+    "id": 925,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10176,7 +10176,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6358,
+    "id": 926,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10187,7 +10187,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6359,
+    "id": 927,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10198,7 +10198,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6360,
+    "id": 928,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10209,7 +10209,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6361,
+    "id": 929,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10220,7 +10220,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6362,
+    "id": 930,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10231,7 +10231,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6363,
+    "id": 931,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10242,7 +10242,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6364,
+    "id": 932,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10253,7 +10253,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6365,
+    "id": 933,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10264,7 +10264,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6366,
+    "id": 934,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10275,7 +10275,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6367,
+    "id": 935,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10286,7 +10286,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6368,
+    "id": 936,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10297,7 +10297,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6369,
+    "id": 937,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10308,7 +10308,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6370,
+    "id": 938,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10319,7 +10319,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6371,
+    "id": 939,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10330,7 +10330,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6372,
+    "id": 940,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10341,7 +10341,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6373,
+    "id": 941,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10352,7 +10352,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6374,
+    "id": 942,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10363,7 +10363,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6375,
+    "id": 943,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10374,7 +10374,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6376,
+    "id": 944,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10385,7 +10385,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6377,
+    "id": 945,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10396,7 +10396,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6378,
+    "id": 946,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10407,7 +10407,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6379,
+    "id": 947,
     "ubigeo": "140119",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10418,7 +10418,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6380,
+    "id": 948,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10429,7 +10429,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6381,
+    "id": 949,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10440,7 +10440,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6382,
+    "id": 950,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10451,7 +10451,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6383,
+    "id": 951,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10462,7 +10462,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6384,
+    "id": 952,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10473,7 +10473,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6385,
+    "id": 953,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10484,7 +10484,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6386,
+    "id": 954,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10495,7 +10495,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6387,
+    "id": 955,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10506,7 +10506,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6388,
+    "id": 956,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10517,7 +10517,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6389,
+    "id": 957,
     "ubigeo": "140129",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10528,7 +10528,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6390,
+    "id": 958,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10539,7 +10539,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6391,
+    "id": 959,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10550,7 +10550,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6392,
+    "id": 960,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10561,7 +10561,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6393,
+    "id": 961,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10572,7 +10572,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6394,
+    "id": 962,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10583,7 +10583,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6395,
+    "id": 963,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10594,7 +10594,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6396,
+    "id": 964,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10605,7 +10605,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6397,
+    "id": 965,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10616,7 +10616,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6398,
+    "id": 966,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10627,7 +10627,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6399,
+    "id": 967,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10638,7 +10638,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6400,
+    "id": 968,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10649,7 +10649,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6401,
+    "id": 969,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10660,7 +10660,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6402,
+    "id": 970,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10671,7 +10671,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6403,
+    "id": 971,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10682,7 +10682,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6404,
+    "id": 972,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10693,7 +10693,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6405,
+    "id": 973,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10704,7 +10704,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6406,
+    "id": 974,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10715,7 +10715,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6407,
+    "id": 975,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10726,7 +10726,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6408,
+    "id": 976,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10737,7 +10737,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6409,
+    "id": 977,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10748,7 +10748,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6410,
+    "id": 978,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10759,7 +10759,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6411,
+    "id": 979,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10770,7 +10770,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6412,
+    "id": 980,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10781,7 +10781,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6413,
+    "id": 981,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10792,7 +10792,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6414,
+    "id": 982,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10803,7 +10803,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6415,
+    "id": 983,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10814,7 +10814,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6416,
+    "id": 984,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10825,7 +10825,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6417,
+    "id": 985,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10836,7 +10836,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6418,
+    "id": 986,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10847,7 +10847,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6419,
+    "id": 987,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10858,7 +10858,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6420,
+    "id": 988,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10869,7 +10869,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6421,
+    "id": 989,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10880,7 +10880,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6422,
+    "id": 990,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10891,7 +10891,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6423,
+    "id": 991,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10902,7 +10902,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6424,
+    "id": 992,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10913,7 +10913,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6425,
+    "id": 993,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10924,7 +10924,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6426,
+    "id": 994,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10935,7 +10935,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6427,
+    "id": 995,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10946,7 +10946,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6428,
+    "id": 996,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10957,7 +10957,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6429,
+    "id": 997,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10968,7 +10968,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6430,
+    "id": 998,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10979,7 +10979,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6431,
+    "id": 999,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -10990,7 +10990,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6432,
+    "id": 1000,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11001,7 +11001,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6433,
+    "id": 1001,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11012,7 +11012,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6434,
+    "id": 1002,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11023,7 +11023,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6435,
+    "id": 1003,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11034,7 +11034,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 6436,
+    "id": 1004,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11045,7 +11045,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6437,
+    "id": 1005,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11056,7 +11056,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6438,
+    "id": 1006,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11067,7 +11067,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6439,
+    "id": 1007,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11078,7 +11078,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6440,
+    "id": 1008,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11089,7 +11089,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6441,
+    "id": 1009,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11100,7 +11100,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6442,
+    "id": 1010,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11111,7 +11111,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6443,
+    "id": 1011,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11122,7 +11122,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6444,
+    "id": 1012,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11133,7 +11133,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6445,
+    "id": 1013,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11144,7 +11144,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6446,
+    "id": 1014,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11155,7 +11155,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6447,
+    "id": 1015,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11166,7 +11166,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6448,
+    "id": 1016,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11177,7 +11177,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6449,
+    "id": 1017,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11188,7 +11188,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6450,
+    "id": 1018,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11199,7 +11199,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6451,
+    "id": 1019,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11210,7 +11210,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6452,
+    "id": 1020,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11221,7 +11221,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6453,
+    "id": 1021,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11232,7 +11232,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6454,
+    "id": 1022,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11243,7 +11243,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6455,
+    "id": 1023,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11254,7 +11254,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6456,
+    "id": 1024,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11265,7 +11265,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6457,
+    "id": 1025,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11276,7 +11276,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6458,
+    "id": 1026,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11287,7 +11287,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6459,
+    "id": 1027,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11298,7 +11298,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6460,
+    "id": 1028,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11309,7 +11309,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6461,
+    "id": 1029,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11320,7 +11320,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6462,
+    "id": 1030,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11331,7 +11331,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6463,
+    "id": 1031,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11342,7 +11342,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6464,
+    "id": 1032,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11353,7 +11353,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6465,
+    "id": 1033,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11364,7 +11364,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6466,
+    "id": 1034,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11375,7 +11375,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6467,
+    "id": 1035,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11386,7 +11386,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6468,
+    "id": 1036,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11397,7 +11397,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6469,
+    "id": 1037,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11408,7 +11408,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6470,
+    "id": 1038,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11419,7 +11419,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6471,
+    "id": 1039,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11430,7 +11430,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6472,
+    "id": 1040,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11441,7 +11441,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6473,
+    "id": 1041,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11452,7 +11452,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6474,
+    "id": 1042,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11463,7 +11463,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6475,
+    "id": 1043,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11474,7 +11474,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6476,
+    "id": 1044,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11485,7 +11485,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6477,
+    "id": 1045,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11496,7 +11496,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6478,
+    "id": 1046,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11507,7 +11507,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6479,
+    "id": 1047,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11518,7 +11518,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6480,
+    "id": 1048,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11529,7 +11529,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6481,
+    "id": 1049,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11540,7 +11540,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6482,
+    "id": 1050,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11551,7 +11551,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6483,
+    "id": 1051,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11562,7 +11562,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6484,
+    "id": 1052,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11573,7 +11573,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6485,
+    "id": 1053,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11584,7 +11584,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6486,
+    "id": 1054,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11595,7 +11595,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6487,
+    "id": 1055,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11606,7 +11606,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6488,
+    "id": 1056,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11617,7 +11617,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6489,
+    "id": 1057,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11628,7 +11628,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6490,
+    "id": 1058,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11639,7 +11639,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6491,
+    "id": 1059,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11650,7 +11650,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6492,
+    "id": 1060,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11661,7 +11661,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6493,
+    "id": 1061,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11672,7 +11672,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6494,
+    "id": 1062,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11683,7 +11683,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6495,
+    "id": 1063,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11694,7 +11694,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6496,
+    "id": 1064,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11705,7 +11705,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6497,
+    "id": 1065,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11716,7 +11716,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6498,
+    "id": 1066,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11727,7 +11727,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6499,
+    "id": 1067,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11738,7 +11738,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6500,
+    "id": 1068,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11749,7 +11749,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6501,
+    "id": 1069,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11760,7 +11760,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6502,
+    "id": 1070,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11771,7 +11771,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6503,
+    "id": 1071,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11782,7 +11782,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6504,
+    "id": 1072,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11793,7 +11793,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6505,
+    "id": 1073,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11804,7 +11804,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6506,
+    "id": 1074,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11815,7 +11815,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6507,
+    "id": 1075,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11826,7 +11826,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6508,
+    "id": 1076,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11837,7 +11837,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6509,
+    "id": 1077,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11848,7 +11848,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6510,
+    "id": 1078,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11859,7 +11859,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6511,
+    "id": 1079,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11870,7 +11870,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6512,
+    "id": 1080,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11881,7 +11881,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6513,
+    "id": 1081,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11892,7 +11892,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6514,
+    "id": 1082,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11903,7 +11903,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6515,
+    "id": 1083,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11914,7 +11914,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6516,
+    "id": 1084,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11925,7 +11925,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6517,
+    "id": 1085,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11936,7 +11936,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6518,
+    "id": 1086,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11947,7 +11947,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6519,
+    "id": 1087,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11958,7 +11958,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6520,
+    "id": 1088,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11969,7 +11969,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6521,
+    "id": 1089,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11980,7 +11980,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6522,
+    "id": 1090,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -11991,7 +11991,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6523,
+    "id": 1091,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12002,7 +12002,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6524,
+    "id": 1092,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12013,7 +12013,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6525,
+    "id": 1093,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12024,7 +12024,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6526,
+    "id": 1094,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12035,7 +12035,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6527,
+    "id": 1095,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12046,7 +12046,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6528,
+    "id": 1096,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12057,7 +12057,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6529,
+    "id": 1097,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12068,7 +12068,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6530,
+    "id": 1098,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12079,7 +12079,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6531,
+    "id": 1099,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12090,7 +12090,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6532,
+    "id": 1100,
     "ubigeo": "140106",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12101,7 +12101,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6533,
+    "id": 1101,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12112,7 +12112,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6534,
+    "id": 1102,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12123,7 +12123,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6535,
+    "id": 1103,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12134,7 +12134,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6536,
+    "id": 1104,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12145,7 +12145,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6537,
+    "id": 1105,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12156,7 +12156,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6538,
+    "id": 1106,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12167,7 +12167,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6539,
+    "id": 1107,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12178,7 +12178,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6540,
+    "id": 1108,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12189,7 +12189,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6541,
+    "id": 1109,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12200,7 +12200,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6542,
+    "id": 1110,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12211,7 +12211,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6543,
+    "id": 1111,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12222,7 +12222,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6544,
+    "id": 1112,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12233,7 +12233,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6545,
+    "id": 1113,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12244,7 +12244,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6546,
+    "id": 1114,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12255,7 +12255,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6547,
+    "id": 1115,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12266,7 +12266,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6548,
+    "id": 1116,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12277,7 +12277,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6549,
+    "id": 1117,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12288,7 +12288,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6550,
+    "id": 1118,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12299,7 +12299,7 @@ export const LOCALES_OFICIALES = [
     "electores": 14700
   },
   {
-    "id": 6551,
+    "id": 1119,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12310,7 +12310,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6552,
+    "id": 1120,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12321,7 +12321,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6553,
+    "id": 1121,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12332,7 +12332,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 6554,
+    "id": 1122,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12343,7 +12343,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 6555,
+    "id": 1123,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12354,7 +12354,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6556,
+    "id": 1124,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12365,7 +12365,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6557,
+    "id": 1125,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12376,7 +12376,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6558,
+    "id": 1126,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12387,7 +12387,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6559,
+    "id": 1127,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12398,7 +12398,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6560,
+    "id": 1128,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12409,7 +12409,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6561,
+    "id": 1129,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12420,7 +12420,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6562,
+    "id": 1130,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12431,7 +12431,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6563,
+    "id": 1131,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12442,7 +12442,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6564,
+    "id": 1132,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12453,7 +12453,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6565,
+    "id": 1133,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12464,7 +12464,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6566,
+    "id": 1134,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12475,7 +12475,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6567,
+    "id": 1135,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12486,7 +12486,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6568,
+    "id": 1136,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12497,7 +12497,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6569,
+    "id": 1137,
     "ubigeo": "140122",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12508,7 +12508,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6570,
+    "id": 1138,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12519,7 +12519,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6571,
+    "id": 1139,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12530,7 +12530,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6572,
+    "id": 1140,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12541,7 +12541,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6573,
+    "id": 1141,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12552,7 +12552,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12600
   },
   {
-    "id": 6574,
+    "id": 1142,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12563,7 +12563,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6575,
+    "id": 1143,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12574,7 +12574,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6576,
+    "id": 1144,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12585,7 +12585,7 @@ export const LOCALES_OFICIALES = [
     "electores": 16500
   },
   {
-    "id": 6577,
+    "id": 1145,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12596,7 +12596,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6578,
+    "id": 1146,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12607,7 +12607,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6579,
+    "id": 1147,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12618,7 +12618,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6580,
+    "id": 1148,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12629,7 +12629,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 6581,
+    "id": 1149,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12640,7 +12640,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6582,
+    "id": 1150,
     "ubigeo": "140111",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12651,7 +12651,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6583,
+    "id": 1151,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12662,7 +12662,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6584,
+    "id": 1152,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12673,7 +12673,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6585,
+    "id": 1153,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12684,7 +12684,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6586,
+    "id": 1154,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12695,7 +12695,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6587,
+    "id": 1155,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12706,7 +12706,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6588,
+    "id": 1156,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12717,7 +12717,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6589,
+    "id": 1157,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12728,7 +12728,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6590,
+    "id": 1158,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12739,7 +12739,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6591,
+    "id": 1159,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12750,7 +12750,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6592,
+    "id": 1160,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12761,7 +12761,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6593,
+    "id": 1161,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12772,7 +12772,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6594,
+    "id": 1162,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12783,7 +12783,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6595,
+    "id": 1163,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12794,7 +12794,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6596,
+    "id": 1164,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12805,7 +12805,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6597,
+    "id": 1165,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12816,7 +12816,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6598,
+    "id": 1166,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12827,7 +12827,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6599,
+    "id": 1167,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12838,7 +12838,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6600,
+    "id": 1168,
     "ubigeo": "140114",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12849,7 +12849,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6601,
+    "id": 1169,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12860,7 +12860,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6602,
+    "id": 1170,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12871,7 +12871,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6603,
+    "id": 1171,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12882,7 +12882,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6604,
+    "id": 1172,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12893,7 +12893,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6605,
+    "id": 1173,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12904,7 +12904,7 @@ export const LOCALES_OFICIALES = [
     "electores": 18600
   },
   {
-    "id": 6606,
+    "id": 1174,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12915,7 +12915,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6607,
+    "id": 1175,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12926,7 +12926,7 @@ export const LOCALES_OFICIALES = [
     "electores": 19500
   },
   {
-    "id": 6608,
+    "id": 1176,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12937,7 +12937,7 @@ export const LOCALES_OFICIALES = [
     "electores": 16500
   },
   {
-    "id": 6609,
+    "id": 1177,
     "ubigeo": "140124",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12948,7 +12948,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6610,
+    "id": 1178,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12959,7 +12959,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 6611,
+    "id": 1179,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12970,7 +12970,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6612,
+    "id": 1180,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12981,7 +12981,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6613,
+    "id": 1181,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -12992,7 +12992,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6614,
+    "id": 1182,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13003,7 +13003,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6615,
+    "id": 1183,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13014,7 +13014,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6616,
+    "id": 1184,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13025,7 +13025,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6617,
+    "id": 1185,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13036,7 +13036,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6618,
+    "id": 1186,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13047,7 +13047,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6619,
+    "id": 1187,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13058,7 +13058,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 6620,
+    "id": 1188,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13069,7 +13069,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 6621,
+    "id": 1189,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13080,7 +13080,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6622,
+    "id": 1190,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13091,7 +13091,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6623,
+    "id": 1191,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13102,7 +13102,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6624,
+    "id": 1192,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13113,7 +13113,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6625,
+    "id": 1193,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13124,7 +13124,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6626,
+    "id": 1194,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13135,7 +13135,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6627,
+    "id": 1195,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13146,7 +13146,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6628,
+    "id": 1196,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13157,7 +13157,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6629,
+    "id": 1197,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13168,7 +13168,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6630,
+    "id": 1198,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13179,7 +13179,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6631,
+    "id": 1199,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13190,7 +13190,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6632,
+    "id": 1200,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13201,7 +13201,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6633,
+    "id": 1201,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13212,7 +13212,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6634,
+    "id": 1202,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13223,7 +13223,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 6635,
+    "id": 1203,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13234,7 +13234,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6636,
+    "id": 1204,
     "ubigeo": "140115",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13245,7 +13245,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6637,
+    "id": 1205,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13256,7 +13256,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6638,
+    "id": 1206,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13267,7 +13267,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6639,
+    "id": 1207,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13278,7 +13278,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6640,
+    "id": 1208,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13289,7 +13289,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6641,
+    "id": 1209,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13300,7 +13300,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6642,
+    "id": 1210,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13311,7 +13311,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6643,
+    "id": 1211,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13322,7 +13322,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6644,
+    "id": 1212,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13333,7 +13333,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6645,
+    "id": 1213,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13344,7 +13344,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6646,
+    "id": 1214,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13355,7 +13355,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12000
   },
   {
-    "id": 6647,
+    "id": 1215,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13366,7 +13366,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6648,
+    "id": 1216,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13377,7 +13377,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6649,
+    "id": 1217,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13388,7 +13388,7 @@ export const LOCALES_OFICIALES = [
     "electores": 15000
   },
   {
-    "id": 6650,
+    "id": 1218,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13399,7 +13399,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6651,
+    "id": 1219,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13410,7 +13410,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6652,
+    "id": 1220,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13421,7 +13421,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6653,
+    "id": 1221,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13432,7 +13432,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6654,
+    "id": 1222,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13443,7 +13443,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6655,
+    "id": 1223,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13454,7 +13454,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6656,
+    "id": 1224,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13465,7 +13465,7 @@ export const LOCALES_OFICIALES = [
     "electores": 14400
   },
   {
-    "id": 6657,
+    "id": 1225,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13476,7 +13476,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6658,
+    "id": 1226,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13487,7 +13487,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6659,
+    "id": 1227,
     "ubigeo": "140131",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13498,7 +13498,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6660,
+    "id": 1228,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13509,7 +13509,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6661,
+    "id": 1229,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13520,7 +13520,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6662,
+    "id": 1230,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13531,7 +13531,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6663,
+    "id": 1231,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13542,7 +13542,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6664,
+    "id": 1232,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13553,7 +13553,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6665,
+    "id": 1233,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13564,7 +13564,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6666,
+    "id": 1234,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13575,7 +13575,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6667,
+    "id": 1235,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13586,7 +13586,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6668,
+    "id": 1236,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13597,7 +13597,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6669,
+    "id": 1237,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13608,7 +13608,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6670,
+    "id": 1238,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13619,7 +13619,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12300
   },
   {
-    "id": 6671,
+    "id": 1239,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13630,7 +13630,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6672,
+    "id": 1240,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13641,7 +13641,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6673,
+    "id": 1241,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13652,7 +13652,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6674,
+    "id": 1242,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13663,7 +13663,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13500
   },
   {
-    "id": 6675,
+    "id": 1243,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13674,7 +13674,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6676,
+    "id": 1244,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13685,7 +13685,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6677,
+    "id": 1245,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13696,7 +13696,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13200
   },
   {
-    "id": 6678,
+    "id": 1246,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13707,7 +13707,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6679,
+    "id": 1247,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13718,7 +13718,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 6680,
+    "id": 1248,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13729,7 +13729,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 6681,
+    "id": 1249,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13740,7 +13740,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6682,
+    "id": 1250,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13751,7 +13751,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6683,
+    "id": 1251,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13762,7 +13762,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6684,
+    "id": 1252,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13773,7 +13773,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6685,
+    "id": 1253,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13784,7 +13784,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6686,
+    "id": 1254,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13795,7 +13795,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6687,
+    "id": 1255,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13806,7 +13806,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6688,
+    "id": 1256,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13817,7 +13817,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6689,
+    "id": 1257,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13828,7 +13828,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6690,
+    "id": 1258,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13839,7 +13839,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6691,
+    "id": 1259,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13850,7 +13850,7 @@ export const LOCALES_OFICIALES = [
     "electores": 21000
   },
   {
-    "id": 6692,
+    "id": 1260,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13861,7 +13861,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6693,
+    "id": 1261,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13872,7 +13872,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6694,
+    "id": 1262,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13883,7 +13883,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6695,
+    "id": 1263,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13894,7 +13894,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6696,
+    "id": 1264,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13905,7 +13905,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6697,
+    "id": 1265,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13916,7 +13916,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6698,
+    "id": 1266,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13927,7 +13927,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 6699,
+    "id": 1267,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13938,7 +13938,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6700,
+    "id": 1268,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13949,7 +13949,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6701,
+    "id": 1269,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13960,7 +13960,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6702,
+    "id": 1270,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13971,7 +13971,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6703,
+    "id": 1271,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13982,7 +13982,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6704,
+    "id": 1272,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -13993,7 +13993,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 6705,
+    "id": 1273,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14004,7 +14004,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6706,
+    "id": 1274,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14015,7 +14015,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6707,
+    "id": 1275,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14026,7 +14026,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6708,
+    "id": 1276,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14037,7 +14037,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12300
   },
   {
-    "id": 6709,
+    "id": 1277,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14048,7 +14048,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6710,
+    "id": 1278,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14059,7 +14059,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6711,
+    "id": 1279,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14070,7 +14070,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6712,
+    "id": 1280,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14081,7 +14081,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6713,
+    "id": 1281,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14092,7 +14092,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6714,
+    "id": 1282,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14103,7 +14103,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6715,
+    "id": 1283,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14114,7 +14114,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6716,
+    "id": 1284,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14125,7 +14125,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6717,
+    "id": 1285,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14136,7 +14136,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12000
   },
   {
-    "id": 6718,
+    "id": 1286,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14147,7 +14147,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6719,
+    "id": 1287,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14158,7 +14158,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6720,
+    "id": 1288,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14169,7 +14169,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6721,
+    "id": 1289,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14180,7 +14180,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6722,
+    "id": 1290,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14191,7 +14191,7 @@ export const LOCALES_OFICIALES = [
     "electores": 14100
   },
   {
-    "id": 6723,
+    "id": 1291,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14202,7 +14202,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6724,
+    "id": 1292,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14213,7 +14213,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6725,
+    "id": 1293,
     "ubigeo": "140130",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14224,7 +14224,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6726,
+    "id": 1294,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14235,7 +14235,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6727,
+    "id": 1295,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14246,7 +14246,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6728,
+    "id": 1296,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14257,7 +14257,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6729,
+    "id": 1297,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14268,7 +14268,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6730,
+    "id": 1298,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14279,7 +14279,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6731,
+    "id": 1299,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14290,7 +14290,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6732,
+    "id": 1300,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14301,7 +14301,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6733,
+    "id": 1301,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14312,7 +14312,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6734,
+    "id": 1302,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14323,7 +14323,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6735,
+    "id": 1303,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14334,7 +14334,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6736,
+    "id": 1304,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14345,7 +14345,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6737,
+    "id": 1305,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14356,7 +14356,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6738,
+    "id": 1306,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14367,7 +14367,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6739,
+    "id": 1307,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14378,7 +14378,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6740,
+    "id": 1308,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14389,7 +14389,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6741,
+    "id": 1309,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14400,7 +14400,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6742,
+    "id": 1310,
     "ubigeo": "140113",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14411,7 +14411,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6743,
+    "id": 1311,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14422,7 +14422,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6744,
+    "id": 1312,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14433,7 +14433,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6745,
+    "id": 1313,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14444,7 +14444,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6746,
+    "id": 1314,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14455,7 +14455,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6747,
+    "id": 1315,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14466,7 +14466,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6748,
+    "id": 1316,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14477,7 +14477,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6749,
+    "id": 1317,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14488,7 +14488,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6750,
+    "id": 1318,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14499,7 +14499,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6751,
+    "id": 1319,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14510,7 +14510,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6752,
+    "id": 1320,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14521,7 +14521,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6753,
+    "id": 1321,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14532,7 +14532,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6754,
+    "id": 1322,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14543,7 +14543,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6755,
+    "id": 1323,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14554,7 +14554,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6756,
+    "id": 1324,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14565,7 +14565,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6757,
+    "id": 1325,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14576,7 +14576,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6758,
+    "id": 1326,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14587,7 +14587,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6759,
+    "id": 1327,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14598,7 +14598,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6760,
+    "id": 1328,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14609,7 +14609,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6761,
+    "id": 1329,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14620,7 +14620,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6762,
+    "id": 1330,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14631,7 +14631,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6763,
+    "id": 1331,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14642,7 +14642,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6764,
+    "id": 1332,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14653,7 +14653,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6765,
+    "id": 1333,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14664,7 +14664,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6766,
+    "id": 1334,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14675,7 +14675,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6767,
+    "id": 1335,
     "ubigeo": "140116",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14686,7 +14686,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6768,
+    "id": 1336,
     "ubigeo": "140118",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14697,7 +14697,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6769,
+    "id": 1337,
     "ubigeo": "140118",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14708,7 +14708,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6770,
+    "id": 1338,
     "ubigeo": "140118",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14719,7 +14719,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6771,
+    "id": 1339,
     "ubigeo": "140118",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14730,7 +14730,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6772,
+    "id": 1340,
     "ubigeo": "140118",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14741,7 +14741,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6773,
+    "id": 1341,
     "ubigeo": "140120",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14752,7 +14752,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6774,
+    "id": 1342,
     "ubigeo": "140120",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14763,7 +14763,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6775,
+    "id": 1343,
     "ubigeo": "140120",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14774,7 +14774,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6776,
+    "id": 1344,
     "ubigeo": "140121",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14785,7 +14785,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6777,
+    "id": 1345,
     "ubigeo": "140121",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14796,7 +14796,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6778,
+    "id": 1346,
     "ubigeo": "140121",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14807,7 +14807,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6779,
+    "id": 1347,
     "ubigeo": "140123",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14818,7 +14818,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6780,
+    "id": 1348,
     "ubigeo": "140123",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14829,7 +14829,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6781,
+    "id": 1349,
     "ubigeo": "140128",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14840,7 +14840,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6782,
+    "id": 1350,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14851,7 +14851,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6783,
+    "id": 1351,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14862,7 +14862,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6784,
+    "id": 1352,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14873,7 +14873,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6785,
+    "id": 1353,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14884,7 +14884,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6786,
+    "id": 1354,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14895,7 +14895,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6787,
+    "id": 1355,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14906,7 +14906,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6788,
+    "id": 1356,
     "ubigeo": "140139",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14917,7 +14917,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6789,
+    "id": 1357,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14928,7 +14928,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6790,
+    "id": 1358,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14939,7 +14939,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6791,
+    "id": 1359,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14950,7 +14950,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 6792,
+    "id": 1360,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14961,7 +14961,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6793,
+    "id": 1361,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14972,7 +14972,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6794,
+    "id": 1362,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14983,7 +14983,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6795,
+    "id": 1363,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -14994,7 +14994,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6796,
+    "id": 1364,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15005,7 +15005,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6797,
+    "id": 1365,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15016,7 +15016,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6798,
+    "id": 1366,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15027,7 +15027,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6799,
+    "id": 1367,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15038,7 +15038,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6800,
+    "id": 1368,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15049,7 +15049,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6801,
+    "id": 1369,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15060,7 +15060,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6802,
+    "id": 1370,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15071,7 +15071,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6803,
+    "id": 1371,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15082,7 +15082,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6804,
+    "id": 1372,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15093,7 +15093,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6805,
+    "id": 1373,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15104,7 +15104,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6806,
+    "id": 1374,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15115,7 +15115,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6807,
+    "id": 1375,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15126,7 +15126,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6808,
+    "id": 1376,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15137,7 +15137,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6809,
+    "id": 1377,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15148,7 +15148,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6810,
+    "id": 1378,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15159,7 +15159,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6811,
+    "id": 1379,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15170,7 +15170,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6812,
+    "id": 1380,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15181,7 +15181,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6813,
+    "id": 1381,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15192,7 +15192,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6814,
+    "id": 1382,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15203,7 +15203,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6815,
+    "id": 1383,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15214,7 +15214,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6816,
+    "id": 1384,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15225,7 +15225,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6817,
+    "id": 1385,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15236,7 +15236,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6818,
+    "id": 1386,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15247,7 +15247,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 6819,
+    "id": 1387,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15258,7 +15258,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6820,
+    "id": 1388,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15269,7 +15269,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6821,
+    "id": 1389,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15280,7 +15280,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6822,
+    "id": 1390,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15291,7 +15291,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6823,
+    "id": 1391,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15302,7 +15302,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 6824,
+    "id": 1392,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15313,7 +15313,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6825,
+    "id": 1393,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15324,7 +15324,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6826,
+    "id": 1394,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15335,7 +15335,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6827,
+    "id": 1395,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15346,7 +15346,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6828,
+    "id": 1396,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15357,7 +15357,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6829,
+    "id": 1397,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15368,7 +15368,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6830,
+    "id": 1398,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15379,7 +15379,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6831,
+    "id": 1399,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15390,7 +15390,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6832,
+    "id": 1400,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15401,7 +15401,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6833,
+    "id": 1401,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15412,7 +15412,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 6834,
+    "id": 1402,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15423,7 +15423,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6835,
+    "id": 1403,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15434,7 +15434,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6836,
+    "id": 1404,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15445,7 +15445,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6837,
+    "id": 1405,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15456,7 +15456,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6838,
+    "id": 1406,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15467,7 +15467,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6839,
+    "id": 1407,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15478,7 +15478,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6840,
+    "id": 1408,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15489,7 +15489,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6841,
+    "id": 1409,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15500,7 +15500,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6842,
+    "id": 1410,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15511,7 +15511,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6843,
+    "id": 1411,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15522,7 +15522,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6844,
+    "id": 1412,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15533,7 +15533,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6845,
+    "id": 1413,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15544,7 +15544,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6846,
+    "id": 1414,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15555,7 +15555,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6847,
+    "id": 1415,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15566,7 +15566,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6848,
+    "id": 1416,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15577,7 +15577,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 6849,
+    "id": 1417,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15588,7 +15588,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10500
   },
   {
-    "id": 6850,
+    "id": 1418,
     "ubigeo": "140142",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15599,7 +15599,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 6851,
+    "id": 1419,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15610,7 +15610,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6852,
+    "id": 1420,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15621,7 +15621,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6853,
+    "id": 1421,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15632,7 +15632,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6854,
+    "id": 1422,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15643,7 +15643,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6855,
+    "id": 1423,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15654,7 +15654,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6856,
+    "id": 1424,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15665,7 +15665,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6857,
+    "id": 1425,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15676,7 +15676,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6858,
+    "id": 1426,
     "ubigeo": "140107",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15687,7 +15687,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6859,
+    "id": 1427,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15698,7 +15698,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6860,
+    "id": 1428,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15709,7 +15709,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6861,
+    "id": 1429,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15720,7 +15720,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6862,
+    "id": 1430,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15731,7 +15731,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6863,
+    "id": 1431,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15742,7 +15742,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6864,
+    "id": 1432,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15753,7 +15753,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6865,
+    "id": 1433,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15764,7 +15764,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6866,
+    "id": 1434,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15775,7 +15775,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6867,
+    "id": 1435,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15786,7 +15786,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6868,
+    "id": 1436,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15797,7 +15797,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6869,
+    "id": 1437,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15808,7 +15808,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 6870,
+    "id": 1438,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15819,7 +15819,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 6871,
+    "id": 1439,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15830,7 +15830,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6872,
+    "id": 1440,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15841,7 +15841,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6873,
+    "id": 1441,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15852,7 +15852,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 6874,
+    "id": 1442,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15863,7 +15863,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6875,
+    "id": 1443,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15874,7 +15874,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6876,
+    "id": 1444,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15885,7 +15885,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6877,
+    "id": 1445,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15896,7 +15896,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6878,
+    "id": 1446,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15907,7 +15907,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6879,
+    "id": 1447,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15918,7 +15918,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6880,
+    "id": 1448,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15929,7 +15929,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6881,
+    "id": 1449,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15940,7 +15940,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6882,
+    "id": 1450,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15951,7 +15951,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6883,
+    "id": 1451,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15962,7 +15962,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6884,
+    "id": 1452,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15973,7 +15973,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6885,
+    "id": 1453,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15984,7 +15984,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6886,
+    "id": 1454,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -15995,7 +15995,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6887,
+    "id": 1455,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16006,7 +16006,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6888,
+    "id": 1456,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16017,7 +16017,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 6889,
+    "id": 1457,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16028,7 +16028,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6890,
+    "id": 1458,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16039,7 +16039,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6891,
+    "id": 1459,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16050,7 +16050,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6892,
+    "id": 1460,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16061,7 +16061,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6893,
+    "id": 1461,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16072,7 +16072,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6894,
+    "id": 1462,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16083,7 +16083,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11400
   },
   {
-    "id": 6895,
+    "id": 1463,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16094,7 +16094,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6896,
+    "id": 1464,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16105,7 +16105,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6897,
+    "id": 1465,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16116,7 +16116,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6898,
+    "id": 1466,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16127,7 +16127,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 6899,
+    "id": 1467,
     "ubigeo": "140112",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16138,7 +16138,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6900,
+    "id": 1468,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16149,7 +16149,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6901,
+    "id": 1469,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16160,7 +16160,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6902,
+    "id": 1470,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16171,7 +16171,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6903,
+    "id": 1471,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16182,7 +16182,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6904,
+    "id": 1472,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16193,7 +16193,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 6905,
+    "id": 1473,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16204,7 +16204,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6906,
+    "id": 1474,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16215,7 +16215,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6907,
+    "id": 1475,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16226,7 +16226,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6908,
+    "id": 1476,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16237,7 +16237,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 6909,
+    "id": 1477,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16248,7 +16248,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6910,
+    "id": 1478,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16259,7 +16259,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 6911,
+    "id": 1479,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16270,7 +16270,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 6912,
+    "id": 1480,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16281,7 +16281,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6913,
+    "id": 1481,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16292,7 +16292,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 6914,
+    "id": 1482,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16303,7 +16303,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6915,
+    "id": 1483,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16314,7 +16314,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 6916,
+    "id": 1484,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16325,7 +16325,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6917,
+    "id": 1485,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16336,7 +16336,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6918,
+    "id": 1486,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16347,7 +16347,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6919,
+    "id": 1487,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16358,7 +16358,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6920,
+    "id": 1488,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16369,7 +16369,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 6921,
+    "id": 1489,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16380,7 +16380,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 6922,
+    "id": 1490,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16391,7 +16391,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 6923,
+    "id": 1491,
     "ubigeo": "140117",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16402,7 +16402,7 @@ export const LOCALES_OFICIALES = [
     "electores": 600
   },
   {
-    "id": 6924,
+    "id": 1492,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16413,7 +16413,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6925,
+    "id": 1493,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16424,7 +16424,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 6926,
+    "id": 1494,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16435,7 +16435,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6927,
+    "id": 1495,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16446,7 +16446,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6928,
+    "id": 1496,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16457,7 +16457,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6929,
+    "id": 1497,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16468,7 +16468,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 6930,
+    "id": 1498,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16479,7 +16479,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6931,
+    "id": 1499,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16490,7 +16490,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6932,
+    "id": 1500,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16501,7 +16501,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6933,
+    "id": 1501,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16512,7 +16512,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6934,
+    "id": 1502,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16523,7 +16523,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 6935,
+    "id": 1503,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16534,7 +16534,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6936,
+    "id": 1504,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16545,7 +16545,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6937,
+    "id": 1505,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16556,7 +16556,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13500
   },
   {
-    "id": 6938,
+    "id": 1506,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16567,7 +16567,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6939,
+    "id": 1507,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16578,7 +16578,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6940,
+    "id": 1508,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16589,7 +16589,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6941,
+    "id": 1509,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16600,7 +16600,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6942,
+    "id": 1510,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16611,7 +16611,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 6943,
+    "id": 1511,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16622,7 +16622,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 6944,
+    "id": 1512,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16633,7 +16633,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6945,
+    "id": 1513,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16644,7 +16644,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6946,
+    "id": 1514,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16655,7 +16655,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6947,
+    "id": 1515,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16666,7 +16666,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6948,
+    "id": 1516,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16677,7 +16677,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6949,
+    "id": 1517,
     "ubigeo": "140140",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16688,7 +16688,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 6950,
+    "id": 1518,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16699,7 +16699,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6951,
+    "id": 1519,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16710,7 +16710,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6952,
+    "id": 1520,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16721,7 +16721,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6953,
+    "id": 1521,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16732,7 +16732,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6954,
+    "id": 1522,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16743,7 +16743,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6955,
+    "id": 1523,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16754,7 +16754,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6956,
+    "id": 1524,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16765,7 +16765,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6957,
+    "id": 1525,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16776,7 +16776,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6958,
+    "id": 1526,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16787,7 +16787,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6959,
+    "id": 1527,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16798,7 +16798,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6960,
+    "id": 1528,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16809,7 +16809,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6961,
+    "id": 1529,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16820,7 +16820,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6962,
+    "id": 1530,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16831,7 +16831,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6963,
+    "id": 1531,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16842,7 +16842,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6964,
+    "id": 1532,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16853,7 +16853,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6965,
+    "id": 1533,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16864,7 +16864,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6966,
+    "id": 1534,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16875,7 +16875,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 6967,
+    "id": 1535,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16886,7 +16886,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6968,
+    "id": 1536,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16897,7 +16897,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6969,
+    "id": 1537,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16908,7 +16908,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6970,
+    "id": 1538,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16919,7 +16919,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6971,
+    "id": 1539,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16930,7 +16930,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6972,
+    "id": 1540,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16941,7 +16941,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6973,
+    "id": 1541,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16952,7 +16952,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6974,
+    "id": 1542,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16963,7 +16963,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6975,
+    "id": 1543,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16974,7 +16974,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6976,
+    "id": 1544,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16985,7 +16985,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 6977,
+    "id": 1545,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -16996,7 +16996,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6978,
+    "id": 1546,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17007,7 +17007,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6979,
+    "id": 1547,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17018,7 +17018,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6980,
+    "id": 1548,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17029,7 +17029,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6981,
+    "id": 1549,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17040,7 +17040,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6982,
+    "id": 1550,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17051,7 +17051,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 6983,
+    "id": 1551,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17062,7 +17062,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 6984,
+    "id": 1552,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17073,7 +17073,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 6985,
+    "id": 1553,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17084,7 +17084,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6986,
+    "id": 1554,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17095,7 +17095,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 6987,
+    "id": 1555,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17106,7 +17106,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6988,
+    "id": 1556,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17117,7 +17117,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 6989,
+    "id": 1557,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17128,7 +17128,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6990,
+    "id": 1558,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17139,7 +17139,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 6991,
+    "id": 1559,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17150,7 +17150,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 6992,
+    "id": 1560,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17161,7 +17161,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6993,
+    "id": 1561,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17172,7 +17172,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6994,
+    "id": 1562,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17183,7 +17183,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 6995,
+    "id": 1563,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17194,7 +17194,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6996,
+    "id": 1564,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17205,7 +17205,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 6997,
+    "id": 1565,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17216,7 +17216,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 6998,
+    "id": 1566,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17227,7 +17227,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 6999,
+    "id": 1567,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17238,7 +17238,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7000,
+    "id": 1568,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17249,7 +17249,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7001,
+    "id": 1569,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17260,7 +17260,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7002,
+    "id": 1570,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17271,7 +17271,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7003,
+    "id": 1571,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17282,7 +17282,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7004,
+    "id": 1572,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17293,7 +17293,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7005,
+    "id": 1573,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17304,7 +17304,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7006,
+    "id": 1574,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17315,7 +17315,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7007,
+    "id": 1575,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17326,7 +17326,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7008,
+    "id": 1576,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17337,7 +17337,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7009,
+    "id": 1577,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17348,7 +17348,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7010,
+    "id": 1578,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17359,7 +17359,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7011,
+    "id": 1579,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17370,7 +17370,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7012,
+    "id": 1580,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17381,7 +17381,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7013,
+    "id": 1581,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17392,7 +17392,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7014,
+    "id": 1582,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17403,7 +17403,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7015,
+    "id": 1583,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17414,7 +17414,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7016,
+    "id": 1584,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17425,7 +17425,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7017,
+    "id": 1585,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17436,7 +17436,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7018,
+    "id": 1586,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17447,7 +17447,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7019,
+    "id": 1587,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17458,7 +17458,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7020,
+    "id": 1588,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17469,7 +17469,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7021,
+    "id": 1589,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17480,7 +17480,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7022,
+    "id": 1590,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17491,7 +17491,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7023,
+    "id": 1591,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17502,7 +17502,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7024,
+    "id": 1592,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17513,7 +17513,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7025,
+    "id": 1593,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17524,7 +17524,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7026,
+    "id": 1594,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17535,7 +17535,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7027,
+    "id": 1595,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17546,7 +17546,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7028,
+    "id": 1596,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17557,7 +17557,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7029,
+    "id": 1597,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17568,7 +17568,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7030,
+    "id": 1598,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17579,7 +17579,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7031,
+    "id": 1599,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17590,7 +17590,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7032,
+    "id": 1600,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17601,7 +17601,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7033,
+    "id": 1601,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17612,7 +17612,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7034,
+    "id": 1602,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17623,7 +17623,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 7035,
+    "id": 1603,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17634,7 +17634,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7036,
+    "id": 1604,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17645,7 +17645,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7037,
+    "id": 1605,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17656,7 +17656,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7038,
+    "id": 1606,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17667,7 +17667,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7039,
+    "id": 1607,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17678,7 +17678,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7040,
+    "id": 1608,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17689,7 +17689,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7041,
+    "id": 1609,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17700,7 +17700,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7042,
+    "id": 1610,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17711,7 +17711,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7043,
+    "id": 1611,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17722,7 +17722,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7044,
+    "id": 1612,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17733,7 +17733,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7045,
+    "id": 1613,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17744,7 +17744,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7046,
+    "id": 1614,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17755,7 +17755,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7047,
+    "id": 1615,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17766,7 +17766,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7048,
+    "id": 1616,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17777,7 +17777,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7049,
+    "id": 1617,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17788,7 +17788,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7050,
+    "id": 1618,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17799,7 +17799,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7051,
+    "id": 1619,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17810,7 +17810,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7052,
+    "id": 1620,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17821,7 +17821,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7053,
+    "id": 1621,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17832,7 +17832,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7054,
+    "id": 1622,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17843,7 +17843,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7055,
+    "id": 1623,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17854,7 +17854,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7056,
+    "id": 1624,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17865,7 +17865,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7057,
+    "id": 1625,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17876,7 +17876,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7058,
+    "id": 1626,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17887,7 +17887,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7059,
+    "id": 1627,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17898,7 +17898,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 7060,
+    "id": 1628,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17909,7 +17909,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7061,
+    "id": 1629,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17920,7 +17920,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7062,
+    "id": 1630,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17931,7 +17931,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7063,
+    "id": 1631,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17942,7 +17942,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7064,
+    "id": 1632,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17953,7 +17953,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7065,
+    "id": 1633,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17964,7 +17964,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7066,
+    "id": 1634,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17975,7 +17975,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7067,
+    "id": 1635,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17986,7 +17986,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7068,
+    "id": 1636,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -17997,7 +17997,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7069,
+    "id": 1637,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18008,7 +18008,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7070,
+    "id": 1638,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18019,7 +18019,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7071,
+    "id": 1639,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18030,7 +18030,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7072,
+    "id": 1640,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18041,7 +18041,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7073,
+    "id": 1641,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18052,7 +18052,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7074,
+    "id": 1642,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18063,7 +18063,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7075,
+    "id": 1643,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18074,7 +18074,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 7076,
+    "id": 1644,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18085,7 +18085,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7077,
+    "id": 1645,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18096,7 +18096,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7078,
+    "id": 1646,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18107,7 +18107,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7079,
+    "id": 1647,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18118,7 +18118,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7080,
+    "id": 1648,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18129,7 +18129,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7081,
+    "id": 1649,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18140,7 +18140,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7082,
+    "id": 1650,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18151,7 +18151,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7083,
+    "id": 1651,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18162,7 +18162,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7084,
+    "id": 1652,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18173,7 +18173,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7085,
+    "id": 1653,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18184,7 +18184,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 7086,
+    "id": 1654,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18195,7 +18195,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7087,
+    "id": 1655,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18206,7 +18206,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7088,
+    "id": 1656,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18217,7 +18217,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7089,
+    "id": 1657,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18228,7 +18228,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7090,
+    "id": 1658,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18239,7 +18239,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7091,
+    "id": 1659,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18250,7 +18250,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7092,
+    "id": 1660,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18261,7 +18261,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7093,
+    "id": 1661,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18272,7 +18272,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7094,
+    "id": 1662,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18283,7 +18283,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7095,
+    "id": 1663,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18294,7 +18294,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7096,
+    "id": 1664,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18305,7 +18305,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7097,
+    "id": 1665,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18316,7 +18316,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7098,
+    "id": 1666,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18327,7 +18327,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7099,
+    "id": 1667,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18338,7 +18338,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7100,
+    "id": 1668,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18349,7 +18349,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7101,
+    "id": 1669,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18360,7 +18360,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7102,
+    "id": 1670,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18371,7 +18371,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7103,
+    "id": 1671,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18382,7 +18382,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7104,
+    "id": 1672,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18393,7 +18393,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7105,
+    "id": 1673,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18404,7 +18404,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7106,
+    "id": 1674,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18415,7 +18415,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7107,
+    "id": 1675,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18426,7 +18426,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7108,
+    "id": 1676,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18437,7 +18437,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7109,
+    "id": 1677,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18448,7 +18448,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7110,
+    "id": 1678,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18459,7 +18459,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7111,
+    "id": 1679,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18470,7 +18470,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7112,
+    "id": 1680,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18481,7 +18481,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7113,
+    "id": 1681,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18492,7 +18492,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7114,
+    "id": 1682,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18503,7 +18503,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7115,
+    "id": 1683,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18514,7 +18514,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7116,
+    "id": 1684,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18525,7 +18525,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7117,
+    "id": 1685,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18536,7 +18536,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7118,
+    "id": 1686,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18547,7 +18547,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7119,
+    "id": 1687,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18558,7 +18558,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7120,
+    "id": 1688,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18569,7 +18569,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7121,
+    "id": 1689,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18580,7 +18580,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7122,
+    "id": 1690,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18591,7 +18591,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7123,
+    "id": 1691,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18602,7 +18602,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7124,
+    "id": 1692,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18613,7 +18613,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7125,
+    "id": 1693,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18624,7 +18624,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7126,
+    "id": 1694,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18635,7 +18635,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7127,
+    "id": 1695,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18646,7 +18646,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7128,
+    "id": 1696,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18657,7 +18657,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7129,
+    "id": 1697,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18668,7 +18668,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7130,
+    "id": 1698,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18679,7 +18679,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7131,
+    "id": 1699,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18690,7 +18690,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7132,
+    "id": 1700,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18701,7 +18701,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7133,
+    "id": 1701,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18712,7 +18712,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7134,
+    "id": 1702,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18723,7 +18723,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7135,
+    "id": 1703,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18734,7 +18734,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7136,
+    "id": 1704,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18745,7 +18745,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7137,
+    "id": 1705,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18756,7 +18756,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7138,
+    "id": 1706,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18767,7 +18767,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7139,
+    "id": 1707,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18778,7 +18778,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7140,
+    "id": 1708,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18789,7 +18789,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7141,
+    "id": 1709,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18800,7 +18800,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7142,
+    "id": 1710,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18811,7 +18811,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7143,
+    "id": 1711,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18822,7 +18822,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7144,
+    "id": 1712,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18833,7 +18833,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7145,
+    "id": 1713,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18844,7 +18844,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7146,
+    "id": 1714,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18855,7 +18855,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7147,
+    "id": 1715,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18866,7 +18866,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7148,
+    "id": 1716,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18877,7 +18877,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7149,
+    "id": 1717,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18888,7 +18888,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7150,
+    "id": 1718,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18899,7 +18899,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7151,
+    "id": 1719,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18910,7 +18910,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7152,
+    "id": 1720,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18921,7 +18921,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7153,
+    "id": 1721,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18932,7 +18932,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7154,
+    "id": 1722,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18943,7 +18943,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7155,
+    "id": 1723,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18954,7 +18954,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7156,
+    "id": 1724,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18965,7 +18965,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7157,
+    "id": 1725,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18976,7 +18976,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7158,
+    "id": 1726,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18987,7 +18987,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7159,
+    "id": 1727,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -18998,7 +18998,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7160,
+    "id": 1728,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19009,7 +19009,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7161,
+    "id": 1729,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19020,7 +19020,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7162,
+    "id": 1730,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19031,7 +19031,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7163,
+    "id": 1731,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19042,7 +19042,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7164,
+    "id": 1732,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19053,7 +19053,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7165,
+    "id": 1733,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19064,7 +19064,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 7166,
+    "id": 1734,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19075,7 +19075,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7167,
+    "id": 1735,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19086,7 +19086,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7168,
+    "id": 1736,
     "ubigeo": "140137",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19097,7 +19097,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7169,
+    "id": 1737,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19108,7 +19108,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7170,
+    "id": 1738,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19119,7 +19119,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7171,
+    "id": 1739,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19130,7 +19130,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7172,
+    "id": 1740,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19141,7 +19141,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7173,
+    "id": 1741,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19152,7 +19152,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7174,
+    "id": 1742,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19163,7 +19163,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 7175,
+    "id": 1743,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19174,7 +19174,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7176,
+    "id": 1744,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19185,7 +19185,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7177,
+    "id": 1745,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19196,7 +19196,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7178,
+    "id": 1746,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19207,7 +19207,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7179,
+    "id": 1747,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19218,7 +19218,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7180,
+    "id": 1748,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19229,7 +19229,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7181,
+    "id": 1749,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19240,7 +19240,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7182,
+    "id": 1750,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19251,7 +19251,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7183,
+    "id": 1751,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19262,7 +19262,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7184,
+    "id": 1752,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19273,7 +19273,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7185,
+    "id": 1753,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19284,7 +19284,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7186,
+    "id": 1754,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19295,7 +19295,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7187,
+    "id": 1755,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19306,7 +19306,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7188,
+    "id": 1756,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19317,7 +19317,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7189,
+    "id": 1757,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19328,7 +19328,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7190,
+    "id": 1758,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19339,7 +19339,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7191,
+    "id": 1759,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19350,7 +19350,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7192,
+    "id": 1760,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19361,7 +19361,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7193,
+    "id": 1761,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19372,7 +19372,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7194,
+    "id": 1762,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19383,7 +19383,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7195,
+    "id": 1763,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19394,7 +19394,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7196,
+    "id": 1764,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19405,7 +19405,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7197,
+    "id": 1765,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19416,7 +19416,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7198,
+    "id": 1766,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19427,7 +19427,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7199,
+    "id": 1767,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19438,7 +19438,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7200,
+    "id": 1768,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19449,7 +19449,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7201,
+    "id": 1769,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19460,7 +19460,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7202,
+    "id": 1770,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19471,7 +19471,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7203,
+    "id": 1771,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19482,7 +19482,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7204,
+    "id": 1772,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19493,7 +19493,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7205,
+    "id": 1773,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19504,7 +19504,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7206,
+    "id": 1774,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19515,7 +19515,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7207,
+    "id": 1775,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19526,7 +19526,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7208,
+    "id": 1776,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19537,7 +19537,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7209,
+    "id": 1777,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19548,7 +19548,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7210,
+    "id": 1778,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19559,7 +19559,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7211,
+    "id": 1779,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19570,7 +19570,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 7212,
+    "id": 1780,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19581,7 +19581,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7213,
+    "id": 1781,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19592,7 +19592,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7214,
+    "id": 1782,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19603,7 +19603,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7215,
+    "id": 1783,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19614,7 +19614,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 7216,
+    "id": 1784,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19625,7 +19625,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7217,
+    "id": 1785,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19636,7 +19636,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7218,
+    "id": 1786,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19647,7 +19647,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7219,
+    "id": 1787,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19658,7 +19658,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7220,
+    "id": 1788,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19669,7 +19669,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7221,
+    "id": 1789,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19680,7 +19680,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7222,
+    "id": 1790,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19691,7 +19691,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7223,
+    "id": 1791,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19702,7 +19702,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7224,
+    "id": 1792,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19713,7 +19713,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7225,
+    "id": 1793,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19724,7 +19724,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7226,
+    "id": 1794,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19735,7 +19735,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7227,
+    "id": 1795,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19746,7 +19746,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7228,
+    "id": 1796,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19757,7 +19757,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7229,
+    "id": 1797,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19768,7 +19768,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7230,
+    "id": 1798,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19779,7 +19779,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7231,
+    "id": 1799,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19790,7 +19790,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7232,
+    "id": 1800,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19801,7 +19801,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7233,
+    "id": 1801,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19812,7 +19812,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7234,
+    "id": 1802,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19823,7 +19823,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7235,
+    "id": 1803,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19834,7 +19834,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7236,
+    "id": 1804,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19845,7 +19845,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7237,
+    "id": 1805,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19856,7 +19856,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7238,
+    "id": 1806,
     "ubigeo": "140136",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19867,7 +19867,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7239,
+    "id": 1807,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19878,7 +19878,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7240,
+    "id": 1808,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19889,7 +19889,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7241,
+    "id": 1809,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19900,7 +19900,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7242,
+    "id": 1810,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19911,7 +19911,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7243,
+    "id": 1811,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19922,7 +19922,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7244,
+    "id": 1812,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19933,7 +19933,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7245,
+    "id": 1813,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19944,7 +19944,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7246,
+    "id": 1814,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19955,7 +19955,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7247,
+    "id": 1815,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19966,7 +19966,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7248,
+    "id": 1816,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19977,7 +19977,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7249,
+    "id": 1817,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19988,7 +19988,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7250,
+    "id": 1818,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -19999,7 +19999,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7251,
+    "id": 1819,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20010,7 +20010,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7252,
+    "id": 1820,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20021,7 +20021,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7253,
+    "id": 1821,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20032,7 +20032,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 7254,
+    "id": 1822,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20043,7 +20043,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7255,
+    "id": 1823,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20054,7 +20054,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7256,
+    "id": 1824,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20065,7 +20065,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7257,
+    "id": 1825,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20076,7 +20076,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7258,
+    "id": 1826,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20087,7 +20087,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7259,
+    "id": 1827,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20098,7 +20098,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7260,
+    "id": 1828,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20109,7 +20109,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7261,
+    "id": 1829,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20120,7 +20120,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7262,
+    "id": 1830,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20131,7 +20131,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7263,
+    "id": 1831,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20142,7 +20142,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7264,
+    "id": 1832,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20153,7 +20153,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7265,
+    "id": 1833,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20164,7 +20164,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7266,
+    "id": 1834,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20175,7 +20175,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7267,
+    "id": 1835,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20186,7 +20186,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7268,
+    "id": 1836,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20197,7 +20197,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7269,
+    "id": 1837,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20208,7 +20208,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7270,
+    "id": 1838,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20219,7 +20219,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7271,
+    "id": 1839,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20230,7 +20230,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7272,
+    "id": 1840,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20241,7 +20241,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7273,
+    "id": 1841,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20252,7 +20252,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7274,
+    "id": 1842,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20263,7 +20263,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7275,
+    "id": 1843,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20274,7 +20274,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7276,
+    "id": 1844,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20285,7 +20285,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7277,
+    "id": 1845,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20296,7 +20296,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7278,
+    "id": 1846,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20307,7 +20307,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7279,
+    "id": 1847,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20318,7 +20318,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7280,
+    "id": 1848,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20329,7 +20329,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7281,
+    "id": 1849,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20340,7 +20340,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7282,
+    "id": 1850,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20351,7 +20351,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7283,
+    "id": 1851,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20362,7 +20362,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7284,
+    "id": 1852,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20373,7 +20373,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7285,
+    "id": 1853,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20384,7 +20384,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7286,
+    "id": 1854,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20395,7 +20395,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7287,
+    "id": 1855,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20406,7 +20406,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7288,
+    "id": 1856,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20417,7 +20417,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7289,
+    "id": 1857,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20428,7 +20428,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7290,
+    "id": 1858,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20439,7 +20439,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7291,
+    "id": 1859,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20450,7 +20450,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7292,
+    "id": 1860,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20461,7 +20461,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7293,
+    "id": 1861,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20472,7 +20472,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7294,
+    "id": 1862,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20483,7 +20483,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7295,
+    "id": 1863,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20494,7 +20494,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7296,
+    "id": 1864,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20505,7 +20505,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7297,
+    "id": 1865,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20516,7 +20516,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7298,
+    "id": 1866,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20527,7 +20527,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7299,
+    "id": 1867,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20538,7 +20538,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7300,
+    "id": 1868,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20549,7 +20549,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7301,
+    "id": 1869,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20560,7 +20560,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7302,
+    "id": 1870,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20571,7 +20571,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7303,
+    "id": 1871,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20582,7 +20582,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7304,
+    "id": 1872,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20593,7 +20593,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7305,
+    "id": 1873,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20604,7 +20604,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7306,
+    "id": 1874,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20615,7 +20615,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7307,
+    "id": 1875,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20626,7 +20626,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7308,
+    "id": 1876,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20637,7 +20637,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7309,
+    "id": 1877,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20648,7 +20648,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7310,
+    "id": 1878,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20659,7 +20659,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7311,
+    "id": 1879,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20670,7 +20670,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7312,
+    "id": 1880,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20681,7 +20681,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7313,
+    "id": 1881,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20692,7 +20692,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7314,
+    "id": 1882,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20703,7 +20703,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7315,
+    "id": 1883,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20714,7 +20714,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7316,
+    "id": 1884,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20725,7 +20725,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7317,
+    "id": 1885,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20736,7 +20736,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7318,
+    "id": 1886,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20747,7 +20747,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7319,
+    "id": 1887,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20758,7 +20758,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7320,
+    "id": 1888,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20769,7 +20769,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7321,
+    "id": 1889,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20780,7 +20780,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7322,
+    "id": 1890,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20791,7 +20791,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7323,
+    "id": 1891,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20802,7 +20802,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7324,
+    "id": 1892,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20813,7 +20813,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7325,
+    "id": 1893,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20824,7 +20824,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7326,
+    "id": 1894,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20835,7 +20835,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7327,
+    "id": 1895,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20846,7 +20846,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7328,
+    "id": 1896,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20857,7 +20857,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7329,
+    "id": 1897,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20868,7 +20868,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7330,
+    "id": 1898,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20879,7 +20879,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7331,
+    "id": 1899,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20890,7 +20890,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7332,
+    "id": 1900,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20901,7 +20901,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7333,
+    "id": 1901,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20912,7 +20912,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7334,
+    "id": 1902,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20923,7 +20923,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7335,
+    "id": 1903,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20934,7 +20934,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7336,
+    "id": 1904,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20945,7 +20945,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7337,
+    "id": 1905,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20956,7 +20956,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7338,
+    "id": 1906,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20967,7 +20967,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7339,
+    "id": 1907,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20978,7 +20978,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7340,
+    "id": 1908,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -20989,7 +20989,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7341,
+    "id": 1909,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21000,7 +21000,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7342,
+    "id": 1910,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21011,7 +21011,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7343,
+    "id": 1911,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21022,7 +21022,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7344,
+    "id": 1912,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21033,7 +21033,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7345,
+    "id": 1913,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21044,7 +21044,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7346,
+    "id": 1914,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21055,7 +21055,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7347,
+    "id": 1915,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21066,7 +21066,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7348,
+    "id": 1916,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21077,7 +21077,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7349,
+    "id": 1917,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21088,7 +21088,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7350,
+    "id": 1918,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21099,7 +21099,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7351,
+    "id": 1919,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21110,7 +21110,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7352,
+    "id": 1920,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21121,7 +21121,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7353,
+    "id": 1921,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21132,7 +21132,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7354,
+    "id": 1922,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21143,7 +21143,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7355,
+    "id": 1923,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21154,7 +21154,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7356,
+    "id": 1924,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21165,7 +21165,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7357,
+    "id": 1925,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21176,7 +21176,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7358,
+    "id": 1926,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21187,7 +21187,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7359,
+    "id": 1927,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21198,7 +21198,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7360,
+    "id": 1928,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21209,7 +21209,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7361,
+    "id": 1929,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21220,7 +21220,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7362,
+    "id": 1930,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21231,7 +21231,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7363,
+    "id": 1931,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21242,7 +21242,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7364,
+    "id": 1932,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21253,7 +21253,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7365,
+    "id": 1933,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21264,7 +21264,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7366,
+    "id": 1934,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21275,7 +21275,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7367,
+    "id": 1935,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21286,7 +21286,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7368,
+    "id": 1936,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21297,7 +21297,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7369,
+    "id": 1937,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21308,7 +21308,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7370,
+    "id": 1938,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21319,7 +21319,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7371,
+    "id": 1939,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21330,7 +21330,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7372,
+    "id": 1940,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21341,7 +21341,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7373,
+    "id": 1941,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21352,7 +21352,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7374,
+    "id": 1942,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21363,7 +21363,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7375,
+    "id": 1943,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21374,7 +21374,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7376,
+    "id": 1944,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21385,7 +21385,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7377,
+    "id": 1945,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21396,7 +21396,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7378,
+    "id": 1946,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21407,7 +21407,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7379,
+    "id": 1947,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21418,7 +21418,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7380,
+    "id": 1948,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21429,7 +21429,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7381,
+    "id": 1949,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21440,7 +21440,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7382,
+    "id": 1950,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21451,7 +21451,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7383,
+    "id": 1951,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21462,7 +21462,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7384,
+    "id": 1952,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21473,7 +21473,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7385,
+    "id": 1953,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21484,7 +21484,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7386,
+    "id": 1954,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21495,7 +21495,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7387,
+    "id": 1955,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21506,7 +21506,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7388,
+    "id": 1956,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21517,7 +21517,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7389,
+    "id": 1957,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21528,7 +21528,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7390,
+    "id": 1958,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21539,7 +21539,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7391,
+    "id": 1959,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21550,7 +21550,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7392,
+    "id": 1960,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21561,7 +21561,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7393,
+    "id": 1961,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21572,7 +21572,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7394,
+    "id": 1962,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21583,7 +21583,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7395,
+    "id": 1963,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21594,7 +21594,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7396,
+    "id": 1964,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21605,7 +21605,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7397,
+    "id": 1965,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21616,7 +21616,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7398,
+    "id": 1966,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21627,7 +21627,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7399,
+    "id": 1967,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21638,7 +21638,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7400,
+    "id": 1968,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21649,7 +21649,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7401,
+    "id": 1969,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21660,7 +21660,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7402,
+    "id": 1970,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21671,7 +21671,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7403,
+    "id": 1971,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21682,7 +21682,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7404,
+    "id": 1972,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21693,7 +21693,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7405,
+    "id": 1973,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21704,7 +21704,7 @@ export const LOCALES_OFICIALES = [
     "electores": 900
   },
   {
-    "id": 7406,
+    "id": 1974,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21715,7 +21715,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7407,
+    "id": 1975,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21726,7 +21726,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7408,
+    "id": 1976,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21737,7 +21737,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12900
   },
   {
-    "id": 7409,
+    "id": 1977,
     "ubigeo": "140126",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21748,7 +21748,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7410,
+    "id": 1978,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21759,7 +21759,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7411,
+    "id": 1979,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21770,7 +21770,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7412,
+    "id": 1980,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21781,7 +21781,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7413,
+    "id": 1981,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21792,7 +21792,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7414,
+    "id": 1982,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21803,7 +21803,7 @@ export const LOCALES_OFICIALES = [
     "electores": 15000
   },
   {
-    "id": 7415,
+    "id": 1983,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21814,7 +21814,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7416,
+    "id": 1984,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21825,7 +21825,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7417,
+    "id": 1985,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21836,7 +21836,7 @@ export const LOCALES_OFICIALES = [
     "electores": 17400
   },
   {
-    "id": 7418,
+    "id": 1986,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21847,7 +21847,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7419,
+    "id": 1987,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21858,7 +21858,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7420,
+    "id": 1988,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21869,7 +21869,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7421,
+    "id": 1989,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21880,7 +21880,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7422,
+    "id": 1990,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21891,7 +21891,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7423,
+    "id": 1991,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21902,7 +21902,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7424,
+    "id": 1992,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21913,7 +21913,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12000
   },
   {
-    "id": 7425,
+    "id": 1993,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21924,7 +21924,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7426,
+    "id": 1994,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21935,7 +21935,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7427,
+    "id": 1995,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21946,7 +21946,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7428,
+    "id": 1996,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21957,7 +21957,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7429,
+    "id": 1997,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21968,7 +21968,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7430,
+    "id": 1998,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21979,7 +21979,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7431,
+    "id": 1999,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -21990,7 +21990,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7432,
+    "id": 2000,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22001,7 +22001,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7433,
+    "id": 2001,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22012,7 +22012,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7434,
+    "id": 2002,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22023,7 +22023,7 @@ export const LOCALES_OFICIALES = [
     "electores": 14400
   },
   {
-    "id": 7435,
+    "id": 2003,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22034,7 +22034,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7436,
+    "id": 2004,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22045,7 +22045,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7437,
+    "id": 2005,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22056,7 +22056,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7438,
+    "id": 2006,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22067,7 +22067,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7439,
+    "id": 2007,
     "ubigeo": "140127",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22078,7 +22078,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7440,
+    "id": 2008,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22089,7 +22089,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7441,
+    "id": 2009,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22100,7 +22100,7 @@ export const LOCALES_OFICIALES = [
     "electores": 15300
   },
   {
-    "id": 7442,
+    "id": 2010,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22111,7 +22111,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7443,
+    "id": 2011,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22122,7 +22122,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7444,
+    "id": 2012,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22133,7 +22133,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7445,
+    "id": 2013,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22144,7 +22144,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7446,
+    "id": 2014,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22155,7 +22155,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7447,
+    "id": 2015,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22166,7 +22166,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11100
   },
   {
-    "id": 7448,
+    "id": 2016,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22177,7 +22177,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7449,
+    "id": 2017,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22188,7 +22188,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7450,
+    "id": 2018,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22199,7 +22199,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7451,
+    "id": 2019,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22210,7 +22210,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7452,
+    "id": 2020,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22221,7 +22221,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7453,
+    "id": 2021,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22232,7 +22232,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7454,
+    "id": 2022,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22243,7 +22243,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7455,
+    "id": 2023,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22254,7 +22254,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7456,
+    "id": 2024,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22265,7 +22265,7 @@ export const LOCALES_OFICIALES = [
     "electores": 11700
   },
   {
-    "id": 7457,
+    "id": 2025,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22276,7 +22276,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7458,
+    "id": 2026,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22287,7 +22287,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7459,
+    "id": 2027,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22298,7 +22298,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12000
   },
   {
-    "id": 7460,
+    "id": 2028,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22309,7 +22309,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7461,
+    "id": 2029,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22320,7 +22320,7 @@ export const LOCALES_OFICIALES = [
     "electores": 18900
   },
   {
-    "id": 7462,
+    "id": 2030,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22331,7 +22331,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7463,
+    "id": 2031,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22342,7 +22342,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7464,
+    "id": 2032,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22353,7 +22353,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7465,
+    "id": 2033,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22364,7 +22364,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7466,
+    "id": 2034,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22375,7 +22375,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7467,
+    "id": 2035,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22386,7 +22386,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7468,
+    "id": 2036,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22397,7 +22397,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7469,
+    "id": 2037,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22408,7 +22408,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7470,
+    "id": 2038,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22419,7 +22419,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7471,
+    "id": 2039,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22430,7 +22430,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7472,
+    "id": 2040,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22441,7 +22441,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7473,
+    "id": 2041,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22452,7 +22452,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7474,
+    "id": 2042,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22463,7 +22463,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7475,
+    "id": 2043,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22474,7 +22474,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7476,
+    "id": 2044,
     "ubigeo": "140143",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22485,7 +22485,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7477,
+    "id": 2045,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22496,7 +22496,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7478,
+    "id": 2046,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22507,7 +22507,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7479,
+    "id": 2047,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22518,7 +22518,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7480,
+    "id": 2048,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22529,7 +22529,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7481,
+    "id": 2049,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22540,7 +22540,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 7482,
+    "id": 2050,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22551,7 +22551,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7483,
+    "id": 2051,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22562,7 +22562,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7484,
+    "id": 2052,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22573,7 +22573,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7485,
+    "id": 2053,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22584,7 +22584,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7486,
+    "id": 2054,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22595,7 +22595,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7487,
+    "id": 2055,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22606,7 +22606,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7488,
+    "id": 2056,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22617,7 +22617,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7489,
+    "id": 2057,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22628,7 +22628,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7490,
+    "id": 2058,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22639,7 +22639,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7491,
+    "id": 2059,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22650,7 +22650,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7492,
+    "id": 2060,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22661,7 +22661,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7493,
+    "id": 2061,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22672,7 +22672,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7494,
+    "id": 2062,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22683,7 +22683,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7495,
+    "id": 2063,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22694,7 +22694,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7496,
+    "id": 2064,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22705,7 +22705,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7497,
+    "id": 2065,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22716,7 +22716,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7498,
+    "id": 2066,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22727,7 +22727,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7499,
+    "id": 2067,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22738,7 +22738,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7500,
+    "id": 2068,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22749,7 +22749,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7501,
+    "id": 2069,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22760,7 +22760,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7502,
+    "id": 2070,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22771,7 +22771,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7503,
+    "id": 2071,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22782,7 +22782,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7504,
+    "id": 2072,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22793,7 +22793,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7505,
+    "id": 2073,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22804,7 +22804,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7506,
+    "id": 2074,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22815,7 +22815,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7507,
+    "id": 2075,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22826,7 +22826,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7508,
+    "id": 2076,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22837,7 +22837,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7509,
+    "id": 2077,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22848,7 +22848,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7510,
+    "id": 2078,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22859,7 +22859,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7511,
+    "id": 2079,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22870,7 +22870,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7512,
+    "id": 2080,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22881,7 +22881,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7513,
+    "id": 2081,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22892,7 +22892,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7514,
+    "id": 2082,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22903,7 +22903,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7515,
+    "id": 2083,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22914,7 +22914,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7516,
+    "id": 2084,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22925,7 +22925,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7517,
+    "id": 2085,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22936,7 +22936,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7518,
+    "id": 2086,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22947,7 +22947,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7519,
+    "id": 2087,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22958,7 +22958,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7520,
+    "id": 2088,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22969,7 +22969,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7521,
+    "id": 2089,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22980,7 +22980,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7522,
+    "id": 2090,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -22991,7 +22991,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7523,
+    "id": 2091,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23002,7 +23002,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7524,
+    "id": 2092,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23013,7 +23013,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7525,
+    "id": 2093,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23024,7 +23024,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7526,
+    "id": 2094,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23035,7 +23035,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7527,
+    "id": 2095,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23046,7 +23046,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7528,
+    "id": 2096,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23057,7 +23057,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7529,
+    "id": 2097,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23068,7 +23068,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7530,
+    "id": 2098,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23079,7 +23079,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7531,
+    "id": 2099,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23090,7 +23090,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7532,
+    "id": 2100,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23101,7 +23101,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7533,
+    "id": 2101,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23112,7 +23112,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7534,
+    "id": 2102,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23123,7 +23123,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7535,
+    "id": 2103,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23134,7 +23134,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7536,
+    "id": 2104,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23145,7 +23145,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7537,
+    "id": 2105,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23156,7 +23156,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7538,
+    "id": 2106,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23167,7 +23167,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7539,
+    "id": 2107,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23178,7 +23178,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7540,
+    "id": 2108,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23189,7 +23189,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7541,
+    "id": 2109,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23200,7 +23200,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7542,
+    "id": 2110,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23211,7 +23211,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 7543,
+    "id": 2111,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23222,7 +23222,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7544,
+    "id": 2112,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23233,7 +23233,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7545,
+    "id": 2113,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23244,7 +23244,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7546,
+    "id": 2114,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23255,7 +23255,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7547,
+    "id": 2115,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23266,7 +23266,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7548,
+    "id": 2116,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23277,7 +23277,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7549,
+    "id": 2117,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23288,7 +23288,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7550,
+    "id": 2118,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23299,7 +23299,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7551,
+    "id": 2119,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23310,7 +23310,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7552,
+    "id": 2120,
     "ubigeo": "140141",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -23321,7 +23321,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7553,
+    "id": 2121,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23332,7 +23332,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7554,
+    "id": 2122,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23343,7 +23343,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7555,
+    "id": 2123,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23354,7 +23354,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7556,
+    "id": 2124,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23365,7 +23365,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7557,
+    "id": 2125,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23376,7 +23376,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10500
   },
   {
-    "id": 7558,
+    "id": 2126,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23387,7 +23387,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7559,
+    "id": 2127,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23398,7 +23398,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7560,
+    "id": 2128,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23409,7 +23409,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 7561,
+    "id": 2129,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23420,7 +23420,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7562,
+    "id": 2130,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23431,7 +23431,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7563,
+    "id": 2131,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23442,7 +23442,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7564,
+    "id": 2132,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23453,7 +23453,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7565,
+    "id": 2133,
     "ubigeo": "070102",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23464,7 +23464,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7566,
+    "id": 2134,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23475,7 +23475,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7567,
+    "id": 2135,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23486,7 +23486,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7568,
+    "id": 2136,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23497,7 +23497,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7569,
+    "id": 2137,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23508,7 +23508,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7570,
+    "id": 2138,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23519,7 +23519,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7571,
+    "id": 2139,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23530,7 +23530,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7572,
+    "id": 2140,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23541,7 +23541,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7573,
+    "id": 2141,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23552,7 +23552,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7574,
+    "id": 2142,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23563,7 +23563,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7575,
+    "id": 2143,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23574,7 +23574,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7576,
+    "id": 2144,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23585,7 +23585,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7577,
+    "id": 2145,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23596,7 +23596,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7578,
+    "id": 2146,
     "ubigeo": "070103",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23607,7 +23607,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7579,
+    "id": 2147,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23618,7 +23618,7 @@ export const LOCALES_OFICIALES = [
     "electores": 13200
   },
   {
-    "id": 7580,
+    "id": 2148,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23629,7 +23629,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7581,
+    "id": 2149,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23640,7 +23640,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 7582,
+    "id": 2150,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23651,7 +23651,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7583,
+    "id": 2151,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23662,7 +23662,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7584,
+    "id": 2152,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23673,7 +23673,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7585,
+    "id": 2153,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23684,7 +23684,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7586,
+    "id": 2154,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23695,7 +23695,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7587,
+    "id": 2155,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23706,7 +23706,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7588,
+    "id": 2156,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23717,7 +23717,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7589,
+    "id": 2157,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23728,7 +23728,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7590,
+    "id": 2158,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23739,7 +23739,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7591,
+    "id": 2159,
     "ubigeo": "070104",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23750,7 +23750,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7592,
+    "id": 2160,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23761,7 +23761,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7593,
+    "id": 2161,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23772,7 +23772,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7594,
+    "id": 2162,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23783,7 +23783,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7595,
+    "id": 2163,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23794,7 +23794,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 7596,
+    "id": 2164,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23805,7 +23805,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7597,
+    "id": 2165,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23816,7 +23816,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7598,
+    "id": 2166,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23827,7 +23827,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7599,
+    "id": 2167,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23838,7 +23838,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7600,
+    "id": 2168,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23849,7 +23849,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7601,
+    "id": 2169,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23860,7 +23860,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7602,
+    "id": 2170,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23871,7 +23871,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7603,
+    "id": 2171,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23882,7 +23882,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7604,
+    "id": 2172,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23893,7 +23893,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7605,
+    "id": 2173,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23904,7 +23904,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7606,
+    "id": 2174,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23915,7 +23915,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7607,
+    "id": 2175,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23926,7 +23926,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7608,
+    "id": 2176,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23937,7 +23937,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7609,
+    "id": 2177,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23948,7 +23948,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7610,
+    "id": 2178,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23959,7 +23959,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7611,
+    "id": 2179,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23970,7 +23970,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7612,
+    "id": 2180,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23981,7 +23981,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7613,
+    "id": 2181,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -23992,7 +23992,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7614,
+    "id": 2182,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24003,7 +24003,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7615,
+    "id": 2183,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24014,7 +24014,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7616,
+    "id": 2184,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24025,7 +24025,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7617,
+    "id": 2185,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24036,7 +24036,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7618,
+    "id": 2186,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24047,7 +24047,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7619,
+    "id": 2187,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24058,7 +24058,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7620,
+    "id": 2188,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24069,7 +24069,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7621,
+    "id": 2189,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24080,7 +24080,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7622,
+    "id": 2190,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24091,7 +24091,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7623,
+    "id": 2191,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24102,7 +24102,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7624,
+    "id": 2192,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24113,7 +24113,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7625,
+    "id": 2193,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24124,7 +24124,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7626,
+    "id": 2194,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24135,7 +24135,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8700
   },
   {
-    "id": 7627,
+    "id": 2195,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24146,7 +24146,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7628,
+    "id": 2196,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24157,7 +24157,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7629,
+    "id": 2197,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24168,7 +24168,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7630,
+    "id": 2198,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24179,7 +24179,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7631,
+    "id": 2199,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24190,7 +24190,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7632,
+    "id": 2200,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24201,7 +24201,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7633,
+    "id": 2201,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24212,7 +24212,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7634,
+    "id": 2202,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24223,7 +24223,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7635,
+    "id": 2203,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24234,7 +24234,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7636,
+    "id": 2204,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24245,7 +24245,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7637,
+    "id": 2205,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24256,7 +24256,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7638,
+    "id": 2206,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24267,7 +24267,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7639,
+    "id": 2207,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24278,7 +24278,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7640,
+    "id": 2208,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24289,7 +24289,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7641,
+    "id": 2209,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24300,7 +24300,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7642,
+    "id": 2210,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24311,7 +24311,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7643,
+    "id": 2211,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24322,7 +24322,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7644,
+    "id": 2212,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24333,7 +24333,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7645,
+    "id": 2213,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24344,7 +24344,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7646,
+    "id": 2214,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24355,7 +24355,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7647,
+    "id": 2215,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24366,7 +24366,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7648,
+    "id": 2216,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24377,7 +24377,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7649,
+    "id": 2217,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24388,7 +24388,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7650,
+    "id": 2218,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24399,7 +24399,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7651,
+    "id": 2219,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24410,7 +24410,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7652,
+    "id": 2220,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24421,7 +24421,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7653,
+    "id": 2221,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24432,7 +24432,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7654,
+    "id": 2222,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24443,7 +24443,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7655,
+    "id": 2223,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24454,7 +24454,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7656,
+    "id": 2224,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24465,7 +24465,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7657,
+    "id": 2225,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24476,7 +24476,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7658,
+    "id": 2226,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24487,7 +24487,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7659,
+    "id": 2227,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24498,7 +24498,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7660,
+    "id": 2228,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24509,7 +24509,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7661,
+    "id": 2229,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24520,7 +24520,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7662,
+    "id": 2230,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24531,7 +24531,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7663,
+    "id": 2231,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24542,7 +24542,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7664,
+    "id": 2232,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24553,7 +24553,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7665,
+    "id": 2233,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24564,7 +24564,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7666,
+    "id": 2234,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24575,7 +24575,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7667,
+    "id": 2235,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24586,7 +24586,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7668,
+    "id": 2236,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24597,7 +24597,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7669,
+    "id": 2237,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24608,7 +24608,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7670,
+    "id": 2238,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24619,7 +24619,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7671,
+    "id": 2239,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24630,7 +24630,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7672,
+    "id": 2240,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24641,7 +24641,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10500
   },
   {
-    "id": 7673,
+    "id": 2241,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24652,7 +24652,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7674,
+    "id": 2242,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24663,7 +24663,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7675,
+    "id": 2243,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24674,7 +24674,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7676,
+    "id": 2244,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24685,7 +24685,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7677,
+    "id": 2245,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24696,7 +24696,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7678,
+    "id": 2246,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24707,7 +24707,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7679,
+    "id": 2247,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24718,7 +24718,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7680,
+    "id": 2248,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24729,7 +24729,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7681,
+    "id": 2249,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24740,7 +24740,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7682,
+    "id": 2250,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24751,7 +24751,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7683,
+    "id": 2251,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24762,7 +24762,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7684,
+    "id": 2252,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24773,7 +24773,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7685,
+    "id": 2253,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24784,7 +24784,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7686,
+    "id": 2254,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24795,7 +24795,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7687,
+    "id": 2255,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24806,7 +24806,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7688,
+    "id": 2256,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24817,7 +24817,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7689,
+    "id": 2257,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24828,7 +24828,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9900
   },
   {
-    "id": 7690,
+    "id": 2258,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24839,7 +24839,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7691,
+    "id": 2259,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24850,7 +24850,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7692,
+    "id": 2260,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24861,7 +24861,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7693,
+    "id": 2261,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24872,7 +24872,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7694,
+    "id": 2262,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24883,7 +24883,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7695,
+    "id": 2263,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24894,7 +24894,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7696,
+    "id": 2264,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24905,7 +24905,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7697,
+    "id": 2265,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24916,7 +24916,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7698,
+    "id": 2266,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24927,7 +24927,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7699,
+    "id": 2267,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24938,7 +24938,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7700,
+    "id": 2268,
     "ubigeo": "070101",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24949,7 +24949,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7701,
+    "id": 2269,
     "ubigeo": "070105",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24960,7 +24960,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7702,
+    "id": 2270,
     "ubigeo": "070105",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24971,7 +24971,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7703,
+    "id": 2271,
     "ubigeo": "070105",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24982,7 +24982,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7704,
+    "id": 2272,
     "ubigeo": "070105",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -24993,7 +24993,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7705,
+    "id": 2273,
     "ubigeo": "070105",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25004,7 +25004,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7706,
+    "id": 2274,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25015,7 +25015,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7707,
+    "id": 2275,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25026,7 +25026,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7708,
+    "id": 2276,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25037,7 +25037,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7709,
+    "id": 2277,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25048,7 +25048,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7710,
+    "id": 2278,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25059,7 +25059,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7711,
+    "id": 2279,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25070,7 +25070,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7712,
+    "id": 2280,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25081,7 +25081,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7713,
+    "id": 2281,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25092,7 +25092,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7714,
+    "id": 2282,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25103,7 +25103,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7715,
+    "id": 2283,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25114,7 +25114,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6600
   },
   {
-    "id": 7716,
+    "id": 2284,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25125,7 +25125,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7717,
+    "id": 2285,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25136,7 +25136,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7718,
+    "id": 2286,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25147,7 +25147,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7719,
+    "id": 2287,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25158,7 +25158,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7720,
+    "id": 2288,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25169,7 +25169,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7721,
+    "id": 2289,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25180,7 +25180,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1200
   },
   {
-    "id": 7722,
+    "id": 2290,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25191,7 +25191,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7723,
+    "id": 2291,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25202,7 +25202,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7724,
+    "id": 2292,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25213,7 +25213,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7725,
+    "id": 2293,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25224,7 +25224,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7726,
+    "id": 2294,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25235,7 +25235,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7727,
+    "id": 2295,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25246,7 +25246,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7728,
+    "id": 2296,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25257,7 +25257,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7729,
+    "id": 2297,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25268,7 +25268,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7730,
+    "id": 2298,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25279,7 +25279,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7731,
+    "id": 2299,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25290,7 +25290,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7732,
+    "id": 2300,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25301,7 +25301,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7733,
+    "id": 2301,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25312,7 +25312,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7734,
+    "id": 2302,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25323,7 +25323,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7735,
+    "id": 2303,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25334,7 +25334,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 7736,
+    "id": 2304,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25345,7 +25345,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7737,
+    "id": 2305,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25356,7 +25356,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7738,
+    "id": 2306,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25367,7 +25367,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 7739,
+    "id": 2307,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25378,7 +25378,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7740,
+    "id": 2308,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25389,7 +25389,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7741,
+    "id": 2309,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25400,7 +25400,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7742,
+    "id": 2310,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25411,7 +25411,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7743,
+    "id": 2311,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25422,7 +25422,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7744,
+    "id": 2312,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25433,7 +25433,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8100
   },
   {
-    "id": 7745,
+    "id": 2313,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25444,7 +25444,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7746,
+    "id": 2314,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25455,7 +25455,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7747,
+    "id": 2315,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25466,7 +25466,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7748,
+    "id": 2316,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25477,7 +25477,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7749,
+    "id": 2317,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25488,7 +25488,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 7750,
+    "id": 2318,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25499,7 +25499,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7751,
+    "id": 2319,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25510,7 +25510,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7752,
+    "id": 2320,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25521,7 +25521,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7753,
+    "id": 2321,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25532,7 +25532,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7754,
+    "id": 2322,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25543,7 +25543,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7755,
+    "id": 2323,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25554,7 +25554,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7756,
+    "id": 2324,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25565,7 +25565,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7757,
+    "id": 2325,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25576,7 +25576,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6900
   },
   {
-    "id": 7758,
+    "id": 2326,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25587,7 +25587,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7759,
+    "id": 2327,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25598,7 +25598,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7760,
+    "id": 2328,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25609,7 +25609,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7761,
+    "id": 2329,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25620,7 +25620,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7762,
+    "id": 2330,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25631,7 +25631,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7763,
+    "id": 2331,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25642,7 +25642,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7764,
+    "id": 2332,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25653,7 +25653,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7765,
+    "id": 2333,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25664,7 +25664,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7766,
+    "id": 2334,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25675,7 +25675,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7767,
+    "id": 2335,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25686,7 +25686,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7768,
+    "id": 2336,
     "ubigeo": "070106",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25697,7 +25697,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7769,
+    "id": 2337,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25708,7 +25708,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7770,
+    "id": 2338,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25719,7 +25719,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7771,
+    "id": 2339,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25730,7 +25730,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4200
   },
   {
-    "id": 7772,
+    "id": 2340,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25741,7 +25741,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7773,
+    "id": 2341,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25752,7 +25752,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7500
   },
   {
-    "id": 7774,
+    "id": 2342,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25763,7 +25763,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7775,
+    "id": 2343,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25774,7 +25774,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7776,
+    "id": 2344,
     "ubigeo": "070107",
     "departamento": "CALLAO",
     "provincia": "CALLAO",
@@ -25785,7 +25785,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7777,
+    "id": 2345,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25796,7 +25796,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7778,
+    "id": 2346,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25807,7 +25807,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7779,
+    "id": 2347,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25818,7 +25818,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7780,
+    "id": 2348,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25829,7 +25829,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7781,
+    "id": 2349,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25840,7 +25840,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7782,
+    "id": 2350,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25851,7 +25851,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7783,
+    "id": 2351,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25862,7 +25862,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7784,
+    "id": 2352,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25873,7 +25873,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7785,
+    "id": 2353,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25884,7 +25884,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7786,
+    "id": 2354,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25895,7 +25895,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7787,
+    "id": 2355,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25906,7 +25906,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7788,
+    "id": 2356,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25917,7 +25917,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7789,
+    "id": 2357,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25928,7 +25928,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7790,
+    "id": 2358,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25939,7 +25939,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7791,
+    "id": 2359,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25950,7 +25950,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7792,
+    "id": 2360,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25961,7 +25961,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7793,
+    "id": 2361,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25972,7 +25972,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7794,
+    "id": 2362,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25983,7 +25983,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7795,
+    "id": 2363,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -25994,7 +25994,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7200
   },
   {
-    "id": 7796,
+    "id": 2364,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26005,7 +26005,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9000
   },
   {
-    "id": 7797,
+    "id": 2365,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26016,7 +26016,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7798,
+    "id": 2366,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26027,7 +26027,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7799,
+    "id": 2367,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26038,7 +26038,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7800,
+    "id": 2368,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26049,7 +26049,7 @@ export const LOCALES_OFICIALES = [
     "electores": 8400
   },
   {
-    "id": 7801,
+    "id": 2369,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26060,7 +26060,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7802,
+    "id": 2370,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26071,7 +26071,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6300
   },
   {
-    "id": 7803,
+    "id": 2371,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26082,7 +26082,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9300
   },
   {
-    "id": 7804,
+    "id": 2372,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26093,7 +26093,7 @@ export const LOCALES_OFICIALES = [
     "electores": 12300
   },
   {
-    "id": 7805,
+    "id": 2373,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26104,7 +26104,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7806,
+    "id": 2374,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26115,7 +26115,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7807,
+    "id": 2375,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26126,7 +26126,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7808,
+    "id": 2376,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26137,7 +26137,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7809,
+    "id": 2377,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26148,7 +26148,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4800
   },
   {
-    "id": 7810,
+    "id": 2378,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26159,7 +26159,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7811,
+    "id": 2379,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26170,7 +26170,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7812,
+    "id": 2380,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26181,7 +26181,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7813,
+    "id": 2381,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26192,7 +26192,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7814,
+    "id": 2382,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26203,7 +26203,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7815,
+    "id": 2383,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26214,7 +26214,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 7816,
+    "id": 2384,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26225,7 +26225,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7817,
+    "id": 2385,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26236,7 +26236,7 @@ export const LOCALES_OFICIALES = [
     "electores": 7800
   },
   {
-    "id": 7818,
+    "id": 2386,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26247,7 +26247,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7819,
+    "id": 2387,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26258,7 +26258,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10800
   },
   {
-    "id": 7820,
+    "id": 2388,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26269,7 +26269,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7821,
+    "id": 2389,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26280,7 +26280,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7822,
+    "id": 2390,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26291,7 +26291,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7823,
+    "id": 2391,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26302,7 +26302,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7824,
+    "id": 2392,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26313,7 +26313,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7825,
+    "id": 2393,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26324,7 +26324,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7826,
+    "id": 2394,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26335,7 +26335,7 @@ export const LOCALES_OFICIALES = [
     "electores": 9600
   },
   {
-    "id": 7827,
+    "id": 2395,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26346,7 +26346,7 @@ export const LOCALES_OFICIALES = [
     "electores": 10200
   },
   {
-    "id": 7828,
+    "id": 2396,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26357,7 +26357,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7829,
+    "id": 2397,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26368,7 +26368,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7830,
+    "id": 2398,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26379,7 +26379,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7831,
+    "id": 2399,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26390,7 +26390,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5700
   },
   {
-    "id": 7832,
+    "id": 2400,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26401,7 +26401,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7833,
+    "id": 2401,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26412,7 +26412,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7834,
+    "id": 2402,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26423,7 +26423,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7835,
+    "id": 2403,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26434,7 +26434,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7836,
+    "id": 2404,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26445,7 +26445,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7837,
+    "id": 2405,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26456,7 +26456,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7838,
+    "id": 2406,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26467,7 +26467,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7839,
+    "id": 2407,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26478,7 +26478,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7840,
+    "id": 2408,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26489,7 +26489,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7841,
+    "id": 2409,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26500,7 +26500,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2100
   },
   {
-    "id": 7842,
+    "id": 2410,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26511,7 +26511,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5100
   },
   {
-    "id": 7843,
+    "id": 2411,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26522,7 +26522,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3600
   },
   {
-    "id": 7844,
+    "id": 2412,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26533,7 +26533,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7845,
+    "id": 2413,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26544,7 +26544,7 @@ export const LOCALES_OFICIALES = [
     "electores": 4500
   },
   {
-    "id": 7846,
+    "id": 2414,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26555,7 +26555,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7847,
+    "id": 2415,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26566,7 +26566,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7848,
+    "id": 2416,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26577,7 +26577,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7849,
+    "id": 2417,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26588,7 +26588,7 @@ export const LOCALES_OFICIALES = [
     "electores": 6000
   },
   {
-    "id": 7850,
+    "id": 2418,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26599,7 +26599,7 @@ export const LOCALES_OFICIALES = [
     "electores": 5400
   },
   {
-    "id": 7851,
+    "id": 2419,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26610,7 +26610,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7852,
+    "id": 2420,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26621,7 +26621,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1500
   },
   {
-    "id": 7853,
+    "id": 2421,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26632,7 +26632,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7854,
+    "id": 2422,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26643,7 +26643,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3300
   },
   {
-    "id": 7855,
+    "id": 2423,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26654,7 +26654,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7856,
+    "id": 2424,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26665,7 +26665,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7857,
+    "id": 2425,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26676,7 +26676,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2400
   },
   {
-    "id": 7858,
+    "id": 2426,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26687,7 +26687,7 @@ export const LOCALES_OFICIALES = [
     "electores": 2700
   },
   {
-    "id": 7859,
+    "id": 2427,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26698,7 +26698,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3900
   },
   {
-    "id": 7860,
+    "id": 2428,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26709,7 +26709,7 @@ export const LOCALES_OFICIALES = [
     "electores": 1800
   },
   {
-    "id": 7861,
+    "id": 2429,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26720,7 +26720,7 @@ export const LOCALES_OFICIALES = [
     "electores": 3000
   },
   {
-    "id": 7862,
+    "id": 2430,
     "ubigeo": "140132",
     "departamento": "LIMA",
     "provincia": "LIMA",
@@ -26729,6 +26729,50 @@ export const LOCALES_OFICIALES = [
     "direccion": "AV PROL VILLA MARIA 492",
     "mesas": 6,
     "electores": 1800
+  },
+  {
+    "id": "150142-0031",
+    "ubigeo": "150142",
+    "departamento": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "nombre": "IEP LINCOLN DEL TRIUNFO",
+    "direccion": "AV JORGE CHAVEZ 281",
+    "mesas": 6,
+    "electores": 1800
+  },
+  {
+    "id": "150142-0059",
+    "ubigeo": "150142",
+    "departamento": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "nombre": "IEP LISCAY",
+    "direccion": "MZA. E LT. 20 CALLE 4 GRUPO RESIDENCIAL 1",
+    "mesas": 5,
+    "electores": 1500
+  },
+  {
+    "id": "150142-0061",
+    "ubigeo": "150142",
+    "departamento": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "nombre": "COLEGIO EXPHADIS - EX MELITON CARBAJAL",
+    "direccion": "JR LA CONVENCION SN / AV MARIAM QUIMPER 897",
+    "mesas": 8,
+    "electores": 2400
+  },
+  {
+    "id": "150142-0088",
+    "ubigeo": "150142",
+    "departamento": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "nombre": "IEP HENDRICK ANTOON LORENTZ",
+    "direccion": "PJE CHILETE 183 CESAR VALLEJO",
+    "mesas": 5,
+    "electores": 1500
   }
 ];
 

@@ -801,10 +801,11 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
   const handleDelete = async () => {
     const authorName = authUser?.fullName || authUser?.name || authUser?.['Nombres y Apellidos'] || (isSuperAdmin ? 'Superadmin' : 'Coordinador Distrital');
     const authorRoleName = isSuperAdmin ? 'Superadministrador' : `Coordinador Distrital (${authUser?.['Distrito Asignado'] || authUser?.distritoAsignado || formData.distritoAsignado})`;
+    const roleLabel = formData.rolADesempenar || 'Personero';
 
     const confirmTitle = isSuperAdmin
-      ? `⚠️ ACCIÓN DE SUPERADMINISTRADOR:\n\n¿Está seguro de eliminar definitivamente a "${formData.nombresApellidos}" (DNI: ${dni}) de la base de datos?\n\nEsta acción quedará registrada en el historial de auditoría.`
-      : `⚠️ ACCIÓN DE COORDINADOR DISTRITAL:\n\n¿Está seguro de eliminar a "${formData.nombresApellidos}" (DNI: ${dni}) del padrón de ${formData.distritoAsignado}?\n\nEsta eliminación quedará registrada en el sistema.`;
+      ? `⚠️ ACCIÓN DE SUPERADMINISTRADOR:\n\n¿Está seguro de eliminar definitivamente a "${formData.nombresApellidos}" (DNI: ${dni} - ${roleLabel}) de la base de datos?\n\nEsta acción quedará registrada en el historial de auditoría.`
+      : `⚠️ ACCIÓN DE COORDINADOR DISTRITAL:\n\n¿Está seguro de eliminar a "${formData.nombresApellidos}" (DNI: ${dni} - ${roleLabel}) del padrón de ${formData.distritoAsignado}?\n\nEsta eliminación quedará registrada en el sistema.`;
 
     const confirmDelete = window.confirm(confirmTitle);
     if (!confirmDelete) return;
@@ -816,7 +817,7 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
       onSaved();
       onClose();
     } catch (err) {
-      setErrorMsg(err.message || 'Error al eliminar personero');
+      setErrorMsg(err.message || `Error al eliminar ${roleLabel.toLowerCase()}`);
       setDeleting(false);
     }
   };
@@ -833,7 +834,7 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
               <span>
                 {isTrainingMode 
                   ? 'Gestión de Capacitación y Credencial' 
-                  : (isSuperAdmin ? 'Gestión y Modificación de Registro (Superadmin)' : `Gestión de Personero - ${formData.distritoAsignado}`)}
+                  : (isSuperAdmin ? `Gestión de ${formData.rolADesempenar || 'Registro'} (Superadmin)` : `Gestión de ${formData.rolADesempenar || 'Personero'} - ${formData.distritoAsignado}`)}
               </span>
             </h3>
             <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>
@@ -862,7 +863,7 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
           }}>
             <Shield className="w-4 h-4 text-sky-600 flex-shrink-0" />
             <span>
-              <strong>Panel de Coordinador Distrital:</strong> Tienes permiso para modificar los datos, centros, mesas y eliminar personeros asignados a tu distrito ({formData.distritoAsignado}).
+              <strong>Panel de Coordinador Distrital:</strong> Tienes permiso para modificar datos, locales, mesas y eliminar registros asignados a tu distrito ({formData.distritoAsignado}).
             </span>
           </div>
         )}
@@ -1148,7 +1149,7 @@ export function EditAssignmentModal({ personero, mode = 'full', onClose, onSaved
               }}
             >
               <Trash2 className="w-4 h-4" />
-              <span>{deleting ? 'Eliminando de la BD...' : 'Eliminar Personero'}</span>
+              <span>{deleting ? 'Eliminando de la BD...' : `Eliminar ${formData.rolADesempenar || 'Personero'}`}</span>
             </button>
 
             <button

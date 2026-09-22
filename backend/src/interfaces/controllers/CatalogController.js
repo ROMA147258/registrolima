@@ -159,46 +159,49 @@ export class CatalogController {
         return assignedLocales.some(al => String(al).trim().toLowerCase() === clean);
       };
 
-      // 1. Consultar en tabla mesas de PostgreSQL agrupado por colegio
+      // 1. Consultar en tablas colegios y mesas de PostgreSQL agrupado por colegio
       try {
         const pool = await dbPool.getPool();
         const placeholders = variants.map((_, i) => `$${i + 1}`).join(', ');
 
-        const queryMesas = `
+        const queryLocales = `
           SELECT 
             MIN(id) as id,
             distrito,
             colegio,
             MAX(direccion) as direccion,
-            COUNT(*) as num_mesas,
+            MAX(num_mesas) as num_mesas,
             MAX(latitud) as latitud,
             MAX(longitud) as longitud,
             MAX(coordenadas_gps) as coordenadas_gps
-          FROM mesas
-          WHERE UPPER(distrito) IN (${placeholders})
+          FROM (
+            SELECT id::text, distrito, colegio, direccion, num_mesas, latitud, longitud, coordenadas_gps FROM colegios WHERE UPPER(distrito) IN (${placeholders})
+            UNION ALL
+            SELECT id::text, distrito, colegio, direccion, 1 as num_mesas, latitud, longitud, coordenadas_gps FROM mesas WHERE UPPER(distrito) IN (${placeholders})
+          ) combined
           GROUP BY distrito, colegio
           ORDER BY colegio
         `;
 
-        const dbResultMesas = await pool.query(queryMesas, variants.map(v => v.toUpperCase()));
+        const dbResultLocales = await pool.query(queryLocales, variants.map(v => v.toUpperCase()));
 
-        if (dbResultMesas && dbResultMesas.rows && dbResultMesas.rows.length > 0) {
-          let list = dbResultMesas.rows.map(r => r.colegio).filter(Boolean);
+        if (dbResultLocales && dbResultLocales.rows && dbResultLocales.rows.length > 0) {
+          let list = dbResultLocales.rows.map(r => r.colegio).filter(Boolean);
           if (excludeAssigned === 'true' || excludeAssigned === true) {
             list = list.filter(l => !isAssigned(l));
           }
-          const fullData = dbResultMesas.rows;
+          const fullData = dbResultLocales.rows;
           return res.json({
             status: 'success',
             distrito,
             data: list,
             assignedLocales,
             fullDetails: fullData,
-            source: 'mesas'
+            source: 'db_combined'
           });
         }
       } catch (err) {
-        console.warn('Consulta en tabla mesas falló, usando catálogo local:', err.message);
+        console.warn('Consulta combinada en colegios/mesas falló, intentando fallback mesas/local:', err.message);
       }
 
       // 2. Fallback al catálogo unificado local
