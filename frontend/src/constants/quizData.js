@@ -1,7 +1,8 @@
 /**
  * Banco oficial de 100 preguntas de capacitación electoral para Personeros de Mesa
  * Elecciones Regionales y Municipales 2026.
- * Basado estrictamente en el "BANCO OFICIAL DE PREGUNTAS Y RESPUESTAS (2).docx" y la Cartilla ONPE.
+ * Basado estrictamente en la Cartilla Oficial y Documento del Personero de Mesa - ONPE.
+ * Actualizado con Banco Oficial 3 (Aplicando cambios en verde, eliminando tachados en rojo y reemplazando preguntas lila).
  */
 export const QUESTION_BANK = [
   {
@@ -37,7 +38,7 @@ export const QUESTION_BANK = [
       "A las 9:00 a. m.",
       "A las 6:00 a. m."
     ],
-    "answer": 3,
+    "answer": 0,
     "explanation": "La instalación de la mesa de sufragio inicia a las 7:00 a. m."
   },
   {
@@ -49,7 +50,7 @@ export const QUESTION_BANK = [
       "A las 9:00 a. m.",
       "A las 10:00 a. m."
     ],
-    "answer": 1,
+    "answer": 0,
     "explanation": "El sufragio inicia a las 8:00 a. m., una vez instalada la mesa."
   },
   {
@@ -560,7 +561,7 @@ export const QUESTION_BANK = [
     "id": 47,
     "question": "¿Qué recibe el elector al momento de que le devuelven su DNI tras votar?",
     "options": [
-      "Su Documento Nacional de Identidad (DNI)",
+      "Su Documento Nacional de Identidad (DNI) Correcta)*",
       "Un certificado de participación electoral.",
       "Una copia del acta de escrutinio.",
       "Una constancia de haber emitido su voto."
@@ -584,7 +585,7 @@ export const QUESTION_BANK = [
     "id": 49,
     "question": "¿Qué debe hacer un personero si detecta propaganda electoral dentro de la cámara secreta?",
     "options": [
-      "Comunicar de inmediato a los miembros de mesa para que retiren la propaganda .",
+      "Comunicar de inmediato a los miembros de mesa para que retiren la propaganda.",
       "Retirarla directamente sin informar a los miembros de mesa.",
       "Pegar encima propaganda de su propio partido.",
       "Solicitar al elector que vote por otra opción."
@@ -596,7 +597,7 @@ export const QUESTION_BANK = [
     "id": 50,
     "question": "¿Puede el elector tomar fotos a su cédula de votación con su teléfono celular dentro de la cámara secreta?",
     "options": [
-      "No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio",
+      "No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio.",
       "Sí, si no muestra su rostro.",
       "Sí, si es para mostrarle a su jefe de trabajo.",
       "Sí, si no publica la imagen."
@@ -692,7 +693,7 @@ export const QUESTION_BANK = [
     "id": 58,
     "question": "¿Qué pasa si una cédula tiene una marca hecha con un lapicero que no es el oficial de la ONPE?",
     "options": [
-      "Si la marca es una cruz o aspa válida, el voto es VÁLIDO. No se anula el voto por el tipo de bolígrafo .",
+      "Si la marca es una cruz o aspa válida, el voto es VÁLIDO. No se anula el voto por el tipo de bolígrafo.",
       "Se anula inmediatamente.",
       "Se manda a la fiscalía para peritaje.",
       "Se considera voto en blanco."
@@ -882,15 +883,15 @@ export const QUESTION_BANK = [
   },
   {
     "id": 74,
-    "question": "¿Qué pasa con los útiles electorales (lapiceros, tampones, cintas) al finalizar el escrutinio?",
+    "question": "¿Puede un personero de mesa presenciar y verificar el acondicionamiento de la cámara secreta antes del inicio del sufragio?",
     "options": [
-      "Se guardan en los sobres y cajas correspondientes de la ONPE para su retorno.",
-      "Los personeros se los llevan a su casa como recuerdo.",
-      "Se botan en el patio del colegio.",
-      "Se regalan a los electores que pasan por la calle."
+      "Sí, tiene derecho a ingresar junto a los miembros de mesa para verificar que la cámara secreta esté libre de propaganda electoral y debidamente acondicionada.",
+      "No, solo pueden ingresar los efectivos de la Policía Nacional.",
+      "No, está prohibido que los personeros observen la cámara secreta en cualquier momento.",
+      "Solo si el coordinador de la ONPE le otorga un permiso notarial."
     ],
     "answer": 0,
-    "explanation": "Todo el material y útiles electorales se empaquetan en las cajas oficiales de la ONPE."
+    "explanation": "El personero tiene el derecho y deber de presenciar la instalación y verificar que la cámara secreta garantice el secreto del voto y esté libre de propaganda."
   },
   {
     "id": 75,
@@ -1026,36 +1027,36 @@ export const QUESTION_BANK = [
   },
   {
     "id": 86,
-    "question": "¿Quién custodia las actas electorales mientras son transportadas a la sede de la ODPE?",
+    "question": "¿Qué debe hacer el personero si un miembro de mesa comete un error involuntario al sumar o anotar una cifra en la hoja borrador?",
     "options": [
-      "El personal de la ONPE con el resguardo y custodia estricta de las Fuerzas Armadas y Policía Nacional.",
-      "Los personeros de los partidos en sus propios autos.",
-      "Una empresa de mensajería privada común.",
-      "Los mototaxistas de la zona."
+      "Alertar de inmediato y con respeto a los miembros de mesa para que corrijan la cifra antes de transcribirla al Acta Electoral definitiva.",
+      "Esperar a que firmen el acta final para luego intentar anular toda la mesa de votación.",
+      "Quitarle los documentos al miembro de mesa y escribir él mismo los números.",
+      "Guardar silencio y retirarse del aula de votación sin firmar nada."
     ],
     "answer": 0,
-    "explanation": "El traslado del material electoral y actas se realiza bajo custodia militar y policial permanente."
+    "explanation": "La función de vigilancia activa del personero permite advertir y corregir a tiempo cualquier error en la hoja borrador antes del llenado definitivo del Acta Electoral."
   },
   {
     "id": 87,
-    "question": "¿Qué pasa si un personero firma un acta electoral en blanco antes de que termine el conteo?",
+    "question": "¿ Qué implica que un personero firme un acta electoral en blanco antes de que concluya el escrutinio?",
     "options": [
-      "Comete una grave irresponsabilidad que facilita posibles fraudes y adulteraciones; NUNCA se debe firmar un acta en blanco.",
-      "Es una buena práctica para irse temprano a casa.",
-      "La ONPE lo premia con un diploma.",
-      "No pasa nada porque el presidente es buena persona."
+      "Constituye una actuación irresponsable y riesgosa; un personero nunca debe firmar un acta en blanco.",
+      "Es una práctica adecuada para retirarse antes del cierre.",
+      "Es una conducta recomendada por la ONPE.",
+      "No genera ningún riesgo porque los datos pueden completarse posteriormente."
     ],
     "answer": 0,
     "explanation": "Bajo ninguna circunstancia se debe firmar un acta en blanco; siempre se firma cuando todos los datos están completos."
   },
   {
     "id": 88,
-    "question": "¿Qué es la acreditación del personero de mesa?",
+    "question": "¿Qué es la credencial del personero de mesa?",
     "options": [
-      "Es el documento expedido por el personero legal o directivo autorizado que le da validez oficial para actuar ante la mesa.",
+      "Es el documento que acredita oficialmente al ciudadano para ejercer funciones como personero ante una mesa de sufragio.",
       "Es un mensaje de texto en el celular sin nombre.",
       "Es una tarjeta de presentación comercial.",
-      "Es un autógrafo del candidato."
+      "Es un documento firmado únicamente por el candidato."
     ],
     "answer": 0,
     "explanation": "La credencial acredita legalmente al personero ante las autoridades de la mesa y la ONPE."
@@ -1064,10 +1065,10 @@ export const QUESTION_BANK = [
     "id": 89,
     "question": "¿Qué debe hacer el personero si durante el sufragio un elector no sabe cómo doblar su cédula?",
     "options": [
-      "El presidente de mesa le indica amablemente cómo doblarla sin mirar por quién votó, respetando el secreto del voto.",
-      "El personero le quita la cédula y se la dobla mirando el voto.",
-      "El elector debe romper la cédula.",
-      "El policía entra al aula y se la dobla."
+      "El presidente de mesa puede indicarle cómo doblarla, respetando en todo momento el secreto del voto",
+      "El personero debe tomar la cédula y doblarla observando el voto.",
+      "El elector debe destruir la cédula y solicitar otra.",
+      "Un efectivo policial debe ingresar para doblar la cédula."
     ],
     "answer": 0,
     "explanation": "Los miembros de mesa guían al elector respetando siempre la privacidad y el secreto de su decisión."
@@ -1076,20 +1077,20 @@ export const QUESTION_BANK = [
     "id": 90,
     "question": "¿Qué pasa si un personero llega tarde, por ejemplo a las 9:00 a. m. cuando la mesa ya está instalada?",
     "options": [
-      "Puede acreditarse en ese momento y comenzar a cumplir sus funciones a partir de su llegada, sin anular lo ya actuado.",
-      "Ya no se le permite ingresar y se le retira del colegio.",
+      "Puede acreditarse en ese momento y comenzar a cumplir sus funciones a partir de su llegada.",
+      "Ya no puede ingresar al local de votación.",
       "Se debe desinstalar la mesa y volver a empezar de cero.",
-      "Se le cobra una multa de 100 soles en la mesa."
+      "Debe pagar una multa para incorporarse a la jornada."
     ],
     "answer": 0,
     "explanation": "El personero puede incorporarse a la mesa en cualquier momento de la jornada, acreditándose ante el presidente."
   },
   {
     "id": 91,
-    "question": "¿Tiene derecho el personero a solicitar que conste en el acta alguna incidencia o irregularidad observada?",
+    "question": "¿Tiene el personero derecho a solicitar que una incidencia o irregularidad observada quede registrada en el Acta Electoral?",
     "options": [
-      "Sí, tiene derecho a que sus observaciones fundamentadas se escriban en el casillero de observaciones del acta electoral.",
-      "No, las actas no permiten escribir ninguna queja.",
+      "Sí. Puede solicitar que sus observaciones o reclamos sean consignados en el espacio correspondiente del acta",
+      "No, las actas no permiten escribir ninguna observación.",
       "Solo si los miembros de mesa están de acuerdo con su partido.",
       "Solo pagando un derecho de trámite."
     ],
@@ -1098,9 +1099,9 @@ export const QUESTION_BANK = [
   },
   {
     "id": 92,
-    "question": "¿Qué es el derecho al sufragio en el Perú?",
+    "question": "¿Qué representa el derecho al sufragio en el Perú?",
     "options": [
-      "Es un derecho y un deber cívico de todos los ciudadanos peruanos mayores de 18 años.",
+      "Es un derecho y un deber cívico de los ciudadanos, conforme a las condiciones establecidas por la Constitución y la legislación electoral..",
       "Es un trámite voluntario exclusivo de los funcionarios públicos.",
       "Es una obligación solo para personas que tienen título profesional.",
       "Es un sorteo de premios organizado por el Estado."
@@ -1110,33 +1111,33 @@ export const QUESTION_BANK = [
   },
   {
     "id": 93,
-    "question": "¿Cuál es el rol del Coordinador de Local de Votación de la ONPE?",
+    "question": "¿Qué documento oficial debe recibir y llevarse consigo el personero de mesa al término del escrutinio?",
     "options": [
-      "Coordinar la logística, entrega de materiales, habilitación de aulas y apoyo técnico a los miembros de mesa en el local.",
-      "Decidir quién gana las elecciones en cada aula.",
-      "Contar los votos en secreto en la dirección del colegio.",
-      "Impedir que los personeros entren al local."
+      "Una copia idéntica y firmada del Acta Electoral (Acta de Escrutinio, Instalación y Sufragio) entregada por los miembros de mesa.",
+      "La lista completa del padrón con las firmas y huellas de los electores de la mesa.",
+      "El ánfora de sufragio con todas las cédulas contabilizadas.",
+      "El sello oficial y el tampón dactilar de la mesa de sufragio."
     ],
     "answer": 0,
-    "explanation": "El personal de la ONPE brinda soporte logístico y técnico para asegurar el correcto desarrollo de la jornada electoral."
+    "explanation": "La legislación electoral garantiza el derecho de cada personero de mesa acreditado a recibir una copia auténtica del Acta Electoral firmada por los miembros de mesa."
   },
   {
     "id": 94,
     "question": "¿Cuál es la función del fiscalizador del Jurado Nacional de Elecciones (JNE) en el local de votación?",
     "options": [
-      "Fiscalizar el estricto cumplimiento de la ley electoral y la legalidad del proceso durante toda la jornada.",
+      "Fiscalizar el cumplimiento de la normativa electoral y el adecuado desarrollo del proceso dentro del ámbito de sus competencias.",
       "Contar las cédulas de votación junto a los miembros de mesa.",
       "Hacer propaganda para los candidatos regionales.",
-      "Revisar las mochilas de los electores."
+      "Revisar las pertenencias personales de los electores."
     ],
     "answer": 0,
     "explanation": "El fiscalizador del JNE vela por el cumplimiento de las normas y la legalidad del proceso en los locales."
   },
   {
     "id": 95,
-    "question": "¿Qué debe hacer el personero si encuentra a una persona repartiendo volantes dentro del colegio electoral?",
+    "question": "¿Qué debe hacer el personero si encuentra a una persona repartiendo volantes dentro del centro de votación?",
     "options": [
-      "Denunciar el hecho inmediatamente ante el fiscalizador del JNE, el coordinador de la ONPE y las fuerzas de seguridad.",
+      "Comunicar de inmediato el hecho al fiscalizador del JNE, al personal de la ONPE y, de ser necesario, a las fuerzas del orden.",
       "Pedirle volantes para repartirlos él también.",
       "Quedarse callado para no generar molestias.",
       "Comprarle los volantes para botarlos."
@@ -1148,10 +1149,10 @@ export const QUESTION_BANK = [
     "id": 96,
     "question": "¿Qué debe hacer el personero cuando concluye toda la jornada electoral y ya tiene su acta firmada?",
     "options": [
-      "Entregar o transmitir de inmediato su acta y reporte a su Coordinador Zonal o Distrital del partido.",
+      "Entregar o transmitir de inmediato su acta y reporte a su personero de local de votación.",
       "Publicarla en redes sociales con datos personales borrados.",
       "Romper el acta porque ya terminó la votación.",
-      "Irse a dormir sin avisar a su organización política."
+      "Retirarse sin reportar los resultados a su organización política."
     ],
     "answer": 0,
     "explanation": "La misión del personero culmina entregando con éxito el acta electoral y los resultados al equipo central de su partido."
@@ -1160,21 +1161,21 @@ export const QUESTION_BANK = [
     "id": 97,
     "question": "¿Por qué el personero de mesa representa la primera línea de defensa democrática del voto popular?",
     "options": [
-      "Porque con su presencia, vigilancia y actas en mano garantiza que se respete la voluntad de cada ciudadano expresada en las urnas.",
+      "Porque su presencia, vigilancia y registro de los resultados contribuyen a verificar que la voluntad expresada por los electores sea respetada.",
       "Porque tiene inmunidad diplomática el día de la elección.",
-      "Porque cobra un sueldo millonario del Estado.",
-      "Porque decide qué candidatos van a segunda vuelta."
+      "Porque recibe una remuneración del Estado por decidir los resultados.",
+      "Porque determina qué candidatos continúan en el proceso electoral."
     ],
     "answer": 0,
     "explanation": "El personero cuida la democracia asegurando con transparencia que cada voto emitido sea contado con total fidelidad."
   },
   {
     "id": 98,
-    "question": "¿Qué valores definen al buen personero de mesa durante todo el día electoral?",
+    "question": "¿Qué valores y actitudes deben caracterizar a un buen personero de mesa durante la jornada electoral?",
     "options": [
-      "Puntualidad, honestidad, firmeza, respeto, concentración y compromiso democrático con su país y su partido.",
-      "Llegar tarde, gritar a los ancianos y distraerse con el celular.",
-      "Firmar actas en blanco y abandonar la mesa a las 3:00 p. m.",
+      "Puntualidad, honestidad, firmeza, respeto, concentración y compromiso con el cumplimiento de sus funciones.",
+      "Impuntualidad, confrontación con los electores y distracción constante.",
+      "Firma de documentos incompletos y abandono anticipado de la mesa.",
       "Pelear con los miembros de mesa por cualquier motivo."
     ],
     "answer": 0,
@@ -1182,24 +1183,24 @@ export const QUESTION_BANK = [
   },
   {
     "id": 99,
-    "question": "¿Cómo se califica un voto donde el elector marcó una cruz sobre el símbolo de un partido y no marcó nada en los otros?",
+    "question": "¿Cómo se califica un voto donde el elector marcó una cruz sobre el símbolo de un partido y no realiza otra marca en la otra elección?",
     "options": [
-      "Es un VOTO VÁLIDO a favor de esa organización política.",
-      "Es un voto nulo por no marcar a los demás partidos.",
-      "Es un voto en blanco porque falta marcar regidores.",
-      "Es un voto observado que se bota."
+      "Es un VOTO VÁLIDO a favor de esa organización política en esa elección.",
+      "Es un voto nulo por no marcar a las demás organizaciones políticas.",
+      "Es un voto en blanco porque faltan otras marcas.",
+      "Es un voto observado que debe desercharse."
     ],
     "answer": 0,
     "explanation": "Es el voto válido clásico y reglamentario a favor de la organización política elegida."
   },
   {
     "id": 100,
-    "question": "¿Cuál es la consigna final del personero de mesa al concluir el escrutinio?",
+    "question": "¿Cuál debe ser la principal consigna del personero de mesa al finalizar el escrutinio?",
     "options": [
-      "¡Cuidar y defender cada voto con responsabilidad, respeto a la ley y con el Acta Electoral firmada en la mano!",
-      "Irse antes de las 5:00 p. m. para evitar el tráfico de la ciudad.",
-      "Discutir sin fundamento todas las decisiones de los miembros de mesa.",
-      "Tocar y contar las cédulas directamente sin autorización."
+      "Proteger y defender cada voto con responsabilidad, respeto a la normativa electoral y verificando que cuente con su copia del Acta Electoral debidamente firmada.",
+      "Retirarse antes de que concluya el procedimiento para evitar demoras.",
+      "Cuestionar sin fundamento todas las decisiones de los miembros de mesa.",
+      "Manipular y volver a contar directamente las cédulas sin autorización."
     ],
     "answer": 0,
     "explanation": "Defender cada voto con firmeza cívica, respeto a la ley electoral y con el Acta Oficial firmada en la mano."

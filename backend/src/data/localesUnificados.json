@@ -12204,807 +12204,6 @@
     "mesas": 16
   },
   {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEI 552",
-    "direccion": "AV FLORA TRISTAN SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6059 SAGRADO CORAZON DE JESUS",
-    "direccion": "JR COTAHUASI 120",
-    "mesas": 24
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6072",
-    "direccion": "CALLE LAS BEGONIAS SN",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEI 652 01 EL PARAISO",
-    "direccion": "AV PARAISO SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7217 OLIMPIA GERALDINA MELENDEZ PERALTA",
-    "direccion": "CALLE 5 MZ COLEGIO",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7220",
-    "direccion": "AV CAMINOS DEL INCA PARAISO SN",
-    "mesas": 10
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7231",
-    "direccion": "AV PROLONGACION PACHACUTEC SN",
-    "mesas": 12
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7233 MATSU UTSUMI",
-    "direccion": "AV CASAGRANDE SN AH PUYUSCA",
-    "mesas": 26
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7245 SAN JOSE OBRERO",
-    "direccion": "AV LA UNION SN MZ F1 LOTE 1",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP SANTA MARIA DEL CAMINO",
-    "direccion": "AV LOS PROCERES 535",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "CEP JESUS MI REDENTOR - SECUNDARIA",
-    "direccion": "AV FRANCISCO DE ZELA 415 - 417",
-    "mesas": 9
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEPA EL REDENTOR",
-    "direccion": "JR FAUSTINO SANCHEZ CARRION 148",
-    "mesas": 13
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP ANGELES DE JESUS - SEDE 2",
-    "direccion": "AV MICAELA BASTIDA 214",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP FRIEDRICH WOHLER",
-    "direccion": "CALLE TARAPACA 180",
-    "mesas": 10
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "CEP JESUS MI REDENTOR - PRIMARIA",
-    "direccion": "AV SIMON BOLIVAR 1170",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP LA CATOLICA",
-    "direccion": "JR IQUITOS 253",
-    "mesas": 17
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP MATER ADMIRABILIS",
-    "direccion": "JR LATINOAMERICA 332",
-    "mesas": 15
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP MARIA DE LOS ANGELES",
-    "direccion": "JR UNION 551",
-    "mesas": 12
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP MARIA MONTESSORI",
-    "direccion": "JR MARAÑON 159 JOSE GALVEZ MZ 61 LT 5",
-    "mesas": 13
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP PROLOG DE VILLA MARIA",
-    "direccion": "AV VILLA MARIA 291",
-    "mesas": 12
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP REDIMER JESUS",
-    "direccion": "CALLE JOSE OLAYA 224",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP SIERVOS DE JESUS",
-    "direccion": "PJE MONTE DE LOS OLIVOS MZ K 2 LOTE 8 - 9",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "CETPRO JOSE GALVEZ BARRENECHEA",
-    "direccion": "AV LIMA 503 JOSE GALVEZ",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP KERPEN HORREN",
-    "direccion": "AV AGRICULTURA SN",
-    "mesas": 7
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE MANUEL CASALINO GRIEVE",
-    "direccion": "JR LAS MARGARITAS SN",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP PROLOG DE NUEVA ESPERANZA",
-    "direccion": "AV 26 DE NOVIEMBRE 1149",
-    "mesas": 20
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP REINA CARMELITA",
-    "direccion": "AV MIGUEL GRAU 2205",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP SAN IGNACIO DE NUEVA ESPERANZA",
-    "direccion": "JR LIBERTAD 196",
-    "mesas": 11
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP HENDRICK ANTOON LORENTZ",
-    "direccion": "PJE CHILETE 183 CESAR VALLEJO",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP CRISTOBAL COLON",
-    "direccion": "AV 26 DE NOVIEMBRE 1721",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "COLEGIO CIENTIFICO NIKOLA TESLA",
-    "direccion": "MZ F LT 7 AAHH 19 DE JULIO",
-    "mesas": 7
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP HIRAM BINGHAM",
-    "direccion": "JR SANTA CRUZ 372",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP LINCOLN DEL TRIUNFO",
-    "direccion": "AV JORGE CHAVEZ 281",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP CESAR ABRAHAM VALLEJO MENDOZA",
-    "direccion": "AV JOSE CARLOS MARIATEGUI 1925",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "COLEGIO EXPHADIS - EX MELITON CARBAJAL",
-    "direccion": "JR LA CONVENCION SN",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP JUAN GUTEMBERG",
-    "direccion": "AV DANIEL ALCIDES CARRION 858",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP ALMIRANTE MIGUEL GRAU SEMINARIO - SECUNDARIA",
-    "direccion": "AV SAN FRANCISCO 386",
-    "mesas": 19
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP MIGUEL GRAU - PRIMARIA",
-    "direccion": "AV SIMON BOLIVAR MZ 2 L LT 6",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE PARROQUIAL NUESTRO SALVADOR",
-    "direccion": "AV JUAN GUERRERO QUIMPER 1300",
-    "mesas": 32
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP CRISTO AMIGO - SECUNDARIA",
-    "direccion": "CALLE SAN LUIS MZ A LT 1",
-    "mesas": 11
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP CRISTO AMIGO - PRIMARIA",
-    "direccion": "JR SAENZ PEÑA 147",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEI 525 REYNA DEL CARMEN",
-    "direccion": "JR ICA 150",
-    "mesas": 9
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6011 SANTISIMA VIRGEN DE FATIMA",
-    "direccion": "AV 28 DE JULIO N° 790",
-    "mesas": 18
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6014 VIRGEN DEL CARMEN",
-    "direccion": "JR TORIBIO RODRIGUEZ DE MENDOZA 252",
-    "mesas": 9
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6015 SANTISIMO SAGRADO CORAZON DE JESUS",
-    "direccion": "AV LIMA 1005",
-    "mesas": 13
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6017 SANTA ROSA BAJA",
-    "direccion": "JR 9 DE AGOSTO SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6019 MARIANO MELGAR",
-    "direccion": "AV LA UNION 1115",
-    "mesas": 30
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6020 MICAELA BASTIDAS",
-    "direccion": "JR HUAYNA CAPAC SN",
-    "mesas": 24
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6022",
-    "direccion": "AV EL SOL 205",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6024 JOSE MARIA ARGUEDAS",
-    "direccion": "CALLE SAN FRANCISCO SN",
-    "mesas": 24
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6025 652 - 20",
-    "direccion": "AV 8 DE OCTUBRE 365",
-    "mesas": 15
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6029 BARTOLOME MITRE",
-    "direccion": "JR AMAZONAS 252",
-    "mesas": 10
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6032 ALMIRANTE MIGUEL GRAU SEMINARIO",
-    "direccion": "AV 26 DE NOVIEMBRE 076",
-    "mesas": 15
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6056 SANTA ROSA ALTA",
-    "direccion": "AV SANTA ROSA 900",
-    "mesas": 24
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6057 VIRGEN DE LOURDES",
-    "direccion": "JR CASMA 215",
-    "mesas": 12
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6060 JULIO C TELLO",
-    "direccion": "AV PACHACUTEC 4355",
-    "mesas": 30
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6073 JORGE BASADRE GROHMANN - PRIMARIA",
-    "direccion": "AV GUILLERMO BILLINGHURST 640",
-    "mesas": 18
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6073 JORGE BASADRE GROHMANN - SECUNDARIA",
-    "direccion": "AV RICARDO PALMA 600",
-    "mesas": 15
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6081 MANUEL SCORZA TORRES",
-    "direccion": "AV SIMON BOLIVAR SN",
-    "mesas": 28
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6084 SAN MARTIN DE PORRES",
-    "direccion": "JR RICARDO PALMA SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6093 JUAN VALER SANDOVAL",
-    "direccion": "AV MIGUEL GRAU SN",
-    "mesas": 21
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 6152 STELLA MARIS",
-    "direccion": "JR PASEO ATAHUALPA 150",
-    "mesas": 31
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7054 VILLA MARIA DEL TRIUNFO",
-    "direccion": "AV VILLA MARIA 800",
-    "mesas": 41
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7055 TUPAC AMARU II",
-    "direccion": "AV EL TRIUNFO CDRA 7 SN",
-    "mesas": 32
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7057 SOBERANA ORDEN MILITAR DE MALTA",
-    "direccion": "AV PANDO EGUZQUIZA 501",
-    "mesas": 34
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7073 SANTA ROSA DE LIMA",
-    "direccion": "AV MARIA PARADO DE BELLIDO 180 - 2",
-    "mesas": 32
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7080 JORGE BERNALES SALAS",
-    "direccion": "JR INDEPENDENCIA 196 - VALLECITO BAJO",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7088 GERONIMO CAFFERATA MARAZZI",
-    "direccion": "AV FLORA TRISTAN 1050",
-    "mesas": 16
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE PARROQUIAL LOS CAMINANTES",
-    "direccion": "JR SUCRE 300 JOSE GALVEZ",
-    "mesas": 13
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7106 VILLA LIMATAMBO",
-    "direccion": "AV PROL JOSE CARLOS MARIATEGUI 3467",
-    "mesas": 34
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE FE Y ALEGRIA 23",
-    "direccion": "AV GARCILASO DE LA VEGA 156",
-    "mesas": 13
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE FE Y ALEGRIA 24",
-    "direccion": "AV JOSE CARLOS MARIATEGUI 2855",
-    "mesas": 12
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE JOSE CARLOS MARIATEGUI",
-    "direccion": "AV PRIMAVERA 1245",
-    "mesas": 7
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE MARISCAL ELOY GASPAR URETA",
-    "direccion": "AV 26 DE NOVIEMBRE 102 - A",
-    "mesas": 19
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "I.E. REPUBLICA DE ECUADOR",
-    "direccion": "JR. EL TRIUNFO S/N",
-    "mesas": 21
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IESTP JUAN VELASCO ALVARADO",
-    "direccion": "AV JOSE OLAYA 120",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE TUPAC AMARU",
-    "direccion": "PROL AV VILLA MARÍA 191",
-    "mesas": 34
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IESTP VILLA MARIA",
-    "direccion": "AV PROL VILLA MARIA 492",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IESTP SAN FRANCISCO DE ASIS",
-    "direccion": "JR FRANCISCO BOLOGNESI 592",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP NAZARENO",
-    "direccion": "JR JOSE DE SAN MARTIN SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP TERESA DE LOS REYES",
-    "direccion": "AV JOSE CARLOS MARIATEGUI 2305",
-    "mesas": 9
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7226 - 562 JOSE OLAYA BALANDRA",
-    "direccion": "AV LOS INCAS MZ 15 LT 6 SECTOR 3",
-    "mesas": 24
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7218 PAPA JUAN PABLO II",
-    "direccion": "CALLE JAVIER HERAUD SN",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP LISCAY",
-    "direccion": "MZA. E LT. 20 CALLE 4 GRUPO RESIDENCIAL 1",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP MIGUEL GRAU INICIAL",
-    "direccion": "CALLE LA CONCORDIA SN MZA 2J LT. 5A",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP SAN JUAN",
-    "direccion": "AV 02 DE MAYO 663 - NUEVA ESPERANZA",
-    "mesas": 13
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP COLEGIOS PROLOG SECUNDARIA - JOSE GALVEZ",
-    "direccion": "AV MANCO CAPAC MZ Z 110 LOTE 9",
-    "mesas": 6
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE 7214",
-    "direccion": "JR MARIANO NECOCHEA SN",
-    "mesas": 5
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IE EMBLEMATICA JUAN GUERRERO QUIMPER",
-    "direccion": "AV MARIAM QUIMPER 850",
-    "mesas": 36
-  },
-  {
     "ubigeo": "140142",
     "dpto": "LIMA",
     "provincia": "LIMA",
@@ -19881,24 +19080,6 @@
     "mesas": 20
   },
   {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "IEP PROLOG SEDE JOSE GALVEZ PRIMARIA",
-    "direccion": "",
-    "mesas": 8
-  },
-  {
-    "ubigeo": "140132",
-    "dpto": "LIMA",
-    "provincia": "LIMA",
-    "distrito": "VILLA MARIA DEL TRIUNFO",
-    "colegio": "COLEGIO",
-    "direccion": "DIRECCIÓN",
-    "mesas": 0
-  },
-  {
     "ubigeo": "070102",
     "dpto": "CALLAO",
     "provincia": "CALLAO",
@@ -21913,5 +21094,779 @@
     "colegio": "IEP CIRO ALEGRIA",
     "direccion": "AV TRUJILLO SN MZ I LT 8-22-23",
     "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "CEP JESUS MI REDENTOR - PRIMARIA",
+    "direccion": "AV SIMON BOLIVAR 1170",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "CEP JESUS MI REDENTOR - SECUNDARIA",
+    "direccion": "AV FRANCISCO DE ZELA 415 - 417",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "CETPRO JOSE GALVEZ BARRENECHEA",
+    "direccion": "AV LIMA 503 JOSE GALVEZ",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "COLEGIO CIENTIFICO NIKOLA TESLA",
+    "direccion": "MZ F LT 7 AAHH 19 DE JULIO",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "I.E. REPUBLICA DE ECUADOR",
+    "direccion": "JR. EL TRIUNFO S/N",
+    "mesas": 21
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6011 SANTISIMA VIRGEN DE FATIMA",
+    "direccion": "AV 28 DE JULIO N° 790",
+    "mesas": 18
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6014 VIRGEN DEL CARMEN",
+    "direccion": "JR TORIBIO RODRIGUEZ DE MENDOZA 252",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6015 SANTISIMO SAGRADO CORAZON DE JESUS",
+    "direccion": "AV LIMA 1005",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6017 SANTA ROSA BAJA",
+    "direccion": "JR 9 DE AGOSTO SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6019 MARIANO MELGAR",
+    "direccion": "AV LA UNION 1115",
+    "mesas": 30
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6020 MICAELA BASTIDAS",
+    "direccion": "JR HUAYNA CAPAC SN",
+    "mesas": 24
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6022",
+    "direccion": "AV EL SOL 205",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6024 JOSE MARIA ARGUEDAS",
+    "direccion": "CALLE SAN FRANCISCO SN",
+    "mesas": 24
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6025 652 - 20",
+    "direccion": "AV 8 DE OCTUBRE 365",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6029 BARTOLOME MITRE",
+    "direccion": "JR AMAZONAS 252",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6032 ALMIRANTE MIGUEL GRAU SEMINARIO",
+    "direccion": "AV 26 DE NOVIEMBRE 076",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6056 SANTA ROSA ALTA",
+    "direccion": "AV SANTA ROSA 900",
+    "mesas": 24
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6057 VIRGEN DE LOURDES",
+    "direccion": "JR CASMA 215",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6059 SAGRADO CORAZON DE JESUS",
+    "direccion": "JR COTAHUASI 120",
+    "mesas": 24
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6060 JULIO C TELLO",
+    "direccion": "AV PACHACUTEC 4355",
+    "mesas": 30
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6072",
+    "direccion": "CALLE LAS BEGONIAS SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6073 JORGE BASADRE GROHMANN - PRIMARIA",
+    "direccion": "AV GUILLERMO BILLINGHURST 640",
+    "mesas": 18
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6073 JORGE BASADRE GROHMANN - SECUNDARIA",
+    "direccion": "AV RICARDO PALMA 600",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6081 MANUEL SCORZA TORRES",
+    "direccion": "AV SIMON BOLIVAR SN",
+    "mesas": 28
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6084 SAN MARTIN DE PORRES",
+    "direccion": "JR RICARDO PALMA SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6093 JUAN VALER SANDOVAL",
+    "direccion": "AV MIGUEL GRAU SN",
+    "mesas": 21
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 6152 STELLA MARIS",
+    "direccion": "JR PASEO ATAHUALPA 150",
+    "mesas": 31
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7054 VILLA MARIA DEL TRIUNFO",
+    "direccion": "AV VILLA MARIA 800",
+    "mesas": 41
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7055 TUPAC AMARU II",
+    "direccion": "AV EL TRIUNFO CDRA 7 SN",
+    "mesas": 32
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7057 SOBERANA ORDEN MILITAR DE MALTA",
+    "direccion": "AV PANDO EGUZQUIZA 501",
+    "mesas": 34
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7073 SANTA ROSA DE LIMA",
+    "direccion": "AV MARIA PARADO DE BELLIDO 180 - 2",
+    "mesas": 32
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7080 JORGE BERNALES SALAS",
+    "direccion": "JR INDEPENDENCIA 196 - VALLECITO BAJO",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7088 GERONIMO CAFFERATA MARAZZI",
+    "direccion": "AV FLORA TRISTAN 1050",
+    "mesas": 16
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7106 VILLA LIMATAMBO",
+    "direccion": "AV PROL JOSE CARLOS MARIATEGUI 3467",
+    "mesas": 34
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7214",
+    "direccion": "JR MARIANO NECOCHEA SN",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7217 OLIMPIA GERALDINA MELENDEZ PERALTA",
+    "direccion": "CALLE 5 MZ COLEGIO",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7218 PAPA JUAN PABLO II",
+    "direccion": "CALLE JAVIER HERAUD SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7220",
+    "direccion": "AV CAMINOS DEL INCA PARAISO SN",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7226 - 562 JOSE OLAYA BALANDRA",
+    "direccion": "AV LOS INCAS MZ 15 LT 6 SECTOR 3",
+    "mesas": 26
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7231",
+    "direccion": "AV PROLONGACION PACHACUTEC SN",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7233 MATSU UTSUMI",
+    "direccion": "AV CASAGRANDE SN AH PUYUSCA",
+    "mesas": 26
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE 7245 SAN JOSE OBRERO",
+    "direccion": "AV LA UNION SN MZ F1 LOTE 1",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE EMBLEMATICA JUAN GUERRERO QUIMPER",
+    "direccion": "AV MARIAM QUIMPER 850",
+    "mesas": 36
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE FE Y ALEGRIA 23",
+    "direccion": "AV GARCILASO DE LA VEGA 156",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE FE Y ALEGRIA 24",
+    "direccion": "AV JOSE CARLOS MARIATEGUI 2855",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE JOSE CARLOS MARIATEGUI",
+    "direccion": "AV PRIMAVERA 1245",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE MANUEL CASALINO GRIEVE",
+    "direccion": "JR LAS MARGARITAS SN",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE MARISCAL ELOY GASPAR URETA",
+    "direccion": "AV 26 DE NOVIEMBRE 102 - A",
+    "mesas": 18
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE PARROQUIAL LOS CAMINANTES",
+    "direccion": "JR SUCRE 300 JOSE GALVEZ",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE PARROQUIAL NUESTRO SALVADOR",
+    "direccion": "AV JUAN GUERRERO QUIMPER 1300",
+    "mesas": 32
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IE TUPAC AMARU",
+    "direccion": "PROL AV VILLA MARÍA 191",
+    "mesas": 34
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEI 525 REYNA DEL CARMEN",
+    "direccion": "JR ICA 150",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEI 552",
+    "direccion": "AV FLORA TRISTAN SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEI 652 01 EL PARAISO",
+    "direccion": "AV PARAISO SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP ALMIRANTE MIGUEL GRAU SEMINARIO - SECUNDARIA",
+    "direccion": "AV SAN FRANCISCO 386",
+    "mesas": 19
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP ANGELES DE JESUS - SEDE 2",
+    "direccion": "AV MICAELA BASTIDA 214",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP CESAR ABRAHAM VALLEJO MENDOZA",
+    "direccion": "AV JOSE CARLOS MARIATEGUI 1925",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP COLEGIOS PROLOG SECUNDARIA - JOSE GALVEZ",
+    "direccion": "AV MANCO CAPAC MZ Z 110 LOTE 9",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP CRISTO AMIGO - PRIMARIA",
+    "direccion": "JR SAENZ PEÑA 147",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP CRISTO AMIGO - SECUNDARIA",
+    "direccion": "CALLE SAN LUIS MZ A LT 1",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP CRISTOBAL COLON",
+    "direccion": "AV 26 DE NOVIEMBRE 1721",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP FRIEDRICH WOHLER",
+    "direccion": "CALLE TARAPACA 180",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP HIRAM BINGHAM",
+    "direccion": "JR SANTA CRUZ 372",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP JUAN GUTEMBERG",
+    "direccion": "AV DANIEL ALCIDES CARRION 858",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP KERPEN HORREN",
+    "direccion": "AV AGRICULTURA SN",
+    "mesas": 7
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP LA CATOLICA",
+    "direccion": "JR IQUITOS 253",
+    "mesas": 17
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP MARIA DE LOS ANGELES",
+    "direccion": "JR UNION 551",
+    "mesas": 12
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP MARIA MONTESSORI",
+    "direccion": "JR MARAÑON 159 JOSE GALVEZ MZ 61 LT 5",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP MATER ADMIRABILIS",
+    "direccion": "JR LATINOAMERICA 332",
+    "mesas": 15
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP MIGUEL GRAU - PRIMARIA",
+    "direccion": "AV SIMON BOLIVAR MZ 2 L LT 6",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP MIGUEL GRAU INICIAL",
+    "direccion": "CALLE LA CONCORDIA SN MZA 2J LT. 5A",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP NAZARENO",
+    "direccion": "JR JOSE DE SAN MARTIN SN",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP PROLOG DE NUEVA ESPERANZA",
+    "direccion": "AV 26 DE NOVIEMBRE 1149",
+    "mesas": 20
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP PROLOG DE VILLA MARIA",
+    "direccion": "AV VILLA MARIA 291",
+    "mesas": 18
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP PROLOG SEDE JOSE GALVEZ PRIMARIA",
+    "direccion": "JR. AYACUCHO 661",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP REDIMER JESUS",
+    "direccion": "CALLE JOSE OLAYA 224",
+    "mesas": 5
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP REINA CARMELITA",
+    "direccion": "AV MIGUEL GRAU 2205",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP SAN IGNACIO DE NUEVA ESPERANZA",
+    "direccion": "JR LIBERTAD 196",
+    "mesas": 11
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP SAN JUAN",
+    "direccion": "AV 02 DE MAYO 663 - NUEVA ESPERANZA",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP SANTA MARIA DEL CAMINO",
+    "direccion": "AV LOS PROCERES 535",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP SIERVOS DE JESUS",
+    "direccion": "PJE MONTE DE LOS OLIVOS MZ K 2 LOTE 8 - 9",
+    "mesas": 8
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEP TERESA DE LOS REYES",
+    "direccion": "AV JOSE CARLOS MARIATEGUI 2305",
+    "mesas": 9
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IEPA EL REDENTOR",
+    "direccion": "JR FAUSTINO SANCHEZ CARRION 148",
+    "mesas": 13
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IESTP JUAN VELASCO ALVARADO",
+    "direccion": "AV JOSE OLAYA 120",
+    "mesas": 6
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IESTP SAN FRANCISCO DE ASIS",
+    "direccion": "JR FRANCISCO BOLOGNESI 592",
+    "mesas": 10
+  },
+  {
+    "ubigeo": "140132",
+    "dpto": "LIMA",
+    "provincia": "LIMA",
+    "distrito": "VILLA MARIA DEL TRIUNFO",
+    "colegio": "IESTP VILLA MARIA",
+    "direccion": "AV PROL VILLA MARIA 492",
+    "mesas": 6
   }
 ]

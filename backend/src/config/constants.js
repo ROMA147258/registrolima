@@ -74,12 +74,12 @@ export const DISTRITOS_LIMA = [
   "Ventanilla"
 ];
 
-export const TOTAL_MESAS_LIMA = 32008;
-export const TOTAL_MESAS_LIMA_METROPOLITANA = 26338;
+export const TOTAL_MESAS_LIMA = 32000;
+export const TOTAL_MESAS_LIMA_METROPOLITANA = 26330;
 export const TOTAL_MESAS_CALLAO = 2900;
 
 export const PROVINCIA_METAS = {
-  "LIMA": 26338,
+  "LIMA": 26330,
   "CAÑETE": 673,
   "CANTA": 48,
   "HUARAL": 555,
@@ -216,7 +216,6 @@ export const DISTRITO_METAS = {
   "SAN BARTOLO": 24,
   "SANTA MARIA DEL MAR": 6,
   "CIENEGUILLA": 105,
-  "VILLA MARIA DEL TRIUNFO": 1242,
   "LOS OLIVOS": 977,
   "CHACLACAYO": 138,
   "LURIGANCHO": 550,
@@ -234,5 +233,6 @@ export const DISTRITO_METAS = {
   "CALLAO": 1329,
   "LA PUNTA": 22,
   "VENTANILLA": 858,
-  "MI PERU": 115
+  "MI PERU": 115,
+  "VILLA MARIA DEL TRIUNFO": 1234
 };

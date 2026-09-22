@@ -4,10 +4,12 @@ import {
   Search, ZoomIn, ZoomOut, Maximize2, Minimize2,
   Shield, Phone, CheckCircle2, AlertTriangle,
   XCircle, ChevronRight, ChevronLeft, ExternalLink, Eye, RotateCcw,
-  Map as MapIcon, X, Copy, Check, Trash2, Undo2, Layers, Filter
+  Map as MapIcon, X, Copy, Check, Trash2, Undo2, Layers, Filter,
+  Download, FileSpreadsheet
 } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import * as XLSX from 'xlsx';
 import { VMT_ZONAS_GEO, VMT_SCHOOLS_GEO } from '../../constants/vmtSchoolsGeo.js';
 
 export function MapaZonasVMTView({
@@ -432,10 +434,171 @@ export function MapaZonasVMTView({
     setTimeout(() => setCopiedAll(false), 2000);
   };
 
+  // EXPORTAR EXCEL DETALLADO DONDE CADA ZONA ES UNA HOJA NUEVA
+  const handleExportExcelZonal = () => {
+    const isSpecificZona = selectedZona !== 'all';
+
+    // Función auxiliar para construir los datos detallados de colegios y personeros de una lista de colegios
+    const buildZoneSheetData = (schoolsInZone) => {
+      const sheetData = [];
+      let rowIdx = 1;
+
+      schoolsInZone.forEach(sch => {
+        const pcvName = sch.pcv ? (sch.pcv['Nombres y Apellidos'] || sch.pcv.nombresApellidos || '') : 'PENDIENTE';
+        const pcvDni = sch.pcv ? (sch.pcv['D.N.I.'] || sch.pcv.dni || '') : '-';
+        const pcvCel = sch.pcv ? (sch.pcv['Celular'] || sch.pcv.celular || '') : '-';
+
+        const zonalName = sch.zonal ? (sch.zonal['Nombres y Apellidos'] || sch.zonal.nombresApellidos || '') : 'POR ASIGNAR';
+        const zonalDni = sch.zonal ? (sch.zonal['D.N.I.'] || sch.zonal.dni || '') : '-';
+        const zonalCel = sch.zonal ? (sch.zonal['Celular'] || sch.zonal.celular || '') : '-';
+
+        if (sch.mesaPersoneros.length === 0) {
+          sheetData.push({
+            'N°': rowIdx++,
+            'Colegio / Local': sch.colegio,
+            'Dirección del Local': sch.direccion || 'Sin dirección',
+            'Mesas Totales': sch.mesas,
+            'Personeros de Mesa': 0,
+            'Coord. Local (PCV)': pcvName,
+            'DNI PCV': pcvDni,
+            'Celular PCV': pcvCel,
+            'Coordinador Zonal': zonalName,
+            'DNI Zonal': zonalDni,
+            'Celular Zonal': zonalCel,
+            'Rol Integrante': 'Sin personeros de mesa',
+            'Nombres y Apellidos Personero': '(No hay personeros de mesa registrados aún)',
+            'DNI': '-',
+            'Celular': '-',
+            'Mesa Asignada': '-',
+            'Acreditación': 'Pendiente',
+            'Capacitación': 'Pendiente',
+            'Experiencia': '-',
+            'Movilidad': '-'
+          });
+        } else {
+          sch.mesaPersoneros.forEach(p => {
+            const cred = String(p['Credenciales'] || p.credenciales || '').toLowerCase();
+            const isAcred = cred === 'confirmado' ? 'Confirmado' : 'Pendiente';
+            const preg = String(p['Preguntas'] || p.preguntas || '').toLowerCase();
+            const isAprob = preg.includes('aprob') ? 'Aprobado' : 'Pendiente';
+
+            sheetData.push({
+              'N°': rowIdx++,
+              'Colegio / Local': sch.colegio,
+              'Dirección del Local': sch.direccion || 'Sin dirección',
+              'Mesas Totales': sch.mesas,
+              'Personeros de Mesa': sch.assignedCount,
+              'Coord. Local (PCV)': pcvName,
+              'DNI PCV': pcvDni,
+              'Celular PCV': pcvCel,
+              'Coordinador Zonal': zonalName,
+              'DNI Zonal': zonalDni,
+              'Celular Zonal': zonalCel,
+              'Rol Integrante': 'Personero de Mesa',
+              'Nombres y Apellidos Personero': p['Nombres y Apellidos'] || p.nombresApellidos || '',
+              'DNI': p['D.N.I.'] || p.dni || '',
+              'Celular': p['Celular'] || p.celular || '',
+              'Mesa Asignada': p['Mesa de Sufragio'] || p.mesaDeSufragio || p.mesa || 'Sin mesa',
+              'Acreditación': isAcred,
+              'Capacitación': isAprob,
+              'Experiencia': p['Experiencia como Personero'] || p.experiencia || 'No',
+              'Movilidad': p['Cuenta con Movilidad'] || p.movilidad || 'No'
+            });
+          });
+        }
+      });
+
+      return sheetData;
+    };
+
+    // Función auxiliar para auto-ajustar ancho de columnas en hojas Excel
+    const autoFitColumns = (ws) => {
+      const colWidths = [];
+      const range = XLSX.utils.decode_range(ws['!ref'] || 'A1');
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        let maxLen = 12;
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+          const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
+          if (cell && cell.v) {
+            const valLen = String(cell.v).length;
+            if (valLen > maxLen) maxLen = valLen;
+          }
+        }
+        colWidths.push({ wch: Math.min(maxLen + 3, 50) });
+      }
+      ws['!cols'] = colWidths;
+    };
+
+    // Crear nuevo libro Excel
+    const wb = XLSX.utils.book_new();
+
+    // 1. HOJA 1: RESUMEN GENERAL CONSOLIDADOR DE TODAS LAS ZONAS
+    const zonasSummary = {};
+    enrichedSchools.forEach(sch => {
+      if (!zonasSummary[sch.zona]) {
+        zonasSummary[sch.zona] = {
+          zona: sch.zona,
+          short: sch.zonaShort,
+          totalColegios: 0,
+          totalMesas: 0,
+          totalPersoneros: 0,
+          zonal: sch.zonal ? (sch.zonal['Nombres y Apellidos'] || sch.zonal.nombresApellidos || '') : 'POR ASIGNAR',
+          celularZonal: sch.zonal ? (sch.zonal['Celular'] || sch.zonal.celular || '-') : '-'
+        };
+      }
+      zonasSummary[sch.zona].totalColegios++;
+      zonasSummary[sch.zona].totalMesas += sch.mesas;
+      zonasSummary[sch.zona].totalPersoneros += sch.assignedCount;
+    });
+
+    const summaryData = Object.values(zonasSummary).map((z, idx) => ({
+      'N°': idx + 1,
+      'Zona Territorial': z.zona,
+      'Total Colegios': z.totalColegios,
+      'Total Mesas': z.totalMesas,
+      'Personeros de Mesa Registrados': z.totalPersoneros,
+      'Mesas Faltantes': Math.max(0, z.totalMesas - z.totalPersoneros),
+      '% Cobertura': z.totalMesas > 0 ? `${Math.min(100, Math.round((z.totalPersoneros / z.totalMesas) * 100))}%` : '0%',
+      'Coordinador Zonal': z.zonal,
+      'Celular Coordinador': z.celularZonal
+    }));
+
+    const wsSummary = XLSX.utils.json_to_sheet(summaryData);
+    autoFitColumns(wsSummary);
+    XLSX.utils.book_append_sheet(wb, wsSummary, 'Resumen General VMT');
+
+    // 2. CREAR UNA HOJA DEDICADA POR CADA ZONA TERRITORIAL
+    const zonesToExport = isSpecificZona
+      ? [selectedZona]
+      : Object.keys(VMT_ZONAS_GEO);
+
+    zonesToExport.forEach(zoneKey => {
+      const schoolsInThisZone = enrichedSchools.filter(s => s.zona === zoneKey);
+      if (schoolsInThisZone.length === 0) return;
+
+      const zoneSheetData = buildZoneSheetData(schoolsInThisZone);
+      const wsZone = XLSX.utils.json_to_sheet(zoneSheetData);
+      autoFitColumns(wsZone);
+
+      // Nombre de la pestaña (límite Excel 31 caracteres)
+      const geoInfo = VMT_ZONAS_GEO[zoneKey];
+      const tabName = geoInfo ? `Zona ${geoInfo.short}` : zoneKey.replace('ZONA ', 'Zona ');
+      const cleanTabName = tabName.substring(0, 31);
+
+      XLSX.utils.book_append_sheet(wb, wsZone, cleanTabName);
+    });
+
+    // Descargar archivo Excel con nombre claro
+    const cleanName = isSpecificZona ? selectedZona.replace(/[^A-Za-z0-9]/g, '_') : 'Todas_Las_Zonas_Separadas';
+    const fileName = `Reporte_VMT_${cleanName}_2026.xlsx`;
+
+    XLSX.writeFile(wb, fileName);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '100%', boxSizing: 'border-box' }}>
       
-      {/* HEADER COMPACTO CON SELECTOR DE ZONAS */}
+      {/* HEADER COMPACTO CON SELECTOR DE ZONAS Y BOTÓN EXPORTAR EXCEL */}
       <div style={{
         background: bgCard,
         border: `1px solid ${borderCol}`,
@@ -454,13 +617,38 @@ export function MapaZonasVMTView({
               Mapa Territorial GPS • Villa María del Triunfo
             </h2>
             <span style={{ fontSize: '0.72rem', color: textSub }}>
-              Haz clic en el mapa para marcar coordenadas o selecciona un colegio de la lista para ver su estructura.
+              {selectedZona === 'all' ? 'Mostrando todas las 7 zonas' : `Filtrado por: ${selectedZona}`} &bull; {filteredSchools.length} colegios
             </span>
           </div>
         </div>
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {/* Botón Exportar Excel de la Zona */}
+          <button
+            onClick={handleExportExcelZonal}
+            title={selectedZona === 'all' ? "Exportar Excel de todas las zonas" : `Exportar Excel de ${selectedZona}`}
+            style={{
+              padding: '6px 12px',
+              borderRadius: '8px',
+              border: '1.5px solid #16a34a',
+              background: isDark ? 'rgba(22, 163, 74, 0.15)' : '#dcfce7',
+              color: '#15803d',
+              fontSize: '0.74rem',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 2px 6px rgba(22, 163, 74, 0.2)'
+            }}
+          >
+            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+            <span>Exportar Excel {selectedZona === 'all' ? '(Todas las Zonas)' : `(${selectedZona.replace('Zona ', '')})`}</span>
+          </button>
+        </div>
+
         {/* Filtros de zona compactos */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none', paddingTop: '4px', borderTop: `1px dashed ${borderCol}` }}>
           <button
             onClick={() => {
               setSelectedZona('all');
@@ -663,7 +851,7 @@ export function MapaZonasVMTView({
             color: textSub
           }}>
             <span>📍 Haz clic en el mapa para marcar puntos de coordenadas</span>
-            <span>{filteredSchools.length} colegios en la zona</span>
+            <span>{filteredSchools.length} colegios en la vista</span>
           </div>
         </div>
 

@@ -1713,52 +1713,35 @@ export function DashboardView({ onGoToTraining }) {
       });
     }
 
-    // 5. Ordenamiento de Centros según cobertura de personeros, cantidad o zona
+    // 5. Ordenamiento de Centros según criterio seleccionado (Zona, Nombre, Cobertura, Personeros, Mesas)
     const sorted = [...list].sort((a, b) => {
-      const isExcA = a.asignadas > (a.totalMesas || 1);
-      const isExcB = b.asignadas > (b.totalMesas || 1);
-
-      // --- 1. Mayor Cobertura de Personeros (100% a 0%) ---
-      if (sortBySchool1 === 'cobertura_desc') {
-        return (b.cobertura - a.cobertura) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre);
-      }
-      // --- 2. Menor Cobertura de Personeros (0% a 100% - Faltan personeros) ---
-      if (sortBySchool1 === 'cobertura_asc') {
-        return (a.cobertura - b.cobertura) || (a.asignadas - b.asignadas) || a.nombre.localeCompare(b.nombre);
-      }
-      // --- 3. Sobrecupo de Personeros (Superan las mesas requeridas) ---
-      if (sortBySchool1 === 'excedidos_primero') {
-        const diffA = isExcA ? (a.asignadas - (a.totalMesas || 1)) : -1;
-        const diffB = isExcB ? (b.asignadas - (b.totalMesas || 1)) : -1;
-        return (diffB - diffA) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
-      }
-      // --- 4. Sin Personero de Centro (PCV) Primero ---
-      if (sortBySchool1 === 'sin_pcv_primero') {
-        const hasA = !!a.plvPersonero ? 1 : 0;
-        const hasB = !!b.plvPersonero ? 1 : 0;
-        return (hasA - hasB) || (a.cobertura - b.cobertura) || a.nombre.localeCompare(b.nombre);
-      }
-      // --- 5. Con Personero de Centro (PCV) Primero ---
-      if (sortBySchool1 === 'con_pcv_primero') {
-        const hasA = !!a.plvPersonero ? 1 : 0;
-        const hasB = !!b.plvPersonero ? 1 : 0;
-        return (hasB - hasA) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
-      }
-      // --- 6. Más Personeros Registrados en el Centro (Total de personas) ---
-      if (sortBySchool1 === 'personeros_desc') {
-        return ((b.allPersoneros?.length || b.asignadas || 0) - (a.allPersoneros?.length || a.asignadas || 0)) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
-      }
-      // --- 7. Nombre Alfabético (A - Z) ---
-      if (sortBySchool1 === 'alfabetico_asc') {
-        return a.nombre.localeCompare(b.nombre);
-      }
-      // --- 8. Agrupar por Coordinador Zonal ---
+      // --- 1. Agrupar por Coordinador Zonal (Default) ---
       if (sortBySchool1 === 'zonal_group') {
         const nameA = a.zonalPersonero ? (a.zonalPersonero['Nombres y Apellidos'] || a.zonalPersonero.nombresApellidos || '').trim() : 'zzzz_sin_zona';
         const nameB = b.zonalPersonero ? (b.zonalPersonero['Nombres y Apellidos'] || b.zonalPersonero.nombresApellidos || '').trim() : 'zzzz_sin_zona';
         const cmpZ = nameA.localeCompare(nameB);
         if (cmpZ !== 0) return cmpZ;
         return a.nombre.localeCompare(b.nombre);
+      }
+      // --- 2. Nombre Alfabético (A - Z) ---
+      if (sortBySchool1 === 'alfabetico_asc') {
+        return a.nombre.localeCompare(b.nombre);
+      }
+      // --- 3. Mayor Cobertura de Personeros (100% a 0%) ---
+      if (sortBySchool1 === 'cobertura_desc') {
+        return (b.cobertura - a.cobertura) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 4. Menor Cobertura de Personeros (0% a 100% - Faltan personeros) ---
+      if (sortBySchool1 === 'cobertura_asc') {
+        return (a.cobertura - b.cobertura) || (a.asignadas - b.asignadas) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 5. Más Personeros Registrados en el Centro ---
+      if (sortBySchool1 === 'personeros_desc') {
+        return ((b.allPersoneros?.length || b.asignadas || 0) - (a.allPersoneros?.length || a.asignadas || 0)) || (b.cobertura - a.cobertura) || a.nombre.localeCompare(b.nombre);
+      }
+      // --- 6. Mayor Cantidad de Mesas de Sufragio ---
+      if (sortBySchool1 === 'mesas_desc') {
+        return ((b.totalMesas || 0) - (a.totalMesas || 0)) || a.nombre.localeCompare(b.nombre);
       }
 
       return (b.cobertura - a.cobertura) || (b.asignadas - a.asignadas) || a.nombre.localeCompare(b.nombre);
@@ -3737,33 +3720,128 @@ export function DashboardView({ onGoToTraining }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {/* Centros de Votación */}
                   <div>
-                    {/* Barra de Filtro Rápido por Tipo de Zona y Ordenamiento */}
+                    {/* Barra de Filtros y Ordenamiento Adaptativa de Centros y Mesas */}
                     <div style={{
                       display: 'flex',
-                      flexDirection: isMobile ? 'column' : 'row',
-                      alignItems: isMobile ? 'stretch' : 'center',
-                      justifyContent: 'space-between',
-                      gap: isMobile ? '10px' : '12px',
-                      marginBottom: '14px',
-                      background: isDark ? 'rgba(255,255,255,0.02)' : '#f8fafc',
-                      padding: isMobile ? '10px 12px' : '10px 14px',
-                      borderRadius: '12px',
-                      border: `1px solid ${borderCol}`
+                      flexDirection: 'column',
+                      gap: '12px',
+                      marginBottom: '16px',
+                      background: isDark ? 'rgba(30, 41, 59, 0.7)' : '#ffffff',
+                      padding: isMobile ? '12px 14px' : '14px 18px',
+                      borderRadius: '16px',
+                      border: `1px solid ${borderCol}`,
+                      boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.2)' : '0 2px 12px rgba(0,0,0,0.04)',
+                      backdropFilter: 'blur(8px)'
                     }}>
-                      {!isCoordinadorLocal ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '6px' : '8px', flexWrap: 'wrap' }}>
-                          <span style={{ fontSize: '0.82rem', fontWeight: 800, color: textTitle, display: 'flex', alignItems: 'center', gap: '6px', marginRight: '4px' }}>
+                      {/* Fila 1: Título y Contadores + Selector de Ordenamiento */}
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: isMobile ? 'column' : 'row',
+                        alignItems: isMobile ? 'flex-start' : 'center',
+                        justifyContent: 'space-between',
+                        gap: '10px',
+                        borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9'}`,
+                        paddingBottom: '10px'
+                      }}>
+                        {/* Título de Centros */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <span style={{ fontSize: '0.86rem', fontWeight: 800, color: textTitle, display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <School className="w-4 h-4 text-sky-500" />
-                            <span>Centros ({districtSchools.length})</span>
+                            <span>Centros de Votación</span>
                           </span>
+                          <span style={{
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            padding: '2px 8px',
+                            borderRadius: '12px',
+                            background: isDark ? 'rgba(14, 165, 233, 0.15)' : '#e0f2fe',
+                            color: '#0284c7',
+                            border: '1px solid rgba(14, 165, 233, 0.3)'
+                          }}>
+                            {filteredDistrictSchools.length} {filteredDistrictSchools.length === 1 ? 'mostrado' : `de ${districtSchools.length}`}
+                          </span>
+                        </div>
 
-                          {/* Quick Filter Pills de Alertas de Cobertura */}
-                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap' }}>
+                        {/* Selector de Ordenamiento (Limpio, sin duplicados ni redundancias) */}
+                        {!isCoordinadorLocal ? (
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            width: isMobile ? '100%' : 'auto',
+                            justifyContent: isMobile ? 'space-between' : 'flex-end'
+                          }}>
+                            <span style={{ fontSize: '0.74rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                              <ArrowUpDown className="w-3.5 h-3.5 text-sky-500" />
+                              <span>Ordenar:</span>
+                            </span>
+                            <select
+                              value={sortBySchool1}
+                              onChange={(e) => setSortBySchool1(e.target.value)}
+                              style={{
+                                padding: '6px 12px',
+                                borderRadius: '10px',
+                                border: `1px solid ${borderCol}`,
+                                background: isDark ? '#0f172a' : '#f8fafc',
+                                color: textTitle,
+                                fontSize: '0.74rem',
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                                outline: 'none',
+                                width: isMobile ? '100%' : 'auto',
+                                flex: isMobile ? 1 : 'none',
+                                transition: 'all 0.15s ease'
+                              }}
+                            >
+                              <option value="zonal_group">🗺️ Por Coordinador Zonal</option>
+                              <option value="alfabetico_asc">🔤 Nombre del Centro (A → Z)</option>
+                              <option value="cobertura_desc">📈 Mayor Cobertura (%)</option>
+                              <option value="cobertura_asc">📉 Menor Cobertura (%)</option>
+                              <option value="personeros_desc">👥 Más Personeros Asignados</option>
+                              <option value="mesas_desc">🗳️ Más Mesas de Sufragio</option>
+                            </select>
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7',
+                              color: '#15803d',
+                              border: '1px solid #86efac',
+                              padding: '4px 12px',
+                              borderRadius: '20px',
+                              fontSize: '0.78rem',
+                              fontWeight: 800
+                            }}>
+                              <School className="w-3.5 h-3.5" />
+                              <span>{coordinatorLocal} • Mesas y Personeros</span>
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Fila 2: Filtros de Cobertura y Personero de Centro (PCV) */}
+                      {!isCoordinadorLocal && (
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: isMobile ? 'column' : 'row',
+                          alignItems: isMobile ? 'stretch' : 'center',
+                          gap: isMobile ? '8px' : '14px',
+                          flexWrap: 'wrap'
+                        }}>
+                          {/* Grupo Cobertura */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+                            <span style={{ fontSize: '0.7rem', fontWeight: 800, color: textSub, marginRight: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                              Cobertura:
+                            </span>
+
                             <button
                               type="button"
                               onClick={() => { setAlertFilter1('all'); setCoordLocalFilter1('all'); }}
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: (alertFilter1 === 'all' && coordLocalFilter1 === 'all') ? '1.5px solid #0284c7' : `1px solid ${borderCol}`,
                                 background: (alertFilter1 === 'all' && coordLocalFilter1 === 'all') ? (isDark ? '#0369a1' : '#e0f2fe') : (isDark ? '#1e293b' : '#ffffff'),
@@ -3782,7 +3860,7 @@ export function DashboardView({ onGoToTraining }) {
                               onClick={() => setAlertFilter1(alertFilter1 === 'critico' ? 'all' : 'critico')}
                               title="0% – 30% Cobertura"
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: alertFilter1 === 'critico' ? '1.5px solid #ef4444' : (countCriticoSchools > 0 ? '1px solid #fca5a5' : `1px solid ${borderCol}`),
                                 background: alertFilter1 === 'critico' ? '#ef4444' : (countCriticoSchools > 0 ? (isDark ? 'rgba(239, 68, 68, 0.15)' : '#fef2f2') : 'transparent'),
@@ -3793,7 +3871,7 @@ export function DashboardView({ onGoToTraining }) {
                                 transition: 'all 0.15s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px'
+                                gap: '4px'
                               }}
                             >
                               <span>🔴 Crítico (0-30%)</span>
@@ -3811,7 +3889,7 @@ export function DashboardView({ onGoToTraining }) {
                               onClick={() => setAlertFilter1(alertFilter1 === 'parcial' ? 'all' : 'parcial')}
                               title="31% – 75% Cobertura"
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: alertFilter1 === 'parcial' ? '1.5px solid #f59e0b' : (countParcialSchools > 0 ? '1px solid #fcd34d' : `1px solid ${borderCol}`),
                                 background: alertFilter1 === 'parcial' ? '#f59e0b' : (countParcialSchools > 0 ? (isDark ? 'rgba(245, 158, 11, 0.15)' : '#fffbeb') : 'transparent'),
@@ -3822,7 +3900,7 @@ export function DashboardView({ onGoToTraining }) {
                                 transition: 'all 0.15s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px'
+                                gap: '4px'
                               }}
                             >
                               <span>🟡 Parcial (31-75%)</span>
@@ -3840,7 +3918,7 @@ export function DashboardView({ onGoToTraining }) {
                               onClick={() => setAlertFilter1(alertFilter1 === 'optimo' ? 'all' : 'optimo')}
                               title="76% – 100% Cobertura"
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: alertFilter1 === 'optimo' ? '1.5px solid #10b981' : (countOptimoSchools > 0 ? '1px solid #86efac' : `1px solid ${borderCol}`),
                                 background: alertFilter1 === 'optimo' ? '#10b981' : (countOptimoSchools > 0 ? (isDark ? 'rgba(16, 185, 129, 0.15)' : '#ecfdf5') : 'transparent'),
@@ -3851,7 +3929,7 @@ export function DashboardView({ onGoToTraining }) {
                                 transition: 'all 0.15s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px'
+                                gap: '4px'
                               }}
                             >
                               <span>🟢 Óptimo (76-100%)</span>
@@ -3869,7 +3947,7 @@ export function DashboardView({ onGoToTraining }) {
                               onClick={() => setAlertFilter1(alertFilter1 === 'excedido' ? 'all' : 'excedido')}
                               title="> 100% Cobertura (Mesas sobrepasadas)"
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: alertFilter1 === 'excedido' ? '1.5px solid #e11d48' : (countExcedidoSchools > 0 ? '1px solid #fda4af' : `1px solid ${borderCol}`),
                                 background: alertFilter1 === 'excedido' ? '#e11d48' : (countExcedidoSchools > 0 ? (isDark ? 'rgba(225, 29, 72, 0.15)' : '#fff1f2') : 'transparent'),
@@ -3880,7 +3958,7 @@ export function DashboardView({ onGoToTraining }) {
                                 transition: 'all 0.15s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px'
+                                gap: '4px'
                               }}
                             >
                               <span>🚨 Excedido (&gt;100%)</span>
@@ -3892,17 +3970,23 @@ export function DashboardView({ onGoToTraining }) {
                                 fontWeight: 800
                               }}>{countExcedidoSchools}</span>
                             </button>
+                          </div>
 
-                            {/* Separador */}
-                            <span style={{ color: borderCol, padding: '0 2px' }}>|</span>
+                          {/* Divisor en Desktop */}
+                          {!isMobile && <div style={{ height: '20px', width: '1px', background: borderCol }} />}
 
-                            {/* Quick Filter Pills de Personero de Centro (PCV) */}
+                          {/* Grupo PCV (Personero de Centro) */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+                            <span style={{ fontSize: '0.7rem', fontWeight: 800, color: textSub, marginRight: '2px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                              Personero Centro:
+                            </span>
+
                             <button
                               type="button"
                               onClick={() => setCoordLocalFilter1(coordLocalFilter1 === 'con_pcv' ? 'all' : 'con_pcv')}
                               title="Colegios CON Personero de Centro (PCV)"
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: coordLocalFilter1 === 'con_pcv' ? '1.5px solid #0284c7' : (countConPcvSchools > 0 ? '1px solid #bae6fd' : `1px solid ${borderCol}`),
                                 background: coordLocalFilter1 === 'con_pcv' ? '#0284c7' : (countConPcvSchools > 0 ? (isDark ? 'rgba(2, 132, 199, 0.15)' : '#e0f2fe') : 'transparent'),
@@ -3913,7 +3997,7 @@ export function DashboardView({ onGoToTraining }) {
                                 transition: 'all 0.15s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px'
+                                gap: '4px'
                               }}
                             >
                               <span>✅ Con PCV</span>
@@ -3931,7 +4015,7 @@ export function DashboardView({ onGoToTraining }) {
                               onClick={() => setCoordLocalFilter1(coordLocalFilter1 === 'sin_pcv' ? 'all' : 'sin_pcv')}
                               title="Colegios SIN Personero de Centro (PCV)"
                               style={{
-                                padding: '3px 8px',
+                                padding: '4px 10px',
                                 borderRadius: '20px',
                                 border: coordLocalFilter1 === 'sin_pcv' ? '1.5px solid #f59e0b' : (countSinPcvSchools > 0 ? '1px solid #fcd34d' : `1px solid ${borderCol}`),
                                 background: coordLocalFilter1 === 'sin_pcv' ? '#f59e0b' : (countSinPcvSchools > 0 ? (isDark ? 'rgba(245, 158, 11, 0.15)' : '#fffbeb') : 'transparent'),
@@ -3942,7 +4026,7 @@ export function DashboardView({ onGoToTraining }) {
                                 transition: 'all 0.15s ease',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '3px'
+                                gap: '4px'
                               }}
                             >
                               <span>⚠️ Sin PCV</span>
@@ -3956,74 +4040,7 @@ export function DashboardView({ onGoToTraining }) {
                             </button>
                           </div>
                         </div>
-                      ) : (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            background: isDark ? 'rgba(16, 185, 129, 0.2)' : '#dcfce7',
-                            color: '#15803d',
-                            border: '1px solid #86efac',
-                            padding: '4px 12px',
-                            borderRadius: '20px',
-                            fontSize: '0.78rem',
-                            fontWeight: 800
-                          }}>
-                            <School className="w-3.5 h-3.5" />
-                            <span>{coordinatorLocal} • Mesas y Personeros</span>
-                          </span>
-                        </div>
                       )}
-
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'space-between' : 'flex-end', width: isMobile ? '100%' : 'auto', gap: isMobile ? '8px' : '12px', flexWrap: 'wrap' }}>
-                        {/* Selector de Ordenamiento */}
-                        {!isCoordinadorLocal && (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flex: isMobile ? 1 : 'none' }}>
-                            <span style={{ fontSize: '0.76rem', fontWeight: 800, color: textSub, display: 'flex', alignItems: 'center', gap: '3px', whiteSpace: 'nowrap' }}>
-                              <ArrowUpDown className="w-3.5 h-3.5 text-amber-500" />
-                              <span style={{ display: isMobile ? 'none' : 'inline' }}>Ordenar centros:</span>
-                            </span>
-                            <select
-                              value={sortBySchool1}
-                              onChange={(e) => setSortBySchool1(e.target.value)}
-                              style={{
-                                padding: '5px 8px',
-                                borderRadius: '8px',
-                                border: `1px solid ${borderCol}`,
-                                background: isDark ? '#1e293b' : '#ffffff',
-                                color: textTitle,
-                                fontSize: '0.74rem',
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                                outline: 'none',
-                                width: isMobile ? '100%' : 'auto'
-                              }}
-                            >
-                              <optgroup label="📊 COBERTURA DE PERSONEROS">
-                                <option value="cobertura_desc">📈 Mayor Cobertura (100% → 0% personeros asignados)</option>
-                                <option value="cobertura_asc">📉 Menor Cobertura / Urgentes (0% → 100% faltan personeros)</option>
-                                <option value="excedidos_primero">🚨 Sobrecupo (Más personeros que mesas requeridas)</option>
-                              </optgroup>
-                              <optgroup label="🏫 PERSONERO DE CENTRO (PCV)">
-                                <option value="sin_pcv_primero">⚠️ Sin Personero de Centro (PCV) primero</option>
-                                <option value="con_pcv_primero">✅ Con Personero de Centro (PCV) primero</option>
-                              </optgroup>
-                              <optgroup label="👥 CANTIDAD DE PERSONEROS">
-                                <option value="personeros_desc">👥 Más Personeros Registrados en el Centro</option>
-                              </optgroup>
-                              <optgroup label="🔤 ALFABÉTICO Y ZONAS">
-                                <option value="alfabetico_asc">🔤 Nombre del Centro (A → Z)</option>
-                                <option value="zonal_group">🗺️ Por Coordinador Zonal</option>
-                              </optgroup>
-                            </select>
-                          </div>
-                        )}
-
-                        <div style={{ fontSize: '0.74rem', color: textSub, whiteSpace: 'nowrap' }}>
-                          <strong>{filteredDistrictSchools.length}</strong> {filteredDistrictSchools.length === 1 ? 'centro' : 'centros'}
-                        </div>
-                      </div>
                     </div>
 
                     <div

@@ -1,8 +1,8 @@
 # BANCO OFICIAL DE PREGUNTAS Y RESPUESTAS - CARTILLA DEL PERSONERO ONPE ERM 2026
 
-> **Documento Oficial de Estudio y Evaluación (Banco Oficial 2)**
-> Basado estrictamente en el documento oficial *BANCO OFICIAL DE PREGUNTAS Y RESPUESTAS (2).docx* y la *Cartilla del Personero ONPE*.
-> Contiene las 100 preguntas completas con sus opciones, respuesta correcta y justificación.
+> **Documento Oficial de Estudio y Evaluación (Banco Oficial 3 - Revisado)**
+> Basado estrictamente en el documento oficial *BANCO OFICIAL DE PREGUNTAS Y RESPUESTAS (3).docx* y la *Cartilla del Personero de Mesa ONPE*.
+> Contiene exactamente 100 preguntas didácticas, claras y directas con sus respuestas correctas y justificaciones oficiales, habiendo aplicado los cambios en verde, eliminado los textos tachados en rojo y reemplazado las preguntas en lila.
 
 ---
 
@@ -33,10 +33,10 @@
 ### Pregunta 3
 **¿A qué hora deben presentarse los miembros de mesa y personeros para la instalación?**
 
-- [ ] A) A las 7:00 a. m.
+- [x] **A) A las 7:00 a. m.** *(Correcta)*
 - [ ] B) A las 8:30 a. m.
 - [ ] C) A las 9:00 a. m.
-- [x] **D) A las 6:00 a. m.** *(Correcta)*
+- [ ] D) A las 6:00 a. m.
 
 > **💡 Justificación / Explicación:** La instalación de la mesa de sufragio inicia a las 7:00 a. m.
 
@@ -45,8 +45,8 @@
 ### Pregunta 4
 **¿A qué hora inicia el sufragio (la votación de los electores)?**
 
-- [ ] A) A las 8:00 a. m.
-- [x] **B) A las 7:00 a. m.** *(Correcta)*
+- [x] **A) A las 8:00 a. m.** *(Correcta)*
+- [ ] B) A las 7:00 a. m.
 - [ ] C) A las 9:00 a. m.
 - [ ] D) A las 10:00 a. m.
 
@@ -561,7 +561,7 @@
 ### Pregunta 47
 **¿Qué recibe el elector al momento de que le devuelven su DNI tras votar?**
 
-- [x] **A) Su Documento Nacional de Identidad (DNI)** *(Correcta)*
+- [x] **A) Su Documento Nacional de Identidad (DNI) Correcta)*** *(Correcta)*
 - [ ] B) Un certificado de participación electoral.
 - [ ] C) Una copia del acta de escrutinio.
 - [ ] D) Una constancia de haber emitido su voto.
@@ -585,7 +585,7 @@
 ### Pregunta 49
 **¿Qué debe hacer un personero si detecta propaganda electoral dentro de la cámara secreta?**
 
-- [x] **A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda .** *(Correcta)*
+- [x] **A) Comunicar de inmediato a los miembros de mesa para que retiren la propaganda.** *(Correcta)*
 - [ ] B) Retirarla directamente sin informar a los miembros de mesa.
 - [ ] C) Pegar encima propaganda de su propio partido.
 - [ ] D) Solicitar al elector que vote por otra opción.
@@ -597,7 +597,7 @@
 ### Pregunta 50
 **¿Puede el elector tomar fotos a su cédula de votación con su teléfono celular dentro de la cámara secreta?**
 
-- [x] **A) No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio** *(Correcta)*
+- [x] **A) No, está prohibido tomar fotos o grabar el voto para proteger el secreto del sufragio.** *(Correcta)*
 - [ ] B) Sí, si no muestra su rostro.
 - [ ] C) Sí, si es para mostrarle a su jefe de trabajo.
 - [ ] D) Sí, si no publica la imagen.
@@ -693,7 +693,7 @@
 ### Pregunta 58
 **¿Qué pasa si una cédula tiene una marca hecha con un lapicero que no es el oficial de la ONPE?**
 
-- [x] **A) Si la marca es una cruz o aspa válida, el voto es VÁLIDO. No se anula el voto por el tipo de bolígrafo .** *(Correcta)*
+- [x] **A) Si la marca es una cruz o aspa válida, el voto es VÁLIDO. No se anula el voto por el tipo de bolígrafo.** *(Correcta)*
 - [ ] B) Se anula inmediatamente.
 - [ ] C) Se manda a la fiscalía para peritaje.
 - [ ] D) Se considera voto en blanco.
@@ -883,14 +883,14 @@
 ---
 
 ### Pregunta 74
-**¿Qué pasa con los útiles electorales (lapiceros, tampones, cintas) al finalizar el escrutinio?**
+**¿Puede un personero de mesa presenciar y verificar el acondicionamiento de la cámara secreta antes del inicio del sufragio?**
 
-- [x] **A) Se guardan en los sobres y cajas correspondientes de la ONPE para su retorno.** *(Correcta)*
-- [ ] B) Los personeros se los llevan a su casa como recuerdo.
-- [ ] C) Se botan en el patio del colegio.
-- [ ] D) Se regalan a los electores que pasan por la calle.
+- [x] **A) Sí, tiene derecho a ingresar junto a los miembros de mesa para verificar que la cámara secreta esté libre de propaganda electoral y debidamente acondicionada.** *(Correcta)*
+- [ ] B) No, solo pueden ingresar los efectivos de la Policía Nacional.
+- [ ] C) No, está prohibido que los personeros observen la cámara secreta en cualquier momento.
+- [ ] D) Solo si el coordinador de la ONPE le otorga un permiso notarial.
 
-> **💡 Justificación / Explicación:** Todo el material y útiles electorales se empaquetan en las cajas oficiales de la ONPE.
+> **💡 Justificación / Explicación:** El personero tiene el derecho y deber de presenciar la instalación y verificar que la cámara secreta garantice el secreto del voto y esté libre de propaganda.
 
 ---
 
@@ -1027,36 +1027,36 @@
 ---
 
 ### Pregunta 86
-**¿Quién custodia las actas electorales mientras son transportadas a la sede de la ODPE?**
+**¿Qué debe hacer el personero si un miembro de mesa comete un error involuntario al sumar o anotar una cifra en la hoja borrador?**
 
-- [x] **A) El personal de la ONPE con el resguardo y custodia estricta de las Fuerzas Armadas y Policía Nacional.** *(Correcta)*
-- [ ] B) Los personeros de los partidos en sus propios autos.
-- [ ] C) Una empresa de mensajería privada común.
-- [ ] D) Los mototaxistas de la zona.
+- [x] **A) Alertar de inmediato y con respeto a los miembros de mesa para que corrijan la cifra antes de transcribirla al Acta Electoral definitiva.** *(Correcta)*
+- [ ] B) Esperar a que firmen el acta final para luego intentar anular toda la mesa de votación.
+- [ ] C) Quitarle los documentos al miembro de mesa y escribir él mismo los números.
+- [ ] D) Guardar silencio y retirarse del aula de votación sin firmar nada.
 
-> **💡 Justificación / Explicación:** El traslado del material electoral y actas se realiza bajo custodia militar y policial permanente.
+> **💡 Justificación / Explicación:** La función de vigilancia activa del personero permite advertir y corregir a tiempo cualquier error en la hoja borrador antes del llenado definitivo del Acta Electoral.
 
 ---
 
 ### Pregunta 87
-**¿Qué pasa si un personero firma un acta electoral en blanco antes de que termine el conteo?**
+**¿ Qué implica que un personero firme un acta electoral en blanco antes de que concluya el escrutinio?**
 
-- [x] **A) Comete una grave irresponsabilidad que facilita posibles fraudes y adulteraciones; NUNCA se debe firmar un acta en blanco.** *(Correcta)*
-- [ ] B) Es una buena práctica para irse temprano a casa.
-- [ ] C) La ONPE lo premia con un diploma.
-- [ ] D) No pasa nada porque el presidente es buena persona.
+- [x] **A) Constituye una actuación irresponsable y riesgosa; un personero nunca debe firmar un acta en blanco.** *(Correcta)*
+- [ ] B) Es una práctica adecuada para retirarse antes del cierre.
+- [ ] C) Es una conducta recomendada por la ONPE.
+- [ ] D) No genera ningún riesgo porque los datos pueden completarse posteriormente.
 
 > **💡 Justificación / Explicación:** Bajo ninguna circunstancia se debe firmar un acta en blanco; siempre se firma cuando todos los datos están completos.
 
 ---
 
 ### Pregunta 88
-**¿Qué es la acreditación del personero de mesa?**
+**¿Qué es la credencial del personero de mesa?**
 
-- [x] **A) Es el documento expedido por el personero legal o directivo autorizado que le da validez oficial para actuar ante la mesa.** *(Correcta)*
+- [x] **A) Es el documento que acredita oficialmente al ciudadano para ejercer funciones como personero ante una mesa de sufragio.** *(Correcta)*
 - [ ] B) Es un mensaje de texto en el celular sin nombre.
 - [ ] C) Es una tarjeta de presentación comercial.
-- [ ] D) Es un autógrafo del candidato.
+- [ ] D) Es un documento firmado únicamente por el candidato.
 
 > **💡 Justificación / Explicación:** La credencial acredita legalmente al personero ante las autoridades de la mesa y la ONPE.
 
@@ -1065,10 +1065,10 @@
 ### Pregunta 89
 **¿Qué debe hacer el personero si durante el sufragio un elector no sabe cómo doblar su cédula?**
 
-- [x] **A) El presidente de mesa le indica amablemente cómo doblarla sin mirar por quién votó, respetando el secreto del voto.** *(Correcta)*
-- [ ] B) El personero le quita la cédula y se la dobla mirando el voto.
-- [ ] C) El elector debe romper la cédula.
-- [ ] D) El policía entra al aula y se la dobla.
+- [x] **A) El presidente de mesa puede indicarle cómo doblarla, respetando en todo momento el secreto del voto** *(Correcta)*
+- [ ] B) El personero debe tomar la cédula y doblarla observando el voto.
+- [ ] C) El elector debe destruir la cédula y solicitar otra.
+- [ ] D) Un efectivo policial debe ingresar para doblar la cédula.
 
 > **💡 Justificación / Explicación:** Los miembros de mesa guían al elector respetando siempre la privacidad y el secreto de su decisión.
 
@@ -1077,20 +1077,20 @@
 ### Pregunta 90
 **¿Qué pasa si un personero llega tarde, por ejemplo a las 9:00 a. m. cuando la mesa ya está instalada?**
 
-- [x] **A) Puede acreditarse en ese momento y comenzar a cumplir sus funciones a partir de su llegada, sin anular lo ya actuado.** *(Correcta)*
-- [ ] B) Ya no se le permite ingresar y se le retira del colegio.
+- [x] **A) Puede acreditarse en ese momento y comenzar a cumplir sus funciones a partir de su llegada.** *(Correcta)*
+- [ ] B) Ya no puede ingresar al local de votación.
 - [ ] C) Se debe desinstalar la mesa y volver a empezar de cero.
-- [ ] D) Se le cobra una multa de 100 soles en la mesa.
+- [ ] D) Debe pagar una multa para incorporarse a la jornada.
 
 > **💡 Justificación / Explicación:** El personero puede incorporarse a la mesa en cualquier momento de la jornada, acreditándose ante el presidente.
 
 ---
 
 ### Pregunta 91
-**¿Tiene derecho el personero a solicitar que conste en el acta alguna incidencia o irregularidad observada?**
+**¿Tiene el personero derecho a solicitar que una incidencia o irregularidad observada quede registrada en el Acta Electoral?**
 
-- [x] **A) Sí, tiene derecho a que sus observaciones fundamentadas se escriban en el casillero de observaciones del acta electoral.** *(Correcta)*
-- [ ] B) No, las actas no permiten escribir ninguna queja.
+- [x] **A) Sí. Puede solicitar que sus observaciones o reclamos sean consignados en el espacio correspondiente del acta** *(Correcta)*
+- [ ] B) No, las actas no permiten escribir ninguna observación.
 - [ ] C) Solo si los miembros de mesa están de acuerdo con su partido.
 - [ ] D) Solo pagando un derecho de trámite.
 
@@ -1099,9 +1099,9 @@
 ---
 
 ### Pregunta 92
-**¿Qué es el derecho al sufragio en el Perú?**
+**¿Qué representa el derecho al sufragio en el Perú?**
 
-- [x] **A) Es un derecho y un deber cívico de todos los ciudadanos peruanos mayores de 18 años.** *(Correcta)*
+- [x] **A) Es un derecho y un deber cívico de los ciudadanos, conforme a las condiciones establecidas por la Constitución y la legislación electoral..** *(Correcta)*
 - [ ] B) Es un trámite voluntario exclusivo de los funcionarios públicos.
 - [ ] C) Es una obligación solo para personas que tienen título profesional.
 - [ ] D) Es un sorteo de premios organizado por el Estado.
@@ -1111,33 +1111,33 @@
 ---
 
 ### Pregunta 93
-**¿Cuál es el rol del Coordinador de Local de Votación de la ONPE?**
+**¿Qué documento oficial debe recibir y llevarse consigo el personero de mesa al término del escrutinio?**
 
-- [x] **A) Coordinar la logística, entrega de materiales, habilitación de aulas y apoyo técnico a los miembros de mesa en el local.** *(Correcta)*
-- [ ] B) Decidir quién gana las elecciones en cada aula.
-- [ ] C) Contar los votos en secreto en la dirección del colegio.
-- [ ] D) Impedir que los personeros entren al local.
+- [x] **A) Una copia idéntica y firmada del Acta Electoral (Acta de Escrutinio, Instalación y Sufragio) entregada por los miembros de mesa.** *(Correcta)*
+- [ ] B) La lista completa del padrón con las firmas y huellas de los electores de la mesa.
+- [ ] C) El ánfora de sufragio con todas las cédulas contabilizadas.
+- [ ] D) El sello oficial y el tampón dactilar de la mesa de sufragio.
 
-> **💡 Justificación / Explicación:** El personal de la ONPE brinda soporte logístico y técnico para asegurar el correcto desarrollo de la jornada electoral.
+> **💡 Justificación / Explicación:** La legislación electoral garantiza el derecho de cada personero de mesa acreditado a recibir una copia auténtica del Acta Electoral firmada por los miembros de mesa.
 
 ---
 
 ### Pregunta 94
 **¿Cuál es la función del fiscalizador del Jurado Nacional de Elecciones (JNE) en el local de votación?**
 
-- [x] **A) Fiscalizar el estricto cumplimiento de la ley electoral y la legalidad del proceso durante toda la jornada.** *(Correcta)*
+- [x] **A) Fiscalizar el cumplimiento de la normativa electoral y el adecuado desarrollo del proceso dentro del ámbito de sus competencias.** *(Correcta)*
 - [ ] B) Contar las cédulas de votación junto a los miembros de mesa.
 - [ ] C) Hacer propaganda para los candidatos regionales.
-- [ ] D) Revisar las mochilas de los electores.
+- [ ] D) Revisar las pertenencias personales de los electores.
 
 > **💡 Justificación / Explicación:** El fiscalizador del JNE vela por el cumplimiento de las normas y la legalidad del proceso en los locales.
 
 ---
 
 ### Pregunta 95
-**¿Qué debe hacer el personero si encuentra a una persona repartiendo volantes dentro del colegio electoral?**
+**¿Qué debe hacer el personero si encuentra a una persona repartiendo volantes dentro del centro de votación?**
 
-- [x] **A) Denunciar el hecho inmediatamente ante el fiscalizador del JNE, el coordinador de la ONPE y las fuerzas de seguridad.** *(Correcta)*
+- [x] **A) Comunicar de inmediato el hecho al fiscalizador del JNE, al personal de la ONPE y, de ser necesario, a las fuerzas del orden.** *(Correcta)*
 - [ ] B) Pedirle volantes para repartirlos él también.
 - [ ] C) Quedarse callado para no generar molestias.
 - [ ] D) Comprarle los volantes para botarlos.
@@ -1149,10 +1149,10 @@
 ### Pregunta 96
 **¿Qué debe hacer el personero cuando concluye toda la jornada electoral y ya tiene su acta firmada?**
 
-- [x] **A) Entregar o transmitir de inmediato su acta y reporte a su Coordinador Zonal o Distrital del partido.** *(Correcta)*
+- [x] **A) Entregar o transmitir de inmediato su acta y reporte a su personero de local de votación.** *(Correcta)*
 - [ ] B) Publicarla en redes sociales con datos personales borrados.
 - [ ] C) Romper el acta porque ya terminó la votación.
-- [ ] D) Irse a dormir sin avisar a su organización política.
+- [ ] D) Retirarse sin reportar los resultados a su organización política.
 
 > **💡 Justificación / Explicación:** La misión del personero culmina entregando con éxito el acta electoral y los resultados al equipo central de su partido.
 
@@ -1161,21 +1161,21 @@
 ### Pregunta 97
 **¿Por qué el personero de mesa representa la primera línea de defensa democrática del voto popular?**
 
-- [x] **A) Porque con su presencia, vigilancia y actas en mano garantiza que se respete la voluntad de cada ciudadano expresada en las urnas.** *(Correcta)*
+- [x] **A) Porque su presencia, vigilancia y registro de los resultados contribuyen a verificar que la voluntad expresada por los electores sea respetada.** *(Correcta)*
 - [ ] B) Porque tiene inmunidad diplomática el día de la elección.
-- [ ] C) Porque cobra un sueldo millonario del Estado.
-- [ ] D) Porque decide qué candidatos van a segunda vuelta.
+- [ ] C) Porque recibe una remuneración del Estado por decidir los resultados.
+- [ ] D) Porque determina qué candidatos continúan en el proceso electoral.
 
 > **💡 Justificación / Explicación:** El personero cuida la democracia asegurando con transparencia que cada voto emitido sea contado con total fidelidad.
 
 ---
 
 ### Pregunta 98
-**¿Qué valores definen al buen personero de mesa durante todo el día electoral?**
+**¿Qué valores y actitudes deben caracterizar a un buen personero de mesa durante la jornada electoral?**
 
-- [x] **A) Puntualidad, honestidad, firmeza, respeto, concentración y compromiso democrático con su país y su partido.** *(Correcta)*
-- [ ] B) Llegar tarde, gritar a los ancianos y distraerse con el celular.
-- [ ] C) Firmar actas en blanco y abandonar la mesa a las 3:00 p. m.
+- [x] **A) Puntualidad, honestidad, firmeza, respeto, concentración y compromiso con el cumplimiento de sus funciones.** *(Correcta)*
+- [ ] B) Impuntualidad, confrontación con los electores y distracción constante.
+- [ ] C) Firma de documentos incompletos y abandono anticipado de la mesa.
 - [ ] D) Pelear con los miembros de mesa por cualquier motivo.
 
 > **💡 Justificación / Explicación:** La puntualidad, el respeto, la concentración y el civismo garantizan un desempeño impecable en la mesa.
@@ -1183,24 +1183,24 @@
 ---
 
 ### Pregunta 99
-**¿Cómo se califica un voto donde el elector marcó una cruz sobre el símbolo de un partido y no marcó nada en los otros?**
+**¿Cómo se califica un voto donde el elector marcó una cruz sobre el símbolo de un partido y no realiza otra marca en la otra elección?**
 
-- [x] **A) Es un VOTO VÁLIDO a favor de esa organización política.** *(Correcta)*
-- [ ] B) Es un voto nulo por no marcar a los demás partidos.
-- [ ] C) Es un voto en blanco porque falta marcar regidores.
-- [ ] D) Es un voto observado que se bota.
+- [x] **A) Es un VOTO VÁLIDO a favor de esa organización política en esa elección.** *(Correcta)*
+- [ ] B) Es un voto nulo por no marcar a las demás organizaciones políticas.
+- [ ] C) Es un voto en blanco porque faltan otras marcas.
+- [ ] D) Es un voto observado que debe desercharse.
 
 > **💡 Justificación / Explicación:** Es el voto válido clásico y reglamentario a favor de la organización política elegida.
 
 ---
 
 ### Pregunta 100
-**¿Cuál es la consigna final del personero de mesa al concluir el escrutinio?**
+**¿Cuál debe ser la principal consigna del personero de mesa al finalizar el escrutinio?**
 
-- [x] **A) ¡Cuidar y defender cada voto con responsabilidad, respeto a la ley y con el Acta Electoral firmada en la mano!** *(Correcta)*
-- [ ] B) Irse antes de las 5:00 p. m. para evitar el tráfico de la ciudad.
-- [ ] C) Discutir sin fundamento todas las decisiones de los miembros de mesa.
-- [ ] D) Tocar y contar las cédulas directamente sin autorización.
+- [x] **A) Proteger y defender cada voto con responsabilidad, respeto a la normativa electoral y verificando que cuente con su copia del Acta Electoral debidamente firmada.** *(Correcta)*
+- [ ] B) Retirarse antes de que concluya el procedimiento para evitar demoras.
+- [ ] C) Cuestionar sin fundamento todas las decisiones de los miembros de mesa.
+- [ ] D) Manipular y volver a contar directamente las cédulas sin autorización.
 
 > **💡 Justificación / Explicación:** Defender cada voto con firmeza cívica, respeto a la ley electoral y con el Acta Oficial firmada en la mano.
 
