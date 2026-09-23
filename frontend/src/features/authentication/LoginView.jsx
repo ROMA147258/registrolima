@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { User, Lock, LogIn, ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { User, Lock, LogIn, ArrowLeft, ShieldAlert } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { BANK_SECURITY_STORAGE_KEY } from '../../utils/bankSecurity.js';
 
 export function LoginView({ onBackToRegister, successMessage = '' }) {
   const { login } = useAuth();
@@ -9,6 +10,18 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(successMessage || null);
+  const [securityNotice, setSecurityNotice] = useState(() => {
+    try {
+      const notice = sessionStorage.getItem(BANK_SECURITY_STORAGE_KEY);
+      if (notice) {
+        sessionStorage.removeItem(BANK_SECURITY_STORAGE_KEY);
+        return notice;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,6 +121,25 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
         {/* Formulario */}
         <div style={{ padding: '24px' }}>
           
+          {securityNotice && (
+            <div style={{
+              background: '#eff6ff',
+              border: '1.5px solid #93c5fd',
+              borderRadius: '10px',
+              padding: '12px 14px',
+              marginBottom: '18px',
+              color: '#1e40af',
+              fontSize: '0.84rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <ShieldAlert size={18} style={{ color: '#2563eb', flexShrink: 0 }} />
+              <span>{securityNotice}</span>
+            </div>
+          )}
+
           {successMsg && (
             <div style={{
               background: '#f0fdf4',

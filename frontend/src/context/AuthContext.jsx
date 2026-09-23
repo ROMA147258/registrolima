@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { api } from '../services/api.js';
+import { setupBankSecurity } from '../utils/bankSecurity.js';
 
 const AuthContext = createContext();
 
@@ -18,6 +19,35 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => {
     try { return localStorage.getItem('token') || null; } catch (e) { return null; }
   });
+
+  const logout = useCallback(() => {
+    setUser(null);
+    setRole(null);
+    setToken(null);
+    // Limpieza selectiva de credenciales preservando la caché offline de catálogos
+    const sessionKeys = [
+      'auth_user',
+      'user_role',
+      'token',
+      'user_logged_in',
+      'login_initially_confirmed'
+    ];
+    sessionKeys.forEach(k => localStorage.removeItem(k));
+    window.location.hash = '';
+  }, []);
+
+  // 🛑 Activación de Seguridad Bancaria (Auto-Logout 90s y Auto-Cierre 25s en Background)
+  useEffect(() => {
+    if (!user) return;
+    const cleanupSecurity = setupBankSecurity({
+      onLogout: () => {
+        logout();
+      }
+    });
+    return () => {
+      cleanupSecurity();
+    };
+  }, [user, logout]);
 
   const login = async (credentials) => {
     const cleanUser = String(credentials.username || credentials.fullName || '').toLowerCase().trim();
@@ -73,14 +103,6 @@ export function AuthProvider({ children }) {
       }
       throw err;
     }
-  };
-
-  const logout = () => {
-    setUser(null);
-    setRole(null);
-    setToken(null);
-    localStorage.clear();
-    window.location.hash = '';
   };
 
   const updateUserTraining = (updates) => {

@@ -887,9 +887,11 @@ export function DashboardView({ onGoToTraining }) {
   useEffect(() => {
     if (canViewAudit) {
       fetchAuditLogs(false);
-      // Polling de auditoría en tiempo real cada 10 segundos
+      // Polling de auditoría en tiempo real cada 10 segundos (congelado a 0 bytes en segundo plano)
       const notifInterval = setInterval(() => {
-        fetchAuditLogs(true);
+        if (!document.hidden && !window.__APP_FROZEN_FOR_SECURITY__) {
+          fetchAuditLogs(true);
+        }
       }, 10000);
       return () => clearInterval(notifInterval);
     }
@@ -961,16 +963,16 @@ export function DashboardView({ onGoToTraining }) {
     let isMounted = true;
     fetchData();
 
-    // Sincronización automática periódica cada 20 segundos
+    // Sincronización automática periódica cada 20 segundos (congelada a 0 bytes en segundo plano)
     const interval = setInterval(() => {
-      if (isMounted) {
+      if (isMounted && !document.hidden && !window.__APP_FROZEN_FOR_SECURITY__) {
         fetchData(true);
       }
     }, 20000);
 
-    // Sincronizar al volver a la pestaña
+    // Sincronizar al volver a la pestaña si no está congelada
     const handleFocus = () => {
-      if (isMounted) {
+      if (isMounted && !document.hidden && !window.__APP_FROZEN_FOR_SECURITY__) {
         fetchData(true);
       }
     };
