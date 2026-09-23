@@ -29,19 +29,8 @@ function autoFitColumns(ws) {
   ws['!cols'] = colWidths;
 }
 
-/**
- * Exporta a Excel los registros autorizados para el usuario
- * Hoja 1: Padrón de Personeros
- * Hoja 2: Cantidad de Roles
- * Hoja 3: Faltantes y Cobertura de Mesas
- */
-export function exportPadronToExcel({
-  records = [],
-  title = 'Padrón de Personeros',
-  fileName = 'Padron_SomosPeru_2026.xlsx',
-  scopeType = 'general', // 'colegio', 'zona', 'distrital', 'general'
-  scopeName = ''
-}) {
+// Fallback síncrono si el entorno no soporta Web Workers
+function exportPadronSync({ records, title, fileName, scopeType, scopeName }) {
   const wb = XLSX.utils.book_new();
 
   // 1. HOJA 1: PADRÓN DE PERSONEROS
@@ -107,7 +96,6 @@ export function exportPadronToExcel({
   XLSX.utils.book_append_sheet(wb, ws2, 'Cantidad de Roles');
 
   // 3. HOJA 3: COBERTURA Y FALTANTES POR COLEGIO
-  // Obtener locales involucrados
   const localesInRecords = new Set();
   records.forEach(r => {
     const loc = String(r['Local de Votación Asignado'] || r.localDeVotacionAsignado || r.localAsignado || r['Local de Votación'] || '').trim();
@@ -128,7 +116,6 @@ export function exportPadronToExcel({
       return (l === normLoc || l.includes(normLoc) || normLoc.includes(l)) && !rol.includes('distrital') && !rol.includes('zonal') && !rol.includes('local');
     }).length;
 
-    // Buscar total de mesas en catálogo oficial
     const officialMatch = (LOCALES_OFICIALES || []).find(s => {
       const sNorm = normalize(s.nombre);
       return sNorm === normLoc || sNorm.includes(normLoc) || normLoc.includes(sNorm);
@@ -166,6 +153,132 @@ export function exportPadronToExcel({
   autoFitColumns(ws3);
   XLSX.utils.book_append_sheet(wb, ws3, 'Cobertura por Colegio');
 
-  // Descargar archivo
   XLSX.writeFile(wb, fileName);
+}
+
+// Helper para disparar la descarga desde el navegador
+function triggerDownload(blob, fileName) {
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 1000);
+}
+
+// Pool / Worker Singleton con protocolo Request-Reply
+let exportWorkerInstance = null;
+const pendingRequests = new Map();
+
+function getOrCreateWorker() {
+  if (typeof window === 'undefined' || typeof Worker === 'undefined') {
+    return null;
+  }
+
+  if (!exportWorkerInstance) {
+    try {
+      exportWorkerInstance = new Worker(
+        new URL('./excelExport.worker.js', import.meta.url),
+        { type: 'module' }
+      );
+
+      // Manejador del Reply asíncrono
+      exportWorkerInstance.onmessage = (e) => {
+        const { id, status, buffer, fileName, error } = e.data || {};
+        const resolver = pendingRequests.get(id);
+        if (!resolver) return;
+
+        pendingRequests.delete(id);
+
+        if (status === 'SUCCESS' && buffer) {
+          try {
+            const blob = new Blob([buffer], {
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            });
+            triggerDownload(blob, fileName);
+            resolver.resolve(true);
+          } catch (err) {
+            resolver.reject(err);
+          }
+        } else {
+          resolver.reject(new Error(error || 'Error al generar Excel'));
+        }
+      };
+
+      exportWorkerInstance.onerror = (err) => {
+        console.error('Error en Web Worker de Excel:', err);
+        // Rechazar todas las peticiones pendientes para que usen fallback
+        pendingRequests.forEach((res) => {
+          res.reject(err);
+        });
+        pendingRequests.clear();
+        exportWorkerInstance.terminate();
+        exportWorkerInstance = null;
+      };
+    } catch (err) {
+      console.warn('No se pudo inicializar el Web Worker de Excel. Se usará fallback síncrono.', err);
+      exportWorkerInstance = null;
+    }
+  }
+
+  return exportWorkerInstance;
+}
+
+/**
+ * Exporta a Excel los registros autorizados para el usuario
+ * Implementa el patrón Request-Reply Asíncrono en segundo plano (Web Worker)
+ * Hoja 1: Padrón de Personeros
+ * Hoja 2: Cantidad de Roles
+ * Hoja 3: Faltantes y Cobertura de Mesas
+ */
+export async function exportPadronToExcel({
+  records = [],
+  title = 'Padrón de Personeros',
+  fileName = 'Padron_SomosPeru_2026.xlsx',
+  scopeType = 'general', // 'colegio', 'zona', 'distrital', 'general'
+  scopeName = ''
+}) {
+  const worker = getOrCreateWorker();
+
+  // Si no hay soporte de Web Worker, ejecutar fallback
+  if (!worker) {
+    exportPadronSync({ records, title, fileName, scopeType, scopeName });
+    return;
+  }
+
+  const requestId = 'req_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+
+  return new Promise((resolve, reject) => {
+    // Registrar el manejador de la respuesta (Reply)
+    pendingRequests.set(requestId, {
+      resolve,
+      reject: (err) => {
+        console.warn('Fallo en Worker Request-Reply, recurriendo a exportación síncrona...', err);
+        try {
+          exportPadronSync({ records, title, fileName, scopeType, scopeName });
+          resolve(true);
+        } catch (syncErr) {
+          reject(syncErr);
+        }
+      }
+    });
+
+    // Enviar la petición asíncrona (Request)
+    worker.postMessage({
+      id: requestId,
+      type: 'GENERATE_PADRON_EXCEL',
+      payload: {
+        records,
+        title,
+        fileName,
+        scopeType,
+        scopeName
+      }
+    });
+  });
 }
