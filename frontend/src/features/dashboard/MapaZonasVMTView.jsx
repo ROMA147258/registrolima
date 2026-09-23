@@ -639,28 +639,7 @@ export function MapaZonasVMTView({
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          {/* Botón Exportar Excel de la Zona */}
-          <button
-            onClick={handleExportExcelZonal}
-            title={selectedZona === 'all' ? "Exportar Excel de todas las zonas" : `Exportar Excel de ${selectedZona}`}
-            style={{
-              padding: '6px 12px',
-              borderRadius: '8px',
-              border: '1.5px solid #16a34a',
-              background: isDark ? 'rgba(22, 163, 74, 0.15)' : '#dcfce7',
-              color: '#15803d',
-              fontSize: '0.74rem',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              boxShadow: '0 2px 6px rgba(22, 163, 74, 0.2)'
-            }}
-          >
-            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-            <span>Exportar Excel {effectiveAssignedZona ? `(Zona ${VMT_ZONAS_GEO[effectiveAssignedZona]?.short || effectiveAssignedZona.replace('ZONA ', '')})` : (selectedZona === 'all' ? '(Todas las Zonas)' : `(${selectedZona.replace('ZONA ', 'Zona ')})`)}</span>
-          </button>
+          {/* Botón Exportar Excel de la Zona removido */}
         </div>
 
         {/* Filtros de zona */}
