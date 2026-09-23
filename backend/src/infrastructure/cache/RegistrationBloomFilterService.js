@@ -12,7 +12,7 @@ class RegistrationBloomFilterService {
     this.initPromise = null;
 
     // Pre-populate known admin usernames
-    ['supera', 'admin', 'eric', 'paola', 'pola', 'susana'].forEach(u => {
+    ['supera', 'admin'].forEach(u => {
       this.usernameFilter.add(u);
     });
   }

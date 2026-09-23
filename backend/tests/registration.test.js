@@ -467,39 +467,22 @@ test('Strict Authentication: Full Name requires valid DNI or Clave de Acceso, re
   );
 });
 
-test('Superadmin Authentication: Eric, Paola, Susana, Admin all succeed and receive superadmin role', async () => {
+test('Superadmin Authentication: Only Supera/Admin succeed; Eric, Paola, Susana are blocked', async () => {
   const repo = new MockPersoneroRepository();
   const audit = new MockAuditRepository();
   const { LoginUseCase } = await import('../src/application/use-cases/LoginUseCase.js');
   const loginUseCase = new LoginUseCase(repo, null, audit);
 
-  // 1. Paola
-  const resPaola = await loginUseCase.execute({
-    username: 'paola',
-    password: 'pao123$'
+  // 1. Supera
+  const resSupera = await loginUseCase.execute({
+    username: 'supera',
+    password: 'abcde12345'
   });
-  assert.equal(resPaola.status, 'success');
-  assert.equal(resPaola.role, 'superadmin');
-  assert.equal(resPaola.user.role, 'superadmin');
+  assert.equal(resSupera.status, 'success');
+  assert.equal(resSupera.role, 'superadmin');
+  assert.equal(resSupera.user.role, 'superadmin');
 
-  // 2. Susana
-  const resSusana = await loginUseCase.execute({
-    username: 'susana',
-    password: 'susan456&'
-  });
-  assert.equal(resSusana.status, 'success');
-  assert.equal(resSusana.role, 'superadmin');
-  assert.equal(resSusana.user.role, 'superadmin');
-
-  // 3. Eric
-  const resEric = await loginUseCase.execute({
-    username: 'eric',
-    password: 'eric123'
-  });
-  assert.equal(resEric.status, 'success');
-  assert.equal(resEric.role, 'superadmin');
-
-  // 4. Admin
+  // 2. Admin
   const resAdmin = await loginUseCase.execute({
     username: 'admin',
     password: 'admin123'
@@ -507,12 +490,32 @@ test('Superadmin Authentication: Eric, Paola, Susana, Admin all succeed and rece
   assert.equal(resAdmin.status, 'success');
   assert.equal(resAdmin.role, 'superadmin');
 
-  // 5. Wrong credentials fail
+  // 3. Paola, Eric, Susana no existen en superadmin y son rechazados si no están en la BD
   await assert.rejects(
     async () => {
       await loginUseCase.execute({
         username: 'paola',
-        password: 'wrongpassword'
+        password: 'pao123$'
+      });
+    },
+    /Credenciales incorrectas/
+  );
+
+  await assert.rejects(
+    async () => {
+      await loginUseCase.execute({
+        username: 'eric',
+        password: 'eric123'
+      });
+    },
+    /Credenciales incorrectas/
+  );
+
+  await assert.rejects(
+    async () => {
+      await loginUseCase.execute({
+        username: 'susana',
+        password: 'susan456&'
       });
     },
     /Credenciales incorrectas/

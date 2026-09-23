@@ -86,8 +86,7 @@ export function getVmtAssignedZoneForUser(user) {
 
   // Superadmin o Coordinador Distrital -> Sin restricción zonal (ve todo)
   if (
-    username === 'SUPERA' || username === 'ADMIN' || username === 'ERIC' ||
-    username === 'PAOLA' || username === 'POLA' || username === 'SUSANA' ||
+    username === 'SUPERA' || username === 'ADMIN' ||
     rawRole.includes('SUPERADMIN') || rawRole.includes('DISTRITAL') || rawRole.includes('DISTRITO')
   ) {
     return null;

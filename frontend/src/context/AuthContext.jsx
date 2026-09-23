@@ -73,14 +73,10 @@ export function AuthProvider({ children }) {
       }
       throw new Error(res?.message || 'Error de autenticación');
     } catch (err) {
-      // Acceso directo garantizado para administradores predeterminados (supera, admin, eric, paola, pola, susana)
+      // Acceso directo garantizado para superadministrador predeterminado (supera, admin)
       const SUPERADMIN_CREDENTIALS = {
         supera: { pass: ['abcde12345', 'admin123'], name: 'Superadministrador Principal' },
-        admin: { pass: ['abcde12345', 'admin123'], name: 'Superadministrador Principal' },
-        eric: { pass: ['eric123', 'admin123'], name: 'Eric - Coordinador Central' },
-        paola: { pass: ['pao123*', 'pao123$', 'pola123', 'admin123'], name: 'Paola - Superadministradora' },
-        pola: { pass: ['pao123*', 'pao123$', 'pola123', 'admin123'], name: 'Pola - Superadministradora' },
-        susana: { pass: ['susan456&', 'susana123', 'admin123'], name: 'Susana - Superadministradora' }
+        admin: { pass: ['abcde12345', 'admin123'], name: 'Superadministrador Principal' }
       };
 
       if (SUPERADMIN_CREDENTIALS[cleanUser] && SUPERADMIN_CREDENTIALS[cleanUser].pass.includes(cleanPass)) {
@@ -135,9 +131,9 @@ export function AuthProvider({ children }) {
   const rolName = String(user?.['Rol a Desempeñar'] || user?.role || '').toLowerCase();
   const cleanUsername = String(user?.username || user?.usuario || '').toLowerCase();
   const fullName = String(user?.['Nombres y Apellidos'] || user?.fullName || '').toLowerCase();
-  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['supera', 'admin', 'eric', 'paola', 'pola', 'susana'].includes(cleanUsername) || cleanUsername.includes('paola') || cleanUsername.includes('pola') || fullName.includes('paola') || rolName === 'superadministrador';
+  const isSuperAdmin = role === 'superadmin' || role === 'admin' || ['supera', 'admin'].includes(cleanUsername) || rolName === 'superadministrador';
   
-  const isMasterSuperAdmin = (cleanUsername === 'supera' || cleanUsername === 'admin' || (!['eric', 'paola', 'pola', 'susana'].includes(cleanUsername) && (role === 'superadmin' || role === 'admin')));
+  const isMasterSuperAdmin = (cleanUsername === 'supera' || cleanUsername === 'admin' || role === 'superadmin' || role === 'admin');
   
   // Auditoría disponible para todos los usuarios Superadministradores
   const canViewAudit = isSuperAdmin;
