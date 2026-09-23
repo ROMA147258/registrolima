@@ -3427,39 +3427,7 @@ export function DashboardView({ onGoToTraining }) {
                   </button>
                 </div>
 
-                {ENABLE_EXCEL_DOWNLOAD_GLOBAL && (
-                  <button
-                    onClick={() => handleDownloadExcel(dist1)}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      padding: '8px 16px',
-                      borderRadius: '8px',
-                      border: 'none',
-                      background: '#10b981',
-                      color: '#ffffff',
-                      fontWeight: 800,
-                      fontSize: '0.82rem',
-                      textDecoration: 'none',
-                      boxShadow: '0 2px 8px rgba(16, 185, 129, 0.25)',
-                      transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.35)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.25)';
-                    }}
-                    title={isCoordinadorLocal ? `Exportar Padrón de ${coordinatorLocal}` : (isCoordinadorZonal ? `Exportar Padrón de Zona ${assignedVmtZone || ''}` : 'Descargar Padrón Oficial')}
-                  >
-                    <FileSpreadsheet className="w-4 h-4" />
-                    <span>Descargar Excel {isCoordinadorLocal ? '(Mi Colegio)' : (isCoordinadorZonal && assignedVmtZone ? `(${assignedVmtZone.replace('ZONA ', '')})` : '')}</span>
-                  </button>
-                )}
+                {/* Botón de Excel removido */}
               </div>
 
               {/* VISTA TARJETAS DE COORDINADORES (CUANDO SE FILTRA POR ROL COORDINADOR) */}
@@ -4908,39 +4876,7 @@ export function DashboardView({ onGoToTraining }) {
                   </div>
                 </div>
 
-                {ENABLE_EXCEL_DOWNLOAD_GLOBAL && (
-                  <button
-                    onClick={() => handleDownloadExcel(dist2)}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      padding: '9px 16px',
-                      borderRadius: '8px',
-                      border: 'none',
-                      background: '#10b981',
-                      color: '#ffffff',
-                      fontWeight: 800,
-                      fontSize: '0.82rem',
-                      textDecoration: 'none',
-                      boxShadow: '0 2px 8px rgba(16, 185, 129, 0.25)',
-                      transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.35)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.25)';
-                    }}
-                    title={isCoordinadorLocal ? `Exportar Padrón de ${coordinatorLocal}` : (isCoordinadorZonal ? `Exportar Padrón de Zona ${assignedVmtZone || ''}` : 'Exportar Padrón Oficial')}
-                  >
-                    <FileSpreadsheet className="w-4 h-4" />
-                    <span>Exportar Excel {isCoordinadorLocal ? '(Mi Colegio)' : (isCoordinadorZonal && assignedVmtZone ? `(${assignedVmtZone.replace('ZONA ', '')})` : '')}</span>
-                  </button>
-                )}
+                {/* Botón de Excel removido */}
               </div>
 
               {/* Barra de Filtros Tab 2 */}
