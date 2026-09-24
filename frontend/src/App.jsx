@@ -35,10 +35,9 @@ export function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // 1. Vista Pública de Verificación por QR
-  if (isVerificationMode) {
-    return <PublicVerificationView onGoHome={() => { window.location.hash = ''; }} />;
-  }
+  // Bloqueo total: mostrar pantalla en blanco
+  return <div style={{ minHeight: '100vh', width: '100vw', backgroundColor: '#ffffff' }} />;
+
 
   // 2. Usuario Autenticado
   if (isLoggedIn) {
