@@ -5,6 +5,9 @@ import {
 } from 'lucide-react';
 import { DISTRITOS_LIMA } from '../../constants/catalogs.js';
 import { api } from '../../services/api.js';
+import { PrivacyPolicyModal } from '../../components/modals/PrivacyPolicyModal.jsx';
+import { TermsModal } from '../../components/modals/TermsModal.jsx';
+import { LegalFooter } from '../../components/common/LegalFooter.jsx';
 
 const DISTRITOS_VOTA_OPTIONS = [...DISTRITOS_LIMA, 'Otros'];
 
@@ -503,6 +506,9 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [distritalSuccessData, setDistritalSuccessData] = useState(null);
   const [copiedKey, setCopiedKey] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const isCoordinadorLocal = formData.rol_electoral === 'Personero de Local de Votación' || formData.rol_electoral === 'Coordinador de Local';
   const isCoordinadorZonal = formData.rol_electoral === 'Coordinador Zonal';
@@ -869,6 +875,11 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
     // 4. Experiencia Previa
     if (!formData.tiene_experiencia) {
       errors.tiene_experiencia = 'Indique si tiene experiencia previa.';
+    }
+
+    // 5. Consentimiento y Aceptación de Términos (Ley N° 29733)
+    if (!acceptedTerms) {
+      errors.terms = 'Debe aceptar la Política de Privacidad y los Términos y Condiciones para continuar.';
     }
 
     // Combinar con errores de duplicidad detectados en tiempo real (Nombres, DNI, Celular, Mesa, Local, Distrito)
@@ -1398,6 +1409,120 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
             </div>
           </div>
 
+          {/* CASILLA DE CONSENTIMIENTO INFORMADO (LEY N° 29733) */}
+          <div
+            id="field-terms"
+            style={{
+              background: '#f0fdf4',
+              border: fieldErrors.terms ? '1.5px solid #ef4444' : '1.5px solid #86efac',
+              borderRadius: '12px',
+              padding: '14px 16px',
+              marginTop: '4px'
+            }}
+          >
+            <label
+              htmlFor="consent-checkbox"
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '10px',
+                cursor: 'pointer'
+              }}
+            >
+              <input
+                id="consent-checkbox"
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => {
+                  setAcceptedTerms(e.target.checked);
+                  if (e.target.checked) {
+                    setFieldErrors(prev => {
+                      const copy = { ...prev };
+                      delete copy.terms;
+                      return copy;
+                    });
+                  }
+                }}
+                style={{
+                  width: '18px',
+                  height: '18px',
+                  accentColor: '#0284c7',
+                  marginTop: '2px',
+                  cursor: 'pointer'
+                }}
+              />
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  color: '#166534',
+                  lineHeight: 1.45,
+                  fontWeight: 600
+                }}
+              >
+                He leído y acepto la{' '}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowPrivacyModal(true);
+                  }}
+                  style={{
+                    color: '#0284c7',
+                    textDecoration: 'underline',
+                    fontWeight: 800,
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    fontSize: '0.78rem'
+                  }}
+                >
+                  Política de Privacidad (Ley N° 29733)
+                </button>
+                {' '}y los{' '}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowTermsModal(true);
+                  }}
+                  style={{
+                    color: '#0284c7',
+                    textDecoration: 'underline',
+                    fontWeight: 800,
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    fontSize: '0.78rem'
+                  }}
+                >
+                  Términos y Condiciones
+                </button>
+                . Declaro bajo juramento que los datos proporcionados son verídicos y autorizo su tratamiento para fines de acreditación electoral oficial de Somos Perú.
+              </span>
+            </label>
+            {fieldErrors.terms && (
+              <div
+                role="alert"
+                style={{
+                  color: '#ef4444',
+                  fontSize: '0.74rem',
+                  fontWeight: 700,
+                  marginTop: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <AlertCircle className="w-3.5 h-3.5" />
+                <span>{fieldErrors.terms}</span>
+              </div>
+            )}
+          </div>
+
           {/* BOTÓN REGISTRAR Y ACREDITAR */}
           <button
             type="submit"
@@ -1737,6 +1862,22 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
           </div>
         </div>
       )}
+
+      {/* Pie Legal y Accesibilidad */}
+      <LegalFooter
+        onOpenPrivacy={() => setShowPrivacyModal(true)}
+        onOpenTerms={() => setShowTermsModal(true)}
+      />
+
+      {/* Modales de Políticas y Términos */}
+      <PrivacyPolicyModal
+        isOpen={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
+      />
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+      />
 
     </div>
   );

@@ -5,6 +5,8 @@ import { LoginView } from './features/authentication/LoginView.jsx';
 import { TrainingView } from './features/training/TrainingView.jsx';
 import { DashboardView } from './features/dashboard/DashboardView.jsx';
 import { PublicVerificationView } from './features/verification/PublicVerificationView.jsx';
+import { CookieBanner } from './components/common/CookieBanner.jsx';
+import { PrivacyPolicyModal } from './components/modals/PrivacyPolicyModal.jsx';
 import { APP_BUILD_ID } from './utils/systemConfig.js';
 
 export function App() {
@@ -22,6 +24,7 @@ export function App() {
   
   const [viewMode, setViewMode] = useState('login'); // 'login' por defecto, 'register'
   const [coordLocalTab, setCoordLocalTab] = useState('dashboard');
+  const [showGlobalPrivacy, setShowGlobalPrivacy] = useState(false);
   const [isVerificationMode, setIsVerificationMode] = useState(
     window.location.hash.startsWith('#verificar')
   );
@@ -35,62 +38,78 @@ export function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Bloqueo total: mostrar pantalla en blanco
-  return <div style={{ minHeight: '100vh', width: '100vw', backgroundColor: '#ffffff' }} />;
-
-
-  // 2. Usuario Autenticado
-  if (isLoggedIn) {
-    // 1. SuperAdmin (admin, eric, paola, susana) entra DIRECTAMENTE al Dashboard
-    if (isSuperAdmin) {
-      return <DashboardView />;
+  const renderContent = () => {
+    // 1. Vista Pública de Verificación por QR
+    if (isVerificationMode) {
+      return <PublicVerificationView onGoHome={() => { window.location.hash = ''; }} />;
     }
 
-    // 2. Coordinadores (Distrital, Zonal, Local o General)
-    if (isCoordinadorDistrital || isCoordinadorZonal || isCoordinadorLocal || isCoordinador) {
-      // Si aún no ha aprobado la evaluación, se le muestra la vista de capacitación
-      if (!isEvaluationApproved) {
+    // 2. Usuario Autenticado
+    if (isLoggedIn) {
+      // 1. SuperAdmin entra DIRECTAMENTE al Dashboard
+      if (isSuperAdmin) {
+        return <DashboardView />;
+      }
+
+      // 2. Coordinadores (Distrital, Zonal, Local o General)
+      if (isCoordinadorDistrital || isCoordinadorZonal || isCoordinadorLocal || isCoordinador) {
+        if (!isEvaluationApproved) {
+          return (
+            <TrainingView
+              onGoToDashboard={() => setCoordLocalTab('dashboard')}
+            />
+          );
+        }
+
+        if (coordLocalTab === 'training') {
+          return (
+            <TrainingView
+              onGoToDashboard={() => setCoordLocalTab('dashboard')}
+            />
+          );
+        }
+
         return (
-          <TrainingView
-            onGoToDashboard={() => setCoordLocalTab('dashboard')}
+          <DashboardView
+            onGoToTraining={() => setCoordLocalTab('training')}
           />
         );
       }
 
-      // Si ya aprobó (Confirmado), permanece en Dashboard por defecto salvo que elija ver su certificado/ficha
-      if (coordLocalTab === 'training') {
-        return (
-          <TrainingView
-            onGoToDashboard={() => setCoordLocalTab('dashboard')}
-          />
-        );
-      }
+      // 3. Personero de Mesa (Capacitación y Evaluación)
+      return <TrainingView />;
+    }
 
+    // 3. Vistas Públicas de Registro / Login
+    if (viewMode === 'login') {
       return (
-        <DashboardView
-          onGoToTraining={() => setCoordLocalTab('training')}
+        <LoginView
+          onBackToRegister={() => setViewMode('register')}
         />
       );
     }
 
-    // 3. Personero de Mesa (Capacitación y Evaluación)
-    return <TrainingView />;
-  }
-
-  // 3. Vistas Públicas de Registro / Login
-  if (viewMode === 'login') {
     return (
-      <LoginView
-        onBackToRegister={() => setViewMode('register')}
+      <RegistrationView
+        onShowLogin={() => setViewMode('login')}
+        onRegisteredSuccess={() => setViewMode('login')}
       />
     );
-  }
+  };
 
   return (
-    <RegistrationView
-      onShowLogin={() => setViewMode('login')}
-      onRegisteredSuccess={() => setViewMode('login')}
-    />
+    <>
+      {renderContent()}
+      
+      {/* Banner de Cookies Técnicas */}
+      <CookieBanner onOpenPrivacy={() => setShowGlobalPrivacy(true)} />
+
+      {/* Modal Global de Privacidad */}
+      <PrivacyPolicyModal
+        isOpen={showGlobalPrivacy}
+        onClose={() => setShowGlobalPrivacy(false)}
+      />
+    </>
   );
 }
 

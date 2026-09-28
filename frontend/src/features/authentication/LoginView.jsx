@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { User, Lock, LogIn, ArrowLeft, ShieldAlert } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { BANK_SECURITY_STORAGE_KEY } from '../../utils/bankSecurity.js';
+import { PrivacyPolicyModal } from '../../components/modals/PrivacyPolicyModal.jsx';
+import { TermsModal } from '../../components/modals/TermsModal.jsx';
+import { LegalFooter } from '../../components/common/LegalFooter.jsx';
 
 export function LoginView({ onBackToRegister, successMessage = '' }) {
   const { login } = useAuth();
@@ -10,6 +13,9 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(successMessage || null);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
   const [securityNotice, setSecurityNotice] = useState(() => {
     try {
       const notice = sessionStorage.getItem(BANK_SECURITY_STORAGE_KEY);
@@ -52,149 +58,171 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'rgb(193, 229, 249)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '24px 16px',
-      fontFamily: "'Outfit', 'Montserrat', sans-serif"
-    }}>
-      <div style={{
-        background: '#ffffff',
-        border: '1.5px solid #bae6fd',
-        borderRadius: '20px',
-        width: '100%',
-        maxWidth: '440px',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
-        color: '#0f172a',
-        overflow: 'hidden',
-        animation: 'fadeIn 0.2s ease-out'
-      }}>
-        
-        {/* Encabezado con Sello Oficial del Partido Somos Perú (Sin círculo contenedor) */}
-        <div style={{
+    <main
+      role="main"
+      style={{
+        minHeight: '100vh',
+        background: 'rgb(193, 229, 249)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '24px 16px',
+        fontFamily: "'Outfit', 'Montserrat', sans-serif"
+      }}
+    >
+      <div
+        style={{
           background: '#ffffff',
-          padding: '28px 24px 16px',
-          textAlign: 'center',
-          borderBottom: '1px solid #e0f2fe'
-        }}>
-          {/* Sello Oficial del Partido sin círculo */}
+          border: '1.5px solid #bae6fd',
+          borderRadius: '20px',
+          width: '100%',
+          maxWidth: '440px',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+          color: '#0f172a',
+          overflow: 'hidden',
+          animation: 'fadeIn 0.2s ease-out'
+        }}
+      >
+        {/* Encabezado con Sello Oficial del Partido Somos Perú */}
+        <header
+          style={{
+            background: '#ffffff',
+            padding: '28px 24px 16px',
+            textAlign: 'center',
+            borderBottom: '1px solid #e0f2fe'
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
             <img
               src="/images/logo_somos_peru.svg"
-              alt="Sello Partido Democrático Somos Perú"
+              alt="Logotipo oficial del Partido Democrático Somos Perú"
               style={{ width: '130px', height: 'auto', maxHeight: '75px', objectFit: 'contain' }}
             />
           </div>
 
-          <h1 style={{
-            fontFamily: 'Cinzel, serif',
-            color: '#0f172a',
-            fontSize: '1.25rem',
-            fontWeight: 900,
-            margin: '0 0 4px 0',
-            letterSpacing: '0.5px',
-            lineHeight: 1.25
-          }}>
+          <h1
+            style={{
+              fontFamily: 'Cinzel, serif',
+              color: '#0f172a',
+              fontSize: '1.25rem',
+              fontWeight: 900,
+              margin: '0 0 4px 0',
+              letterSpacing: '0.5px',
+              lineHeight: 1.25
+            }}
+          >
             ELECCIONES REGIONALES Y MUNICIPALES 2026
           </h1>
 
-          <div style={{
-            color: '#0284c7',
-            fontSize: '0.82rem',
-            fontWeight: 800,
-            letterSpacing: '0.8px',
-            textTransform: 'uppercase'
-          }}>
+          <div
+            style={{
+              color: '#0284c7',
+              fontSize: '0.82rem',
+              fontWeight: 800,
+              letterSpacing: '0.8px',
+              textTransform: 'uppercase'
+            }}
+          >
             Plataforma de Capacitación y Seguimiento
           </div>
 
-          <div style={{ display: 'flex', height: '3px', width: '100px', margin: '10px auto 0', borderRadius: '2px', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', height: '3px', width: '100px', margin: '10px auto 0', borderRadius: '2px', overflow: 'hidden' }} aria-hidden="true">
             <div style={{ flex: 1, background: '#e30613' }}></div>
             <div style={{ flex: 1, background: '#cbd5e1' }}></div>
             <div style={{ flex: 1, background: 'rgb(14, 165, 233)' }}></div>
           </div>
-        </div>
+        </header>
 
         {/* Formulario */}
-        <div style={{ padding: '24px' }}>
-          
+        <section style={{ padding: '24px' }}>
           {securityNotice && (
-            <div style={{
-              background: '#eff6ff',
-              border: '1.5px solid #93c5fd',
-              borderRadius: '10px',
-              padding: '12px 14px',
-              marginBottom: '18px',
-              color: '#1e40af',
-              fontSize: '0.84rem',
-              fontWeight: 700,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              <ShieldAlert size={18} style={{ color: '#2563eb', flexShrink: 0 }} />
+            <div
+              role="alert"
+              style={{
+                background: '#eff6ff',
+                border: '1.5px solid #93c5fd',
+                borderRadius: '10px',
+                padding: '12px 14px',
+                marginBottom: '18px',
+                color: '#1e40af',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <ShieldAlert size={18} style={{ color: '#2563eb', flexShrink: 0 }} aria-hidden="true" />
               <span>{securityNotice}</span>
             </div>
           )}
 
           {successMsg && (
-            <div style={{
-              background: '#f0fdf4',
-              border: '1.5px solid #86efac',
-              borderRadius: '10px',
-              padding: '12px 14px',
-              marginBottom: '18px',
-              color: '#15803d',
-              fontSize: '0.84rem',
-              fontWeight: 700,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
+            <div
+              role="status"
+              style={{
+                background: '#f0fdf4',
+                border: '1.5px solid #86efac',
+                borderRadius: '10px',
+                padding: '12px 14px',
+                marginBottom: '18px',
+                color: '#15803d',
+                fontSize: '0.84rem',
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
               <span>✅ {successMsg}</span>
             </div>
           )}
 
           {errorMsg && (
-            <div style={{
-              background: '#fef2f2',
-              border: '1px solid #fecaca',
-              borderRadius: '10px',
-              padding: '12px 14px',
-              marginBottom: '18px',
-              color: '#dc2626',
-              fontSize: '0.82rem',
-              fontWeight: 700
-            }}>
+            <div
+              role="alert"
+              style={{
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
+                borderRadius: '10px',
+                padding: '12px 14px',
+                marginBottom: '18px',
+                color: '#dc2626',
+                fontSize: '0.82rem',
+                fontWeight: 700
+              }}
+            >
               ⚠️ {errorMsg}
             </div>
           )}
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            
-            {/* Campo 1: Usuario / Nombre con icono bien visible */}
+            {/* Campo 1: Usuario / Nombre */}
             <div>
-              <label style={{
-                display: 'block',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                color: '#1e293b',
-                marginBottom: '6px'
-              }}>
+              <label
+                htmlFor="login-username"
+                style={{
+                  display: 'block',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  color: '#1e293b',
+                  marginBottom: '6px'
+                }}
+              >
                 Usuario o Nombres <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <div style={{ position: 'relative' }}>
-                <User className="w-5 h-5" style={{ position: 'absolute', left: '12px', top: '12px', color: '#0284c7' }} />
+                <User className="w-5 h-5" style={{ position: 'absolute', left: '12px', top: '12px', color: '#0284c7' }} aria-hidden="true" />
                 <input
+                  id="login-username"
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder=""
+                  placeholder="Ingrese sus nombres o usuario"
                   required
-                  autoComplete="off"
+                  aria-required="true"
+                  autoComplete="username"
                   style={{
                     width: '100%',
                     padding: '12px 14px 12px 40px',
@@ -215,26 +243,31 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
               </div>
             </div>
 
-            {/* Campo 2: Contraseña / DNI con icono bien visible */}
+            {/* Campo 2: Contraseña / DNI */}
             <div>
-              <label style={{
-                display: 'block',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                color: '#1e293b',
-                marginBottom: '6px'
-              }}>
+              <label
+                htmlFor="login-password"
+                style={{
+                  display: 'block',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  color: '#1e293b',
+                  marginBottom: '6px'
+                }}
+              >
                 Contraseña o DNI <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <div style={{ position: 'relative' }}>
-                <Lock className="w-5 h-5" style={{ position: 'absolute', left: '12px', top: '12px', color: '#0284c7' }} />
+                <Lock className="w-5 h-5" style={{ position: 'absolute', left: '12px', top: '12px', color: '#0284c7' }} aria-hidden="true" />
                 <input
+                  id="login-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder=""
+                  placeholder="Ingrese su DNI o clave asignada"
                   required
-                  autoComplete="new-password"
+                  aria-required="true"
+                  autoComplete="current-password"
                   style={{
                     width: '100%',
                     padding: '12px 14px 12px 40px',
@@ -251,7 +284,7 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
                 />
               </div>
               <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '4px', paddingLeft: '2px' }}>
-                Ejemplo: Ingrese su DNI (o su Clave asignada si es Coordinador Distrital)
+                Ejemplo: Ingrese su DNI (o su clave si es Coordinador Distrital)
               </div>
             </div>
 
@@ -259,6 +292,7 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
             <button
               type="submit"
               disabled={loading}
+              aria-label="Ingresar al sistema electoral"
               style={{
                 marginTop: '8px',
                 padding: '14px',
@@ -279,20 +313,21 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.98)'; }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
             >
-              <LogIn className="w-5 h-5" />
+              <LogIn className="w-5 h-5" aria-hidden="true" />
               <span>{loading ? 'Ingresando...' : 'Ingresar al Sistema'}</span>
             </button>
           </form>
+        </section>
 
-        </div>
-
-        {/* Footer */}
-        <div style={{
-          padding: '14px 24px',
-          background: '#f8fafc',
-          borderTop: '1px solid #e2e8f0',
-          textAlign: 'center'
-        }}>
+        {/* Footer Registro */}
+        <div
+          style={{
+            padding: '14px 24px',
+            background: '#f8fafc',
+            borderTop: '1px solid #e2e8f0',
+            textAlign: 'center'
+          }}
+        >
           <button
             type="button"
             onClick={onBackToRegister}
@@ -311,12 +346,29 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
             onMouseEnter={(e) => { e.currentTarget.style.color = '#0369a1'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = '#0284c7'; }}
           >
-            <ArrowLeft className="w-4 h-4 flex-shrink-0" />
+            <ArrowLeft className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
             <span>¿Aún no estás inscrito? Regístrate aquí</span>
           </button>
         </div>
-
       </div>
-    </div>
+
+      {/* Pie Legal y Accesibilidad */}
+      <LegalFooter
+        onOpenPrivacy={() => setShowPrivacyModal(true)}
+        onOpenTerms={() => setShowTermsModal(true)}
+      />
+
+      {/* Modales Legales */}
+      <PrivacyPolicyModal
+        isOpen={showPrivacyModal}
+        onClose={() => setShowPrivacyModal(false)}
+      />
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+      />
+    </main>
   );
 }
+
+export default LoginView;
