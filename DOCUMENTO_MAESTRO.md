@@ -84,3 +84,11 @@
 
 ## 🏆 Estado Final:
 Aplicación **100% lista, asegurada, optimizada y con acceso de superadministrador centralizado exclusivamente en `supera`**.
+
+---
+
+## 👤 Autor y Responsable Técnico
+* **Desarrollador / Creador:** Ricardo Alonso Rodriguez Malaver
+* **DNI:** 74909613
+* **Proyecto:** `registroconteolima`
+* **Repositorio:** `https://github.com/ROMA147258/registrolima`

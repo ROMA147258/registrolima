@@ -2,8 +2,15 @@
   "name": "registroconteolima",
   "version": "1.0.0",
   "private": true,
+  "author": "Ricardo Alonso Rodriguez Malaver (DNI: 74909613)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ROMA147258/registrolima.git"
+  },
   "scripts": {
     "build": "npm --prefix frontend install && npm --prefix frontend run build",
-    "vercel-build": "npm --prefix frontend install && npm --prefix frontend run build"
+    "vercel-build": "npm --prefix frontend install && npm --prefix frontend run build",
+    "verify:signature": "npm --prefix backend run verify:signature"
   }
 }
+

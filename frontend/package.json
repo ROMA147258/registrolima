@@ -2,6 +2,7 @@
   "name": "registroconteo-frontend",
   "private": true,
   "version": "1.0.0",
+  "author": "Ricardo Alonso Rodriguez Malaver (DNI: 74909613)",
   "type": "module",
   "scripts": {
     "dev": "vite",

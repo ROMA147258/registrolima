@@ -103,3 +103,12 @@ npm run build
 
 Si se requiere restaurar el sistema anterior en cualquier momento, todos los archivos originales se encuentran inmutables en:
 `E:\conteolima\registroconteolima\_backup_original\`
+
+---
+
+## 👤 Autor y Firma de Desarrollo
+
+- **Desarrollador / Autor:** Ricardo Alonso Rodriguez Malaver
+- **DNI:** 74909613
+- **Proyecto:** `registroconteolima`
+- **Repositorio Oficial:** [ROMA147258/registrolima](https://github.com/ROMA147258/registrolima)

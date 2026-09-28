@@ -6,7 +6,7 @@ import { encodeToZeroWidth } from './verify_signature.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sigText = 'COPYRIGHT (C) 2026 - SISTEMA ELECTORAL SOMOS PERU - AUTOR Y CODIGO ORIGINAL PROTEGIDO';
+const sigText = 'AUTOR: Ricardo Alonso Rodriguez Malaver | DNI: 74909613 | PROYECTO: registroconteolima | REPO: https://github.com/ROMA147258/registrolima';
 const zw = encodeToZeroWidth(sigText);
 
 const backendTelemetry = `/**
