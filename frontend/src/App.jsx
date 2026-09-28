@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useAuth } from './context/AuthContext.jsx';
-import { RegistrationView } from './features/registration/RegistrationView.jsx';
-import { LoginView } from './features/authentication/LoginView.jsx';
-import { TrainingView } from './features/training/TrainingView.jsx';
-import { DashboardView } from './features/dashboard/DashboardView.jsx';
-import { PublicVerificationView } from './features/verification/PublicVerificationView.jsx';
 import { CookieBanner } from './components/common/CookieBanner.jsx';
 import { PrivacyPolicyModal } from './components/modals/PrivacyPolicyModal.jsx';
+import { LoadingSpinner } from './components/common/LoadingSpinner.jsx';
 import { APP_BUILD_ID } from './utils/systemConfig.js';
+
+// Lazy loading de vistas principales para Code Splitting y optimización de carga inicial
+const RegistrationView = lazy(() => import('./features/registration/RegistrationView.jsx'));
+const LoginView = lazy(() => import('./features/authentication/LoginView.jsx'));
+const TrainingView = lazy(() => import('./features/training/TrainingView.jsx'));
+const DashboardView = lazy(() => import('./features/dashboard/DashboardView.jsx'));
+const PublicVerificationView = lazy(() => import('./features/verification/PublicVerificationView.jsx'));
 
 export function App() {
   const {
@@ -41,59 +44,81 @@ export function App() {
   const renderContent = () => {
     // 1. Vista Pública de Verificación por QR
     if (isVerificationMode) {
-      return <PublicVerificationView onGoHome={() => { window.location.hash = ''; }} />;
+      return (
+        <Suspense fallback={<LoadingSpinner message="Verificando credencial oficial..." />}>
+          <PublicVerificationView onGoHome={() => { window.location.hash = ''; }} />
+        </Suspense>
+      );
     }
 
     // 2. Usuario Autenticado
     if (isLoggedIn) {
       // 1. SuperAdmin entra DIRECTAMENTE al Dashboard
       if (isSuperAdmin) {
-        return <DashboardView />;
+        return (
+          <Suspense fallback={<LoadingSpinner message="Cargando Centro de Control Electoral..." />}>
+            <DashboardView />
+          </Suspense>
+        );
       }
 
       // 2. Coordinadores (Distrital, Zonal, Local o General)
       if (isCoordinadorDistrital || isCoordinadorZonal || isCoordinadorLocal || isCoordinador) {
         if (!isEvaluationApproved) {
           return (
-            <TrainingView
-              onGoToDashboard={() => setCoordLocalTab('dashboard')}
-            />
+            <Suspense fallback={<LoadingSpinner message="Cargando Módulo de Capacitación..." />}>
+              <TrainingView
+                onGoToDashboard={() => setCoordLocalTab('dashboard')}
+              />
+            </Suspense>
           );
         }
 
         if (coordLocalTab === 'training') {
           return (
-            <TrainingView
-              onGoToDashboard={() => setCoordLocalTab('dashboard')}
-            />
+            <Suspense fallback={<LoadingSpinner message="Cargando Módulo de Capacitación..." />}>
+              <TrainingView
+                onGoToDashboard={() => setCoordLocalTab('dashboard')}
+              />
+            </Suspense>
           );
         }
 
         return (
-          <DashboardView
-            onGoToTraining={() => setCoordLocalTab('training')}
-          />
+          <Suspense fallback={<LoadingSpinner message="Cargando Dashboard de Coordinación..." />}>
+            <DashboardView
+              onGoToTraining={() => setCoordLocalTab('training')}
+            />
+          </Suspense>
         );
       }
 
       // 3. Personero de Mesa (Capacitación y Evaluación)
-      return <TrainingView />;
+      return (
+        <Suspense fallback={<LoadingSpinner message="Cargando Módulo de Capacitación y Evaluación..." />}>
+          <TrainingView />
+        </Suspense>
+      );
     }
 
     // 3. Vistas Públicas de Registro / Login
     if (viewMode === 'login') {
       return (
-        <LoginView
-          onBackToRegister={() => setViewMode('register')}
-        />
+        <Suspense fallback={<LoadingSpinner message="Cargando Portal de Acceso..." />}>
+          <LoginView
+            onBackToRegister={() => setViewMode('register')}
+          />
+        </Suspense>
       );
     }
 
     return (
-      <RegistrationView
-        onShowLogin={() => setViewMode('login')}
-        onRegisteredSuccess={() => setViewMode('login')}
-      />
+      <Suspense fallback={<LoadingSpinner message="Cargando Formulario de Registro Oficial..." />}>
+        <RegistrationView
+          onShowLogin={() => setViewMode('login')}
+          onRegisteredSuccess={() => setViewMode('login')}
+        />
+      </Suspense>
     );
   };
 

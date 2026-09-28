@@ -10,11 +10,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
-import { EditAssignmentModal } from '../../components/modals/EditAssignmentModal.jsx';
 import { CertificateModal } from '../../components/modals/CertificateModal.jsx';
-import { TrayectoView } from './TrayectoView.jsx';
-import { ZonasElectoralesView } from './ZonasElectoralesView.jsx';
-import { MapaZonasVMTView } from './MapaZonasVMTView.jsx';
 import { bloomSearchAccelerator } from '../../utils/BloomFilter.js';
 import {
   DISTRITOS_LIMA, DISTRITO_METAS, ROLES, TOTAL_MESAS_LIMA,

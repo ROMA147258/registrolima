@@ -164,3 +164,6 @@ export function PublicVerificationView({ onGoHome }) {
     </div>
   );
 }
+
+export default PublicVerificationView;
+
