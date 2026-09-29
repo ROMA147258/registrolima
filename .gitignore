@@ -7,10 +7,14 @@ dist/
 frontend/dist/
 build/
 
-# Environment and secrets
+# Environment and secrets (Nunca exponer credenciales reales en Git)
 .env
-backend/.env
+.env.*
+*.env
+**/.env
+**/.env.*
 *.local
+!**/.env.example
 
 # Logs and databases
 *.log
