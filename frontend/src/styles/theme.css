@@ -11,9 +11,9 @@
 }
 
 :root {
-  /* Fondo general solicitado */
-  --bg-color: rgb(193, 229, 249);
-  --bg-body-gradient: radial-gradient(circle at top center, #e0f2fe 0%, rgb(193, 229, 249) 100%);
+  /* Fondo general blanco puro */
+  --bg-color: #ffffff;
+  --bg-body-gradient: #ffffff;
   
   --card-bg: #ffffff;
   --card-border: #cbd5e1;

@@ -62,7 +62,7 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
       role="main"
       style={{
         minHeight: '100vh',
-        background: 'rgb(193, 229, 249)',
+        background: '#ffffff',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -74,23 +74,89 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
       <div
         style={{
           background: '#ffffff',
-          border: '1.5px solid #bae6fd',
+          border: '1.5px solid #e2e8f0',
           borderRadius: '20px',
           width: '100%',
           maxWidth: '440px',
-          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+          boxShadow: '0 12px 35px rgba(0, 0, 0, 0.07)',
           color: '#0f172a',
           overflow: 'hidden',
           animation: 'fadeIn 0.2s ease-out'
         }}
       >
+        {/* Selector Superior Ordenado de Pestañas (Registro / Ingresar) */}
+        <nav aria-label="Navegación de acceso" style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '8px',
+          padding: '16px 20px 0',
+          background: '#ffffff'
+        }}>
+          <div style={{
+            display: 'flex',
+            width: '100%',
+            gap: '8px',
+            padding: '4px',
+            background: '#f8fafc',
+            border: '1.5px solid #e2e8f0',
+            borderRadius: '12px'
+          }}>
+            <button
+              type="button"
+              onClick={onBackToRegister}
+              style={{
+                flex: 1,
+                padding: '10px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                background: 'transparent',
+                color: '#64748b',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#0284c7'; e.currentTarget.style.background = '#f1f5f9'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.background = 'transparent'; }}
+            >
+              <span>📝 Registro</span>
+            </button>
+            <button
+              type="button"
+              style={{
+                flex: 1,
+                padding: '10px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                background: '#ffffff',
+                color: '#0284c7',
+                fontWeight: 800,
+                fontSize: '0.88rem',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.06)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                cursor: 'default'
+              }}
+            >
+              <LogIn className="w-4 h-4" />
+              <span>🔐 Ingresar</span>
+            </button>
+          </div>
+        </nav>
+
         {/* Encabezado con Sello Oficial del Partido Somos Perú */}
         <header
           style={{
             background: '#ffffff',
-            padding: '28px 24px 16px',
+            padding: '20px 24px 16px',
             textAlign: 'center',
-            borderBottom: '1px solid #e0f2fe'
+            borderBottom: '1px solid #e2e8f0'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '14px' }}>
