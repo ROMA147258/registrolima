@@ -57,25 +57,6 @@ export function LoginView({ onBackToRegister, successMessage = '' }) {
     }
   };
 
-  const [isRevealed, setIsRevealed] = useState(false);
-
-  if (!isRevealed) {
-    return (
-      <div
-        onClick={() => setIsRevealed(true)}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          width: '100vw',
-          height: '100vh',
-          background: '#ffffff',
-          zIndex: 999999,
-          cursor: 'default'
-        }}
-      />
-    );
-  }
-
   return (
     <main
       role="main"

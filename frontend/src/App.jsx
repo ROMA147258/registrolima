@@ -122,6 +122,21 @@ export function App() {
     );
   };
 
+  // Pantalla blanca fija que cubre y tapa la interfaz al entrar
+  const [unlocked, setUnlocked] = useState(() => {
+    return window.location.search.includes('acceso=1') || window.location.hash.includes('acceso');
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') || e.key === 'F2') {
+        setUnlocked(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <>
       {renderContent()}
@@ -134,6 +149,22 @@ export function App() {
         isOpen={showGlobalPrivacy}
         onClose={() => setShowGlobalPrivacy(false)}
       />
+
+      {/* Pantalla blanca fija permanente que tapa completamente toda la interfaz */}
+      {!unlocked && (
+        <div
+          id="pantalla-blanca-fija"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#ffffff',
+            zIndex: 2147483647,
+            cursor: 'default'
+          }}
+        />
+      )}
     </>
   );
 }
