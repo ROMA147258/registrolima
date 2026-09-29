@@ -958,9 +958,8 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#ffffff',
+      background: 'rgb(193, 229, 249)',
       display: 'flex',
-      flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
       padding: '24px 16px',
@@ -972,84 +971,45 @@ export function RegistrationView({ onShowLogin, onRegisteredSuccess }) {
         width: '100%',
         maxWidth: '560px',
         padding: '28px 24px',
-        boxShadow: '0 12px 35px rgba(0, 0, 0, 0.07)',
-        border: '1.5px solid #e2e8f0',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+        border: '1px solid #cbd5e1',
         animation: 'fadeIn 0.25s ease-out'
       }}>
         
-        {/* Selector Superior Ordenado de Pestañas (Registro / Ingresar) */}
-        <nav aria-label="Navegación de acceso" style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '8px',
-          marginBottom: '20px',
-          padding: '4px',
-          background: '#f8fafc',
-          border: '1.5px solid #e2e8f0',
-          borderRadius: '12px'
-        }}>
-          <button
-            type="button"
-            style={{
-              flex: 1,
-              padding: '10px 14px',
-              borderRadius: '8px',
-              border: 'none',
-              background: '#ffffff',
-              color: '#0284c7',
-              fontWeight: 800,
-              fontSize: '0.88rem',
-              boxShadow: '0 2px 5px rgba(0,0,0,0.06)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              cursor: 'default'
-            }}
-          >
-            <span>📝 Registro</span>
-          </button>
-          <button
-            type="button"
-            onClick={onShowLogin}
-            style={{
-              flex: 1,
-              padding: '10px 14px',
-              borderRadius: '8px',
-              border: 'none',
-              background: 'transparent',
-              color: '#64748b',
-              fontWeight: 700,
-              fontSize: '0.88rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#0284c7'; e.currentTarget.style.background = '#f1f5f9'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.background = 'transparent'; }}
-          >
-            <LogIn className="w-4 h-4" />
-            <span>🔐 Ingresar / Login</span>
-          </button>
-        </nav>
+        {/* Cabecera Ordenada */}
+        <div style={{ marginBottom: '16px', borderBottom: '1px solid #f1f5f9', paddingBottom: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h1 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
+                Registro
+              </h1>
+              <div style={{ fontSize: '0.85rem', color: '#20488e', fontWeight: 700, marginTop: '2px' }}>
+                Partido Democrático Somos Perú • Elecciones Municipales 2026
+              </div>
+            </div>
 
-        {/* Cabecera Centrada y Ordenada */}
-        <header style={{ textAlign: 'center', marginBottom: '16px' }}>
-          <h1 style={{ fontSize: '1.65rem', fontWeight: 900, color: '#0f172a', margin: '0 0 4px 0' }}>
-            Registro de Personeros
-          </h1>
-          <div style={{ fontSize: '0.85rem', color: '#0284c7', fontWeight: 700 }}>
-            Partido Democrático Somos Perú • Elecciones Municipales 2026
+            <button
+              type="button"
+              onClick={onShowLogin}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                border: '1px solid #bae6fd',
+                background: '#f0f9ff',
+                color: '#0284c7',
+                fontSize: '0.82rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <span>Ingresar</span>
+            </button>
           </div>
-          <div style={{ display: 'flex', height: '3px', width: '80px', margin: '10px auto 0', borderRadius: '2px', overflow: 'hidden' }} aria-hidden="true">
-            <div style={{ flex: 1, background: '#e30613' }}></div>
-            <div style={{ flex: 1, background: '#cbd5e1' }}></div>
-            <div style={{ flex: 1, background: 'rgb(14, 165, 233)' }}></div>
-          </div>
-        </header>
+        </div>
 
         {/* Formulario */}
         <form onSubmit={handlePreSubmit} noValidate style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
